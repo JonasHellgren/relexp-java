@@ -1,4 +1,4 @@
-package core.foundation.gadget;
+package core.foundation.gadget.cond;
 
 import lombok.Getter;
 

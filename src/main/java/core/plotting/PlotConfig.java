@@ -2,7 +2,7 @@ package core.plotting;
 
 
 import core.foundation.config.ConfigReader;
-import core.foundation.util.conditionals.ConditionalUtil;
+import core.foundation.util.cond.ConditionalUtil;
 import lombok.extern.java.Log;
 
 import java.util.Properties;

@@ -1,4 +1,4 @@
-package core.foundation.util.conditionals;
+package core.foundation.util.cond;
 
 public class ConditionalUtil {
 
