@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>com.relexp</groupId>
     <artifactId>relexp-java</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -12,6 +12,69 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>21</java.version>
+        <dl4j-master.version>1.0.0-M2.1</dl4j-master.version>
+        <nd4j.version>1.0.0-M2.1</nd4j.version>
+        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+        <maven.minimum.version>3.3.1</maven.minimum.version>
+        <exec-maven-plugin.version>1.4.0</exec-maven-plugin.version>
+        <maven-shade-plugin.version>2.4.3</maven-shade-plugin.version>
+        <jcommon.version>1.0.23</jcommon.version>
+        <jfreechart.version>1.0.13</jfreechart.version>
+        <logback.version>1.1.7</logback.version>
+        <junit.jupiter.version>5.9.3</junit.jupiter.version>
+        <junit.platform.version>1.9.3</junit.platform.version>
+
     </properties>
+
+    <dependencies>
+    <!-- JUnit 5 -->
+    <dependency>
+        <groupId>org.jfree</groupId>
+        <artifactId>jfreechart</artifactId>
+        <version>1.5.3</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.jfree</groupId>
+        <artifactId>jcommon</artifactId>
+        <version>1.0.24</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>${junit.jupiter.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit.jupiter.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>${junit.jupiter.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-suite</artifactId>
+        <version>${junit.platform.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.knowm.xchart</groupId>
+        <artifactId>xchart</artifactId>
+        <version>3.8.6</version>
+    </dependency>
+    </dependencies>
 
 </project>
