@@ -2,7 +2,7 @@ package core.plotting;
 
 
 import core.foundation.config.ConfigReader;
-import core.foundation.utils.conditionals.Conditionals;
+import core.foundation.util.conditionals.ConditionalUtil;
 import lombok.extern.java.Log;
 
 import java.util.Properties;
@@ -11,7 +11,8 @@ import java.util.Properties;
 public record PlotConfig(int width, int height, int fixedNumberForTest) {
 
     public static PlotConfig extract(Properties props) {
-        Conditionals.executeIfTrue(props == null, () -> log.info("properties is null, using defaults"));
+        ConditionalUtil.executeIfTrue(props == null,
+                () -> log.info("properties is null, using defaults"));
 
         return (props == null)
                 ? PlotConfig.defaults()

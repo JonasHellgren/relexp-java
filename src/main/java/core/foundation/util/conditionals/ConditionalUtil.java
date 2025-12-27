@@ -1,6 +1,6 @@
-package core.foundation.utils.conditionals;
+package core.foundation.util.conditionals;
 
-public class Conditionals {
+public class ConditionalUtil {
 
     /**
      * ifTrueMethod is executed if condition is true, else is ifFalseMethod executed

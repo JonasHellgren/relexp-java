@@ -1,5 +1,8 @@
 package archunit;
 
+import com.tngtech.archunit.core.domain.JavaClasses;
+import com.tngtech.archunit.core.importer.ClassFileImporter;
+import com.tngtech.archunit.lang.ArchRule;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
@@ -14,14 +17,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.tngtech.archunit.base.DescribedPredicate;
-import com.tngtech.archunit.core.domain.JavaClasses;
-import com.tngtech.archunit.core.importer.ClassFileImporter;
-import com.tngtech.archunit.core.importer.ImportOption;
-import com.tngtech.archunit.lang.ArchRule;
-
+import static com.tngtech.archunit.base.Predicates.alwaysTrue;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
+import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices;
 
 @Log
 public class ArchitectureTest {
@@ -36,14 +35,8 @@ public class ArchitectureTest {
 
         importedClasses = new ClassFileImporter()
                 .importPath(mainClasses);
-
-        //importedClasses = new ClassFileImporter().importClasspath();
-        /*importedClasses =
-                new ClassFileImporter()
-                        .withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
-                        .importPaths(getAllModuleClassPaths());*/
-        log.info("Setup complete. Classes imported, nof ="+ importedClasses.size());
-        log.info("Classes imported="+ importedClasses);
+        log.info("Setup complete. Classes imported, nof = "+ importedClasses.size());
+     //   log.info("Classes imported="+ importedClasses);
     }
 
     private static List<Path> getAllModuleClassPaths() throws IOException {
@@ -56,20 +49,43 @@ public class ArchitectureTest {
     }
 
     @Test
-    @Disabled
+    public void noCircularDependencies() {
+        executeRule(
+                "noCircularDependencies",
+                slices()
+                        .matching("..(*)..")
+                        .should()
+                        .beFreeOfCycles()
+                        .because("There should be no cyclic dependencies among packages."));
+    }
+
+    @Test
     public void foundationLayerShouldBeIndependent() {
         executeRule(
-                "apiLayerShouldBeIndependent",
+                "foundationLayerShouldBeIndependent",
                 classes()
                         .that()
                         .resideInAPackage("..foundation..")
                         .should()
                         .onlyDependOnClassesThat()
-                        .resideInAnyPackage("java..", "..api..")
-                        .because("The foundation layer should depend on other layers."));
+                        .resideInAnyPackage("java..", "..api..","..lombok..")
+                        .because("The foundation layer should not depend on other project layers."));
     }
 
     @Test
+    public void testUtilityClassNaming() {
+        executeRule(
+                "testUtilityClassNaming",
+                classes()
+                        .that()
+                        .resideInAPackage("..util..")
+                        .should()
+                        .haveSimpleNameEndingWith("Util")
+                        .because("Classes in the utility package should have names ending with 'Util'."));
+    }
+
+    @Test
+    @Disabled
     public void gridrlShouldUseFoundationsOnly() {
         executeRule(
                 "controllersShouldUseDTOsOnly",

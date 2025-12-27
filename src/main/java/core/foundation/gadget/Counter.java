@@ -1,4 +1,4 @@
-package core.foundation.utils.conditionals;
+package core.foundation.gadget;
 
 import lombok.Getter;
 
