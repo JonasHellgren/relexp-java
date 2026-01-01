@@ -72,7 +72,7 @@ public class ProjectPropertiesReader {
     }
 
     public String pathTempDiff() {
-        return properties.getProperty("td_pics");
+        return properties.getProperty("ch4_pics");
     }
 
     public String pathActorCriticPics() {

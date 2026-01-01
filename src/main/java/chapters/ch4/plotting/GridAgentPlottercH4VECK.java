@@ -1,13 +1,11 @@
-package core.plotting.chart_plotting;
+package chapters.ch4.plotting;
 
-import chapters.ch4.domain.agent.AgentGridI;
 import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
 import core.foundation.util.formatting.NumberFormatterUtil;
-import core.gridrl.EnvironmentGridI;
 import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.SneakyThrows;
 import org.knowm.xchart.HeatMapChart;
 
@@ -18,65 +16,50 @@ import static chapters.ch4.domain.helper.GridPlotHelper.*;
 import static core.plotting.chart_plotting.ChartSaverAndPlotter.showAndSaveHeatMapFolderSafe;
 import static core.plotting.chart_plotting.ChartSaverAndPlotter.showAndSaveHeatMapFolderTempDiff;
 
-
 /**
  * A utility class for plotting heat maps of agent data in a grid environment.
  */
-@AllArgsConstructor
-@Getter
-public class GridAgentPlotter {
-
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class GridAgentPlottercH4VECK {
 
     private final Font ARROW_TEXT_FONT = new Font("Arial", Font.PLAIN, 22);
     private final Font VALUE_TEXT_FONT = new Font("Arial", Font.PLAIN, 12);
-    private final EnvironmentGridI environment;
-    private final AgentGridI agent;
+    private final TrainerGridDependencies dependencies;
     private final String fileNameAddOn;
     private final int nofDigits;
 
-
-
-    public static GridAgentPlotter of(TrainerGridDependencies dependencies,
-                                      String fileNameAddO, int nofDigits) {
-        return GridAgentPlotter.of(
-                dependencies.environment(),
-                dependencies.agent(),
-                fileNameAddO,
-                nofDigits);
+    public static GridAgentPlottercH4VECK of(TrainerGridDependencies dependencies,
+                                             String fileNameAddO) {
+        return new GridAgentPlottercH4VECK(dependencies, fileNameAddO, 1);
     }
 
-    public static GridAgentPlotter of(EnvironmentGridI environment,
-                                      AgentGridI agent,
-                                      String fileNameAddO) {
-        return new GridAgentPlotter(environment, agent, fileNameAddO, 1);
-    }
-
-    public static GridAgentPlotter of(EnvironmentGridI environment,
-                                      AgentGridI agent,
-                                      String fileNameAddO, int nofDigits) {
-        return new GridAgentPlotter(environment, agent, fileNameAddO, nofDigits);
+    public static GridAgentPlottercH4VECK of(TrainerGridDependencies dependencies,
+                                             String fileNameAddO,
+                                             int nofDigits) {
+        return new GridAgentPlottercH4VECK(dependencies,  fileNameAddO, nofDigits);
     }
 
     @SneakyThrows
-    public void plotAndSaveStateValuesInFolderTempDiff() {
+    public void plotStateValuesTd() {
         HeatMapChart chart = getValueChart();
         showAndSaveHeatMapFolderTempDiff(chart, "values", fileNameAddOn);
     }
 
     @SneakyThrows
-    public void plotAndSavePolicyInFolderTempDiff() {
+    public void plotPolicyTd() {
         HeatMapChart chart = getPolicyChart();
         showAndSaveHeatMapFolderTempDiff(chart, "policy", fileNameAddOn);
     }
 
+
     @SneakyThrows
-    public void plotStateValuesInFolderSafe() {
+    public void plotStateValuesSafe() {
         HeatMapChart chart = getValueChart();
         showAndSaveHeatMapFolderSafe(chart, "values", fileNameAddOn);
     }
 
     @SneakyThrows
-    public void plotPolicyInFolderSafe() {
+    public void plotPolicySafe() {
         HeatMapChart chart = getPolicyChart();
         showAndSaveHeatMapFolderSafe(chart, "policy", fileNameAddOn);
     }
@@ -84,9 +67,9 @@ public class GridAgentPlotter {
 
     @SneakyThrows
     private HeatMapChart getPolicyChart() {
-        int nCols = getNofCols(environment);
-        int nRows = getNofRows(environment);
-        var data = getPolicyData(nRows, nCols);
+        int nCols = getNofCols(dependencies.environment());
+        int nRows = getNofRows(dependencies.environment());
+        var data =  getPolicyData(nRows, nCols);
         return getStringTextChart(data, nCols, nRows, ARROW_TEXT_FONT);
     }
 
@@ -95,8 +78,8 @@ public class GridAgentPlotter {
     }
 
     private HeatMapChart getValueChart() throws IOException {
-        int nCols = getNofCols(environment);
-        int nRows = getNofRows(environment);
+        int nCols = getNofCols(dependencies.environment());
+        int nRows = getNofRows(dependencies.environment());
         String[][] valueData = getValueData(nRows, nCols);
         return getStringTextChart(valueData, nCols, nRows, VALUE_TEXT_FONT);
     }
@@ -111,11 +94,11 @@ public class GridAgentPlotter {
 
     private String[][] getStringData(int nRows, int nCols, boolean isShowValue) {
         String[][] valueData = new String[nRows][nCols];
-        var parameters = environment.getParameters();
+        var parameters = dependencies.environment().getParameters();
         for (int y = 0; y < nRows; y++) {
             for (int x = 0; x < nCols; x++) {
                 var state = StateGrid.of(x, y);
-                var stringToMaybeShow = isShowValue
+                var stringToMaybeShow=isShowValue
                         ? getValueInStateAsString(state)
                         : getActionAsString(state);
                 valueData[y][x] = isNoDecisionCell(parameters, state)
@@ -126,14 +109,15 @@ public class GridAgentPlotter {
         return valueData;
     }
 
-    public String getValueInStateAsString(StateGrid state) {
+    private String getValueInStateAsString(StateGrid state) {
         return NumberFormatterUtil.getRoundedNumberAsString(
-                agent.readValue(state), nofDigits);
+                dependencies.agent().readValue(state), nofDigits);
     }
 
-    public String getActionAsString(StateGrid state) {
-        return agent.chooseActionNoExploration(state).toString();
+    private String getActionAsString(StateGrid state) {
+        return dependencies.agent().chooseActionNoExploration(state).toString();
     }
+
 
 }
 
