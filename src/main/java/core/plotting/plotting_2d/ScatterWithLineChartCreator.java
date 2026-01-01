@@ -1,4 +1,4 @@
-package core.plotting.base.plotting_2d;
+package core.plotting.plotting_2d;
 
 import com.google.common.base.Preconditions;
 import core.foundation.util.cond.Conditionals;

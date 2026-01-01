@@ -1,7 +1,7 @@
-package core.plotting.base.plotting_2d;
+package core.plotting.plotting_2d;
 
 import com.google.common.collect.Lists;
-import core.foundation.util.list.List2ArrayConverter;
+import core.foundation.util.list_array.List2ArrayConverter;
 import org.apache.commons.math3.util.Pair;
 import java.util.Arrays;
 import java.util.List;

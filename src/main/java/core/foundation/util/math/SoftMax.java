@@ -1,7 +1,7 @@
 package core.foundation.util.math;
 
-import core.foundation.util.list.Array2ListConverter;
-import core.foundation.util.list.List2ArrayConverter;
+import core.foundation.util.list_array.Array2ListConverter;
+import core.foundation.util.list_array.List2ArrayConverter;
 import lombok.experimental.UtilityClass;
 import java.util.List;
 

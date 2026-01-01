@@ -1,4 +1,4 @@
-package core.foundation.util.list;
+package core.foundation.util.list_array;
 
 import lombok.extern.java.Log;
 

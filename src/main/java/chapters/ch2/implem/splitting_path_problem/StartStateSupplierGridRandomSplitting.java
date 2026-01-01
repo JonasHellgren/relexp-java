@@ -1,0 +1,26 @@
+package chapters.ch2.implem.splitting_path_problem;
+
+import core.foundation.gadget.set.SetUtils;
+import core.gridrl.StartStateSupplierGridI;
+import core.gridrl.StateGrid;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class StartStateSupplierGridRandomSplitting implements StartStateSupplierGridI {
+
+    public static StartStateSupplierGridRandomSplitting create() {
+        return new StartStateSupplierGridRandomSplitting();
+    }
+
+    @Override
+    public String environmentName() {
+        return "SplittingPath";
+    }
+
+    @Override
+    public StateGrid getStartState() {
+        var parameters = EnvironmentParametersSplittingFactory.produce();
+        return   SetUtils.getAnyFromSet(parameters.getAllStates());
+    }
+}

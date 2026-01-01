@@ -20,8 +20,8 @@ public class FitterFunctionFactory {
     }
 
     public static FitterFunctionOutput produceOutput(FittingParameters parameters) {
-        var fitter = MemoryFitterOutput.of(getFinder(parameters), parameters);
-        return new FitterFunctionOutput((MemoryFitterI) fitter);
+        MemoryFitterOutput fitter = MemoryFitterOutput.of(getFinder(parameters), parameters);
+        return new FitterFunctionOutput(fitter);
     }
 
     private static BucketFinder getFinder(FittingParameters parameters) {

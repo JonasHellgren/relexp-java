@@ -1,7 +1,7 @@
 package core.plotting.chart_plotting;
 
 import core.foundation.config.ProjectPropertiesReader;
-import core.plotting.base.plotting_2d.ScatterWithLineChartCreator;
+import core.plotting.plotting_2d.ScatterWithLineChartCreator;
 import core.plotting.base.shared.PlotSettings;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;

@@ -1,8 +1,8 @@
 package core.plotting.chart_plotting;
 
 import core.foundation.config.ProjectPropertiesReader;
-import core.foundation.util.list.ListCreator;
-import core.plotting.base.plotting_2d.ManyLinesChartCreator;
+import core.foundation.util.list_array.ListCreator;
+import core.plotting.plotting_2d.ManyLinesChartCreator;
 import core.plotting.base.shared.PlotSettings;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

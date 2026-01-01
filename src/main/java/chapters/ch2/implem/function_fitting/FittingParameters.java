@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.With;
 import java.util.List;
 
-import static core.foundation.util.list.ListCreator.createFromStartToEndWithNofItems;
+import static core.foundation.util.list_array.ListCreator.createFromStartToEndWithNofItems;
 
 
 @Builder

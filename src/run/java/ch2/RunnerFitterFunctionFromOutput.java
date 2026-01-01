@@ -7,12 +7,12 @@ import chapters.ch2.implem.function_fitting.FitterOutCalculator;
 import core.foundation.gadget.training.TrainData;
 import core.foundation.util.math.SigmoidFunctions;
 import core.foundation.util.rand.RandUtils;
-import core.plotting.base.plotting_2d.ChartUtility;
+import core.plotting.plotting_2d.ChartUtility;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static core.foundation.util.list.ListCreator.createFromStartToEndWithNofItems;
+import static core.foundation.util.list_array.ListCreator.createFromStartToEndWithNofItems;
 import static core.plotting.chart_plotting.ChartSaverAndPlotter.showChartSaveInFolderConcepts;
 
 public class RunnerFitterFunctionFromOutput {

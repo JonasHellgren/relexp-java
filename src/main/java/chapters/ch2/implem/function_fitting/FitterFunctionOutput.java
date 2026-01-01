@@ -1,12 +1,13 @@
 package chapters.ch2.implem.function_fitting;
 
+import chapters.ch2.domain.MemoryFitterOutput;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.training.TrainData;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class FitterFunctionOutput implements FitterFunctionI{
-    private final MemoryFitterI fitter;
+    private final MemoryFitterOutput fitter;
 
     public TabularMemory getMemory() {
         return fitter.getMemory();

@@ -1,4 +1,4 @@
-package core.plotting.base.plotting_2d;
+package core.plotting.plotting_2d;
 
 import lombok.experimental.UtilityClass;
 import org.apache.commons.math3.util.Pair;
