@@ -1,7 +1,7 @@
 package chapters.ch2.factory;
 
-import chapters.ch2.domain.FittingParameters;
 import chapters.ch2.domain.MemoryFitterOutput;
+import chapters.ch2.implem.function_fitting.*;
 import com.google.common.collect.Range;
 import core.foundation.gadget.math.BucketFinder;
 import lombok.experimental.UtilityClass;
@@ -14,14 +14,14 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class FitterFunctionFactory {
 
-  /*  public static FitterFunctionDifferences produceDifferences(FittingParameters parameters) {
+   public static FitterFunctionDifferences produceDifferences(FittingParameters parameters) {
         var fitter = MemoryFitterErrors.of(getFinder(parameters), parameters);
         return new FitterFunctionDifferences(fitter);
     }
 
     public static FitterFunctionOutput produceOutput(FittingParameters parameters) {
         var fitter = MemoryFitterOutput.of(getFinder(parameters), parameters);
-        return new FitterFunctionOutput(fitter);
+        return new FitterFunctionOutput((MemoryFitterI) fitter);
     }
 
     private static BucketFinder getFinder(FittingParameters parameters) {
@@ -29,5 +29,5 @@ public class FitterFunctionFactory {
         double dx= parameters.deltaX();
         return BucketFinder.of(Range.closed(-range, range), dx);  //closed <=> inclusive
     }
-*/
+
 }

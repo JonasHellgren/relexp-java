@@ -68,7 +68,7 @@ public class ProjectPropertiesReader {
     }
 
     public String pathConceptsPics() {
-        return properties.getProperty("ch1");
+        return properties.getProperty("ch1_pics");
     }
 
     public String pathTempDiff() {

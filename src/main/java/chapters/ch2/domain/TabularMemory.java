@@ -1,5 +1,6 @@
 package chapters.ch2.domain;
 
+import chapters.ch2.implem.function_fitting.FittingParameters;
 import lombok.AllArgsConstructor;
 
 import java.util.HashMap;

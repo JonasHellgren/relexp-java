@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class RandUtil<T> {
+public class RandUtils<T> {
 
     public static String getRandomItemFromStringList(List<String> list) {
         return list.get(getRandomIntNumber(0,list.size()));
@@ -54,7 +54,7 @@ public class RandUtil<T> {
                 "nSelected should be less than nGross");
         Set<Integer> uniqueRandomNumbers = new HashSet<>();
         while (uniqueRandomNumbers.size() < nSelected) {
-            uniqueRandomNumbers.add(RandUtil.getRandomIntNumber(0, nGross));
+            uniqueRandomNumbers.add(RandUtils.getRandomIntNumber(0, nGross));
         }
         return uniqueRandomNumbers;
     }

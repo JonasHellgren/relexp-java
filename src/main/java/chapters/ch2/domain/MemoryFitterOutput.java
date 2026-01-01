@@ -1,5 +1,6 @@
 package chapters.ch2.domain;
 
+import chapters.ch2.implem.function_fitting.FittingParameters;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.BucketFinder;
 import core.foundation.gadget.training.TrainData;

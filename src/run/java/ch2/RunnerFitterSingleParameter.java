@@ -1,7 +1,7 @@
 package ch2;
 
-import chapters.ch2.domain.FittingParameters;
 import chapters.ch2.factory.FittingParametersFactory;
+import chapters.ch2.implem.function_fitting.FittingParameters;
 import chapters.ch2.implem.parameter_fitting.FitterSingleParameter;
 import core.foundation.config.PathAndFile;
 import core.foundation.config.ProjectPropertiesReader;
