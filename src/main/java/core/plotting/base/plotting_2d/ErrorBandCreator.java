@@ -1,7 +1,7 @@
 package core.plotting.base.plotting_2d;
 
 import com.google.common.base.Preconditions;
-import core.foundation.util.cond.ConditionalUtil;
+import core.foundation.util.cond.Conditionals;
 import core.plotting.base.shared.PlotSettings;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static core.foundation.util.cond.ConditionalUtil.executeIfTrue;
+import static core.foundation.util.cond.Conditionals.executeIfTrue;
 
 @AllArgsConstructor
 public class ErrorBandCreator {
@@ -91,7 +91,7 @@ public class ErrorBandCreator {
 
     private void setStyles(JFreeChart chart) {
         chart.getTitle().setFont(settings.axisTitleFont());
-        ConditionalUtil.executeIfTrue(settings.showLegend(), () ->
+        Conditionals.executeIfTrue(settings.showLegend(), () ->
         chart.getLegend().setItemFont(settings.legendTextFont()));
         XYPlot plot = chart.getXYPlot();
         plot.getDomainAxis().setLabelFont(settings.axisTitleFont());

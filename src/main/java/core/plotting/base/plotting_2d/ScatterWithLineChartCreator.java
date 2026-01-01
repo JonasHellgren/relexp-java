@@ -1,7 +1,7 @@
 package core.plotting.base.plotting_2d;
 
 import com.google.common.base.Preconditions;
-import core.foundation.util.cond.ConditionalUtil;
+import core.foundation.util.cond.Conditionals;
 import core.plotting.base.shared.PlotSettings;
 import core.plotting.base.shared.XYData;
 import lombok.AllArgsConstructor;
@@ -87,7 +87,7 @@ public class ScatterWithLineChartCreator {
         styler.setAxisTitleFont(s.axisTitleFont());
         styler.setAxisTickLabelsFont(s.axisTicksFont());
         styler.setChartBackgroundColor(Color.WHITE);
-        ConditionalUtil.executeIfTrue(s.colorRangeSeries() != null, () ->
+        Conditionals.executeIfTrue(s.colorRangeSeries() != null, () ->
                 styler.setSeriesColors(s.colorRangeSeries()));
     }
 

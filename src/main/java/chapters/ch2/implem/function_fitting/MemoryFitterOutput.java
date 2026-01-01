@@ -1,4 +1,4 @@
-package chapters.ch2.domain;
+package chapters.ch2.implem.function_fitting;
 
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.BucketFinder;
@@ -25,6 +25,7 @@ public class MemoryFitterOutput implements MemoryFitterI {
 
     @Override
     public void fit(TrainData data) {
+
         for (int i = 0; i < data.nSamples(); i++) {
             double in = data.input(i).get(0);
             double out = data.output(i);

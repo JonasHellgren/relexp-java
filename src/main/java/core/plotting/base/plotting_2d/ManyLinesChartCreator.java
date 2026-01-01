@@ -1,7 +1,7 @@
 package core.plotting.base.plotting_2d;
 
 import com.google.common.base.Preconditions;
-import core.foundation.util.cond.ConditionalUtil;
+import core.foundation.util.cond.Conditionals;
 import core.foundation.util.math.MyMathUtils;
 import core.foundation.util.math.MyMatrixListUtils;
 import core.plotting.base.shared.PlotSettings;
@@ -33,7 +33,7 @@ public class ManyLinesChartCreator {
     public static ManyLinesChartCreator of(PlotSettings settings, List<Double> xData) {
         Preconditions.checkArgument(xData.size() > 1, "xData must have at least 2 elements");
         Preconditions.checkArgument(xData.get(1) > xData.get(0), "xData must be increasing");
-        ConditionalUtil.executeIfTrue(settings.isDefinedSpaceBetweenXTicks(), () ->
+        Conditionals.executeIfTrue(settings.isDefinedSpaceBetweenXTicks(), () ->
                 Preconditions.checkArgument(xData.get(1) % 1 == 0,
                 "xData must have even elements, elem=" + xData.get(1)));
         return new ManyLinesChartCreator(settings, xData, new ArrayList<>(), new ArrayList<>());
@@ -70,12 +70,12 @@ public class ManyLinesChartCreator {
         styler.setChartTitleFont(s.axisTitleFont());
         styler.setChartBackgroundColor(Color.WHITE);
         setAxisTicksFormatting(styler);
-        ConditionalUtil.executeIfTrue(s.colorRangeSeries() != null, () ->
+        Conditionals.executeIfTrue(s.colorRangeSeries() != null, () ->
                 styler.setSeriesColors(s.colorRangeSeries()));
         for (String name : names) {
             int i = names.indexOf(name);
             var series = chart.addSeries(name, xList, yData.get(i));
-            ConditionalUtil.executeIfFalse(s.showMarker(), () -> series.setMarker(SeriesMarkers.NONE));
+            Conditionals.executeIfFalse(s.showMarker(), () -> series.setMarker(SeriesMarkers.NONE));
         }
         return chart;
     }
