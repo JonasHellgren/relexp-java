@@ -1,6 +1,5 @@
 package chapters.ch2.factory;
 
-import chapters.ch2.domain.MemoryFitterOutput;
 import chapters.ch2.implem.function_fitting.*;
 import com.google.common.collect.Range;
 import core.foundation.gadget.math.BucketFinder;
