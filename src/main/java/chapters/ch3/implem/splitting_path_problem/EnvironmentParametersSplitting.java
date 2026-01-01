@@ -1,4 +1,4 @@
-package chapters.ch2.implem.splitting_path_problem;
+package chapters.ch3.implem.splitting_path_problem;
 
 import com.google.common.base.Preconditions;
 import core.gridrl.ActionGrid;

@@ -1,6 +1,6 @@
-package ch2;
+package ch3;
 
-import chapters.ch2.implem.splitting_path_problem.*;
+import chapters.ch3.implem.splitting_path_problem.*;
 import core.foundation.config.ProjectPropertiesReader;
 import core.foundation.util.math.LogarithmicDecay;
 import core.gridrl.StateGrid;

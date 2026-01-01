@@ -1,7 +1,7 @@
-package chapters.ch2;
+package chapters.ch3;
 
-import chapters.ch2.implem.splitting_path_problem.EnvironmentParametersSplittingFactory;
-import chapters.ch2.implem.splitting_path_problem.EnvironmentSplittingPath;
+import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplittingFactory;
+import chapters.ch3.implem.splitting_path_problem.EnvironmentSplittingPath;
 import core.gridrl.StateGrid;
 import core.gridrl.StepReturnGrid;
 import org.junit.jupiter.api.BeforeEach;

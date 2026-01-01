@@ -1,6 +1,6 @@
-package chapters.ch2;
+package chapters.ch3;
 
-import chapters.ch2.implem.splitting_path_problem.*;
+import chapters.ch3.implem.splitting_path_problem.*;
 import core.foundation.gadget.set.SetUtils;
 import core.gridrl.StateGrid;
 import org.junit.jupiter.api.BeforeEach;

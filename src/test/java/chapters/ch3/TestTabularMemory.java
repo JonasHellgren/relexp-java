@@ -1,4 +1,4 @@
-package chapters.ch2;
+package chapters.ch3;
 
 import chapters.ch2.factory.FittingParametersFactory;
 import chapters.ch2.implem.function_fitting.FittingParameters;

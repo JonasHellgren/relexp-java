@@ -1,4 +1,4 @@
-package chapters.ch2;
+package chapters.ch3;
 
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
