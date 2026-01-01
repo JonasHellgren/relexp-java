@@ -1,0 +1,11 @@
+package chapters.ch5._shared.episode_generator;
+
+
+import chapters.ch5.domain.environment.ExperienceMc;
+import chapters.ch5.domain.environment.StateMcI;
+
+import java.util.List;
+
+public interface EpisodeGeneratorI {
+    List<ExperienceMc> generate(StateMcI stateStart);
+}

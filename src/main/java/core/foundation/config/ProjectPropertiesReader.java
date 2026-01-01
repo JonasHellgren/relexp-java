@@ -88,7 +88,7 @@ public class ProjectPropertiesReader {
     }
 
     public String pathMonteCarlo() {
-        return properties.getProperty("montecarlo_pics");
+        return properties.getProperty("ch5_pics");
     }
 
     public String pathMultiStep() {
