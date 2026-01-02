@@ -37,7 +37,6 @@ public class RunnerTrainerNeuralOneDimensional {
     public static final int N_SAMPLES = 100;
     public static final double[] EVAL_IN = {1.0, 5.0, 7.5, 10.0};
     public static final int N_WINDOWS = 10;
-    public static final String SUB_PATH = "neural/";
     public static final int IDX_IN1 = 0;
     public static final int IDX_IN10 = 3;
 
@@ -60,7 +59,7 @@ public class RunnerTrainerNeuralOneDimensional {
     }
 
     static void lossPlotting(NeuralOneDimRegressionRecorder recorder) throws IOException {
-        var path = ProjectPropertiesReader.create().pathAdvConcepts()+ SUB_PATH;
+        var path = ProjectPropertiesReader.create().pathAdvConcepts();
         var plotter = ErrorBandPlotterNeuralOneDimRegression.ofFiltering(
                 recorder,
                 path,
