@@ -76,15 +76,15 @@ public class ProjectPropertiesReader {
     }
 
     public String pathActorCriticPics() {
-        return properties.getProperty("actor_critic_pics");
+        return properties.getProperty("ch11_pics");
     }
 
     public String pathGradientLearning() {
-        return properties.getProperty("gradient_learning_pics");
+        return properties.getProperty("ch9_pics");
     }
 
     public String pathRbf() {
-        return properties.getProperty("rbf_pics");
+        return properties.getProperty("ch9_pics");
     }
 
     public String pathMonteCarlo() {
