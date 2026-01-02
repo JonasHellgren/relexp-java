@@ -1,4 +1,4 @@
-package core.nextlevelrl;
+package core.nextlevelrl.neural;
 
 import lombok.experimental.UtilityClass;
 import org.deeplearning4j.nn.api.Layer;

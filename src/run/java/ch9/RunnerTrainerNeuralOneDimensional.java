@@ -12,7 +12,7 @@ import core.foundation.util.cond.Conditionals;
 import core.foundation.util.list_array.Array2ListConverter;
 import core.foundation.util.list_array.List2ArrayConverter;
 import core.foundation.util.list_array.ListCreator;
-import core.nextlevelrl.MultiLayerPrinter;
+import core.nextlevelrl.neural.MultiLayerPrinter;
 import core.plotting.base.shared.PlotSettings;
 import core.plotting.chart_plotting.ChartSaverAndPlotter;
 import core.plotting.plotting_2d.ManyLinesChartCreator;
