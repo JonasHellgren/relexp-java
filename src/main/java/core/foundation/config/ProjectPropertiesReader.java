@@ -96,35 +96,35 @@ public class ProjectPropertiesReader {
     }
 
     public String pathSafe() {
-        return properties.getProperty("safe_pics");
+        return properties.getProperty("ch7_pics");
     }
 
     public String pathPolGrad() {
-        return properties.getProperty("pol_grad_pics");
+        return properties.getProperty("ch10_pics");
     }
 
     public String pathAdvConcepts() {
-        return properties.getProperty("adv_conc_pics");
+        return properties.getProperty("ch9_pics");
     }
 
     public String pathAdvConceptsNeural() {
-        return pathAdvConcepts()+"neural/";
+        return pathAdvConcepts();
     }
 
     public String pathDeepRl() {
-        return properties.getProperty("deep_rl_pics");
+        return properties.getProperty("ch12_pics");
     }
 
     public String pathNonEpisodic() {
-        return properties.getProperty("non_epis_pics");
+        return properties.getProperty("ch8_pics");
     }
 
     public String pathMcts() {
-        return properties.getProperty("mcts_pics");
+        return properties.getProperty("ch13_pics");
     }
 
     public String pathCombLP() {
-        return properties.getProperty("comb_lp_pics");
+        return properties.getProperty("ch14_pics");
     }
 
 
