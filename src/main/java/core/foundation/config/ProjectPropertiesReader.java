@@ -92,7 +92,7 @@ public class ProjectPropertiesReader {
     }
 
     public String pathMultiStep() {
-        return properties.getProperty("multistep_pics");
+        return properties.getProperty("ch6_pics");
     }
 
     public String pathSafe() {

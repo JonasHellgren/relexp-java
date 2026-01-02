@@ -1,0 +1,73 @@
+package chapters.ch6.domain.trainer.core;
+
+import chapters.ch4.domain.memory.StateActionGrid;
+import chapters.ch6._shared.episode_generator.EpisodeGeneratorGrid;
+import chapters.ch6._shared.info.EpisodeInfo;
+import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultsGeneratorGrid;
+import chapters.ch6.domain.trainer.multisteps_after_episode.ProgressMeasureExtractorMultiStep;
+import core.foundation.util.math.LogarithmicDecay;
+import core.plotting.progress_plotting.RecorderProgressMeasures;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.extern.java.Log;
+
+/**
+ * Trainer that implements state-action control after step is perfomed.
+
+ //pseudo code:
+ * while training termination criteria is false
+ * experiences ← run step using present policy
+ * for each step t in the step
+ *   tn ← t+n
+ *   s, r ← extract state and reward from experience t
+ *   G(t) ← ∑_(k=t)^(min⁡(tn-1,T-1))▒〖γ^(t-k)∙r(k)〗
+ *   sn ← the state n steps ahead from s
+ *   if sn is present
+ *    an ← the action taken n steps ahead from t
+ *    G(t) ← G(t)+ γ^n∙Q(sn,an)
+ *   Q(s,a)← Q(s,a)+α·(G-Q(s,a))
+ *  endFor
+ * endWhile
+ *
+ */
+
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
+@Log
+public class TrainerStateActionControlAfterEpisode implements TrainerI {
+
+    private final TrainerDependenciesMultiStep dependencies;
+    private final RecorderProgressMeasures recorder;
+
+    public static TrainerStateActionControlAfterEpisode of(TrainerDependenciesMultiStep dependencies) {
+        return new TrainerStateActionControlAfterEpisode(dependencies,RecorderProgressMeasures.empty());
+    }
+
+    @Override
+    public void train() {
+        var generator = EpisodeGeneratorGrid.of(dependencies);
+        var lrPair = dependencies.trainerParameters().learningRateStartAndEnd();
+        var decLearningRate = LogarithmicDecay.of(lrPair, dependencies.getNofEpisodes());
+        var probPair = dependencies.trainerParameters().probRandomActionStartAndEnd();
+        var decProbRandomAction = LogarithmicDecay.of(probPair, dependencies.getNofEpisodes());
+        var msGenerator = MultiStepResultsGeneratorGrid.of(dependencies);
+        var measureExtractor = ProgressMeasureExtractorMultiStep.of(dependencies);
+        var agent = dependencies.agent();
+        recorder.clear();
+        for (int i = 0; i < dependencies.getNofEpisodes(); i++) {
+            double probRandom = decProbRandomAction.calcOut(i);
+            double learningRate = decLearningRate.calcOut(i);
+            var experiences = generator.generate(probRandom);
+            var msResults = msGenerator.generate(experiences);
+            var info= EpisodeInfo.of(experiences);
+            recorder.add(measureExtractor.getProgressMeasures(experiences,msResults));
+            for (int j = 0; j < msResults.size(); j++) {
+                var msrAtStep = msResults.resultAtStep(j);
+                if (info.isFirstVisit(StateActionGrid.of(msrAtStep.state(),msrAtStep.action()),j)) {
+                    agent.fit(msrAtStep, learningRate);
+                }
+            }
+        }
+    }
+}

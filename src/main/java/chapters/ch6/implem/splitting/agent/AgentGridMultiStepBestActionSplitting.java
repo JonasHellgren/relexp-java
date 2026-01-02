@@ -1,0 +1,78 @@
+package chapters.ch6.implem.splitting.agent;
+
+import chapters.ch4.domain.memory.MemoryGrid;
+import chapters.ch4.domain.memory.StateActionGrid;
+import chapters.ch4.domain.param.AgentGridParameters;
+import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
+import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultGrid;
+import core.gridrl.ActionGrid;
+import core.gridrl.EnvironmentGridParametersI;
+import core.gridrl.StateGrid;
+import lombok.AllArgsConstructor;
+
+/**
+ * Implementation of the AgentGridMultiStepI interface for the splitting agent.
+ * This agent chooses the best action (rule based) based on the current state and updates its memory accordingly.
+ */
+@AllArgsConstructor
+public class AgentGridMultiStepBestActionSplitting implements AgentGridMultiStepI {
+
+    public static final ActionGrid DUMMY_ACTION = ActionGrid.E;
+    public static final double DUMMY_PROB = 1.0;
+    EnvironmentGridParametersI gridParameters;
+    private final MemoryGrid memory;
+
+    public static AgentGridMultiStepBestActionSplitting of(AgentGridParameters agentParameters,
+                                                           EnvironmentGridParametersI gridParameters) {
+        return new AgentGridMultiStepBestActionSplitting(
+                gridParameters,
+                MemoryGrid.of(agentParameters,gridParameters));
+    }
+
+    @Override
+    public MemoryGrid getMemory() {
+        return memory;
+    }
+
+    @Override
+    public ActionGrid chooseAction(StateGrid s, double probRandom) {
+        return s.equals(StateGrid.of(2,1))
+                ? ActionGrid.N
+                : ActionGrid.E;
+    }
+
+    @Override
+    public ActionGrid chooseActionNoExploration(StateGrid s) {
+        return chooseAction(s, DUMMY_PROB);
+    }
+
+    @Override
+    public void fit(MultiStepResultGrid ms, double learningRate) {
+        double valueTar=calculateValueTarget(ms);
+        memory.fit(ms.state(), DUMMY_ACTION, valueTar, learningRate);
+    }
+
+    @Override
+    public double calculateValueTarget(MultiStepResultGrid ms) {
+        double valFutureState=ms.isStateFuturePresent()
+                ? read(ms.stateFuture().orElseThrow())
+                :0;
+        return ms.sumRewards()+valFutureState;
+    }
+
+    @Override
+    public double read(StateActionGrid sa) {
+        return read(sa.state());
+    }
+
+    @Override
+    public double read(StateGrid s) {
+        var sa=StateActionGrid.of(s, DUMMY_ACTION);
+        return memory.read(sa);
+    }
+
+    @Override
+    public double read(StateGrid s, ActionGrid a) {
+        return read(StateActionGrid.of(s,a));
+    }
+}

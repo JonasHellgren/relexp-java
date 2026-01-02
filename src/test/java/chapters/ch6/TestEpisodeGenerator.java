@@ -1,0 +1,34 @@
+package chapters.ch6;
+
+import chapters.ch6._shared.episode_generator.EpisodeGeneratorGrid;
+import chapters.ch6._shared.info.EpisodeInfo;
+import chapters.ch6.implem.factory.TrainerDependenciesFactory;
+import core.foundation.util.math.MyMathUtils;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class TestEpisodeGenerator {
+
+    public static final double TOL = 0.01;
+    EpisodeGeneratorGrid episodeGenerator;
+
+    @BeforeEach
+    void init() {
+        var dependencies= TrainerDependenciesFactory.givenOptimalPolicySplitting(1, 10_000, 0.1);
+        episodeGenerator = EpisodeGeneratorGrid.of(dependencies);
+    }
+
+    @Test
+    void whenGenerating_thenCorrect() {
+        var expList = episodeGenerator.generate(1.0);
+        var info = EpisodeInfo.of(expList);
+        double sumRewards = info.sumRewards();
+        Assertions.assertTrue(info.nSteps() > 0);
+        Assertions.assertTrue(info.endExperience().isTransitionToTerminal());
+        Assertions.assertTrue(MyMathUtils.compareDoubleScalars(0, sumRewards, TOL) ||
+                MyMathUtils.compareDoubleScalars(1, sumRewards, TOL));
+    }
+
+
+}
