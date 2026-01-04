@@ -76,9 +76,7 @@ public class ChartUtility {
     public static void reduceXAxisTicksClutter(XYChart chart, int xStep, String elseStr) {
         Function<Double, String> tickLabelsFormatter = value -> {
             int intValue = (int) Math.floor(value);
-            System.out.println("value = " + value);
             if (intValue % xStep == 0) {
-                System.out.println("intValue = " + intValue);
                 return String.valueOf(intValue);
             } else {
                 return elseStr;

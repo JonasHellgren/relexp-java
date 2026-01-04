@@ -1,8 +1,8 @@
 package chapters.ch3;
 
 import chapters.ch2.factory.FittingParametersFactory;
-import chapters.ch2.domain.FittingParameters;
-import chapters.ch2.domain.TabularMemory;
+import chapters.ch2.domain.fitting.FittingParameters;
+import chapters.ch2.domain.fitting.TabularMemory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

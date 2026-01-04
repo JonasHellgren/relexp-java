@@ -1,6 +1,6 @@
 package ch2;
 
-import chapters.ch2.factory.ChartFactory;
+import core.plotting.factory.ChartFactory;
 import chapters.ch2.factory.FitterFunctionFactory;
 import chapters.ch2.factory.FittingParametersFactory;
 import core.foundation.gadget.training.TrainDataInOut;
@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 import static core.foundation.util.collections.ListCreator.createFromStartToEndWithNofItems;
 import static core.plotting.chart_plotting.ChartSaverAndPlotter.showChartSaveInFolderConcepts;
 
-public class RunnerFitterFunctionFromOutput {
+public class RunnerSigmoidFunctionFitter {
     public static final int N_EPOCHS = 1000;
     public static final int N_POINTS = 1000;  //100
     public static final String FILE_NAME = "sigmoid_fitted";

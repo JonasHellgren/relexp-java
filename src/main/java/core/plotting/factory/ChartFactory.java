@@ -1,4 +1,4 @@
-package chapters.ch2.factory;
+package core.plotting.factory;
 
 import core.plotting.chart_plotting.ChartCreatorFactory;
 import lombok.experimental.UtilityClass;

@@ -1,7 +1,7 @@
 package chapters.ch2.factory;
 
-import chapters.ch2.domain.FittingParameters;
-import chapters.ch2.domain.MemoryFitterOutput;
+import chapters.ch2.domain.fitting.FittingParameters;
+import chapters.ch2.domain.fitting.MemoryFitterOutput;
 import chapters.ch2.impl.function_fitting.*;
 import com.google.common.collect.Range;
 import core.foundation.gadget.math.BucketFinder;

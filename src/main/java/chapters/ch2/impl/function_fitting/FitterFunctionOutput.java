@@ -1,8 +1,8 @@
 package chapters.ch2.impl.function_fitting;
 
-import chapters.ch2.domain.FitterFunctionI;
-import chapters.ch2.domain.MemoryFitterOutput;
-import chapters.ch2.domain.TabularMemory;
+import chapters.ch2.domain.fitting.FitterFunctionI;
+import chapters.ch2.domain.fitting.MemoryFitterOutput;
+import chapters.ch2.domain.fitting.TabularMemory;
 import core.foundation.gadget.training.TrainDataInOut;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package chapters.ch2.domain;
+package chapters.ch2.domain.fitting;
 
 import lombok.Builder;
 import lombok.With;
