@@ -5,8 +5,8 @@ import core.foundation.gadget.math.ScalerLinear;
 import core.foundation.gadget.vector_algebra.ArrayMatrix;
 import core.foundation.util.cond.Conditionals;
 import core.foundation.util.formatting.NumberFormatterUtil;
-import core.foundation.util.list_array.ArrayCreator;
-import core.foundation.util.list_array.MyArrayUtil;
+import core.foundation.util.collections.ArrayCreator;
+import core.foundation.util.collections.MyArrayUtil;
 import core.plotting.base.shared.PlotSettings;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,8 +20,8 @@ import java.util.stream.IntStream;
 
 import static core.foundation.util.cond.Conditionals.executeIfTrue;
 import static core.foundation.util.formatting.NumberFormatterUtil.getRoundedNumberAsString;
-import static core.foundation.util.list_array.MyMatrixArrayUtils.findMax;
-import static core.foundation.util.list_array.MyMatrixArrayUtils.findMin;
+import static core.foundation.util.collections.MyMatrixArrayUtils.findMax;
+import static core.foundation.util.collections.MyMatrixArrayUtils.findMin;
 
 /**
  * This class is used to create a HeatMapChart.

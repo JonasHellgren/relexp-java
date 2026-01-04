@@ -9,7 +9,7 @@ import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import static core.foundation.util.list_array.ListCreator.createFromStartToEndWithNofItems;
+import static core.foundation.util.collections.ListCreator.createFromStartToEndWithNofItems;
 
 public class RunnerCannonDistancePlotter {
 

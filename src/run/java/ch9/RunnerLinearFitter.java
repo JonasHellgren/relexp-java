@@ -5,7 +5,7 @@ import chapters.ch9.gradient_descent.PhiExtractor;
 import core.foundation.config.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.gadget.training.TrainData;
-import core.foundation.util.list_array.ListCreator;
+import core.foundation.util.collections.ListCreator;
 import core.plotting.base.shared.PlotSettings;
 import core.plotting.chart_plotting.ChartSaverAndPlotter;
 import core.plotting.plotting_2d.ChartUtility;

@@ -1,8 +1,8 @@
 package chapters.ch10.bandit._shared;
 
-import core.foundation.util.list_array.List2ArrayConverter;
-import core.foundation.util.list_array.ListCreator;
-import core.foundation.util.list_array.MyArrayUtil;
+import core.foundation.util.collections.List2ArrayConverter;
+import core.foundation.util.collections.ListCreator;
+import core.foundation.util.collections.MyArrayUtil;
 import lombok.experimental.UtilityClass;
 
 /***

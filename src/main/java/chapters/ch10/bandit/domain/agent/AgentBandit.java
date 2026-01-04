@@ -1,7 +1,7 @@
 package chapters.ch10.bandit.domain.agent;
 
 import chapters.ch10.bandit.domain.environment.ActionBandit;
-import core.foundation.util.list_array.MyArrayUtil;
+import core.foundation.util.collections.MyArrayUtil;
 import core.foundation.util.math.SoftMax;
 import core.foundation.util.rand.RandUtils;
 import lombok.AccessLevel;

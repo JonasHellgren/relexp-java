@@ -3,7 +3,7 @@ package chapters.ch5.implem.walk;
 
 import chapters.ch5.domain.environment.StartStateSupplierI;
 import chapters.ch5.domain.environment.StateMcI;
-import core.foundation.util.list_array.MyListUtils;
+import core.foundation.util.collections.MyListUtils;
 import core.foundation.util.rand.RandUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

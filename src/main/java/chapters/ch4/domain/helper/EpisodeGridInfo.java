@@ -1,7 +1,7 @@
 package chapters.ch4.domain.helper;
 
 import chapters.ch4.domain.trainer.core.ExperienceGrid;
-import core.foundation.util.list_array.MyListUtils;
+import core.foundation.util.collections.MyListUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 

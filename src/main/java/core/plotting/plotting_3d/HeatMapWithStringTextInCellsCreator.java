@@ -1,9 +1,9 @@
 package core.plotting.plotting_3d;
 
 import core.foundation.gadget.vector_algebra.ArrayMatrix;
-import core.foundation.util.list_array.ArrayCreator;
-import core.foundation.util.list_array.MatrixArrayCreator;
-import core.foundation.util.list_array.MyArrayUtil;
+import core.foundation.util.collections.ArrayCreator;
+import core.foundation.util.collections.MatrixArrayCreator;
+import core.foundation.util.collections.MyArrayUtil;
 import core.plotting.base.shared.PlotSettings;
 import org.knowm.xchart.HeatMapChart;
 

@@ -9,7 +9,7 @@ import chapters.ch10.bandit.domain.trainer.TrainerDependenciesBandit;
 import chapters.ch10.bandit.factory.FactoryAgentParametersBandit;
 import chapters.ch10.bandit.factory.FactoryEnvironmentParametersBandit;
 import chapters.ch10.bandit.factory.FactoryTrainerParameters;
-import core.foundation.util.list_array.MyListUtils;
+import core.foundation.util.collections.MyListUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

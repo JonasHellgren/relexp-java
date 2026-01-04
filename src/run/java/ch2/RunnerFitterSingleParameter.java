@@ -6,7 +6,7 @@ import chapters.ch2.implem.parameter_fitting.FitterSingleParameter;
 import core.foundation.config.PathAndFile;
 import core.foundation.config.ProjectPropertiesReader;
 import core.foundation.gadget.training.TrainData;
-import core.foundation.util.list_array.MyListUtils;
+import core.foundation.util.collections.MyListUtils;
 import core.plotting.plotting_2d.ManyLinesChartCreator;
 import core.plotting.chart_plotting.ChartSaver;
 import core.plotting.chart_plotting.PlotterFactory;

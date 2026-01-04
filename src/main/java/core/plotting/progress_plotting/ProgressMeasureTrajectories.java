@@ -1,7 +1,7 @@
 package core.plotting.progress_plotting;
 
 
-import core.foundation.util.list_array.ListCreator;
+import core.foundation.util.collections.ListCreator;
 
 import java.util.List;
 

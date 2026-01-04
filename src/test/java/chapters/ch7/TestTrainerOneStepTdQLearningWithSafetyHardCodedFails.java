@@ -4,7 +4,7 @@ import chapters.ch4.implem.treasure.start_state_suppliers.StartStateSupplierPosi
 import chapters.ch7.domain.trainer.TrainerOneStepTdQLearningWithSafety;
 import chapters.ch7.factory.SafetyLayerFactoryTreasure;
 import chapters.ch7.factory.TrainerDependencySafeFactory;
-import core.foundation.util.list_array.MyListUtils;
+import core.foundation.util.collections.MyListUtils;
 import core.gridrl.StateGrid;
 import core.plotting.progress_plotting.ProgressMeasureEnum;
 import core.plotting.progress_plotting.RecorderProgressMeasures;

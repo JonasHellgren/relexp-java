@@ -3,7 +3,7 @@ package chapters.ch4.domain.helper;
 import chapters.ch4.domain.agent.AgentGridI;
 import chapters.ch4.domain.trainer.core.ExperienceGrid;
 import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
-import core.foundation.util.list_array.MyListUtils;
+import core.foundation.util.collections.MyListUtils;
 import core.plotting.progress_plotting.ProgressMeasureTrajectories;
 import core.plotting.progress_plotting.ProgressMeasures;
 import lombok.AccessLevel;

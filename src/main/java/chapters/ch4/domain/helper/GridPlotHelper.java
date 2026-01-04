@@ -1,7 +1,7 @@
 package chapters.ch4.domain.helper;
 
 import core.foundation.config.ProjectPropertiesReader;
-import core.foundation.util.list_array.ArrayCreator;
+import core.foundation.util.collections.ArrayCreator;
 import core.gridrl.EnvironmentGridI;
 import core.plotting.base.shared.PlotSettings;
 import core.plotting.plotting_3d.HeatMapWithStringTextInCellsCreator;

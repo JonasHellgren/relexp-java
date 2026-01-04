@@ -2,7 +2,7 @@ package chapters.ch6._shared.info;
 
 import chapters.ch4.domain.memory.StateActionGrid;
 import chapters.ch4.domain.trainer.core.ExperienceGrid;
-import core.foundation.util.list_array.MyListUtils;
+import core.foundation.util.collections.MyListUtils;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;

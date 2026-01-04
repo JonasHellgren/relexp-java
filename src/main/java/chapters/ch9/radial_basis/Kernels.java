@@ -1,7 +1,7 @@
 package chapters.ch9.radial_basis;
 
 import com.google.common.base.Preconditions;
-import core.foundation.util.list_array.List2ArrayConverter;
+import core.foundation.util.collections.List2ArrayConverter;
 import lombok.AllArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;

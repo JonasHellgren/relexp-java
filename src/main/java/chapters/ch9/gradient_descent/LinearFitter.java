@@ -3,7 +3,7 @@ package chapters.ch9.gradient_descent;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.Weights;
-import core.foundation.util.list_array.MyListUtils;
+import core.foundation.util.collections.MyListUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

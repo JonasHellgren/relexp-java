@@ -12,7 +12,7 @@ import core.plotting.plotting_2d.ChartUtility;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static core.foundation.util.list_array.ListCreator.createFromStartToEndWithNofItems;
+import static core.foundation.util.collections.ListCreator.createFromStartToEndWithNofItems;
 import static core.plotting.chart_plotting.ChartSaverAndPlotter.showChartSaveInFolderConcepts;
 
 public class RunnerFitterFunctionFromOutput {

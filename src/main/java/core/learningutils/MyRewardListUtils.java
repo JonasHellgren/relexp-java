@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static core.foundation.util.list_array.MyListUtils.dotProduct;
-import static core.foundation.util.list_array.MyListUtils.elementProduct;
+import static core.foundation.util.collections.MyListUtils.dotProduct;
+import static core.foundation.util.collections.MyListUtils.elementProduct;
 
 
 public final class MyRewardListUtils {

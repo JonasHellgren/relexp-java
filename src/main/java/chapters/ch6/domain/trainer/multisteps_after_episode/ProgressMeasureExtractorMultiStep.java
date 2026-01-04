@@ -5,7 +5,7 @@ import chapters.ch4.domain.memory.StateActionGrid;
 import chapters.ch4.domain.trainer.core.ExperienceGrid;
 import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
-import core.foundation.util.list_array.MyListUtils;
+import core.foundation.util.collections.MyListUtils;
 import core.plotting.progress_plotting.ProgressMeasureTrajectories;
 import core.plotting.progress_plotting.ProgressMeasures;
 import lombok.AccessLevel;

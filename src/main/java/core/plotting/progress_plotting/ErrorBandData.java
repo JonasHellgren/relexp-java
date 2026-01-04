@@ -1,14 +1,14 @@
 package core.plotting.progress_plotting;
 
 import com.google.common.base.Preconditions;
-import core.foundation.util.list_array.ArrayCreator;
-import core.foundation.util.list_array.List2ArrayConverter;
+import core.foundation.util.collections.ArrayCreator;
+import core.foundation.util.collections.List2ArrayConverter;
 import core.foundation.util.math.MovingAverage;
 
 import java.util.List;
 
-import static core.foundation.util.list_array.MyListUtils.elementSubtraction;
-import static core.foundation.util.list_array.MyListUtils.everyItemAbsolute;
+import static core.foundation.util.collections.MyListUtils.elementSubtraction;
+import static core.foundation.util.collections.MyListUtils.everyItemAbsolute;
 
 
 /**
