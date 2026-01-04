@@ -1,4 +1,4 @@
-package chapters.ch2.implem.function_fitting;
+package chapters.ch2.domain;
 
 import core.foundation.gadget.math.BucketFinder;
 import core.foundation.gadget.training.TrainData;
@@ -6,7 +6,7 @@ import core.foundation.util.cond.Conditionals;
 import lombok.extern.java.Log;
 
 @Log
-public class MemoryFitterErrors extends MemoryFitterOutput implements MemoryFitterI{
+public class MemoryFitterErrors extends MemoryFitterOutput implements MemoryFitterI {
 
     public MemoryFitterErrors(BucketFinder bucketFinder,
                               TabularMemory memory,

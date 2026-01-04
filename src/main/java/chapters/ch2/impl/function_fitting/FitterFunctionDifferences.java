@@ -1,11 +1,14 @@
-package chapters.ch2.implem.function_fitting;
+package chapters.ch2.impl.function_fitting;
 
+import chapters.ch2.domain.FitterFunctionI;
+import chapters.ch2.domain.MemoryFitterI;
+import chapters.ch2.domain.TabularMemory;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.training.TrainData;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class FitterFunctionDifferences implements FitterFunctionI{
+public class FitterFunctionDifferences implements FitterFunctionI {
 
     private final MemoryFitterI fitter;
 

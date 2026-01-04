@@ -1,6 +1,6 @@
 package chapters.ch2.factory;
 
-import chapters.ch2.implem.function_fitting.FittingParameters;
+import chapters.ch2.domain.FittingParameters;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

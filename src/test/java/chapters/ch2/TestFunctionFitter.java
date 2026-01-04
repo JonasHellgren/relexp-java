@@ -2,7 +2,7 @@ package chapters.ch2;
 
 import chapters.ch2.factory.FitterFunctionFactory;
 import chapters.ch2.factory.FittingParametersFactory;
-import chapters.ch2.implem.function_fitting.FitterFunctionOutput;
+import chapters.ch2.impl.function_fitting.FitterFunctionOutput;
 import core.foundation.gadget.training.TrainData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -3,7 +3,7 @@ package ch2;
 import chapters.ch2.factory.ChartFactory;
 import chapters.ch2.factory.FitterFunctionFactory;
 import chapters.ch2.factory.FittingParametersFactory;
-import chapters.ch2.implem.function_fitting.FitterOutCalculator;
+import chapters.ch2.impl.function_fitting.FitterOutCalculator;
 import core.foundation.gadget.training.TrainData;
 import core.foundation.util.math.SigmoidFunctions;
 import core.foundation.util.rand.RandUtils;

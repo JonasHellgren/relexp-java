@@ -1,5 +1,7 @@
-package chapters.ch2.implem.function_fitting;
+package chapters.ch2.impl.function_fitting;
 
+import chapters.ch2.domain.FitterFunctionI;
+import chapters.ch2.domain.FittingParameters;
 import core.foundation.util.math.MyMathUtils;
 import lombok.experimental.UtilityClass;
 import java.util.List;

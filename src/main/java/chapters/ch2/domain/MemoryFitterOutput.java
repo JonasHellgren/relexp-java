@@ -1,4 +1,4 @@
-package chapters.ch2.implem.function_fitting;
+package chapters.ch2.domain;
 
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.BucketFinder;

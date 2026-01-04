@@ -1,4 +1,4 @@
-package chapters.ch2.implem.function_fitting;
+package chapters.ch2.domain;
 
 import lombok.Builder;
 import lombok.With;

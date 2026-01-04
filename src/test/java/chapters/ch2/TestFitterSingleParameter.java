@@ -1,7 +1,7 @@
 package chapters.ch2;
 
 import chapters.ch2.factory.FittingParametersFactory;
-import chapters.ch2.implem.parameter_fitting.FitterSingleParameter;
+import chapters.ch2.impl.parameter_fitting.FitterSingleParameter;
 import core.foundation.gadget.training.TrainData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
