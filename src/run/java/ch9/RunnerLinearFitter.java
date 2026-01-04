@@ -4,7 +4,7 @@ import chapters.ch9.gradient_descent.LinearFitter;
 import chapters.ch9.gradient_descent.PhiExtractor;
 import core.foundation.config.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.collections.ListCreator;
 import core.plotting.base.shared.PlotSettings;
 import core.plotting.chart_plotting.ChartSaverAndPlotter;
@@ -62,7 +62,7 @@ public class RunnerLinearFitter {
 
     @SneakyThrows
     private static XYChart getScatterWithLineChartCreator(
-            TrainData data, List<Double> inList,
+            TrainDataOld data, List<Double> inList,
             List<Double> outList) {
         var weight = ProjectPropertiesReader.create().xyChartWidth2Col();
         var height = ProjectPropertiesReader.create().xyChartHeight();
@@ -87,8 +87,8 @@ public class RunnerLinearFitter {
         return phiExtractor;
     }
 
-    private static TrainData getTrainData() {
-        var data = TrainData.emptyFromOutputs();
+    private static TrainDataOld getTrainData() {
+        var data = TrainDataOld.emptyFromOutputs();
         var outList = List.of(
                 4.5 + 1.0,
                 4.2 + 1.0,
@@ -118,8 +118,8 @@ public class RunnerLinearFitter {
         return data;
     }
 
-    private static TrainData getTrainData0() {
-        var data = TrainData.emptyFromOutputs();
+    private static TrainDataOld getTrainData0() {
+        var data = TrainDataOld.emptyFromOutputs();
         var inList = ListCreator.createFromStartToEndWithNofItems(MIN_X, MAX_X, 10);
         var outList = List.of(
                 4.5 + 1.0,

@@ -2,15 +2,23 @@ package chapters.ch2.impl.function_fitting;
 
 import chapters.ch2.domain.FitterFunctionI;
 import chapters.ch2.domain.FittingParameters;
+import chapters.ch2.domain.MemoryFitterI;
 import core.foundation.util.math.MyMathUtils;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.experimental.UtilityClass;
 import java.util.List;
 
-@UtilityClass
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class FitterOutCalculator {
 
-    public static List<Double> produceOutput(FitterFunctionI fitter,
-                                             List<Double> xList,
+    MemoryFitterI fitter;
+
+    public static FitterOutCalculator of(MemoryFitterI fitter) {
+        return new FitterOutCalculator(fitter);
+    }
+
+    public  List<Double> produceOutput(List<Double> xList,
                                              FittingParameters parameters) {
         double range= parameters.range();
         double margin= parameters.margin();

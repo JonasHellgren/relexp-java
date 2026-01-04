@@ -9,7 +9,7 @@ import chapters.ch14.environments.pong.ActionPong;
 import chapters.ch14.environments.pong.PongSettings;
 import chapters.ch14.environments.pong.StateLongPong;
 import chapters.ch14.environments.pong.StatePong;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.List;
@@ -42,9 +42,9 @@ public class MiniBatchAdapterPong implements MiniBatchAdapterI<StateLongPong, St
      * @return The adapted train data object.
      */
     @Override
-    public TrainData adapt(List<Experience<StatePong, ActionPong>> experiences) {
+    public TrainDataOld adapt(List<Experience<StatePong, ActionPong>> experiences) {
         var timeHitCalculator = BallHitFloorCalculator.of(environment, settings);
-        var buffer = TrainData.emptyFromOutputs();
+        var buffer = TrainDataOld.emptyFromOutputs();
         for (Experience<StatePong, ActionPong> exp : experiences) {
             var sl = StateAdapterPong.stateLong(timeHitCalculator, exp.state());
             var slNew = StateAdapterPong.stateLong(timeHitCalculator, exp.stateNew());

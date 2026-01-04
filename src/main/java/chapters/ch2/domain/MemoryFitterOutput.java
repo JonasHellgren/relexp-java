@@ -2,7 +2,7 @@ package chapters.ch2.domain;
 
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.BucketFinder;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataInOut;
 import core.foundation.util.cond.Conditionals;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +24,7 @@ public class MemoryFitterOutput implements MemoryFitterI {
 
 
     @Override
-    public void fit(TrainData data) {
+    public void fit(TrainDataInOut data) {
 
         for (int i = 0; i < data.nSamples(); i++) {
             double in = data.input(i).get(0);

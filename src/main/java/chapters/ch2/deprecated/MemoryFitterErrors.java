@@ -1,7 +1,12 @@
-package chapters.ch2.domain;
+package chapters.ch2.deprecated;
 
+import chapters.ch2.domain.FittingParameters;
+import chapters.ch2.domain.MemoryFitterI;
+import chapters.ch2.domain.MemoryFitterOutput;
+import chapters.ch2.domain.TabularMemory;
 import core.foundation.gadget.math.BucketFinder;
 import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataInOut;
 import core.foundation.util.cond.Conditionals;
 import lombok.extern.java.Log;
 
@@ -21,7 +26,7 @@ public class MemoryFitterErrors extends MemoryFitterOutput implements MemoryFitt
 
 
     @Override
-    public void fit(TrainData data) {
+    public void fit(TrainDataInOut data) {
         for (int i = 0; i < data.nSamples(); i++) {
             double in = data.input(i).get(0);
             double err = data.errorForSample(i);

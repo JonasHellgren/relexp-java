@@ -1,10 +1,10 @@
 package chapters.ch2.domain;
 
 
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataInOut;
 
 public interface MemoryFitterI {
-    void fit(TrainData data);
+    void fit(TrainDataInOut data);
     TabularMemory getMemory();
     double read(double in);
 }

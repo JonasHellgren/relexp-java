@@ -3,7 +3,7 @@ package chapters.ch9;
 import chapters.ch9.radial_basis.Activations;
 import chapters.ch9.radial_basis.Kernel;
 import chapters.ch9.radial_basis.Kernels;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
      void testChangeActivations() {
-        TrainData data = TrainData.ofOutputs(
+        TrainDataOld data = TrainDataOld.ofOutputs(
                 List.of(List.of(1.0), List.of(3.0)),
                 List.of(1.0, 1.0));
         Kernels kernels = Kernels.empty();

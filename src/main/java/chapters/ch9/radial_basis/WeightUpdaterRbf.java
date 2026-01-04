@@ -1,7 +1,7 @@
 package chapters.ch9.radial_basis;
 
 import com.google.common.base.Preconditions;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.gadget.training.Weights;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class WeightUpdaterRbf {
      * @param weights     The current weights.
      * @param activations The activations of the network.
      */
-    public void updateWeights(TrainData data, Activations activations, Weights weights) {
+    public void updateWeights(TrainDataOld data, Activations activations, Weights weights) {
         validate(data, weights, activations);
         double[] gradient = weightGradientFromErrors(data, activations);
         for (int i = 0; i < weights.size(); i++) {
@@ -42,7 +42,7 @@ public class WeightUpdaterRbf {
      *
      * gradient[idxKernel] = (1/nExamples) * ∑yErr[i] * φ(x[i], idxKernel)
      */
-    private double[] weightGradientFromErrors(TrainData data, Activations activations) {
+    private double[] weightGradientFromErrors(TrainDataOld data, Activations activations) {
         int nKernels = activations.nKernels();
         return IntStream.range(0, nKernels)
                 .mapToDouble(idxKernel -> getElementInGradient(data, activations, idxKernel))
@@ -50,7 +50,7 @@ public class WeightUpdaterRbf {
 
     }
 
-    private static double getElementInGradient(TrainData data,
+    private static double getElementInGradient(TrainDataOld data,
                                                Activations activations,
                                                int idxKernel) {
         int nExamples = data.nSamples();
@@ -65,7 +65,7 @@ public class WeightUpdaterRbf {
     }
 
 
-    private static void validate(TrainData data, Weights weights, Activations activations) {
+    private static void validate(TrainDataOld data, Weights weights, Activations activations) {
         Preconditions.checkArgument(weights.size() == activations.nKernels(),
                 "weights and nKernels should have same length, nWeights = " + weights.size()
                         + ", nKernels = " + activations.nKernels());

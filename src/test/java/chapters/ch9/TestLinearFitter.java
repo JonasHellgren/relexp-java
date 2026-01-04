@@ -2,7 +2,7 @@ package chapters.ch9;
 
 import chapters.ch9.gradient_descent.LinearFitter;
 import chapters.ch9.gradient_descent.PhiExtractor;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class TestLinearFitter {
         var phiExtractor = PhiExtractor.empty();
         phiExtractor.functionList.add(x -> 1);
         phiExtractor.functionList.add(x -> x.get(0));
-        var data = TrainData.emptyFromOutputs();
+        var data = TrainDataOld.emptyFromOutputs();
         data.addIAndOut(List.of(0.1), 5.0 + 1.0);
         data.addIAndOut(List.of(0.3), 5.0 + 3.0);
         data.addIAndOut(List.of(0.5), 5.0 + 5.0);

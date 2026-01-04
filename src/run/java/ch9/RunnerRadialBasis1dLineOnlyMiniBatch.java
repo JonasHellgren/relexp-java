@@ -3,7 +3,7 @@ package ch9;
 import chapters.ch9.radial_basis.Kernels;
 import chapters.ch9.radial_basis.RbfNetwork;
 import core.foundation.config.ProjectPropertiesReader;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.collections.Array2ListConverter;
 import core.foundation.util.collections.ArrayCreator;
 import core.foundation.util.collections.ListCreator;
@@ -74,7 +74,7 @@ public class RunnerRadialBasis1dLineOnlyMiniBatch {
     }
 
     static void fitWeights(RbfNetwork rb) {
-        var data = TrainData.emptyFromOutputs();
+        var data = TrainDataOld.emptyFromOutputs();
         for (int i = 0; i < inTrainingList.size(); i++) {
             data.addIAndOut(inTrainingList.get(i), outTrainingList.get(i));
         }

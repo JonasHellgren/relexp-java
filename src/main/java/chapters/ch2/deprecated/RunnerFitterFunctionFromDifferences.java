@@ -1,9 +1,8 @@
-package ch2;
+package chapters.ch2.deprecated;
 
 import chapters.ch2.factory.ChartFactory;
 import chapters.ch2.factory.FitterFunctionFactory;
 import chapters.ch2.factory.FittingParametersFactory;
-import chapters.ch2.impl.function_fitting.FitterFunctionDifferences;
 import chapters.ch2.impl.function_fitting.FitterOutCalculator;
 import chapters.ch2.domain.FittingParameters;
 import com.google.common.collect.Range;

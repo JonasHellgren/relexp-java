@@ -5,7 +5,7 @@ import chapters.ch9.radial_basis.Kernels;
 import chapters.ch9.radial_basis.RbfNetwork;
 import core.foundation.config.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.collections.ArrayCreator;
 import core.foundation.util.collections.ListCreator;
 import core.plotting.base.shared.PlotSettings;
@@ -57,8 +57,8 @@ class RunnerRadialBasis3dFunction {
         return kernels;
     }
 
-    private static TrainData createTrainData(DoubleBinaryOperator fcn) {
-        var trainData = TrainData.emptyFromOutputs();
+    private static TrainDataOld createTrainData(DoubleBinaryOperator fcn) {
+        var trainData = TrainDataOld.emptyFromOutputs();
         for (double x : getXData()) {
             for (double y : getYData()) {
                 trainData.addIAndOut(List.of(x, y), fcn.applyAsDouble(x, y));

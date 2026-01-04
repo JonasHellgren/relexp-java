@@ -1,7 +1,7 @@
 package chapters.ch9.radial_basis;
 
 import com.google.common.base.Preconditions;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.gadget.training.Weights;
 import core.foundation.util.cond.Conditionals;
 import lombok.AllArgsConstructor;
@@ -43,7 +43,7 @@ public class RbfNetwork {
      * @param nEpochs   the number of epochs to train for
      * @param batchSize the batch size used to update the weights
      */
-    public void fit(TrainData data, int nEpochs, int batchSize) {
+    public void fit(TrainDataOld data, int nEpochs, int batchSize) {
         fitWithUpdateActivationFlag(data, nEpochs, batchSize, true);
     }
 
@@ -52,7 +52,7 @@ public class RbfNetwork {
      *
      * @param other, the other rbf to copy from
      */
-    public void fitUsingActivationsOtherRbf(TrainData data, int nEpochs, int batchSize, RbfNetwork other) {
+    public void fitUsingActivationsOtherRbf(TrainDataOld data, int nEpochs, int batchSize, RbfNetwork other) {
         copyActivations(other);
         fitWithUpdateActivationFlag(data, nEpochs, batchSize, false);
     }
@@ -76,7 +76,7 @@ public class RbfNetwork {
         RbfNetworkHelper.copyActivations(activationsOther, activations);
     }
 
-    private void fitWithUpdateActivationFlag(TrainData data, int nEpochs, int batchSize, boolean updateActivations) {
+    private void fitWithUpdateActivationFlag(TrainDataOld data, int nEpochs, int batchSize, boolean updateActivations) {
         validate(data, nEpochs, batchSize);
         IntStream.range(0, nEpochs).forEach(i -> fitMayUpdateActivations(data, updateActivations));
     }
@@ -84,12 +84,12 @@ public class RbfNetwork {
     /**
      * TODO: errors should be calculated in other method, now entire data is evaluated, even if small batchSize
      */
-    private void fitMayUpdateActivations(TrainData data, boolean updateActivations) {
+    private void fitMayUpdateActivations(TrainDataOld data, boolean updateActivations) {
         var errors = (data.isErrors() ? data.errors() : getErrors(data.inputs(), data.outputs()));
         fitFromErrors(data.inputs(), errors, updateActivations);
     }
 
-    private static void validate(TrainData data, int nEpochs, int batchSize) {
+    private static void validate(TrainDataOld data, int nEpochs, int batchSize) {
         Preconditions.checkArgument(nEpochs > 0, "nEpochs should be > 0");
         Preconditions.checkArgument(data.nSamples() >= batchSize, "nSamples should be >= batchSize");
     }
@@ -101,7 +101,7 @@ public class RbfNetwork {
      * @param errors the error values
      */
     private void fitFromErrors(List<List<Double>> inputs, List<Double> errors, boolean updateActivations) {
-        var data = TrainData.ofErrors(inputs, errors);
+        var data = TrainDataOld.ofErrors(inputs, errors);
         Conditionals.executeIfTrue(updateActivations, () -> {
             activations = createIfNotEqualNofSamples(data.nSamples(), activations);
             activations.calculateActivations(data, kernels);

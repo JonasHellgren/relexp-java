@@ -1,7 +1,7 @@
 package chapters.ch9.gradient_descent;
 
 import com.google.common.base.Preconditions;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.gadget.training.Weights;
 import core.foundation.util.collections.MyListUtils;
 import lombok.AccessLevel;
@@ -17,12 +17,12 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class LinearFitter {
-    private final TrainData data;
+    private final TrainDataOld data;
     private final WeightUpdaterLinear updater;
     private final Weights weights;
     private final OutPutCalculator calculator;
 
-    public static LinearFitter of(TrainData data, PhiExtractor phiExtractor, double learningRate) {
+    public static LinearFitter of(TrainDataOld data, PhiExtractor phiExtractor, double learningRate) {
         return new LinearFitter(
                 data,
                 WeightUpdaterLinear.of(learningRate, phiExtractor),
@@ -82,7 +82,7 @@ public class LinearFitter {
         return MyListUtils.findAverage(diffAbs).orElseThrow();
     }
 
-    private static void validateFit(TrainData data, int nEpochs, int batchSize) {
+    private static void validateFit(TrainDataOld data, int nEpochs, int batchSize) {
         Preconditions.checkArgument(nEpochs > 0, "nEpochs should be > 0");
         Preconditions.checkArgument(data.nSamples() >= batchSize, "nSamples should be >= batchSize");
     }

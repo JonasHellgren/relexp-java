@@ -3,7 +3,7 @@ package chapters.ch9;
 import chapters.ch9.radial_basis.Kernel;
 import chapters.ch9.radial_basis.Kernels;
 import chapters.ch9.radial_basis.RbfNetwork;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,11 +15,11 @@ public class TestRbfNetwork {
     public static final double TOL = 0.01;
     public static final int N_FITS = 100;
     RbfNetwork rbfNetwork, rbfNetworkClone;
-    TrainData data;
+    TrainDataOld data;
 
     @BeforeEach
     void init() {
-        data=TrainData.emptyFromOutputs();
+        data= TrainDataOld.emptyFromOutputs();
         data.addIAndOut(List.of(0.0), 1.0);
         data.addIAndOut(List.of(1.0), 2.0);
         Kernels kernels = Kernels.empty();

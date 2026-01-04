@@ -4,7 +4,7 @@ import chapters.ch2.domain.FittingParameters;
 import chapters.ch2.domain.MemoryFitterOutput;
 import com.google.common.collect.Range;
 import core.foundation.gadget.math.BucketFinder;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataInOut;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -23,7 +23,7 @@ public class FitterSingleParameter {
         return new FitterSingleParameter(fitter);
     }
 
-    public void fit(TrainData data) {
+    public void fit(TrainDataInOut data) {
         fitter.fit(data);
     }
 

@@ -8,7 +8,7 @@ import chapters.ch11.domain.environment.param.LunarParameters;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.MeanAndStd;
 import core.foundation.gadget.normal_distribution.NormDistributionSampler;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import core.nextlevelrl.gradient.NormalDistributionGradientCalculator;
 import lombok.AllArgsConstructor;
@@ -57,12 +57,12 @@ public class AgentLunar implements AgentI{
     }
 
     @Override
-    public void fitCritic(TrainData data) {
+    public void fitCritic(TrainDataOld data) {
         criticMemory.fit(data);
     }
 
     @Override
-    public void fitActorUseCriticActivations(TrainData dataMean, TrainData dataStd) {
+    public void fitActorUseCriticActivations(TrainDataOld dataMean, TrainDataOld dataStd) {
         validate();
         actorMemory.fitUsingActivationsOtherRbfMean(dataMean,dataStd,criticMemory.getMemory());
     }

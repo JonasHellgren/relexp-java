@@ -9,27 +9,27 @@ import java.util.List;
  * Each example in the training data consists of an input, an error OR an output.
  * Error and output can't both be present at the same time.
  */
-public record TrainData(
+public record TrainDataOld(
         List<List<Double>> inputs,
         List<Double> errors,
         List<Double> outputs
 ) {
 
 
-    public static TrainData emptyFromOutputs() {
-        return new TrainData(new ArrayList<>(), null, new ArrayList<>());
+    public static TrainDataOld emptyFromOutputs() {
+        return new TrainDataOld(new ArrayList<>(), null, new ArrayList<>());
     }
 
-    public static TrainData emptyFromErrors() {
-        return new TrainData(new ArrayList<>(), new ArrayList<>(), null);
+    public static TrainDataOld emptyFromErrors() {
+        return new TrainDataOld(new ArrayList<>(), new ArrayList<>(), null);
     }
 
-    public static TrainData ofErrors(List<List<Double>> inputs, List<Double> errors) {
-        return new TrainData(inputs, errors, null);
+    public static TrainDataOld ofErrors(List<List<Double>> inputs, List<Double> errors) {
+        return new TrainDataOld(inputs, errors, null);
     }
 
-    public static TrainData ofOutputs(List<List<Double>> inputs, List<Double> outputs) {
-        return new TrainData(inputs, null, outputs);
+    public static TrainDataOld ofOutputs(List<List<Double>> inputs, List<Double> outputs) {
+        return new TrainDataOld(inputs, null, outputs);
     }
 
     public void addIAndOut(List<Double> input, double output) {
@@ -51,7 +51,7 @@ public record TrainData(
         }
     }
 
-    public TrainData createBatch(int len) {
+    public TrainDataOld createBatch(int len) {
         var randomIndices = RandUtils.randomIndices(len, nSamples());
         var newInputs = new ArrayList<List<Double>>();
         if (isErrors()) {
@@ -60,14 +60,14 @@ public record TrainData(
                 newInputs.add(inputs.get(i));
                 newErrors.add(errors.get(i));
             }
-            return TrainData.ofErrors(newInputs, newErrors);
+            return TrainDataOld.ofErrors(newInputs, newErrors);
         } else {
             var newOutputs = new ArrayList<Double>();
             for (int i : randomIndices) {
                 newInputs.add(inputs.get(i));
                 newOutputs.add(outputs.get(i));
             }
-            return TrainData.ofOutputs(newInputs, newOutputs);
+            return TrainDataOld.ofOutputs(newInputs, newOutputs);
         }
     }
 

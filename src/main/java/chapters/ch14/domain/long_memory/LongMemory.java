@@ -1,7 +1,7 @@
 package chapters.ch14.domain.long_memory;
 
 
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 
 /**
  * This package contains the LongMemory interface and its implementations.
@@ -11,5 +11,5 @@ import core.foundation.gadget.training.TrainData;
 public interface LongMemory<SI> {
     double read(SI state);
     void write(SI state, double value);
-    void fit(TrainData data);
+    void fit(TrainDataOld data);
 }

@@ -7,7 +7,7 @@ import chapters.ch14.environments.pong.StateLongPong;
 import chapters.ch9.radial_basis.Kernel;
 import chapters.ch9.radial_basis.Kernels;
 import chapters.ch9.radial_basis.RbfNetwork;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,7 +46,7 @@ public class LongMemoryRbf implements LongMemory<StateLongPong> {
      * @param data the training data to fit the memory to
      */
     @Override
-    public void fit(TrainData data) {
+    public void fit(TrainDataOld data) {
         int batchSize = Math.min(data.nSamples(), memorySettings.batchSize());
         memory.fit(data, memorySettings.nEpochs(), batchSize);
     }

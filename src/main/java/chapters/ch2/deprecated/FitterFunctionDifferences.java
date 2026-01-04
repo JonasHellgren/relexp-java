@@ -1,4 +1,4 @@
-package chapters.ch2.impl.function_fitting;
+package chapters.ch2.deprecated;
 
 import chapters.ch2.domain.FitterFunctionI;
 import chapters.ch2.domain.MemoryFitterI;

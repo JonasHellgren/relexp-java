@@ -2,7 +2,7 @@ package chapters.ch9;
 
 import chapters.ch9.gradient_descent.PhiExtractor;
 import chapters.ch9.gradient_descent.WeightUpdaterLinear;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.gadget.training.Weights;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,7 @@ public class TestWeightUpdaterLinear {
     public static final double LEARNING_RATE = 0.9;
     public static final int N_OF_WEIGHTS = 2;
     WeightUpdaterLinear updater;
-    TrainData data;
+    TrainDataOld data;
 
      @BeforeEach
       void init() {
@@ -22,7 +22,7 @@ public class TestWeightUpdaterLinear {
          phiExtractor.functionList.add(x -> 1);
          phiExtractor.functionList.add(x -> x.get(0));
          updater= WeightUpdaterLinear.of(LEARNING_RATE, phiExtractor);
-         data=TrainData.emptyFromOutputs();
+         data= TrainDataOld.emptyFromOutputs();
          data.addIAndOut(List.of(0.1), 5.0+1.0);
          data.addIAndOut(List.of(0.3), 5.0+3.0);
          data.addIAndOut(List.of(0.5), 5.0+5.0);

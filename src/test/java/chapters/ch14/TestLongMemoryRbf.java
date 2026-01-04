@@ -6,7 +6,7 @@ import chapters.ch14.environments.pong_memory.LongMemoryRbf;
 import chapters.ch14.environments.pong_memory.StateAdapterPong;
 import chapters.ch14.factory.FactoryMemorySettings;
 import chapters.ch14.factory.FactoryPongSettings;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.rand.RandUtils;
 import org.apache.commons.math3.util.Pair;
 import org.junit.jupiter.api.BeforeEach;
@@ -77,7 +77,7 @@ public class TestLongMemoryRbf {
         int mbSize = 100;
         int nFits = 1000;
 
-        var buffer = TrainData.emptyFromOutputs();
+        var buffer = TrainDataOld.emptyFromOutputs();
         for (int i = 0; i < bufferSize; i++) {
             double timeHit = getTimeHitRandom();
             double deltaX = getDeltaxRandom();
@@ -121,7 +121,7 @@ public class TestLongMemoryRbf {
 
     private static void fitMemory(LongMemoryRbf lm, Pair<Double, Double> pair, double vTarget, int nFits) {
         for (int i = 0; i < nFits; i++) {
-            var data = TrainData.emptyFromOutputs();
+            var data = TrainDataOld.emptyFromOutputs();
             var in = StateAdapterPong.asInput(pair);
             data.addIAndOut(in, vTarget);
             lm.fit(data);

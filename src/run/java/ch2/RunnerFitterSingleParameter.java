@@ -5,7 +5,7 @@ import chapters.ch2.domain.FittingParameters;
 import chapters.ch2.impl.parameter_fitting.FitterSingleParameter;
 import core.foundation.config.PathAndFile;
 import core.foundation.config.ProjectPropertiesReader;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataInOut;
 import core.foundation.util.collections.MyListUtils;
 import core.plotting.plotting_2d.ManyLinesChartCreator;
 import core.plotting.chart_plotting.ChartSaver;
@@ -67,7 +67,7 @@ public class RunnerFitterSingleParameter {
         for (double learningRate : LEARNING_RATES) {
             var par1 = par0.withLearningRate(learningRate);
             var fitter = FitterSingleParameter.of(par1);
-            var data = TrainData.emptyFromOutputs();
+            var data = TrainDataInOut.empty();
             var outputs0 = getOutputs(data, par0, fitter);
             var outputs = MyListUtils.merge(List.of(START_W),outputs0);
             results.put(LEARNING_RATES.indexOf(learningRate), outputs);
@@ -75,8 +75,8 @@ public class RunnerFitterSingleParameter {
         return results;
     }
 
-    private static List<Double> getOutputs(TrainData data, FittingParameters par0, FitterSingleParameter fitter) {
-        data.addIAndOut(List.of(0d), OUTPUT_TARGET);
+    private static List<Double> getOutputs(TrainDataInOut data, FittingParameters par0, FitterSingleParameter fitter) {
+        data.add(List.of(0d), OUTPUT_TARGET);
         return IntStream.range(0, par0.nofIterations())
                 .mapToObj(i -> {
                     fitter.fit(data);

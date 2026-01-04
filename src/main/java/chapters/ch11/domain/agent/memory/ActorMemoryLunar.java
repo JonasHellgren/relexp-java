@@ -9,7 +9,7 @@ import chapters.ch11.helper.RadialBasisAdapter;
 import chapters.ch9.radial_basis.RbfNetwork;
 import core.foundation.gadget.math.MeanAndLogStd;
 import core.foundation.gadget.math.MeanAndStd;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.collections.ArrayCreator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,7 +43,7 @@ public class ActorMemoryLunar {
      * @param dataStd the training data for the standard deviation
      */
     @Deprecated(since = "slow and not recommended")
-    public void fit(TrainData dataMean, TrainData dataStd) {
+    public void fit(TrainDataOld dataMean, TrainDataOld dataStd) {
         int batchSize = Math.min(dataMean.nSamples(), agentParameters.batchSize());
         memoryMean.fit(dataMean, agentParameters.nEpochs(),batchSize);
         memoryLogStd.fit(dataStd, agentParameters.nEpochs(),batchSize);
@@ -53,7 +53,7 @@ public class ActorMemoryLunar {
      * Same but saves computation time using activations from other rbf
      */
 
-    public void fitUsingActivationsOtherRbfMean(TrainData dataMean, TrainData dataStd, RbfNetwork other) {
+    public void fitUsingActivationsOtherRbfMean(TrainDataOld dataMean, TrainDataOld dataStd, RbfNetwork other) {
         int batchSize = Math.min(dataMean.nSamples(), agentParameters.batchSize());
         memoryMean.fitUsingActivationsOtherRbf(dataMean, agentParameters.nEpochs(),batchSize,other);
         memoryLogStd.fitUsingActivationsOtherRbf(dataStd, agentParameters.nEpochs(),batchSize,other);

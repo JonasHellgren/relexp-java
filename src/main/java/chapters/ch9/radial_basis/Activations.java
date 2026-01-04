@@ -1,7 +1,7 @@
 package chapters.ch9.radial_basis;
 
 import com.google.common.base.Preconditions;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import lombok.AllArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class Activations {
         return new Activations(new ArrayList<>());
     }
 
-    public void calculateActivations(TrainData data, Kernels kernels) {
+    public void calculateActivations(TrainDataOld data, Kernels kernels) {
         for (int i = 0; i < data.inputs().size(); i++) {
             var input = data.inputs().get(i);
             var activationsOfInput = kernels.getActivationOfSingleInput(input);

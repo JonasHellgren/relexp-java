@@ -3,7 +3,8 @@ package chapters.ch2;
 import chapters.ch2.factory.FitterFunctionFactory;
 import chapters.ch2.factory.FittingParametersFactory;
 import chapters.ch2.impl.function_fitting.FitterFunctionOutput;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataInOut;
+import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,10 +26,10 @@ public class TestFunctionFitter {
 
     @Test
     void whenFitted_thenCorrect() {
-        var data = TrainData.emptyFromOutputs();
-        data.addIAndOut(List.of(-10d), 0.0);
-        data.addIAndOut(List.of(0d), 0.5);
-        data.addIAndOut(List.of(10d), 1.0);
+        var data = TrainDataInOut.empty();
+        data.add(List.of(-10d), 0.0);
+        data.add(List.of(0d), 0.5);
+        data.add(List.of(10d), 1.0);
         IntStream.range(0, N_EPOCHS).forEach(i -> fitter.fit(data));
         assertEquals(3,fitter.getMemory().size());
         assertEquals(0.0, fitter.read(-10), TOL);

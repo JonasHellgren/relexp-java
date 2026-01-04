@@ -11,7 +11,7 @@ import chapters.ch14.environments.pong_memory.StateAdapterPong;
 import chapters.ch14.factory.FactoryDependencies;
 import chapters.ch14.factory.FactoryStatePong;
 import chapters.ch14.factory.FactoryTrainerSettings;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,7 +72,7 @@ public class TestMiniBatchAdapterPong {
      }
 
 
-    private static void assertBatch(TrainData miniBatch, double time, int dx, int value) {
+    private static void assertBatch(TrainDataOld miniBatch, double time, int dx, int value) {
         var doubles = miniBatch.input(0);
         double output = miniBatch.output(0);
         Assertions.assertEquals(time, doubles.get(0), TOL);

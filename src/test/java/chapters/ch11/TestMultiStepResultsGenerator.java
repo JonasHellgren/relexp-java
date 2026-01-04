@@ -15,7 +15,7 @@ import chapters.ch11.domain.trainer.multisteps.MultiStepResults;
 import chapters.ch11.domain.trainer.multisteps.MultiStepResultsGenerator;
 import chapters.ch11.domain.trainer.param.TrainerParameters;
 import chapters.ch11.helper.RadialBasisAdapter;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -198,7 +198,7 @@ class TestMultiStepResultsGenerator {
 
     private void fitMemory(AgentI agent, double vTarget) {
         StateLunar state = StateLunar.zeroPosAndSpeed();
-        var data= TrainData.emptyFromOutputs();
+        var data= TrainDataOld.emptyFromOutputs();
         var in = RadialBasisAdapter.asInput(state);
         data.addIAndOut(in,vTarget);
         agent.fitCritic(data);

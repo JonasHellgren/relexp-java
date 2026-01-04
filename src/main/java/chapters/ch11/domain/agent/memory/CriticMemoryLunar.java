@@ -6,7 +6,7 @@ import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.factory.RbfMemoryFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import chapters.ch9.radial_basis.RbfNetwork;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -44,7 +44,7 @@ public class CriticMemoryLunar {
      *
      * @param data the training data to fit the memory to
      */
-    public void fit(TrainData data) {
+    public void fit(TrainDataOld data) {
         int batchSize = Math.min(data.nSamples(), agentParameters.batchSize());
         memory.fit(data, agentParameters.nEpochs(),batchSize);
     }

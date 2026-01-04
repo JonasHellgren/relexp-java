@@ -1,7 +1,7 @@
 package chapters.ch9.gradient_descent;
 
 import com.google.common.base.Preconditions;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.gadget.training.Weights;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -29,7 +29,7 @@ public class WeightUpdaterLinear {
      * @param weights     The current weights.
      */
 
-    public void updateWeights(TrainData data0, Weights weights) {
+    public void updateWeights(TrainDataOld data0, Weights weights) {
         Preconditions.checkArgument(weights.size() == phiExtractor.nPhis(),
                 "weights and nPhis should have same length, nWeights = " + weights.size() +
                         ", nPhis = " + phiExtractor.nPhis());
@@ -52,7 +52,7 @@ public class WeightUpdaterLinear {
      * gradient[idxDimension] = (1/nExamples) * ∑yErr[i] * φ(x[i], idxDimension)
      */
 
-    private double[] weightGradientFromErrors(TrainData data) {
+    private double[] weightGradientFromErrors(TrainDataOld data) {
         int nExamples = data.nSamples();
         int nPhis = phiExtractor.nPhis();
         double[] gradient = new double[nPhis];
@@ -67,8 +67,8 @@ public class WeightUpdaterLinear {
         return gradient;
     }
 
-    private TrainData trainDataWithErrors(TrainData data, List<Double> yTargets, Weights weights) {
-        TrainData newData = TrainData.emptyFromErrors();
+    private TrainDataOld trainDataWithErrors(TrainDataOld data, List<Double> yTargets, Weights weights) {
+        TrainDataOld newData = TrainDataOld.emptyFromErrors();
         for (int i = 0; i < data.nSamples(); i++) {
             double error = yTargets.get(i) - calculator.outPut(weights,data.input(i));
             newData.addInAndError(data.input(i), error);
