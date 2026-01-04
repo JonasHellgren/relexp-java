@@ -2,7 +2,6 @@ package chapters.ch13.environments.lane_change;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-
 import java.util.Objects;
 
 /**

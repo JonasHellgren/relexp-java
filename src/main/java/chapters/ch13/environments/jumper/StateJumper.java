@@ -2,7 +2,6 @@ package chapters.ch13.environments.jumper;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-
 import java.util.Objects;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

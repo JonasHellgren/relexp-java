@@ -3,7 +3,6 @@ package chapters.ch13.domain.searcher.node;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 import java.util.stream.Stream;
 

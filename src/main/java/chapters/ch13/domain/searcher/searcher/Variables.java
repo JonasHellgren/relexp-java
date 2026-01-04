@@ -1,7 +1,7 @@
 package chapters.ch13.domain.searcher.searcher;
 
-import k_mcts.domain.searcher.node.Node;
-import k_mcts.domain.searcher.path.Path;
+import chapters.ch13.domain.searcher.node.Node;
+import chapters.ch13.domain.searcher.path.Path;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 

@@ -1,7 +1,6 @@
 package chapters.ch13.environments.lane_change;
 
 import lombok.Getter;
-
 import java.util.List;
 
 /**

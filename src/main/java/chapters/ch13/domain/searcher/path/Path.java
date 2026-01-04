@@ -1,12 +1,10 @@
 package chapters.ch13.domain.searcher.path;
 
-
-import k_mcts.domain.environment.Experience;
-import k_mcts.domain.searcher.node.Node;
+import chapters.ch13.domain.environment.Experience;
+import chapters.ch13.domain.searcher.node.Node;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 

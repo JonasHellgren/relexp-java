@@ -1,10 +1,9 @@
 package chapters.ch13.domain.searcher.searcher;
 
-import k_mcts.domain.environment.EnvironmentI;
-import k_mcts.domain.environment.Experience;
-import k_mcts.domain.searcher.settings.SearcherSettings;
+import chapters.ch13.domain.environment.EnvironmentI;
+import chapters.ch13.domain.environment.Experience;
+import chapters.ch13.domain.searcher.settings.SearcherSettings;
 import lombok.Builder;
-
 import java.util.function.Function;
 
 

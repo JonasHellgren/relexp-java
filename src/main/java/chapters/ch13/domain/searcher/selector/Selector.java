@@ -1,12 +1,11 @@
 package chapters.ch13.domain.searcher.selector;
 
+import chapters.ch13.domain.searcher.node.Node;
+import chapters.ch13.domain.searcher.settings.SearcherSettings;
 import com.google.common.base.Preconditions;
-import k_mcts.domain.searcher.node.Node;
-import k_mcts.domain.searcher.settings.SearcherSettings;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

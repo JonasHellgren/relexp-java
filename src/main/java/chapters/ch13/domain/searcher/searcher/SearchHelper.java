@@ -1,9 +1,10 @@
 package chapters.ch13.domain.searcher.searcher;
 
-import k_mcts.domain.searcher.backpropagator.BackPropagator;
-import k_mcts.domain.searcher.expander.Expander;
-import k_mcts.domain.searcher.selector.Selector;
-import k_mcts.domain.searcher.simulator.Simulator;
+
+import chapters.ch13.domain.searcher.backpropagator.BackPropagator;
+import chapters.ch13.domain.searcher.expander.Expander;
+import chapters.ch13.domain.searcher.selector.Selector;
+import chapters.ch13.domain.searcher.simulator.Simulator;
 
 /**
  * Represents a helper class for the MCTS algorithm, encapsulating the key components:

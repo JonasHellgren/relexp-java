@@ -1,13 +1,12 @@
 package chapters.ch13.domain.searcher.expander;
 
+import chapters.ch13.domain.environment.EnvironmentI;
+import chapters.ch13.domain.environment.Experience;
+import chapters.ch13.domain.searcher.node.Node;
 import com.google.common.base.Preconditions;
-import k_mcts.domain.environment.EnvironmentI;
-import k_mcts.domain.environment.Experience;
-import k_mcts.domain.searcher.node.Node;
+import core.foundation.util.rand.RandUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.hellgren.utilities.random.RandUtils;
-
 import java.util.function.Function;
 
 

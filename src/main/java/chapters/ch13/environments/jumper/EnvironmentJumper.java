@@ -1,10 +1,9 @@
 package chapters.ch13.environments.jumper;
 
-import k_mcts.domain.environment.EnvironmentI;
-import k_mcts.domain.environment.StepReturnI;
+import chapters.ch13.domain.environment.EnvironmentI;
+import chapters.ch13.domain.environment.StepReturnI;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-
 import java.util.List;
 
 /**

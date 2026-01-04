@@ -1,7 +1,7 @@
 package chapters.ch13.domain.searcher.backpropagator;
 
-import k_mcts.domain.searcher.path.Path;
-import k_mcts.domain.searcher.settings.SearcherSettings;
+import chapters.ch13.domain.searcher.path.Path;
+import chapters.ch13.domain.searcher.settings.SearcherSettings;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 

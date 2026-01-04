@@ -1,9 +1,8 @@
 package chapters.ch13.domain.searcher.node;
 
-import k_mcts.domain.environment.Experience;
+import chapters.ch13.domain.environment.Experience;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-
 import java.util.List;
 
 /**

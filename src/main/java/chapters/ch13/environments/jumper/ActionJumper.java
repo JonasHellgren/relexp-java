@@ -13,7 +13,6 @@ import java.util.List;
 public enum ActionJumper {
     up(+1), n(0);
 
-
     /**
      * The change in height (delta) associated with each action.
      */

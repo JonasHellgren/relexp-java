@@ -1,13 +1,13 @@
 package chapters.ch13.environments.lane_change;
 
-import k_mcts.domain.environment.EnvironmentI;
-import k_mcts.domain.environment.StepReturnI;
+import chapters.ch13.domain.environment.EnvironmentI;
+import chapters.ch13.domain.environment.StepReturnI;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import static core.foundation.util.math.MyMathUtils.isEqualDoubles;
 
-import static org.hellgren.utilities.math.MyMathUtils.isEqualDoubles;
 
 /***
  * This class represents a lane change environment, where an agent can take actions to change lanes.

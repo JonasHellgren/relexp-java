@@ -1,12 +1,11 @@
 package chapters.ch13.plotting;
 
-import k_mcts.domain.searcher.node.Node;
-import k_mcts.domain.searcher.tree.Tree;
+import chapters.ch13.domain.searcher.node.Node;
+import chapters.ch13.domain.searcher.tree.Tree;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.jetbrains.annotations.NotNull;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;

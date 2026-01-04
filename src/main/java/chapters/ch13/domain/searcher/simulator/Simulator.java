@@ -1,14 +1,13 @@
 package chapters.ch13.domain.searcher.simulator;
 
-import k_mcts.domain.environment.EnvironmentI;
-import k_mcts.domain.environment.Experience;
-import k_mcts.domain.searcher.node.Node;
-import k_mcts.domain.searcher.path.Path;
-import k_mcts.domain.searcher.settings.SearcherSettings;
+import chapters.ch13.domain.environment.EnvironmentI;
+import chapters.ch13.domain.environment.Experience;
+import chapters.ch13.domain.searcher.node.Node;
+import chapters.ch13.domain.searcher.path.Path;
+import chapters.ch13.domain.searcher.settings.SearcherSettings;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
-
 import java.util.function.Function;
 
 /**

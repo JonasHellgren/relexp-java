@@ -3,7 +3,6 @@ package chapters.ch13.domain.searcher.node;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 

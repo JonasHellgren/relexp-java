@@ -1,13 +1,12 @@
 package chapters.ch13.domain.searcher.path;
 
+import chapters.ch13.domain.environment.Experience;
+import chapters.ch13.domain.searcher.node.Node;
 import com.google.common.base.Preconditions;
-import k_mcts.domain.environment.Experience;
-import k_mcts.domain.searcher.node.Node;
+import core.foundation.util.collections.MyListUtils;
+import core.learningutils.MyRewardListUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.hellgren.utilities.list_arrays.MyListUtils;
-import org.hellgren.utilities.reinforcement_learning.MyRewardListUtils;
-
 import java.util.List;
 
 /**

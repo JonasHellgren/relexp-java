@@ -1,6 +1,6 @@
 package chapters.ch13.factory;
 
-import k_mcts.domain.searcher.settings.SearcherSettings;
+import chapters.ch13.domain.searcher.settings.SearcherSettings;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

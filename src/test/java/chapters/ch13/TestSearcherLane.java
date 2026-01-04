@@ -1,0 +1,60 @@
+package chapters.ch13;
+
+
+import chapters.ch13.domain.searcher.node.Node;
+import chapters.ch13.domain.searcher.path.OptimalPathExtractor;
+import chapters.ch13.domain.searcher.searcher.Dependencies;
+import chapters.ch13.domain.searcher.searcher.Searcher;
+import chapters.ch13.environments.lane_change.ActionLane;
+import chapters.ch13.environments.lane_change.StateLane;
+import chapters.ch13.factory.FactoryDependencies;
+import chapters.ch13.factory.FactoryTreeForTest;
+import chapters.ch13.plotting.DotFileGenerator;
+import core.foundation.config.ProjectPropertiesReader;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+/***
+ *  dot -Tpng pictures/k_mcts/lane_test_mcts.dot -o pictures/k_mcts/lane_test_mcts.png
+ */
+
+
+public class TestSearcherLane {
+
+    public static final int MAX_DEPTH_IN_PLOT = 2;
+    Dependencies<StateLane, ActionLane> dependencies;
+    Searcher<StateLane, ActionLane> searcher;
+    Node<StateLane, ActionLane> root;
+    public static final String FILE_NAME = "lane_test_mcts.dot";
+
+    @BeforeEach
+    void init() {
+        dependencies = FactoryDependencies.laneTest();
+        searcher = Searcher.of(dependencies);
+        root = FactoryTreeForTest.getRootLane();
+    }
+
+    @SneakyThrows
+    @Test
+    void whenSearchThenCorrect() {
+        var tree = searcher.search(root);
+        int sizeTree = tree.info().numberOfNodes();
+
+        var pathExtractor = OptimalPathExtractor.of(dependencies);
+        var generator = DotFileGenerator.init(MAX_DEPTH_IN_PLOT);
+        var nodes = pathExtractor.extract(root).getNodes();
+        var text = generator.generateDot(tree, nodes);
+        var filePath = ProjectPropertiesReader.create().pathMcts();
+        generator.writeToFile(filePath + FILE_NAME, text);
+
+        nodes.forEach(System.out::println);
+
+        Assertions.assertTrue(sizeTree > 5);
+        Assertions.assertEquals(-3.0,nodes.get(nodes.size() - 1).info().state().y(),0.5);
+    }
+
+
+
+}
