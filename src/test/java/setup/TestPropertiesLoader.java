@@ -1,7 +1,7 @@
 package setup;
 
 import core.foundation.config.PropertiesLoader;
-import core.plotting.PlotConfig;
+import core.foundation.config.PlotConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ public class TestPropertiesLoader {
 
     @Test
     void correctPlotConfig() {
-        var props = loader.load();
+        var props = loader.loadProperties();
         var plotCfg = PlotConfig.extract(props);
         Assertions.assertEquals(IN_FILE, plotCfg.fixedNumberForTest());
         Assertions.assertNotEquals(DEFAULT, plotCfg.fixedNumberForTest());

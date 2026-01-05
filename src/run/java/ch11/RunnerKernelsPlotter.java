@@ -5,7 +5,7 @@ import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.helper.RadialBasisAdapter;
 import chapters.ch9.radial_basis.RbfNetwork;
 import com.google.common.collect.Lists;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting.base.shared.PlotSettings;
 import core.plotting.chart_plotting.ChartSaverAndPlotter;
 import core.plotting.plotting_2d.ScatterWithLineChartCreator;

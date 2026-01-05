@@ -11,7 +11,7 @@ import chapters.ch13.factory.FactoryDependencies;
 import chapters.ch13.factory.FactorySearcherSettings;
 import chapters.ch13.factory.FactoryTreeForTest;
 import chapters.ch13.plotting.DotFileGenerator;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import org.apache.commons.math3.util.Pair;
 import org.jetbrains.annotations.NotNull;

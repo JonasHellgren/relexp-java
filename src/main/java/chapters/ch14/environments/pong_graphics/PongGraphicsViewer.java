@@ -1,7 +1,7 @@
 package chapters.ch14.environments.pong_graphics;
 
 import chapters.ch14.environments.pong.PongSettings;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;

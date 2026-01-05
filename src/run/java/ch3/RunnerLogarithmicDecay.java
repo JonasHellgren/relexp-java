@@ -1,7 +1,7 @@
 package ch3;
 
-import core.foundation.config.PathAndFile;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.PathAndFile;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ListCreator;
 import core.foundation.util.math.LogarithmicDecay;
 import core.plotting.base.shared.PlotSettings;

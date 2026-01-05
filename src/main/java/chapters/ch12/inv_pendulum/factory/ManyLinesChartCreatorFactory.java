@@ -1,6 +1,6 @@
 package chapters.ch12.inv_pendulum.factory;
 
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting.base.shared.PlotSettings;
 import core.plotting.plotting_2d.ManyLinesChartCreator;
 import lombok.SneakyThrows;

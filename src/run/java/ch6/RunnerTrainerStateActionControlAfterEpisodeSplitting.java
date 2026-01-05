@@ -4,7 +4,7 @@ import chapters.ch6._shared.plotting.GridAgentPlotterMultiStep;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import chapters.ch6.domain.trainer.core.TrainerStateActionControlAfterEpisode;
 import chapters.ch6.implem.factory.TrainerDependenciesFactory;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting.progress_plotting.PlotterProgressMeasures;
 import core.plotting.progress_plotting.ProgressMeasureEnum;
 import core.plotting.progress_plotting.RecorderProgressMeasures;

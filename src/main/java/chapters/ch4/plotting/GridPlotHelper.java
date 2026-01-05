@@ -1,7 +1,7 @@
 package chapters.ch4.plotting;
 
 import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting.chart_plotting.GridAgentPlotter;
 import core.plotting.progress_plotting.PlotterProgressMeasures;
 import core.plotting.progress_plotting.ProgressMeasureEnum;

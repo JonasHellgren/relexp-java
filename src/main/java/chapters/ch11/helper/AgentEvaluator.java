@@ -4,7 +4,7 @@ import chapters.ch11.domain.environment.core.EnvironmentLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.Conditionals;
 import core.plotting.base.shared.FormattedAsString;

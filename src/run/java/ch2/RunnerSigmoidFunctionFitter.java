@@ -1,5 +1,8 @@
 package ch2;
 
+import chapters.ch2.impl.function_fitting.FitterFunctionOutput;
+import core.foundation.config.ConfigFactory;
+import core.plotting.chart_plotting.ChartSaver;
 import core.plotting.factory.ChartFactory;
 import chapters.ch2.factory.FitterFunctionFactory;
 import chapters.ch2.factory.FittingParametersFactory;
@@ -7,10 +10,11 @@ import core.foundation.gadget.training.TrainDataInOut;
 import core.foundation.util.math.SigmoidFunctions;
 import core.foundation.util.rand.RandUtils;
 import core.plotting.plotting_2d.ChartUtility;
+import org.jetbrains.annotations.NotNull;
+import org.knowm.xchart.XYChart;
 import java.util.List;
 import java.util.stream.IntStream;
 import static core.foundation.util.collections.ListCreator.createFromStartToEndWithNofItems;
-import static core.plotting.chart_plotting.ChartSaverAndPlotter.showChartSaveInFolderConcepts;
 
 public class RunnerSigmoidFunctionFitter {
     public static final int N_EPOCHS = 1000;
@@ -25,11 +29,17 @@ public class RunnerSigmoidFunctionFitter {
         TrainDataInOut data = getTrainData(range);
         var fitter = FitterFunctionFactory.produceOutput(parameters);
         IntStream.range(0, N_EPOCHS).forEach(i -> fitter.fit(data));
-        var xList= createFromStartToEndWithNofItems(-range,range+margin, N_POINTS);
+        var chart = getXyChart(range, margin, fitter);
+        ChartSaver.saveAndShowXYChart(chart, ConfigFactory.pathPicsConfig().ch2(), FILE_NAME);
+    }
+
+    @NotNull
+    private static XYChart getXyChart(double range, double margin, FitterFunctionOutput fitter) {
+        var xList= createFromStartToEndWithNofItems(-range, range + margin, N_POINTS);
         var yList = fitter.read(xList);
         var chart = ChartFactory.getChart(xList, yList);
         ChartUtility.reduceXAxisTicksClutter(chart,2, "0");
-        showChartSaveInFolderConcepts(chart, FILE_NAME);
+        return chart;
     }
 
 

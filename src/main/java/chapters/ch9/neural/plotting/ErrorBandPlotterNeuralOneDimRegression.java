@@ -1,7 +1,7 @@
 package chapters.ch9.neural.plotting;
 
 import com.google.common.base.Preconditions;
-import core.foundation.config.PathAndFile;
+import core.foundation.configOld.PathAndFile;
 import core.foundation.util.collections.ArrayCreator;
 import core.plotting.plotting_2d.ErrorBandCreator;
 import core.plotting.progress_plotting.ErrorBandData;

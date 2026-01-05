@@ -1,7 +1,6 @@
-package core.plotting;
+package core.foundation.config;
 
 
-import core.foundation.config.ConfigReader;
 import core.foundation.util.cond.Conditionals;
 import lombok.extern.java.Log;
 

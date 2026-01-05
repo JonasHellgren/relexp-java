@@ -1,6 +1,6 @@
 package chapters.ch3.implem.splitting_path_problem;
 
-import core.foundation.config.PathAndFile;
+import core.foundation.configOld.PathAndFile;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.StateGrid;
 import core.plotting.chart_plotting.ChartSaver;

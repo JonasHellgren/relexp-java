@@ -1,6 +1,6 @@
 package chapters.ch6._shared.plotting;
 
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting.base.shared.PlotSettings;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

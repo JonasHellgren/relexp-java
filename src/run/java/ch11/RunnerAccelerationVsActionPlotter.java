@@ -2,7 +2,7 @@ package ch11;
 
 import chapters.ch11.domain.environment.core.EnvironmentLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ListCreator;
 import core.foundation.util.unit_converter.MyUnitConverter;
 import core.foundation.util.unit_converter.NonSIUnits;

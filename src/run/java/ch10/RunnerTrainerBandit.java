@@ -9,7 +9,7 @@ import chapters.ch10.bandit.domain.trainer.TrainerDependenciesBandit;
 import chapters.ch10.bandit.factory.FactoryAgentParametersBandit;
 import chapters.ch10.bandit.factory.FactoryEnvironmentParametersBandit;
 import chapters.ch10.bandit.factory.FactoryTrainerParameters;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import lombok.SneakyThrows;
 import java.util.List;

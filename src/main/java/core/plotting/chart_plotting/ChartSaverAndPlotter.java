@@ -1,6 +1,6 @@
 package core.plotting.chart_plotting;
 
-import core.foundation.config.PathAndFile;
+import core.foundation.configOld.PathAndFile;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import org.knowm.xchart.HeatMapChart;
@@ -12,7 +12,7 @@ import static core.plotting.chart_plotting.ProjectFoldersKeyInterpreter.*;
 @UtilityClass
 public class ChartSaverAndPlotter {
 
-    public static void showChartSaveInFolderConcepts(XYChart chart, String fileName) {
+    public static void showAndSaveChart(XYChart chart, String fileName) {
         showAndSaveXyChart(chart, fileName, CONCEPT);
     }
 

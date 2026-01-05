@@ -4,7 +4,7 @@ import chapters.ch10.bandit.factory.FactoryEnvironmentParametersBandit;
 import chapters.ch12.bandit.core.BanditActionValueTrainer;
 import chapters.ch12.bandit.plotting.ErrorBandPlotterNeuralBandit;
 import chapters.ch12.bandit.plotting.MeasuresBanditNeuralEnum;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import lombok.SneakyThrows;
 import java.io.IOException;

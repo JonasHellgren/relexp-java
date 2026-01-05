@@ -1,6 +1,6 @@
 package chapters.ch5._shared.plotting;
 
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ArrayCreator;
 import core.plotting.base.shared.PlotSettings;
 import core.plotting.plotting_3d.HeatMapWithStringTextInCellsCreator;

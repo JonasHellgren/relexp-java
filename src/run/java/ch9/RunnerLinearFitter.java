@@ -2,7 +2,7 @@ package ch9;
 
 import chapters.ch9.gradient_descent.LinearFitter;
 import chapters.ch9.gradient_descent.PhiExtractor;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.collections.ListCreator;

@@ -6,7 +6,7 @@ import chapters.ch9.neural.plotting.ErrorBandPlotterNeuralOneDimRegression;
 import chapters.ch9.neural.plotting.MeasuresOneDimRegressionNeural;
 import chapters.ch9.neural.plotting.MeasuresOneDimRegressionNeuralEnum;
 import chapters.ch9.neural.plotting.NeuralOneDimRegressionRecorder;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.util.cond.Conditionals;
 import core.foundation.util.collections.Array2ListConverter;

@@ -1,8 +1,8 @@
 package chapters.ch14.plotting;
 
 import com.google.common.base.Preconditions;
-import core.foundation.config.PathAndFile;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.PathAndFile;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ArrayCreator;
 import core.foundation.util.collections.List2ArrayConverter;
 import core.plotting.chart_plotting.ChartSaver;

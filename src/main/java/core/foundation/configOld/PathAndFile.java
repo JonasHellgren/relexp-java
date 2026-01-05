@@ -1,4 +1,4 @@
-package core.foundation.config;
+package core.foundation.configOld;
 
 public record PathAndFile(
         String path,
@@ -31,4 +31,8 @@ public record PathAndFile(
         return path+name+"."+fileType;
     }
 
-}
+    public String pathAndName() {
+        return path+name;
+    }
+
+    }

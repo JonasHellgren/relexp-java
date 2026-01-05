@@ -1,6 +1,6 @@
 package chapters.ch4.domain.helper;
 
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ArrayCreator;
 import core.gridrl.EnvironmentGridI;
 import core.plotting.base.shared.PlotSettings;

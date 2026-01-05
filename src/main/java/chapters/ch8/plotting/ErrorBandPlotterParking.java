@@ -1,7 +1,7 @@
 package chapters.ch8.plotting;
 
 import com.google.common.base.Preconditions;
-import core.foundation.config.PathAndFile;
+import core.foundation.configOld.PathAndFile;
 import core.plotting.plotting_2d.ErrorBandCreator;
 import core.plotting.progress_plotting.ErrorBandData;
 import core.plotting.progress_plotting.ErrorBandSaverAndPlotter;

@@ -1,4 +1,4 @@
-package core.foundation.config;
+package core.foundation.configOld;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

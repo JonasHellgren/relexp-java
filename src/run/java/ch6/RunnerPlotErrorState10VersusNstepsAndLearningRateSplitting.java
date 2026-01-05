@@ -2,8 +2,8 @@ package ch6;
 
 import chapters.ch6.domain.trainer.core.TrainerStateActionControlDuringEpisode;
 import chapters.ch6.implem.factory.TrainerDependenciesFactory;
-import core.foundation.config.PathAndFile;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.PathAndFile;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverter;
 import core.foundation.util.collections.MyListUtils;
 import core.plotting.plotting_2d.ErrorBandCreator;

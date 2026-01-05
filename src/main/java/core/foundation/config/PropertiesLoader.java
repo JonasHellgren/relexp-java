@@ -24,7 +24,7 @@ public final class PropertiesLoader {
         return new PropertiesLoader(baseDir, filename);
     }
 
-    public Properties load() {
+    public Properties loadProperties() {
         Path path = baseDir.resolve(filename);
         if (!Files.exists(path)) {
             return null;

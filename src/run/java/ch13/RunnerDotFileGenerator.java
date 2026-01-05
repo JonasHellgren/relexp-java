@@ -5,7 +5,7 @@ import chapters.ch13.environments.jumper.ActionJumper;
 import chapters.ch13.environments.jumper.StateJumper;
 import chapters.ch13.factory.FactoryTreeForTest;
 import chapters.ch13.plotting.DotFileGenerator;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.SneakyThrows;
 
 import java.util.List;

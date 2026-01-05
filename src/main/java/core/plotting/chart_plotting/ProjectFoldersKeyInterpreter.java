@@ -1,7 +1,7 @@
 package core.plotting.chart_plotting;
 
 import com.google.common.base.Preconditions;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 
 import java.io.IOException;
 import java.util.HashMap;

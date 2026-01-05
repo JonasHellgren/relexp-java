@@ -1,7 +1,7 @@
 package chapters.ch8.plotting;
 
 import chapters.ch8.domain.trainer.core.TrainerParking;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import java.util.List;

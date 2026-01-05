@@ -1,7 +1,7 @@
 package ch3;
 
 import chapters.ch3.implem.splitting_path_problem.*;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.math.LogarithmicDecay;
 import core.gridrl.StateGrid;
 import lombok.SneakyThrows;

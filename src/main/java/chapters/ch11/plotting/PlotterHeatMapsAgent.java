@@ -3,7 +3,7 @@ package chapters.ch11.plotting;
 import chapters.ch11.domain.environment.core.EnvironmentLunar;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
-import core.foundation.config.PathAndFile;
+import core.foundation.configOld.PathAndFile;
 import core.foundation.util.collections.List2ArrayConverter;
 import core.plotting.base.shared.PlotSettings;
 import core.plotting.plotting_3d.HeatMapChartCreator;
@@ -40,7 +40,7 @@ public class PlotterHeatMapsAgent {
 
     @SneakyThrows
     public void plotAndSaveAll() {
-        var pathPics = core.foundation.config.ProjectPropertiesReader.create().pathActorCriticPics();
+        var pathPics = core.foundation.configOld.ProjectPropertiesReader.create().pathActorCriticPics();
         plotAndSaveExpectedForce(pathPics);
         plotAndSavExpectedAcceleration(pathPics);
         plotAndSavValue(pathPics);

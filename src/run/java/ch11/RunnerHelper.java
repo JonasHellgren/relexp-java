@@ -11,7 +11,7 @@ import chapters.ch11.domain.trainer.core.TrainerI;
 import chapters.ch11.domain.trainer.param.TrainerParameters;
 import chapters.ch11.helper.AgentEvaluator;
 import chapters.ch11.plotting.PlotterHeatMapsAgent;
-import core.foundation.config.ProjectPropertiesReader;
+import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ListConverter;
 import core.foundation.util.collections.ListCreator;
 import core.foundation.util.collections.MyListUtils;
