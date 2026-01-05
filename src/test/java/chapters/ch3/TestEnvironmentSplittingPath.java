@@ -1,6 +1,6 @@
 package chapters.ch3;
 
-import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplittingFactory;
+import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import chapters.ch3.implem.splitting_path_problem.EnvironmentSplittingPath;
 import core.gridrl.StateGrid;
 import core.gridrl.StepReturnGrid;

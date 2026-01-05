@@ -5,7 +5,7 @@ import chapters.ch5._shared.evaluation.Settings;
 import chapters.ch5._shared.evaluation.StatePolicyEvaluationMc;
 import chapters.ch5.domain.policy.PolicyMcI;
 import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
-import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplittingFactory;
+import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import chapters.ch5.implem.splitting.*;
 import chapters.ch5.implem.walk.EnvironmentWalk;
 import chapters.ch5.implem.walk.MemoryWalk;

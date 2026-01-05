@@ -1,6 +1,6 @@
 package chapters.ch6.implem.factory;
 
-import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplittingFactory;
+import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import chapters.ch3.implem.splitting_path_problem.EnvironmentSplittingPath;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
 import chapters.ch4.implem.treasure.factory.EnvironmentParametersTreasureFactor;

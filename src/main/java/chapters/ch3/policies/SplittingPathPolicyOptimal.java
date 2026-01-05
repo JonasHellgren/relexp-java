@@ -1,5 +1,6 @@
-package chapters.ch3.implem.splitting_path_problem;
+package chapters.ch3.policies;
 
+import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;

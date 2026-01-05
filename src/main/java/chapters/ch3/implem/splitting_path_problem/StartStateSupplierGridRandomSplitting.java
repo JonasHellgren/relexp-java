@@ -1,5 +1,6 @@
 package chapters.ch3.implem.splitting_path_problem;
 
+import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import core.foundation.gadget.set.SetUtils;
 import core.gridrl.StartStateSupplierGridI;
 import core.gridrl.StateGrid;

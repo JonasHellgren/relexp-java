@@ -1,12 +1,18 @@
 package ch3;
 
+import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import chapters.ch3.implem.splitting_path_problem.*;
-import core.foundation.configOld.ProjectPropertiesReader;
+import chapters.ch3.plotting.StateValueMemoryPlotter;
+import chapters.ch3.policies.SplittingPathPolicyI;
+import chapters.ch3.policies.SplittingPathPolicyOptimal;
+import chapters.ch3.policies.SplittingPathPolicyRandom;
+import core.foundation.config.ConfigFactory;
 import core.foundation.util.math.LogarithmicDecay;
 import core.gridrl.StateGrid;
+import core.gridrl.StateValueMemoryGrid;
 import lombok.SneakyThrows;
 import org.apache.commons.math3.util.Pair;
-import java.io.IOException;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,18 +43,18 @@ public class RunnerFitterFunctionSplittingPath {
         plotAndSave(parameters);
     }
 
-    private static MemoryFitterSplittingPath getMemoryFitterSplittingPath() {
+    private static PolicyEvaluatorSplittingPath getMemoryFitterSplittingPath() {
         var pair = LEARNING_RATE;
         var decayingLearningRate = LogarithmicDecay.of(pair.getFirst(), pair.getSecond(), NOF_FITS);
-        return MemoryFitterSplittingPath.builder()
+        return PolicyEvaluatorSplittingPath.builder()
                 .environment(environment).memory(memory)
                 .startStateSupplier(StartStateSupplierGridRandomSplitting.create())
                 .nFits(NOF_FITS).learningRate(decayingLearningRate).discountFactor(DISCOUNT_FACTOR)
                 .build();
     }
 
-    private static void plotAndSave(EnvironmentParametersSplitting parameters) throws IOException {
-        var pathPics = ProjectPropertiesReader.create().pathConceptsPics();
+    private static void plotAndSave(EnvironmentParametersSplitting parameters) {
+        var pathPics = ConfigFactory.pathPicsConfig().ch3();
         var plotter = StateValueMemoryPlotter.builder()
                 .filePath(pathPics)
                 .fileNameAddOn("splitting_path_" + policyNames.get(IDX_POLICY))

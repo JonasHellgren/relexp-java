@@ -1,6 +1,6 @@
 package chapters.ch5.implem.splitting;
 
-import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplittingFactory;
+import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import chapters.ch5.domain.environment.StartStateSupplierI;
 import chapters.ch5.domain.environment.StateMcI;
 import core.foundation.gadget.set.SetUtils;

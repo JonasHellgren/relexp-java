@@ -1,14 +1,16 @@
 package chapters.ch3.implem.splitting_path_problem;
 
+import chapters.ch3.policies.SplittingPathPolicyI;
 import core.foundation.util.math.LogarithmicDecay;
 import core.gridrl.StartStateSupplierGridI;
+import core.gridrl.StateValueMemoryGrid;
 import lombok.Builder;
 import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
 @Builder
-public class MemoryFitterSplittingPath {
+public class PolicyEvaluatorSplittingPath {
 
     private EnvironmentSplittingPath environment;
     private StateValueMemoryGrid memory;

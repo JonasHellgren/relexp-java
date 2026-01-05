@@ -1,7 +1,7 @@
 package chapters.ch5.implem.splitting;
 
 import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
-import chapters.ch3.implem.splitting_path_problem.SplittingPathPolicyRandom;
+import chapters.ch3.policies.SplittingPathPolicyRandom;
 import chapters.ch5.domain.environment.ActionMcI;
 import chapters.ch5.domain.environment.StateMcI;
 import chapters.ch5.domain.policy.PolicyMcI;

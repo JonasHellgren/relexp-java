@@ -1,6 +1,5 @@
-package chapters.ch3.implem.splitting_path_problem;
+package core.gridrl;
 
-import core.gridrl.StateGrid;
 import lombok.AllArgsConstructor;
 import java.util.HashMap;
 import java.util.Map;

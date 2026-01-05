@@ -1,4 +1,4 @@
-package chapters.ch3.implem.splitting_path_problem;
+package chapters.ch3.policies;
 
 
 import core.gridrl.ActionGrid;

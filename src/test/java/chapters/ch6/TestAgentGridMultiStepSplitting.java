@@ -1,6 +1,6 @@
 package chapters.ch6;
 
-import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplittingFactory;
+import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import chapters.ch3.implem.splitting_path_problem.EnvironmentSplittingPath;
 import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultGrid;

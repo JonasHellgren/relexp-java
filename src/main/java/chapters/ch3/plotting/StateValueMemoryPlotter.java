@@ -1,5 +1,7 @@
-package chapters.ch3.implem.splitting_path_problem;
+package chapters.ch3.plotting;
 
+import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
+import core.gridrl.StateValueMemoryGrid;
 import core.foundation.configOld.PathAndFile;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.StateGrid;

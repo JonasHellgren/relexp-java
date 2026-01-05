@@ -1,12 +1,15 @@
 package ch5;
 
+import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import chapters.ch3.implem.splitting_path_problem.*;
+import chapters.ch3.policies.SplittingPathPolicyOptimal;
 import chapters.ch5._shared.evaluation.Settings;
 import chapters.ch5._shared.evaluation.StatePolicyEvaluationMc;
 import chapters.ch5._shared.factory.StatePolicyEvaluationFactory;
 import chapters.ch5.implem.splitting.StartStateSupplierRandomSplitting;
 import core.foundation.util.math.LogarithmicDecay;
 import core.foundation.util.math.MovingAverage;
+import core.gridrl.StateValueMemoryGrid;
 import core.plotting.chart_plotting.ChartSaverAndPlotter;
 import core.plotting.chart_plotting.PlotterFactory;
 import core.plotting.plotting_2d.ManyLinesChartCreator;
@@ -74,7 +77,7 @@ public class RunnerPlotErrorVersusIterationForSplittingPath {
         var decayingLearningRate = LogarithmicDecay.of(
                 pair.getFirst(),pair.getSecond(),settings.nIterations());
         var memory = StateValueMemoryGrid.createZeroDefault();
-        var fitter= MemoryFitterSplittingPath.builder()
+        var fitter= PolicyEvaluatorSplittingPath.builder()
                 .environment(environment)
                 .memory(memory)
                 .startStateSupplier(StartStateSupplierGridRandomSplitting.create())

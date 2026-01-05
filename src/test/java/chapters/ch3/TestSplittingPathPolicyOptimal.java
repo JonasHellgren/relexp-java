@@ -1,9 +1,9 @@
 package chapters.ch3;
 
-import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplittingFactory;
+import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import chapters.ch3.implem.splitting_path_problem.EnvironmentSplittingPath;
-import chapters.ch3.implem.splitting_path_problem.SplittingPathPolicyI;
-import chapters.ch3.implem.splitting_path_problem.SplittingPathPolicyOptimal;
+import chapters.ch3.policies.SplittingPathPolicyI;
+import chapters.ch3.policies.SplittingPathPolicyOptimal;
 import core.foundation.gadget.set.SetUtils;
 import core.gridrl.StateGrid;
 import org.junit.jupiter.api.BeforeEach;

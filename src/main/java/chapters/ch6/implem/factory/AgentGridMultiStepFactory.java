@@ -1,7 +1,7 @@
 package chapters.ch6.implem.factory;
 
 import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
-import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplittingFactory;
+import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import chapters.ch4.domain.param.AgentGridParameters;
 import chapters.ch4.implem.treasure.factory.EnvironmentParametersTreasureFactor;
 import chapters.ch6.implem.splitting.agent.AgentGridMultiStepBestActionSplitting;
