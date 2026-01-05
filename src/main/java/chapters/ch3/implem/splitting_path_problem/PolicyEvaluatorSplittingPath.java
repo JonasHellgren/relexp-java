@@ -23,7 +23,7 @@ public class PolicyEvaluatorSplittingPath {
     private List<Double> errorList = new ArrayList<>();
 
 
-    public void fitMemory(SplittingPathPolicyI policy) {
+    public void evaluate(SplittingPathPolicyI policy) {
         errorList.clear();
         for (int i = 0; i < nFits; i++) {
             var state=startStateSupplier.getStartState();

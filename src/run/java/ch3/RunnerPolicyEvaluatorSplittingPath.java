@@ -8,24 +8,20 @@ import chapters.ch3.policies.SplittingPathPolicyOptimal;
 import chapters.ch3.policies.SplittingPathPolicyRandom;
 import core.foundation.config.ConfigFactory;
 import core.foundation.util.math.LogarithmicDecay;
-import core.gridrl.StateGrid;
 import core.gridrl.StateValueMemoryGrid;
 import lombok.SneakyThrows;
 import org.apache.commons.math3.util.Pair;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * startStateSupplier(StartStateSupplierGridMostLeftSplitting.create())  //will not work, only fitted from start state
  */
 
-public class RunnerFitterFunctionSplittingPath {
+public class RunnerPolicyEvaluatorSplittingPath {
     enum Policy {RANDOM, OPTIMAL}
 
-    static Policy polChosen = Policy.RANDOM;
+    static Policy polChosen = Policy.OPTIMAL;
 
     static final Pair<Double, Double> LEARNING_RATE = Pair.create(0.01, 0.01);  //0.1
     static final double DISCOUNT_FACTOR = 1.0;  //0.5
@@ -39,12 +35,11 @@ public class RunnerFitterFunctionSplittingPath {
         var parameters = EnvironmentParametersSplittingFactory.produce();
         initFields(parameters);
         var policy = policesMap.get(polChosen);
-        var fitter = getMemoryFitterSplittingPath();
-        fitter.fitMemory(policy);
+        getEvaluator().evaluate(policy);
         plotAndSave(parameters);
     }
 
-    private static PolicyEvaluatorSplittingPath getMemoryFitterSplittingPath() {
+    private static PolicyEvaluatorSplittingPath getEvaluator() {
         var pair = LEARNING_RATE;
         var decayingLearningRate = LogarithmicDecay.of(pair.getFirst(), pair.getSecond(), NOF_FITS);
         return PolicyEvaluatorSplittingPath.builder()

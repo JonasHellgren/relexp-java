@@ -10,9 +10,10 @@ public class EnvironmentSplittingPath implements EnvironmentGridI {
 
     public static final String NAME="Splitting";
     private final EnvironmentGridParametersI parameters;
+    private final Informer informer;
 
     public static EnvironmentSplittingPath of(EnvironmentGridParametersI parameters) {
-        return new EnvironmentSplittingPath(parameters);
+        return new EnvironmentSplittingPath(parameters,Informer.create(parameters));
     }
 
     public String name() {
@@ -28,10 +29,10 @@ public class EnvironmentSplittingPath implements EnvironmentGridI {
      */
 
     public StepReturnGrid step(StateGrid s, ActionGrid a) {
-        parameters.validateStateAndAction(s,a);
+        informer.validateStateAndAction(s,a);
         var sNext = getNextState(s, a);
-        var isFail = parameters.isFail(sNext);
-        var isTerminal = parameters.isTerminalNonFail(sNext) || isFail;
+        var isFail = informer.isFail(sNext);
+        var isTerminal = informer.isTerminalNonFail(sNext) || isFail;
         var reward = calculateReward(sNext,isTerminal);
         return StepReturnGrid.builder()
                 .sNext(sNext)
@@ -47,12 +48,12 @@ public class EnvironmentSplittingPath implements EnvironmentGridI {
     }
 
     private StateGrid stateNotPositionedAtWall(StateGrid s, StateGrid sAfterActionApplied) {
-        return parameters.isWall(sAfterActionApplied) ? s : sAfterActionApplied;
+        return informer.isWall(sAfterActionApplied) ? s : sAfterActionApplied;
     }
 
     private double calculateReward(StateGrid sNext, boolean isTerminal) {
-        double rTerminal=isTerminal ? parameters.rewardAtTerminalPos(sNext):0;
-        return rTerminal+parameters.rewardMove();
+        double rTerminal=isTerminal ? informer.rewardAtTerminalPos(sNext):0;
+        return rTerminal+informer.rewardMove();
     }
 
 }

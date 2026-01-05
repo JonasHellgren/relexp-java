@@ -85,7 +85,7 @@ public class RunnerPlotErrorVersusIterationForSplittingPath {
                 .learningRate(decayingLearningRate)
                 .discountFactor(settings.gamma())
                 .build();
-        fitter.fitMemory(policyTd);
+        fitter.evaluate(policyTd);
         var errorListTd0=fitter.getErrorList();
         return getFilteredSubList(errorListTd0);
     }
