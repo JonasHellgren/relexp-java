@@ -15,6 +15,7 @@ import org.apache.commons.math3.util.Pair;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -22,22 +23,22 @@ import java.util.Set;
  */
 
 public class RunnerFitterFunctionSplittingPath {
-    public static final int IDX_POLICY = 1;  //0=Random, 1=Optimal
+    enum Policy {RANDOM, OPTIMAL}
 
-    public static final Pair<Double, Double> LEARNING_RATE = Pair.create(0.01, 0.01);  //0.1
-    public static final double DISCOUNT_FACTOR = 1.0;  //0.5
-    public static final int NOF_FITS = 1_000; //1000, 50_000;
-    private static EnvironmentSplittingPath environment;
-    private static List<SplittingPathPolicyI> polices;
-    private static List<String> policyNames;
-    private static StateValueMemoryGrid memory;
-    private static Set<StateGrid> allStates;
+    static Policy polChosen = Policy.RANDOM;
+
+    static final Pair<Double, Double> LEARNING_RATE = Pair.create(0.01, 0.01);  //0.1
+    static final double DISCOUNT_FACTOR = 1.0;  //0.5
+    static final int NOF_FITS = 1_000; //1000, 50_000;
+    static EnvironmentSplittingPath environment;
+    static Map<Policy, SplittingPathPolicyI> policesMap;
+    static StateValueMemoryGrid memory;
 
     @SneakyThrows
     public static void main(String[] args) {
         var parameters = EnvironmentParametersSplittingFactory.produce();
         initFields(parameters);
-        var policy = polices.get(IDX_POLICY);
+        var policy = policesMap.get(polChosen);
         var fitter = getMemoryFitterSplittingPath();
         fitter.fitMemory(policy);
         plotAndSave(parameters);
@@ -57,22 +58,18 @@ public class RunnerFitterFunctionSplittingPath {
         var pathPics = ConfigFactory.pathPicsConfig().ch3();
         var plotter = StateValueMemoryPlotter.builder()
                 .filePath(pathPics)
-                .fileNameAddOn("splitting_path_" + policyNames.get(IDX_POLICY))
+                .fileNameAddOn("splitting_path_" + polChosen.name())
                 .memory(memory)
                 .parameters(parameters)
                 .build();
         plotter.plotAndSaveStateValues();
     }
 
-
     private static void initFields(EnvironmentParametersSplitting parameters) {
         environment = EnvironmentSplittingPath.of(parameters);
-        var policyRandom = SplittingPathPolicyRandom.of(parameters);
-        var policyOptimal = SplittingPathPolicyOptimal.of(parameters);
-        polices = List.of(policyRandom, policyOptimal);
-        policyNames = List.of("Random", "Optimal");
+        policesMap = Map.of(
+                Policy.RANDOM, SplittingPathPolicyRandom.of(parameters),
+                Policy.OPTIMAL, SplittingPathPolicyOptimal.of(parameters));
         memory = StateValueMemoryGrid.createZeroDefault();
-        allStates = new HashSet<>(parameters.getStatesExceptSplit());
-        allStates.add(parameters.getSplitState().iterator().next());
     }
 }
