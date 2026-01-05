@@ -9,10 +9,10 @@ import lombok.Getter;
 public class EnvironmentSplittingPath implements EnvironmentGridI {
 
     public static final String NAME="Splitting";
-    private final EnvironmentGridParametersI parameters;
+    private final EnvironmentParametersSplitting parameters;
     private final Informer informer;
 
-    public static EnvironmentSplittingPath of(EnvironmentGridParametersI parameters) {
+    public static EnvironmentSplittingPath of(EnvironmentParametersSplitting parameters) {
         return new EnvironmentSplittingPath(parameters,Informer.create(parameters));
     }
 
@@ -43,7 +43,9 @@ public class EnvironmentSplittingPath implements EnvironmentGridI {
     }
 
     private StateGrid getNextState(StateGrid s, ActionGrid a) {
-        var sAfterActionApplied = s.ofApplyingAction(a).clip(parameters);
+        var xyMin=informer.xyMin();
+        var xyMax=informer.xyMax();
+        var sAfterActionApplied = s.ofApplyingAction(a).clip(xyMin, xyMax);
         return stateNotPositionedAtWall(s, sAfterActionApplied);
     }
 

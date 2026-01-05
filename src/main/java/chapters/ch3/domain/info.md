@@ -1,5 +1,5 @@
 
-Domain objects are in core
+Domain classes are in core
 
 
     EnvironmentGridI

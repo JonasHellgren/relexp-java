@@ -22,6 +22,7 @@ public class StartStateSupplierGridRandomSplitting implements StartStateSupplier
     @Override
     public StateGrid getStartState() {
         var parameters = EnvironmentParametersSplittingFactory.produce();
-        return   SetUtils.getAnyFromSet(parameters.getAllStates());
+        var informer= Informer.create(parameters);
+        return   SetUtils.getAnyFromSet(informer.getAllStates());
     }
 }

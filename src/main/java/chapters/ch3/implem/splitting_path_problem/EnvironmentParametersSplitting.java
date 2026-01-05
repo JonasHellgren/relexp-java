@@ -31,6 +31,9 @@ public class EnvironmentParametersSplitting implements EnvironmentGridParameters
     private Double rewardAtFailPos;
     private Double rewardMove;
 
+
+    //TODO NEDAN METODER VECK CH6
+
     @Override
     public void validateStateAndAction(StateGrid s, ActionGrid a) {
         Preconditions.checkArgument(isValidState(s), "invalid state=" + s);

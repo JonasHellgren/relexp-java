@@ -1,8 +1,8 @@
 package ch3;
 
 import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
+import chapters.ch3.factory.StateValueMemoryPlotterFactory;
 import chapters.ch3.implem.splitting_path_problem.*;
-import chapters.ch3.plotting.StateValueMemoryPlotter;
 import chapters.ch3.policies.SplittingPathPolicyI;
 import chapters.ch3.policies.SplittingPathPolicyOptimal;
 import chapters.ch3.policies.SplittingPathPolicyRandom;
@@ -20,8 +20,7 @@ import java.util.Map;
 
 public class RunnerPolicyEvaluatorSplittingPath {
     enum Policy {RANDOM, OPTIMAL}
-
-    static Policy polChosen = Policy.OPTIMAL;
+    static Policy polChosen = Policy.OPTIMAL;  //change if desired
 
     static final Pair<Double, Double> LEARNING_RATE = Pair.create(0.01, 0.01);  //0.1
     static final double DISCOUNT_FACTOR = 1.0;  //0.5
@@ -36,7 +35,10 @@ public class RunnerPolicyEvaluatorSplittingPath {
         initFields(parameters);
         var policy = policesMap.get(polChosen);
         getEvaluator().evaluate(policy);
-        plotAndSave(parameters);
+        var plotter= StateValueMemoryPlotterFactory.produce(parameters,memory);
+        var name = "splitting_path_values"+ polChosen.name();
+        plotter.plotAndSaveStateValues(ConfigFactory.pathPicsConfig().ch3(),name);
+
     }
 
     private static PolicyEvaluatorSplittingPath getEvaluator() {
@@ -49,16 +51,7 @@ public class RunnerPolicyEvaluatorSplittingPath {
                 .build();
     }
 
-    private static void plotAndSave(EnvironmentParametersSplitting parameters) {
-        var pathPics = ConfigFactory.pathPicsConfig().ch3();
-        var plotter = StateValueMemoryPlotter.builder()
-                .filePath(pathPics)
-                .fileNameAddOn("splitting_path_" + polChosen.name())
-                .memory(memory)
-                .parameters(parameters)
-                .build();
-        plotter.plotAndSaveStateValues();
-    }
+
 
     private static void initFields(EnvironmentParametersSplitting parameters) {
         environment = EnvironmentSplittingPath.of(parameters);

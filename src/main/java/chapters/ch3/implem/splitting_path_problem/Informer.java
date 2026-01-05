@@ -1,6 +1,7 @@
 package chapters.ch3.implem.splitting_path_problem;
 
 import com.google.common.base.Preconditions;
+import core.foundation.gadget.pos.PosXyInt;
 import core.gridrl.ActionGrid;
 import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
@@ -14,8 +15,8 @@ public class Informer {
 
     EnvironmentParametersSplitting parameters;
 
-    public static Informer create(EnvironmentGridParametersI parameters) {
-        return new Informer((EnvironmentParametersSplitting) parameters);
+    public static Informer create(EnvironmentParametersSplitting parameters) {
+        return new Informer(parameters);
     }
 
     public void validateStateAndAction(StateGrid s, ActionGrid a) {
@@ -76,6 +77,14 @@ public class Informer {
     void validateTerminalState(StateGrid state) {
         boolean terminal = isTerminalNonFail(state) || isFail(state);
         Preconditions.checkArgument(terminal, "invalid state="+ state +", shall be terminal");
+    }
+
+    public PosXyInt xyMin() {
+        return PosXyInt.of(parameters.getPosXMinMax().getFirst(), parameters.getPosYMinMax().getFirst());
+    }
+
+    public PosXyInt xyMax() {
+        return PosXyInt.of(parameters.getPosXMinMax().getSecond(), parameters.getPosYMinMax().getSecond());
     }
 
 }

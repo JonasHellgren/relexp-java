@@ -23,16 +23,14 @@ public class StateValueMemoryPlotter {
     public static final int NOF_DIGITS = 2;
     private final Font VALUE_TEXT_FONT = new Font("Arial", Font.PLAIN, 12);
 
-    private final String filePath;
-    private final String fileNameAddOn;
     StateValueMemoryGrid memory;
     EnvironmentParametersSplitting parameters;
 
 
     @SneakyThrows
-    public void plotAndSaveStateValues() {
+    public void plotAndSaveStateValues(String filePath, String fileName) {
         HeatMapChart chart = getValueChart();
-        ChartSaver.saveHeatMapChart(chart, PathAndFile.ofPng(filePath, "values" + fileNameAddOn));
+        ChartSaver.saveHeatMapChart(chart, PathAndFile.ofPng(filePath, fileName));
         new SwingWrapper<>(chart).displayChart();
     }
 

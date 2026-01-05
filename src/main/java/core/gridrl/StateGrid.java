@@ -1,5 +1,7 @@
 package core.gridrl;
 
+import core.foundation.gadget.pos.PosXyDouble;
+import core.foundation.gadget.pos.PosXyInt;
 import core.foundation.util.math.MyMathUtils;
 import lombok.AllArgsConstructor;
 import java.util.Objects;
@@ -58,6 +60,8 @@ public class StateGrid {
      *
      * @param parameters the grid parameters to clip to
      * @return the clipped state
+     *
+     * TODO REMOVE METHOD
      */
     public StateGrid clip(EnvironmentGridParametersI parameters) {
         Integer minX = parameters.getPosXMinMax().getFirst();
@@ -69,7 +73,18 @@ public class StateGrid {
                 MyMathUtils.clip(y(), minY, maxY));
     }
 
-    @Override
+/**
+ * Clips this state to the given grid parameters, ensuring that the coordinates are within the valid range.
+ */
+ public StateGrid clip(PosXyInt minXy, PosXyInt maxXy) {
+        return StateGrid.of(
+                MyMathUtils.clip(x(), minXy.x(), maxXy.x()),
+                MyMathUtils.clip(y(), minXy.y(), maxXy.y()));
+    }
+
+
+
+        @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

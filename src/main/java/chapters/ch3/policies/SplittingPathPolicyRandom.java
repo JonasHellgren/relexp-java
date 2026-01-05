@@ -1,6 +1,7 @@
 package chapters.ch3.policies;
 
 import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
+import chapters.ch3.implem.splitting_path_problem.Informer;
 import core.foundation.util.rand.RandUtils;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
@@ -18,11 +19,12 @@ public class SplittingPathPolicyRandom implements SplittingPathPolicyI {
 
     @Override
     public ActionGrid chooseAction(StateGrid s) {
-        boolean isAtSplit=parameters.isAtSplit(s);
+        var informer= Informer.create(parameters);
+        boolean isAtSplit=informer.isAtSplit(s);
         var northOrEast= RandUtils.randomNumberBetweenZeroAndOne() > 0.5
                 ? ActionGrid.N
                 : ActionGrid.S;
-        return (isAtSplit)
+            return (isAtSplit)
                 ? northOrEast
                 : ActionGrid.E;
     }
