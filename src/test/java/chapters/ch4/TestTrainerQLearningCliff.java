@@ -35,13 +35,13 @@ public class TestTrainerQLearningCliff {
         var trainerParams = TrainerParametersFactoryCliff.produceHighLearningRateAndExploration()
                 .withNEpisodes(N_EPISODES);
         var startStateSupplier = StartStateSupplierCliffLowerLeft.create();
-        dependenciesQL = TrainerGridDependencies.builder()
-                .agent(AgentQLearningGrid.of(agentParamsQL, informer))
-                .environment(environment)
-                .trainerParameters(trainerParams)
-                .startStateSupplier(startStateSupplier)
-                .informerParams(informer)
-                .build();
+        dependenciesQL=TrainerGridDependencies.of(
+                AgentQLearningGrid.of(agentParamsQL, informer),
+                environment,
+                trainerParams,
+                startStateSupplier,
+                informer);
+
         trainerQL = TrainerOneStepTdQLearning.of(dependenciesQL);
         trainerQL.train();
     }

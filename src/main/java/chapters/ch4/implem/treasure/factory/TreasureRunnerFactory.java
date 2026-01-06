@@ -50,21 +50,21 @@ public class TreasureRunnerFactory {
         var trainerParamsHighExp = FactoryTrainerParametersTreasure.produceManyEpisodesMuchExploration();
         //var trainerParams = FactoryTrainerParametersTreasure.produceTinyEpisodes();
         var startStateSupplier = StartStateSupplierTreasureMostLeft.create();
-        var lowExpDep = TrainerGridDependencies.builder()
-                .agent(AgentQLearningGrid.of(agentParam, informer))
-                .environment(environment)
-                .trainerParameters(trainerParamsLowExp)
-                .startStateSupplier(startStateSupplier)
-                .informerParams(informer)
-                .build();
-        var highExpDep = TrainerGridDependencies.builder()
-                .agent(AgentQLearningGrid.of(agentParam, informer))
-                .environment(environment)
-                .trainerParameters(trainerParamsHighExp)
-                .startStateSupplier(startStateSupplier)
-                .informerParams(informer)
-                .build();
-//        var agentHighExp = AgentQLearningGrid.of(agentParamHighExp, envParams);
+
+        var lowExpDep=TrainerGridDependencies.of(
+                AgentQLearningGrid.of(agentParam, informer),
+                environment,
+                trainerParamsLowExp,
+                startStateSupplier,
+                informer);
+
+        var highExpDep=TrainerGridDependencies.of(
+                AgentQLearningGrid.of(agentParam, informer),
+                environment,
+                trainerParamsHighExp,
+                startStateSupplier,
+                informer);
+
         return Dependencies.builder()
                 .lowExploration(lowExpDep)
                 .highExploration(highExpDep)

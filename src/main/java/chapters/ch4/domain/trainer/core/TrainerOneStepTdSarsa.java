@@ -1,6 +1,5 @@
 package chapters.ch4.domain.trainer.core;
 
-import chapters.ch4.domain.helper.TrainerOneStepTdHelper;
 import core.plotting.progress_plotting.RecorderProgressMeasures;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,12 +14,10 @@ import lombok.extern.java.Log;
 @Getter
 public class TrainerOneStepTdSarsa  implements TrainerGridI {
     private final TrainerGridDependencies dependencies;
-    private final TrainerOneStepTdHelper helper;
     private final RecorderProgressMeasures recorder;
 
     public static TrainerOneStepTdSarsa of(TrainerGridDependencies dependencies) {
         return new TrainerOneStepTdSarsa(dependencies,
-                TrainerOneStepTdHelper.of(dependencies),
                 RecorderProgressMeasures.empty());
     }
 
@@ -31,28 +28,27 @@ public class TrainerOneStepTdSarsa  implements TrainerGridI {
      */
     public void train() {
         var d = dependencies;
-        var h = helper;
         recorder.clear();
-        h.clearTimer();
+        d.clearTimer();
         recorder.clear();
         log.info("starting training");
         for (int ei = 0; ei < d.getNofEpisodes(); ei++) {
             var s = d.getStartState();
-            var a = h.chooseAction(s, ei);
-            h.resetBeforeEpisode();
-            while (h.notTerminalStateAndNotToManySteps(s)) {
-                var sr = h.takeAction(s, a);
-                var aNext = h.chooseAction(sr.sNext(), ei);
-                var e = h.createSarsaExperience(s, a, sr, aNext);
-                h.updateAgentMemoryFromExperience(e,ei);
+            var a = d.chooseAction(s, ei);
+            d.resetBeforeEpisode();
+            while (d.notTerminalStateAndNotToManySteps(s)) {
+                var sr = d.takeAction(s, a);
+                var aNext = d.chooseAction(sr.sNext(), ei);
+                var e = ExperienceGrid.ofSarsa(s, a, sr,aNext);
+                d.updateAgentMemoryFromExperience(e,ei);
                 s = sr.sNext();
                 a = aNext;
-                h.increaseStepCounter();
-                h.saveExperienceForRecording(e);
+                d.increaseStepCounter();
+                d.saveExperienceForRecording(e);
             }
-            recorder.add(h.getProgressMeasures());
+            recorder.add(d.getProgressMeasures());
         }
-        log.info("Training finished in (s): " + h.getTimer().timeInSecondsAsString());
+        log.info("Training finished in (s): " + d.timer().timeInSecondsAsString());
     }
 
 }

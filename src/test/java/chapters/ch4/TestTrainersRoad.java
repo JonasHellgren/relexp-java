@@ -38,20 +38,19 @@ class TestTrainersRoad {
         var informer= InformerRoadParams.create(envParams);
 
         var startStateSupplier = StartStateSupplierRoadMostLeftAnyLane.create();
-        dependenciesQL = TrainerGridDependencies.builder()
-                .agent(AgentQLearningGrid.of(agentParams, informer))
-                .environment(environment)
-                .trainerParameters(trainerParamsQL)
-                .startStateSupplier(startStateSupplier)
-                .informerParams(informer)
-                .build();
-        dependenciesSarsa = TrainerGridDependencies.builder()
-                .agent(AgentSarsaGrid.of(agentParams, informer))
-                .environment(environment)
-                .trainerParameters(trainerParamsSarsa)
-                .startStateSupplier(startStateSupplier)
-                .informerParams(informer)
-                .build();
+        dependenciesQL=TrainerGridDependencies.of(
+                AgentQLearningGrid.of(agentParams, informer),
+                environment,
+                trainerParamsQL,
+                startStateSupplier,
+                informer);
+
+        dependenciesSarsa=TrainerGridDependencies.of(
+                AgentQLearningGrid.of(agentParams, informer),
+                environment,
+                trainerParamsSarsa,
+                startStateSupplier,
+                informer);
 
         trainerQL = TrainerOneStepTdQLearning.of(dependenciesQL);
         trainerSarsa = TrainerOneStepTdSarsa.of(dependenciesSarsa);

@@ -13,9 +13,6 @@ import java.util.Set;
 
 /**
  * Represents the parameters for the Cliff Walk environment.
- * This class implements the GridParametersI interface and provides the necessary
- * methods for validating states and actions, determining terminal and fail states,
- * and calculating rewards.
  */
 @Builder
 public record EnvironmentParametersCliff (

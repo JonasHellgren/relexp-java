@@ -48,13 +48,19 @@ public class CliffRunnerFactory {
         var agentParamsSarsa = AgentGridParametersFactoryCliff.sutton();
         var trainerParams = TrainerParametersFactoryCliff.produceManyEpisodes();
         var startStateSupplier = StartStateSupplierCliffXis0RandomY.of(environment);
-        var baseDep = TrainerGridDependencies.builder()
+        /*var baseDep = TrainerGridDependencies.builder()
                 .agent(AgentQLearningGrid.of(agentParamsQL, informer))
                 .environment(environment)
                 .trainerParameters(trainerParams)
                 .startStateSupplier(startStateSupplier)
                 .informerParams(informer)
-                .build();
+                .build();*/
+        var baseDep=TrainerGridDependencies.of(
+                AgentQLearningGrid.of(agentParamsQL, informer),
+                environment,
+                trainerParams,
+                startStateSupplier,
+                informer);
         return Dependencies.builder()
                 .qlearning(baseDep)
                 .sarsa(baseDep.withAgent(AgentSarsaGrid.of(agentParamsSarsa, informer)))

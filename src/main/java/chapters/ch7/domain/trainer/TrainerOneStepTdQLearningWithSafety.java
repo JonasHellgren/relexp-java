@@ -89,11 +89,11 @@ public class TrainerOneStepTdQLearningWithSafety implements TrainerGridI {
     }
 
     private static double getLearningRate(int ei, TrainerGridDependencies d) {
-        return d.getLearningRateDecay().calcOut(ei);
+        return d.lrDecay().calcOut(ei);
     }
 
     private static double getProbRandom(int ei, TrainerGridDependencies d) {
-        return d.getProbDecay().calcOut(ei);
+        return d.probRandomDecay().calcOut(ei);
     }
 
     private void logFractionCorrected(List<ExperienceGridCorrectedAction> experiences) {

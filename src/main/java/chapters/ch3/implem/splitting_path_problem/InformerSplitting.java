@@ -21,6 +21,7 @@ public class InformerSplitting implements InformerGridParamsI {
         return new InformerSplitting(parameters);
     }
 
+    @Override
     public void validateStateAndAction(StateGrid s, ActionGrid a) {
         Preconditions.checkArgument(isValidState(s), "invalid state=" + s);
         Preconditions.checkArgument(isValidAction(a), "invalid action=" + a);
@@ -46,52 +47,49 @@ public class InformerSplitting implements InformerGridParamsI {
         return parameters.validActions();
     }
 
+    @Override
     public boolean isTerminalNonFail(StateGrid state) {
         return parameters.terminalNonFailsStates().contains(state);
     }
 
+    @Override
     public boolean isFail(StateGrid state) {
         return parameters.failStates().contains(state);
     }
 
+    @Override
     public boolean isWall(StateGrid state) {
         return parameters.wallStates().contains(state);
     }
 
+    @Override
     public Double rewardAtTerminalPos(StateGrid state) {
         validateTerminalState(state);
         return (isFail(state)) ? 0 : parameters.rewardAtGoalPos().apply(state);
     }
 
+    @Override
     public Double rewardMove() {
         return parameters.rewardMove();
     }
 
-
+    @Override
     public boolean isValidState(StateGrid state) {
         return state.x() >= parameters.posXMinMax().getFirst() && state.x() <= parameters.posXMinMax().getSecond() &&
                 state.y() >= parameters.posYMinMax().getFirst() && state.y() <= parameters.posYMinMax().getSecond();
     }
 
+    @Override
     public boolean isValidAction(ActionGrid action) {
         return parameters.validActions().contains(action);
     }
 
-
-    public boolean isAtSplit(StateGrid s) {
-        return parameters.splitState().contains(s);
-    }
-
-    public HashSet<StateGrid> getAllStates() {
-        var allStates = new HashSet<>(parameters.statesExceptSplit());
-        allStates.add(parameters.splitState().iterator().next());
-        return allStates;
-    }
-
+    @Override
     public boolean isTerminal(StateGrid state) {
         return isTerminalNonFail(state) || isFail(state);
     }
 
+    @Override
     public void validateTerminalState(StateGrid state) {
         boolean terminal = isTerminalNonFail(state) || isFail(state);
         Preconditions.checkArgument(terminal, "invalid state="+ state +", shall be terminal");
@@ -106,5 +104,17 @@ public class InformerSplitting implements InformerGridParamsI {
     public PosXyInt xyMax() {
         return PosXyInt.of(parameters.posXMinMax().getSecond(), parameters.posYMinMax().getSecond());
     }
+
+
+    public boolean isAtSplit(StateGrid s) {
+        return parameters.splitState().contains(s);
+    }
+
+    public HashSet<StateGrid> getAllStates() {
+        var allStates = new HashSet<>(parameters.statesExceptSplit());
+        allStates.add(parameters.splitState().iterator().next());
+        return allStates;
+    }
+
 
 }

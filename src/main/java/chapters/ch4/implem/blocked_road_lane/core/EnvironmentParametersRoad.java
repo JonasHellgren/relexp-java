@@ -14,8 +14,6 @@ import java.util.Set;
 
 /**
  * This class represents the parameters for a road environment in the BlockedRoadLane domain.
- * It extends the GridParametersI interface, which is used to define the parameters for a grid environment.
- * Actual values are defined in the AgentGridParametersFactoryRoad class.
  */
 @Builder
 @With

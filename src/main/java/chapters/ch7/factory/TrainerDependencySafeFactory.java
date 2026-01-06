@@ -28,16 +28,18 @@ public class TrainerDependencySafeFactory {
 
     public static TrainerGridDependencies treasure(int nEpisodes, double learningRateStart, double probRandStart) {
         var envParams = EnvironmentParametersTreasureFactor.produce();
-        var informer= InformerTreasure.create(envParams);
+        var informer = InformerTreasure.create(envParams);
         var environment = EnvironmentTreasure.of(envParams);
         var startStateSupplier = StartStateSupplierTreasureMostLeft.create();
-        return TrainerGridDependencies.builder()
-                .agent(AgentQLearningGrid.of(agentGridParameters(), informer))
-                .environment(environment)
-                .trainerParameters(trainerGridParameters(nEpisodes, learningRateStart,probRandStart))
-                .startStateSupplier(startStateSupplier)
-                .informerParams(informer)
-                .build();
+
+        var baseDep = TrainerGridDependencies.of(
+                AgentQLearningGrid.of(agentGridParameters(), informer),
+                environment,
+                trainerGridParameters(nEpisodes, learningRateStart, probRandStart),
+                startStateSupplier,
+                informer);
+        return baseDep;
+
     }
 
     private static AgentGridParameters agentGridParameters() {
@@ -54,8 +56,8 @@ public class TrainerDependencySafeFactory {
                 .withEnvironmentName(EnvironmentTreasure.NAME)
                 .withPenaltyActionCorrection(-1)
                 .withNStepsMax(100)
-                .withLearningRateStartAndEnd(Pair.create(learningRateStart, learningRateStart* K_LEARNING_RATE_END))
-                .withProbRandomActionStartAndEnd(Pair.create(probRandStart, probRandStart* K_PROB_END))
+                .withLearningRateStartAndEnd(Pair.create(learningRateStart, learningRateStart * K_LEARNING_RATE_END))
+                .withProbRandomActionStartAndEnd(Pair.create(probRandStart, probRandStart * K_PROB_END))
                 .withNEpisodes(nEpisodes);
     }
 

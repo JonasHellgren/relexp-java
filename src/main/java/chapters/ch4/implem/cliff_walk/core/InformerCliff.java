@@ -1,7 +1,6 @@
 package chapters.ch4.implem.cliff_walk.core;
 
 import chapters.ch4.domain.param.InformerGridParamsI;
-import chapters.ch4.implem.blocked_road_lane.core.EnvironmentParametersRoad;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.pos.PosXyInt;
@@ -30,7 +29,7 @@ public class InformerCliff implements InformerGridParamsI {
 
     @Override
     public String environmentName() {
-        return EnvironmentRoad.NAME;
+        return EnvironmentCliff.NAME;
     }
 
     @Override
