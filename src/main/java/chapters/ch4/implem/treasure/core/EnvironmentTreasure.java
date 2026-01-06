@@ -14,11 +14,10 @@ import lombok.Getter;
 public class EnvironmentTreasure implements EnvironmentGridI {
 
     public static final String NAME="Treasure";
-    private final EnvironmentGridParametersI parameters;
-    private final InformerGridParamsI informer;
+    private final InformerTreasure informer;
 
     public static EnvironmentTreasure of(EnvironmentParametersTreasure parameters) {
-        return new EnvironmentTreasure(parameters,InformerTreasure.create(parameters));
+        return new EnvironmentTreasure(InformerTreasure.create(parameters));
     }
 
     @Override
@@ -35,10 +34,10 @@ public class EnvironmentTreasure implements EnvironmentGridI {
      */
     @Override
     public StepReturnGrid step(StateGrid s, ActionGrid a) {
-        parameters.validateStateAndAction(s,a);
+        informer.validateStateAndAction(s,a);
         var sNext = getNextState(s, a);
-        var isFail = parameters.isFail(sNext);
-        var isTerminal = parameters.isTerminalNonFail(sNext) || isFail;
+        var isFail = informer.isFail(sNext);
+        var isTerminal = informer.isTerminalNonFail(sNext) || isFail;
         var reward = calculateReward(sNext,isTerminal);
         return StepReturnGrid.builder()
                 .sNext(sNext)
@@ -54,17 +53,19 @@ public class EnvironmentTreasure implements EnvironmentGridI {
     }
 
     private StateGrid getNextState(StateGrid s, ActionGrid a) {
-        var sAfterActionApplied = s.ofApplyingAction(a).clip(parameters);
+        var xyMin=informer.xyMin();
+        var xyMax=informer.xyMax();
+        var sAfterActionApplied = s.ofApplyingAction(a).clip(xyMin,xyMax);
         return stateNotPositionedAtWall(s, sAfterActionApplied);
     }
 
     private StateGrid stateNotPositionedAtWall(StateGrid s, StateGrid sAfterActionApplied) {
-        return parameters.isWall(sAfterActionApplied) ? s : sAfterActionApplied;
+        return informer.isWall(sAfterActionApplied) ? s : sAfterActionApplied;
     }
 
     private double calculateReward(StateGrid sNext, boolean isTerminal) {
-        double rTerminal=isTerminal ? parameters.rewardAtTerminalPos(sNext):0;
-        return rTerminal+parameters.rewardMove();
+        double rTerminal=isTerminal ? informer.rewardAtTerminalPos(sNext):0;
+        return rTerminal+informer.rewardMove();
     }
 
 

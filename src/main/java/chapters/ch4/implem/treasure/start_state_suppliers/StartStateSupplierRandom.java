@@ -3,6 +3,7 @@ package chapters.ch4.implem.treasure.start_state_suppliers;
 import chapters.ch4.domain.start_state_supplier.StartStateGridSupplierI;
 import chapters.ch4.implem.treasure.core.EnvironmentParametersTreasure;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
+import chapters.ch4.implem.treasure.core.InformerTreasure;
 import core.foundation.util.rand.RandUtils;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
@@ -27,8 +28,9 @@ public class StartStateSupplierRandom implements StartStateGridSupplierI {
 
     @Override
     public StateGrid getStartState() {
-        var posXMinMax= parameters.getPosXMinMax();
-        var posYMinMax= parameters.getPosYMinMax();
+        var informer= InformerTreasure.create(parameters);
+        var posXMinMax= informer.getPosXMinMax();
+        var posYMinMax= informer.getPosYMinMax();
 
         boolean isNotValid = true;
         int x = 0;
@@ -37,7 +39,7 @@ public class StartStateSupplierRandom implements StartStateGridSupplierI {
             x = RandUtils.getRandomIntNumber(posXMinMax.getFirst(), posXMinMax.getSecond() - 1);
             y = RandUtils.getRandomIntNumber(posYMinMax.getFirst(), posYMinMax.getSecond() - 1);
             StateGrid state = StateGrid.of(x, y);
-            isNotValid = parameters.isTerminalNonFail(state) || parameters.isWall(state) || parameters.isFail(state);
+            isNotValid = informer.isTerminalNonFail(state) || informer.isWall(state) || informer.isFail(state);
         } while (isNotValid);
 
         return StateGrid.of(x,y);

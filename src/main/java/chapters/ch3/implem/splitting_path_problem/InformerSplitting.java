@@ -97,10 +97,12 @@ public class InformerSplitting implements InformerGridParamsI {
         Preconditions.checkArgument(terminal, "invalid state="+ state +", shall be terminal");
     }
 
+    @Override
     public PosXyInt xyMin() {
         return PosXyInt.of(parameters.posXMinMax().getFirst(), parameters.posYMinMax().getFirst());
     }
 
+    @Override
     public PosXyInt xyMax() {
         return PosXyInt.of(parameters.posXMinMax().getSecond(), parameters.posYMinMax().getSecond());
     }

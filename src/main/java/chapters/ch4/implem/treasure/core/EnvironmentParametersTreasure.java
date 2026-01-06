@@ -7,6 +7,7 @@ import core.gridrl.StateGrid;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.With;
 import org.apache.commons.math3.util.Pair;
 
 import java.util.List;
@@ -20,24 +21,26 @@ import java.util.function.Function;
  * methods for validating states and actions, determining terminal and fail states,
  * and calculating rewards.
  */
-@Getter
 @Builder
-@Setter
-public class EnvironmentParametersTreasure implements EnvironmentGridParametersI {
+@With
+public record EnvironmentParametersTreasure (
+     Pair<Integer, Integer> posXMinMax,
+     Pair<Integer, Integer> posYMinMax,
+     List<ActionGrid> validActions,
+     Set<StateGrid> terminalNonFailsStates,
+     Set<StateGrid> failStates,
+     Set<StateGrid> wallStates,
+     Double rewardAtFailPos,
+     Function<StateGrid, Double> rewardAtGoalPos,
+     Double rewardMove)
+
+{}
+
+/*
+    //TODO nedan veck
 
     public static final String NAME="treasure";
 
-    private Pair<Integer, Integer> posXMinMax;
-    private Pair<Integer, Integer> posYMinMax;
-    private List<ActionGrid> validActions;
-    private Set<StateGrid> terminalNonFailsStates;
-    private Set<StateGrid> failStates;
-    private Set<StateGrid> wallStates;
-    private Double rewardAtFailPos;
-    private Function<StateGrid, Double> rewardAtGoalPos;
-    private Double rewardMove;
-
-    //TODO nedan veck
 
     @Override
     public void validateStateAndAction(StateGrid s, ActionGrid a) {
@@ -88,5 +91,6 @@ public class EnvironmentParametersTreasure implements EnvironmentGridParametersI
         return validActions.contains(action);
     }
 
+*/
 
-}
+

@@ -92,8 +92,8 @@ public class TrainerDependenciesFactory {
     public static TrainerDependenciesMultiStep treasure(int backupHorizon, int nEpisodes, double learningRateStart) {
         var agent = AgentGridMultiStepFactory.createTreasure();
         var parametersTreasure = EnvironmentParametersTreasureFactor.produce();
-        parametersTreasure.setRewardAtFailPos(0d);  //no penalty for sarsa (on-policy learning)
-        parametersTreasure.setRewardMove(REWARD_MOVE_SMALL_PEN);
+        parametersTreasure=parametersTreasure.withRewardAtFailPos(0d);  //no penalty for sarsa (on-policy learning)
+        parametersTreasure=parametersTreasure.withRewardMove(REWARD_MOVE_SMALL_PEN);
         var environment = EnvironmentTreasure.of(parametersTreasure);
         var trainerParameters = TrainerParametersMultiStepGrid.builder()
                 .nStepsMax(100)

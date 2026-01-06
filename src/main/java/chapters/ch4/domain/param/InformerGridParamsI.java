@@ -1,6 +1,7 @@
 package chapters.ch4.domain.param;
 
 import com.google.common.base.Preconditions;
+import core.foundation.gadget.pos.PosXyInt;
 import core.gridrl.ActionGrid;
 import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
@@ -23,6 +24,8 @@ public interface InformerGridParamsI {
     boolean isValidAction(ActionGrid action);
     Double rewardAtTerminalPos(StateGrid state);
     Double rewardMove();
+    PosXyInt xyMin();
+    PosXyInt xyMax();
 
     default boolean isTerminal(StateGrid state) {
         return isTerminalNonFail(state) || isFail(state);
@@ -36,6 +39,5 @@ public interface InformerGridParamsI {
         boolean terminal = isTerminalNonFail(state) || isFail(state);
         Preconditions.checkArgument(terminal, "invalid state="+ state +", shall be terminal");
     }
-
 
 }

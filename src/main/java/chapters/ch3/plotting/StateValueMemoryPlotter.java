@@ -28,8 +28,6 @@ public class StateValueMemoryPlotter {
     StateValueMemoryGrid memory;
     EnvironmentParametersSplitting parameters;
 
-
-
     @SneakyThrows
     public void plotAndSaveStateValues(String filePath, String fileName, PlotConfig plotCfg) {
         HeatMapChart chart = getValueChart(plotCfg);

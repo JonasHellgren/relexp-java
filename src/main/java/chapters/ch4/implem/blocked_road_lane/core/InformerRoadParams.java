@@ -81,10 +81,12 @@ public class InformerRoadParams implements InformerGridParamsI {
         return par.validActions().contains(action);
     }
 
+    @Override
     public PosXyInt xyMin() {
         return PosXyInt.of(par.posXMinMax().getFirst(), par.posYMinMax().getFirst());
     }
 
+    @Override
     public PosXyInt xyMax() {
         return PosXyInt.of(par.posXMinMax().getSecond(), par.posYMinMax().getSecond());
     }
