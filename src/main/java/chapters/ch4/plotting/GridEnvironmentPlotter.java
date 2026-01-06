@@ -52,12 +52,12 @@ public class GridEnvironmentPlotter {
 
     private String[][] getValueData(int nRows, int nCols) {
         String[][] valueData = new String[nRows][nCols];
-        var params= environment.getParameters();
+        var informer= environment.informer();
         for (int y = 0; y < nRows; y++) {
             for (int x = 0; x < nCols; x++) {
                 var state = StateGrid.of(x, y);
                 var cellType= new CellType(
-                        params.isWall(state), params.isTerminal(state), params.isFail(state));
+                        informer.isWall(state), informer.isTerminal(state), informer.isFail(state));
                    valueData[y][x] = cellTypeMap.getOrDefault(cellType, ".");
             }
         }

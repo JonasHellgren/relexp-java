@@ -1,13 +1,14 @@
 package chapters.ch6.implem.treasure.agent;
 
 import chapters.ch4.domain.helper.ActionSelectorGrid;
-import chapters.ch4.domain.memory.MemoryGrid;
+import chapters.ch4.domain.memory.StateActionMemoryGrid;
 import chapters.ch4.domain.memory.StateActionGrid;
 import chapters.ch4.domain.param.AgentGridParameters;
+import chapters.ch4.implem.treasure.core.EnvironmentParametersTreasure;
+import chapters.ch4.implem.treasure.core.InformerTreasure;
 import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultGrid;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,18 +22,20 @@ import lombok.AllArgsConstructor;
 public class AgentGridMultiStepTreasure implements AgentGridMultiStepI {
 
     private  static final int ZERO_PROBABILITY = 0;
-    private final MemoryGrid memory;
+    private final StateActionMemoryGrid memory;
     private final ActionSelectorGrid actionSelector;
 
     public static AgentGridMultiStepTreasure of(AgentGridParameters agentParameters,
-                                                EnvironmentGridParametersI envParameters) {
+                                                EnvironmentParametersTreasure envParams) {
+        var informer= InformerTreasure.create(envParams);
+
         return new AgentGridMultiStepTreasure(
-                MemoryGrid.of(agentParameters,envParameters),
-                ActionSelectorGrid.of(envParameters));
+                StateActionMemoryGrid.of(agentParameters,informer),
+                ActionSelectorGrid.of(informer));
     }
 
     @Override
-    public MemoryGrid getMemory() {
+    public StateActionMemoryGrid getMemory() {
         return memory;
     }
 

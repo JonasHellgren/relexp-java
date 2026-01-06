@@ -1,6 +1,8 @@
 package core.gridrl;
 
 
+import chapters.ch4.domain.param.InformerGridParamsI;
+
 /**
  * Interface for a grid environment.
  */
@@ -27,5 +29,8 @@ public interface EnvironmentGridI {
      *
      * @return the parameters of the environment
      */
-    EnvironmentGridParametersI getParameters();
+    //EnvironmentGridParametersI getParameters();
+
+
+    InformerGridParamsI informer();
 }

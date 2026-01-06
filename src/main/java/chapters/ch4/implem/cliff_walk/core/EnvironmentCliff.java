@@ -1,5 +1,6 @@
 package chapters.ch4.implem.cliff_walk.core;
 
+import chapters.ch4.domain.param.InformerGridParamsI;
 import core.gridrl.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,9 +14,10 @@ public class EnvironmentCliff implements EnvironmentGridI {
 
     public static final String NAME = "Cliff";
     private final EnvironmentGridParametersI parameters;
+    private final InformerGridParamsI informer;
 
-    public static EnvironmentCliff of(EnvironmentGridParametersI gridParameters) {
-        return new EnvironmentCliff(gridParameters);
+    public static EnvironmentCliff of(EnvironmentParametersCliff gridParameters) {
+        return new EnvironmentCliff(gridParameters,InformerCliff.create(gridParameters));
     }
 
     @Override
@@ -41,6 +43,11 @@ public class EnvironmentCliff implements EnvironmentGridI {
                 .sNext(sNext).reward(reward)
                 .isFail(isFail).isTerminal(isTerminal)
                 .build();
+    }
+
+    @Override
+    public InformerGridParamsI informer() {
+        return informer;
     }
 
     private StateGrid getNextState(StateGrid s, ActionGrid a) {

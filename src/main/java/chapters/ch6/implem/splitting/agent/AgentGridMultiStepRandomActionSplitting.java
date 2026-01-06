@@ -1,6 +1,8 @@
 package chapters.ch6.implem.splitting.agent;
 
-import chapters.ch4.domain.memory.MemoryGrid;
+import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
+import chapters.ch3.implem.splitting_path_problem.InformerSplitting;
+import chapters.ch4.domain.memory.StateActionMemoryGrid;
 import chapters.ch4.domain.param.AgentGridParameters;
 import core.foundation.util.rand.RandUtils;
 import core.gridrl.ActionGrid;
@@ -14,13 +16,15 @@ import core.gridrl.StateGrid;
 
 public class AgentGridMultiStepRandomActionSplitting extends AgentGridMultiStepBestActionSplitting {
 
-    public AgentGridMultiStepRandomActionSplitting(EnvironmentGridParametersI gridParameters, MemoryGrid memory) {
-        super(gridParameters, memory);
+    public AgentGridMultiStepRandomActionSplitting(EnvironmentGridParametersI gridParameters, StateActionMemoryGrid memory) {
+        //super(gridParameters, memory);
+        super(memory);
     }
 
     public static AgentGridMultiStepRandomActionSplitting of(AgentGridParameters agentParameters,
-                                                             EnvironmentGridParametersI gridParameters) {
-        return new AgentGridMultiStepRandomActionSplitting(gridParameters, MemoryGrid.of(agentParameters, gridParameters));
+                                                             EnvironmentParametersSplitting gridParameters) {
+        var informer= InformerSplitting.create(gridParameters);
+        return new AgentGridMultiStepRandomActionSplitting(gridParameters, StateActionMemoryGrid.of(agentParameters, informer));
     }
 
 

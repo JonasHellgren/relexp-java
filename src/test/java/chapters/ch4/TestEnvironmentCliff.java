@@ -1,9 +1,9 @@
 package chapters.ch4;
 
 import chapters.ch4.implem.cliff_walk.core.EnvironmentCliff;
+import chapters.ch4.implem.cliff_walk.core.EnvironmentParametersCliff;
 import chapters.ch4.implem.cliff_walk.factory.FactoryEnvironmentParametersCliff;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import core.gridrl.StepReturnGrid;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestEnvironmentCliff {
 
     private EnvironmentCliff environment;
-    private EnvironmentGridParametersI parameters;
+    private EnvironmentParametersCliff parameters;
     StateGrid state00;
     ActionGrid actionN,actionE, actionS, actionW;
 
 
     @BeforeEach
     void setUp() {
-        parameters = FactoryEnvironmentParametersCliff.produceCliff();
+        parameters = FactoryEnvironmentParametersCliff.produce();
         environment = EnvironmentCliff.of(parameters);
         state00 = StateGrid.of(0,0);
         actionN = ActionGrid.N;

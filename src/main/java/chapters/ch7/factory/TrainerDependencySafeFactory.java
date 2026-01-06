@@ -5,6 +5,7 @@ import chapters.ch4.domain.param.AgentGridParameters;
 import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
 import chapters.ch4.domain.trainer.param.TrainerGridParameters;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
+import chapters.ch4.implem.treasure.core.InformerTreasure;
 import chapters.ch4.implem.treasure.factory.EnvironmentParametersTreasureFactor;
 import chapters.ch4.implem.treasure.start_state_suppliers.StartStateSupplierTreasureMostLeft;
 import lombok.experimental.UtilityClass;
@@ -27,13 +28,15 @@ public class TrainerDependencySafeFactory {
 
     public static TrainerGridDependencies treasure(int nEpisodes, double learningRateStart, double probRandStart) {
         var envParams = EnvironmentParametersTreasureFactor.produce();
+        var informer= InformerTreasure.create(envParams);
         var environment = EnvironmentTreasure.of(envParams);
         var startStateSupplier = StartStateSupplierTreasureMostLeft.create();
         return TrainerGridDependencies.builder()
-                .agent(AgentQLearningGrid.of(agentGridParameters(), envParams))
+                .agent(AgentQLearningGrid.of(agentGridParameters(), informer))
                 .environment(environment)
                 .trainerParameters(trainerGridParameters(nEpisodes, learningRateStart,probRandStart))
                 .startStateSupplier(startStateSupplier)
+                .informerParams(informer)
                 .build();
     }
 

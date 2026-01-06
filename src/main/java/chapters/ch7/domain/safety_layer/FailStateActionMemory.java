@@ -46,7 +46,7 @@ public class FailStateActionMemory {
 
     public List<ActionGrid> getNonFailActions(StateGrid s) {
         List<ActionGrid> validActions = new ArrayList<>(
-                dependencies.environment().getParameters().getValidActions());
+                dependencies.environment().informer().getValidActions());
         for (StateActionGrid sa : failMemory) {
             if (sa.state().equals(s)) {
                 validActions.remove(sa.action());

@@ -2,6 +2,7 @@ package chapters.ch4.domain.trainer.core;
 
 
 import chapters.ch4.domain.agent.AgentGridI;
+import chapters.ch4.domain.param.InformerGridParamsI;
 import chapters.ch4.domain.start_state_supplier.StartStateGridSupplierI;
 import chapters.ch4.domain.trainer.param.TrainerGridParameters;
 import core.foundation.util.math.LogarithmicDecay;
@@ -23,14 +24,16 @@ public record TrainerGridDependencies(
         @NonNull AgentGridI agent,
         @NonNull EnvironmentGridI environment,
         @NonNull TrainerGridParameters trainerParameters,
-        @NonNull StartStateGridSupplierI startStateSupplier
+        @NonNull StartStateGridSupplierI startStateSupplier,
+        @NonNull InformerGridParamsI informerParams
 ) {
 
     public static TrainerGridDependencies of(AgentGridI agent,
                                              EnvironmentGridI environment,
                                              TrainerGridParameters trainerParameters,
-                                             StartStateGridSupplierI startStateSupplier) {
-    return new TrainerGridDependencies(agent, environment, trainerParameters, startStateSupplier);
+                                             StartStateGridSupplierI startStateSupplier,
+                                             InformerGridParamsI informerParams) {
+    return new TrainerGridDependencies(agent, environment, trainerParameters, startStateSupplier, informerParams);
     }
 
     public StateGrid getStartState() {
@@ -38,7 +41,7 @@ public record TrainerGridDependencies(
     }
 
     public boolean isTerminal(StateGrid s) {
-        return environment.getParameters().isTerminal(s);
+        return informerParams().isTerminal(s);
     }
 
     public int getNofEpisodes() {

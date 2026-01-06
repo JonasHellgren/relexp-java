@@ -1,10 +1,10 @@
 package chapters.ch4.domain.memory;
 
 import chapters.ch4.domain.param.AgentGridParameters;
+import chapters.ch4.domain.param.InformerGridParamsI;
 import com.google.common.base.Preconditions;
 import core.foundation.util.math.MyMathUtils;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import lombok.AllArgsConstructor;
 import java.util.Collections;
@@ -17,15 +17,15 @@ import java.util.stream.Collectors;
  * This class stores the value of each state-action pair and provides methods for reading and updating these values.
  */
 @AllArgsConstructor
-public class MemoryGrid {
+public class StateActionMemoryGrid {
 
     private final AgentGridParameters agentParameters;
-    private final EnvironmentGridParametersI gridParameters;
+    private final InformerGridParamsI informerParams;
     private final Map<StateActionGrid, Double> mapValue;
 
-    public static MemoryGrid of(AgentGridParameters agentParameters,
-                                EnvironmentGridParametersI gridParameters) {
-        return new MemoryGrid(agentParameters, gridParameters, new HashMap<>());
+    public static StateActionMemoryGrid of(AgentGridParameters agentParameters,
+                                           InformerGridParamsI informerParams) {
+        return new StateActionMemoryGrid(agentParameters, informerParams, new HashMap<>());
     }
 
     /**
@@ -67,7 +67,7 @@ public class MemoryGrid {
      * @return a map of actions to their values
      */
     public Map<ActionGrid, Double> readActionValuesInState(StateGrid state) {
-        return gridParameters.getValidActions().stream()
+        return informerParams.getValidActions().stream()
                 .collect(Collectors.toMap(
                         a -> a,
                         a -> read(StateActionGrid.of(state, a))));

@@ -6,6 +6,7 @@ import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
 import chapters.ch4.domain.trainer.core.TrainerOneStepTdQLearning;
 import chapters.ch4.domain.trainer.core.TrainerOneStepTdSarsa;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
+import chapters.ch4.implem.blocked_road_lane.core.InformerRoadParams;
 import chapters.ch4.implem.blocked_road_lane.factory.AgentGridParametersFactoryRoad;
 import chapters.ch4.implem.blocked_road_lane.factory.FactoryEnvironmentParametersRoad;
 import chapters.ch4.implem.blocked_road_lane.factory.TrainerParametersFactoryRoad;
@@ -34,20 +35,22 @@ class TestTrainersRoad {
         var agentParams = AgentGridParametersFactoryRoad.produceBase();
         var trainerParamsQL = TrainerParametersFactoryRoad.produceHighLearningRateAndExploration().withNEpisodes(100);
         var trainerParamsSarsa = TrainerParametersFactoryRoad.produceHighLearningLowExploration().withNEpisodes(100);
-
+        var informer= InformerRoadParams.create(envParams);
 
         var startStateSupplier = StartStateSupplierRoadMostLeftAnyLane.create();
         dependenciesQL = TrainerGridDependencies.builder()
-                .agent(AgentQLearningGrid.of(agentParams, envParams))
+                .agent(AgentQLearningGrid.of(agentParams, informer))
                 .environment(environment)
                 .trainerParameters(trainerParamsQL)
                 .startStateSupplier(startStateSupplier)
+                .informerParams(informer)
                 .build();
         dependenciesSarsa = TrainerGridDependencies.builder()
-                .agent(AgentSarsaGrid.of(agentParams, envParams))
+                .agent(AgentSarsaGrid.of(agentParams, informer))
                 .environment(environment)
                 .trainerParameters(trainerParamsSarsa)
                 .startStateSupplier(startStateSupplier)
+                .informerParams(informer)
                 .build();
 
         trainerQL = TrainerOneStepTdQLearning.of(dependenciesQL);

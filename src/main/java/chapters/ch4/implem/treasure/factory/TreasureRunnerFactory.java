@@ -3,7 +3,9 @@ package chapters.ch4.implem.treasure.factory;
 import chapters.ch4.domain.agent.AgentQLearningGrid;
 import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
 import chapters.ch4.domain.trainer.core.TrainerOneStepTdQLearning;
+import chapters.ch4.implem.cliff_walk.core.InformerCliff;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
+import chapters.ch4.implem.treasure.core.InformerTreasure;
 import chapters.ch4.implem.treasure.start_state_suppliers.StartStateSupplierTreasureMostLeft;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -39,6 +41,8 @@ public class TreasureRunnerFactory {
 
     public static Dependencies produceDependencies() {
         var envParams = EnvironmentParametersTreasureFactor.produce();
+        var informer= InformerTreasure.create(envParams);
+
         var environment = EnvironmentTreasure.of(envParams);
         var agentParam = FactoryAgentGridParametersTreasure.produceBase();
 //        var agentParamHighExp = FactoryAgentGridParametersTreasure.produceHighExp();
@@ -47,16 +51,18 @@ public class TreasureRunnerFactory {
         //var trainerParams = FactoryTrainerParametersTreasure.produceTinyEpisodes();
         var startStateSupplier = StartStateSupplierTreasureMostLeft.create();
         var lowExpDep = TrainerGridDependencies.builder()
-                .agent(AgentQLearningGrid.of(agentParam, envParams))
+                .agent(AgentQLearningGrid.of(agentParam, informer))
                 .environment(environment)
                 .trainerParameters(trainerParamsLowExp)
                 .startStateSupplier(startStateSupplier)
+                .informerParams(informer)
                 .build();
         var highExpDep = TrainerGridDependencies.builder()
-                .agent(AgentQLearningGrid.of(agentParam, envParams))
+                .agent(AgentQLearningGrid.of(agentParam, informer))
                 .environment(environment)
                 .trainerParameters(trainerParamsHighExp)
                 .startStateSupplier(startStateSupplier)
+                .informerParams(informer)
                 .build();
 //        var agentHighExp = AgentQLearningGrid.of(agentParamHighExp, envParams);
         return Dependencies.builder()

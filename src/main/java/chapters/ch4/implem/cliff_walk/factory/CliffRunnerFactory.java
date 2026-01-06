@@ -6,7 +6,7 @@ import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
 import chapters.ch4.domain.trainer.core.TrainerOneStepTdQLearning;
 import chapters.ch4.domain.trainer.core.TrainerOneStepTdSarsa;
 import chapters.ch4.implem.cliff_walk.core.EnvironmentCliff;
-import chapters.ch4.implem.cliff_walk.core.EnvironmentParametersCliff;
+import chapters.ch4.implem.cliff_walk.core.InformerCliff;
 import chapters.ch4.implem.cliff_walk.start_state_suppliers.StartStateSupplierCliffXis0RandomY;
 import lombok.Builder;
 import lombok.experimental.UtilityClass;
@@ -41,21 +41,23 @@ public class CliffRunnerFactory {
     }
 
     public static Dependencies produceDependencies() {
-        EnvironmentParametersCliff envParams = FactoryEnvironmentParametersCliff.produceCliff();
+        var envParams = FactoryEnvironmentParametersCliff.produce();
+        var informer= InformerCliff.create(envParams);
         var environment = EnvironmentCliff.of(envParams);
         var agentParamsQL = AgentGridParametersFactoryCliff.sutton();
         var agentParamsSarsa = AgentGridParametersFactoryCliff.sutton();
         var trainerParams = TrainerParametersFactoryCliff.produceManyEpisodes();
         var startStateSupplier = StartStateSupplierCliffXis0RandomY.of(environment);
         var baseDep = TrainerGridDependencies.builder()
-                .agent(AgentQLearningGrid.of(agentParamsQL, envParams))
+                .agent(AgentQLearningGrid.of(agentParamsQL, informer))
                 .environment(environment)
                 .trainerParameters(trainerParams)
                 .startStateSupplier(startStateSupplier)
+                .informerParams(informer)
                 .build();
         return Dependencies.builder()
                 .qlearning(baseDep)
-                .sarsa(baseDep.withAgent(AgentSarsaGrid.of(agentParamsSarsa, envParams)))
+                .sarsa(baseDep.withAgent(AgentSarsaGrid.of(agentParamsSarsa, informer)))
                 .build();
     }
 

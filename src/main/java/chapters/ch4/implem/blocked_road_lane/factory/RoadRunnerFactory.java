@@ -4,6 +4,7 @@ import chapters.ch4.domain.agent.AgentQLearningGrid;
 import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
 import chapters.ch4.domain.trainer.core.TrainerOneStepTdQLearning;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
+import chapters.ch4.implem.blocked_road_lane.core.InformerRoadParams;
 import chapters.ch4.implem.blocked_road_lane.start_state_suppliers.StartStateSupplierRoadMostLeftAnyLane;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -51,6 +52,7 @@ public class RoadRunnerFactory {
         var environment = EnvironmentRoad.of(envParams);
         var envParamsStochasticReward = FactoryEnvironmentParametersRoad.produceRoadRandomReward();
         var environmentStochastic = EnvironmentRoad.of(envParamsStochasticReward);
+        var informerPar= InformerRoadParams.create(envParams);
 
         var agentParamsQL = AgentGridParametersFactoryRoad.produceBase();
         var agentParamsQLDiscD9 = AgentGridParametersFactoryRoad.produceDiscD9();
@@ -59,15 +61,16 @@ public class RoadRunnerFactory {
 
         var startStateSupplier = StartStateSupplierRoadMostLeftAnyLane.create();
         TrainerGridDependencies baseDep = TrainerGridDependencies.builder()
-                .agent(AgentQLearningGrid.of(agentParamsQL, envParams))
+                .agent(AgentQLearningGrid.of(agentParamsQL, informerPar))
                 .environment(environment)
                 .trainerParameters(trainerParamsHighLearnHighExp)
                 .startStateSupplier(startStateSupplier)
+                .informerParams(informerPar)
                 .build();
         return Dependencies.builder()
                 .qlHighLearning(baseDep)
                 .qlLowLearning(baseDep.withTrainerParameters(trainerParamsLowLearnHighExp))
-                .qlHighLearningDiscD9(baseDep.withAgent(AgentQLearningGrid.of(agentParamsQLDiscD9, envParams)))
+                .qlHighLearningDiscD9(baseDep.withAgent(AgentQLearningGrid.of(agentParamsQLDiscD9, informerPar)))
                 .qlStochasticFailReward(baseDep.withEnvironment(environmentStochastic))
                 .build();
     }

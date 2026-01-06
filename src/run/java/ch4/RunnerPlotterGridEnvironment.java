@@ -23,7 +23,7 @@ public class RunnerPlotterGridEnvironment {
     private static List<EnvironmentGridI> getEnvironments() {
         return List.of(
                 EnvironmentRoad.of(FactoryEnvironmentParametersRoad.produceRoadFixedFailReward()),
-                EnvironmentCliff.of(FactoryEnvironmentParametersCliff.produceCliff()),
+                EnvironmentCliff.of(FactoryEnvironmentParametersCliff.produce()),
                 EnvironmentTreasure.of(EnvironmentParametersTreasureFactor.produce())
         );
     }

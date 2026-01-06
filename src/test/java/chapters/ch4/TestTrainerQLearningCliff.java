@@ -4,7 +4,7 @@ import chapters.ch4.domain.agent.AgentQLearningGrid;
 import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
 import chapters.ch4.domain.trainer.core.TrainerOneStepTdQLearning;
 import chapters.ch4.implem.cliff_walk.core.EnvironmentCliff;
-import chapters.ch4.implem.cliff_walk.core.EnvironmentParametersCliff;
+import chapters.ch4.implem.cliff_walk.core.InformerCliff;
 import chapters.ch4.implem.cliff_walk.factory.AgentGridParametersFactoryCliff;
 import chapters.ch4.implem.cliff_walk.factory.FactoryEnvironmentParametersCliff;
 import chapters.ch4.implem.cliff_walk.factory.TrainerParametersFactoryCliff;
@@ -28,17 +28,19 @@ public class TestTrainerQLearningCliff {
 
     @BeforeAll
     static void setUp() {
-        var envParams = FactoryEnvironmentParametersCliff.produceCliff();
+        var envParams = FactoryEnvironmentParametersCliff.produce();
+        var informer= InformerCliff.create(envParams);
         var environment = EnvironmentCliff.of(envParams);
         var agentParamsQL = AgentGridParametersFactoryCliff.produceBase();
         var trainerParams = TrainerParametersFactoryCliff.produceHighLearningRateAndExploration()
                 .withNEpisodes(N_EPISODES);
         var startStateSupplier = StartStateSupplierCliffLowerLeft.create();
         dependenciesQL = TrainerGridDependencies.builder()
-                .agent(AgentQLearningGrid.of(agentParamsQL, envParams))
+                .agent(AgentQLearningGrid.of(agentParamsQL, informer))
                 .environment(environment)
                 .trainerParameters(trainerParams)
                 .startStateSupplier(startStateSupplier)
+                .informerParams(informer)
                 .build();
         trainerQL = TrainerOneStepTdQLearning.of(dependenciesQL);
         trainerQL.train();

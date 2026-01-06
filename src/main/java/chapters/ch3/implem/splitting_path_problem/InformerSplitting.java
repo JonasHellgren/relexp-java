@@ -1,16 +1,19 @@
 package chapters.ch3.implem.splitting_path_problem;
 
+import chapters.ch4.domain.param.InformerGridParamsI;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.pos.PosXyInt;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.apache.commons.math3.util.Pair;
 
 import java.util.HashSet;
+import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class InformerSplitting {
+public class InformerSplitting implements InformerGridParamsI {
 
     EnvironmentParametersSplitting parameters;
 
@@ -25,6 +28,22 @@ public class InformerSplitting {
 
     public String environmentName() {
         return "SplittingPath";
+    }
+
+    @Override
+    public Pair<Integer, Integer> getPosXMinMax() {
+        return parameters.getPosXMinMax();
+    }
+
+    @Override
+    public Pair<Integer, Integer> getPosYMinMax() {
+        return parameters.getPosYMinMax();
+    }
+
+
+    @Override
+    public List<ActionGrid> getValidActions() {
+        return parameters.getValidActions();
     }
 
     public boolean isTerminalNonFail(StateGrid state) {
@@ -73,7 +92,7 @@ public class InformerSplitting {
         return isTerminalNonFail(state) || isFail(state);
     }
 
-    void validateTerminalState(StateGrid state) {
+    public void validateTerminalState(StateGrid state) {
         boolean terminal = isTerminalNonFail(state) || isFail(state);
         Preconditions.checkArgument(terminal, "invalid state="+ state +", shall be terminal");
     }

@@ -1,5 +1,6 @@
 package chapters.ch4.implem.treasure.core;
 
+import chapters.ch4.domain.param.InformerGridParamsI;
 import core.gridrl.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,9 +15,10 @@ public class EnvironmentTreasure implements EnvironmentGridI {
 
     public static final String NAME="Treasure";
     private final EnvironmentGridParametersI parameters;
+    private final InformerGridParamsI informer;
 
-    public static EnvironmentTreasure of(EnvironmentGridParametersI parameters) {
-        return new EnvironmentTreasure(parameters);
+    public static EnvironmentTreasure of(EnvironmentParametersTreasure parameters) {
+        return new EnvironmentTreasure(parameters,InformerTreasure.create(parameters));
     }
 
     @Override
@@ -44,6 +46,11 @@ public class EnvironmentTreasure implements EnvironmentGridI {
                 .isFail(isFail)
                 .isTerminal(isTerminal)
                 .build();
+    }
+
+    @Override
+    public InformerGridParamsI informer() {
+        return informer;
     }
 
     private StateGrid getNextState(StateGrid s, ActionGrid a) {

@@ -1,6 +1,7 @@
 package core.plotting.chart_plotting;
 
 import chapters.ch4.domain.agent.AgentGridI;
+import chapters.ch4.domain.param.InformerGridParamsI;
 import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.EnvironmentGridI;
@@ -90,8 +91,8 @@ public class GridAgentPlotter {
         return getStringTextChart(data, nCols, nRows, ARROW_TEXT_FONT);
     }
 
-    private static boolean isNoDecisionCell(EnvironmentGridParametersI parameters, StateGrid state) {
-        return parameters.isTerminal(state) || parameters.isWall(state);
+    private static boolean isNoDecisionCell(InformerGridParamsI informer, StateGrid state) {
+        return informer.isTerminal(state) || informer.isWall(state);
     }
 
     private HeatMapChart getValueChart() throws IOException {
@@ -111,14 +112,14 @@ public class GridAgentPlotter {
 
     private String[][] getStringData(int nRows, int nCols, boolean isShowValue) {
         String[][] valueData = new String[nRows][nCols];
-        var parameters = environment.getParameters();
+        var informer = environment.informer();
         for (int y = 0; y < nRows; y++) {
             for (int x = 0; x < nCols; x++) {
                 var state = StateGrid.of(x, y);
                 var stringToMaybeShow = isShowValue
                         ? getValueInStateAsString(state)
                         : getActionAsString(state);
-                valueData[y][x] = isNoDecisionCell(parameters, state)
+                valueData[y][x] = isNoDecisionCell(informer, state)
                         ? "."
                         : stringToMaybeShow;
             }

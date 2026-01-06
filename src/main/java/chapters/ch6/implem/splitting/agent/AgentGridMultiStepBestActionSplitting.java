@@ -1,12 +1,13 @@
 package chapters.ch6.implem.splitting.agent;
 
-import chapters.ch4.domain.memory.MemoryGrid;
+import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
+import chapters.ch3.implem.splitting_path_problem.InformerSplitting;
+import chapters.ch4.domain.memory.StateActionMemoryGrid;
 import chapters.ch4.domain.memory.StateActionGrid;
 import chapters.ch4.domain.param.AgentGridParameters;
 import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultGrid;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import lombok.AllArgsConstructor;
 
@@ -19,18 +20,16 @@ public class AgentGridMultiStepBestActionSplitting implements AgentGridMultiStep
 
     public static final ActionGrid DUMMY_ACTION = ActionGrid.E;
     public static final double DUMMY_PROB = 1.0;
-    EnvironmentGridParametersI gridParameters;
-    private final MemoryGrid memory;
+    private final StateActionMemoryGrid memory;
 
     public static AgentGridMultiStepBestActionSplitting of(AgentGridParameters agentParameters,
-                                                           EnvironmentGridParametersI gridParameters) {
+                                                           EnvironmentParametersSplitting gridParameters) {
         return new AgentGridMultiStepBestActionSplitting(
-                gridParameters,
-                MemoryGrid.of(agentParameters,gridParameters));
+                StateActionMemoryGrid.of(agentParameters, InformerSplitting.create(gridParameters)));
     }
 
     @Override
-    public MemoryGrid getMemory() {
+    public StateActionMemoryGrid getMemory() {
         return memory;
     }
 

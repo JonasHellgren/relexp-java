@@ -31,6 +31,8 @@ public class EnvironmentParametersCliff implements EnvironmentGridParametersI {
     private Double rewardMove;
 
 
+    //TODO nedan VECK
+
     @Override
     public void validateStateAndAction(StateGrid s, ActionGrid a) {
         Preconditions.checkArgument(isValidState(s),"invalid state="+ s);

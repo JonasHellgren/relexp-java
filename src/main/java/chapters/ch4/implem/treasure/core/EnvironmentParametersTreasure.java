@@ -37,6 +37,8 @@ public class EnvironmentParametersTreasure implements EnvironmentGridParametersI
     private Function<StateGrid, Double> rewardAtGoalPos;
     private Double rewardMove;
 
+    //TODO nedan veck
+
     @Override
     public void validateStateAndAction(StateGrid s, ActionGrid a) {
         Preconditions.checkArgument(isValidState(s), "invalid state=" + s);

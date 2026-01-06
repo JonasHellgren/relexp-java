@@ -1,6 +1,8 @@
 package chapters.ch4;
 
+import chapters.ch4.implem.blocked_road_lane.core.EnvironmentParametersRoad;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
+import chapters.ch4.implem.blocked_road_lane.core.InformerRoadParams;
 import chapters.ch4.implem.blocked_road_lane.factory.FactoryEnvironmentParametersRoad;
 import core.gridrl.ActionGrid;
 import core.gridrl.EnvironmentGridParametersI;
@@ -14,9 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestEnvironmentRoad {
 
     private EnvironmentRoad environment;
-    private EnvironmentGridParametersI parameters;
+    private EnvironmentParametersRoad parameters;
     StateGrid state00;
     ActionGrid actionE, actionN;
+    InformerRoadParams informer;
 
 
     @BeforeEach
@@ -26,6 +29,7 @@ class TestEnvironmentRoad {
         state00 = StateGrid.of(0,0);
         actionE = ActionGrid.E;
         actionN = ActionGrid.N;
+        informer = InformerRoadParams.create(parameters);
     }
 
     @Test
@@ -63,7 +67,7 @@ class TestEnvironmentRoad {
     void moveToFailState_thenCorrect() {
         StateGrid state = StateGrid.of(2, 1);
         var sr = environment.step(state, actionE);
-        assertEquals(parameters.rewardAtTerminalPos(StateGrid.of(3, 1)),sr.reward());
+        assertEquals(informer.rewardAtTerminalPos(StateGrid.of(3, 1)),sr.reward());
         assertTrue(sr.isTerminal());
         assertTrue(sr.isFail());
     }
@@ -72,7 +76,7 @@ class TestEnvironmentRoad {
     void moveNorthInUpper_thenCorrect() {
         StateGrid state = StateGrid.of(1, 1);
         var sr = environment.step(state, actionN);
-        assertEquals(parameters.rewardMove(),sr.reward());
+        assertEquals(informer.rewardMove(),sr.reward());
         assertFalse(sr.isTerminal());
         assertEquals(StateGrid.of(2,1),sr.sNext());
     }

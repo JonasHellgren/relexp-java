@@ -1,13 +1,13 @@
 package chapters.ch4.domain.agent;
 
 import chapters.ch4.domain.helper.ActionSelectorGrid;
-import chapters.ch4.domain.memory.MemoryGrid;
+import chapters.ch4.domain.memory.StateActionMemoryGrid;
 import chapters.ch4.domain.param.AgentGridParameters;
+import chapters.ch4.domain.param.InformerGridParamsI;
 import chapters.ch4.domain.trainer.core.ExperienceGrid;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.training.ValueCalculator;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,14 +21,14 @@ public class AgentSarsaGrid implements AgentGridI {
 
     private  static final int ZERO_PROBABILITY = 0;
     private final AgentGridParameters agentParameters;
-    private final MemoryGrid memory;
+    private final StateActionMemoryGrid memory;
     private final ActionSelectorGrid actionSelector;
 
-    public static AgentSarsaGrid of(AgentGridParameters agentParameters, EnvironmentGridParametersI gridParameters) {
+    public static AgentSarsaGrid of(AgentGridParameters agentParameters, InformerGridParamsI informer) {
         return new AgentSarsaGrid(
                 agentParameters,
-                MemoryGrid.of(agentParameters, gridParameters),
-                ActionSelectorGrid.of(gridParameters));
+                StateActionMemoryGrid.of(agentParameters, informer),
+                ActionSelectorGrid.of(informer));
     }
 
     /**

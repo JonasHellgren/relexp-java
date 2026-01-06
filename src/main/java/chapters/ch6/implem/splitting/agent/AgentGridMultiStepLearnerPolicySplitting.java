@@ -1,13 +1,14 @@
 package chapters.ch6.implem.splitting.agent;
 
+import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
+import chapters.ch3.implem.splitting_path_problem.InformerSplitting;
 import chapters.ch4.domain.helper.ActionSelectorGrid;
-import chapters.ch4.domain.memory.MemoryGrid;
+import chapters.ch4.domain.memory.StateActionMemoryGrid;
 import chapters.ch4.domain.memory.StateActionGrid;
 import chapters.ch4.domain.param.AgentGridParameters;
 import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultGrid;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,14 +23,14 @@ public class AgentGridMultiStepLearnerPolicySplitting implements AgentGridMultiS
 
     private  static final int ZERO_PROBABILITY = 0;
     @Getter
-    private final MemoryGrid memory;
+    private final StateActionMemoryGrid memory;
     private final ActionSelectorGrid actionSelector;
 
     public static AgentGridMultiStepLearnerPolicySplitting of(AgentGridParameters agentParameters,
-                                                              EnvironmentGridParametersI envParameters) {
+                                                              EnvironmentParametersSplitting envParameters) {
         return new AgentGridMultiStepLearnerPolicySplitting(
-                MemoryGrid.of(agentParameters,envParameters),
-                ActionSelectorGrid.of(envParameters));
+                StateActionMemoryGrid.of(agentParameters, InformerSplitting.create(envParameters)),
+                ActionSelectorGrid.of(InformerSplitting.create(envParameters)));
     }
 
     @Override

@@ -1,9 +1,9 @@
 package chapters.ch4.domain.helper;
 
-import chapters.ch4.domain.memory.MemoryGrid;
+import chapters.ch4.domain.memory.StateActionMemoryGrid;
+import chapters.ch4.domain.param.InformerGridParamsI;
 import core.foundation.util.rand.RandUtils;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
@@ -17,10 +17,10 @@ import java.util.Map;
 @AllArgsConstructor
 public class ActionSelectorGrid {
 
-    private final EnvironmentGridParametersI gridParameters;
+    private final InformerGridParamsI informer;
 
-    public static ActionSelectorGrid of(EnvironmentGridParametersI gridParameters) {
-        return new ActionSelectorGrid(gridParameters);
+    public static ActionSelectorGrid of(InformerGridParamsI informerParams) {
+        return new ActionSelectorGrid(informerParams);
     }
 
     /**
@@ -34,7 +34,7 @@ public class ActionSelectorGrid {
      */
     public ActionGrid chooseActionEpsilonGreedy(StateGrid state,
                                                 double probRandom,
-                                                MemoryGrid memory) {
+                                                StateActionMemoryGrid memory) {
         return (RandomUtils.nextDouble(0, 1) < probRandom)
                 ? chooseActionRandom()
                 : chooseActionWithMaxValue(state, memory);
@@ -46,7 +46,7 @@ public class ActionSelectorGrid {
      * @return The chosen random action.
      */
     private ActionGrid chooseActionRandom() {
-        var validActions=gridParameters.getValidActions();
+        var validActions= informer.getValidActions();
         int randomIndex = RandUtils.getRandomIntNumber(0, validActions.size());
         return validActions.get(randomIndex);
     }
@@ -58,10 +58,10 @@ public class ActionSelectorGrid {
      * @param memory The memory grid containing state-action values.
      * @return The chosen action.
      */
-    private ActionGrid chooseActionWithMaxValue(StateGrid state, MemoryGrid memory) {
+    private ActionGrid chooseActionWithMaxValue(StateGrid state, StateActionMemoryGrid memory) {
         double maxValue = memory.getValueOfBestAction(state);
         Map<ActionGrid, Double> actionValueMap = memory.readActionValuesInState(state);
-        return gridParameters.getValidActions().stream()
+        return informer.getValidActions().stream()
                 .filter(action -> actionValueMap.get(action) == maxValue)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("No best action found"));

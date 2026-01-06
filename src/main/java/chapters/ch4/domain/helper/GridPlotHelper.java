@@ -37,11 +37,11 @@ public class GridPlotHelper {
     }
 
     public static int getNofRows(@NonNull EnvironmentGridI environment) {
-        return environment.getParameters().getPosYMinMax().getSecond() + 1;
+        return environment.informer().getPosYMinMax().getSecond() + 1;
     }
 
     public static Integer getNofCols(@NonNull EnvironmentGridI environment) {
-        return environment.getParameters().getPosXMinMax().getSecond()+1;
+        return environment.informer().getPosXMinMax().getSecond()+1;
     }
 
     public static double[] getXData(int nCols) {

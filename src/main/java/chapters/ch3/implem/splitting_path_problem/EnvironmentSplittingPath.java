@@ -1,5 +1,6 @@
 package chapters.ch3.implem.splitting_path_problem;
 
+import chapters.ch4.domain.param.InformerGridParamsI;
 import core.gridrl.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,6 +41,11 @@ public class EnvironmentSplittingPath implements EnvironmentGridI {
                 .isFail(isFail)
                 .isTerminal(isTerminal)
                 .build();
+    }
+
+    @Override
+    public InformerGridParamsI informer() {
+        return informer;
     }
 
     private StateGrid getNextState(StateGrid s, ActionGrid a) {

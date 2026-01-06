@@ -24,7 +24,7 @@ public class FactoryEnvironmentParametersCliff {
     public static final int MAX_X_CLIFF = 10;
     public static final int MAX_Y_CLIFF = 3;
 
-    public static EnvironmentParametersCliff produceCliff() {
+    public static EnvironmentParametersCliff produce() {
 
         Set<StateGrid> failStates = IntStream.rangeClosed(1, MAX_X_CLIFF-1)
                 .mapToObj(x -> StateGrid.of(x, MIN_Y_CLIFF))

@@ -1,5 +1,6 @@
 package chapters.ch4.implem.blocked_road_lane.core;
 
+import chapters.ch4.domain.param.InformerGridParamsI;
 import com.google.common.base.Preconditions;
 import core.foundation.util.cond.Conditionals;
 import core.gridrl.*;
@@ -15,12 +16,15 @@ import lombok.Getter;
 public class EnvironmentRoad implements EnvironmentGridI {
 
     public static final String NAME = "Road";
-    private final EnvironmentGridParametersI parameters;
+    private final EnvironmentParametersRoad parameters;
+    InformerRoadParams informer;
 
-    public static EnvironmentRoad of(EnvironmentGridParametersI gridParameters) {
+    public static EnvironmentRoad of(EnvironmentParametersRoad gridParameters) {
+/*
         Preconditions.checkArgument(gridParameters.environmentName().equals(NAME),
                 "grid parameters not matching environment");
-        return new EnvironmentRoad(gridParameters);
+*/
+        return new EnvironmentRoad(gridParameters,InformerRoadParams.create(gridParameters));
     }
 
     @Override
@@ -37,10 +41,10 @@ public class EnvironmentRoad implements EnvironmentGridI {
      */
     @Override
     public StepReturnGrid step(StateGrid s, ActionGrid a) {
-        parameters.validateStateAndAction(s, a);
+        informer.validateStateAndAction(s, a);
         var sNext = getNextState(s, a);
-        var isFail = parameters.isFail(sNext);
-        var isTerminal = parameters.isTerminalNonFail(sNext) || isFail;
+        var isFail = informer.isFail(sNext);
+        var isTerminal = informer.isTerminalNonFail(sNext) || isFail;
         var isMove = isMovingSouthOrNorth(a);
         var reward = getReward(sNext, isTerminal, isMove);
         return StepReturnGrid.builder()
@@ -49,15 +53,22 @@ public class EnvironmentRoad implements EnvironmentGridI {
                 .build();
     }
 
+    @Override
+    public InformerGridParamsI informer() {
+        return informer;
+    }
+
     private StateGrid getNextState(StateGrid s, ActionGrid a) {
         var xNext = s.x() + 1;
         var yNext = s.y() + a.deltaY();
-        return StateGrid.of(xNext, yNext).clip(parameters);
+        var xyMin=informer.xyMin();
+        var xyMax=informer.xyMax();
+        return StateGrid.of(xNext, yNext).clip(xyMin, xyMax);
     }
 
     private double getReward(StateGrid sNext, boolean isTerminal, boolean isMove) {
-        return Conditionals.numIfTrueElseZero.apply(isTerminal, parameters.rewardAtTerminalPos(sNext)) +
-                Conditionals.numIfTrueElseZero.apply(isMove, parameters.rewardMove());
+        return Conditionals.numIfTrueElseZero.apply(isTerminal, informer.rewardAtTerminalPos(sNext)) +
+                Conditionals.numIfTrueElseZero.apply(isMove, informer.rewardMove());
     }
 
     private boolean isMovingSouthOrNorth(ActionGrid a) {
