@@ -32,59 +32,59 @@ public class InformerSplitting implements InformerGridParamsI {
 
     @Override
     public Pair<Integer, Integer> getPosXMinMax() {
-        return parameters.getPosXMinMax();
+        return parameters.posXMinMax();
     }
 
     @Override
     public Pair<Integer, Integer> getPosYMinMax() {
-        return parameters.getPosYMinMax();
+        return parameters.posYMinMax();
     }
 
 
     @Override
     public List<ActionGrid> getValidActions() {
-        return parameters.getValidActions();
+        return parameters.validActions();
     }
 
     public boolean isTerminalNonFail(StateGrid state) {
-        return parameters.getTerminalNonFailsStates().contains(state);
+        return parameters.terminalNonFailsStates().contains(state);
     }
 
     public boolean isFail(StateGrid state) {
-        return parameters.getFailStates().contains(state);
+        return parameters.failStates().contains(state);
     }
 
     public boolean isWall(StateGrid state) {
-        return parameters.getWallStates().contains(state);
+        return parameters.wallStates().contains(state);
     }
 
     public Double rewardAtTerminalPos(StateGrid state) {
         validateTerminalState(state);
-        return (isFail(state)) ? 0 : parameters.getRewardAtGoalPos().apply(state);
+        return (isFail(state)) ? 0 : parameters.rewardAtGoalPos().apply(state);
     }
 
     public Double rewardMove() {
-        return parameters.getRewardMove();
+        return parameters.rewardMove();
     }
 
 
     public boolean isValidState(StateGrid state) {
-        return state.x() >= parameters.getPosXMinMax().getFirst() && state.x() <= parameters.getPosXMinMax().getSecond() &&
-                state.y() >= parameters.getPosYMinMax().getFirst() && state.y() <= parameters.getPosYMinMax().getSecond();
+        return state.x() >= parameters.posXMinMax().getFirst() && state.x() <= parameters.posXMinMax().getSecond() &&
+                state.y() >= parameters.posYMinMax().getFirst() && state.y() <= parameters.posYMinMax().getSecond();
     }
 
     public boolean isValidAction(ActionGrid action) {
-        return parameters.getValidActions().contains(action);
+        return parameters.validActions().contains(action);
     }
 
 
     public boolean isAtSplit(StateGrid s) {
-        return parameters.getSplitState().contains(s);
+        return parameters.splitState().contains(s);
     }
 
     public HashSet<StateGrid> getAllStates() {
-        var allStates = new HashSet<>(parameters.getStatesExceptSplit());
-        allStates.add(parameters.getSplitState().iterator().next());
+        var allStates = new HashSet<>(parameters.statesExceptSplit());
+        allStates.add(parameters.splitState().iterator().next());
         return allStates;
     }
 
@@ -98,11 +98,11 @@ public class InformerSplitting implements InformerGridParamsI {
     }
 
     public PosXyInt xyMin() {
-        return PosXyInt.of(parameters.getPosXMinMax().getFirst(), parameters.getPosYMinMax().getFirst());
+        return PosXyInt.of(parameters.posXMinMax().getFirst(), parameters.posYMinMax().getFirst());
     }
 
     public PosXyInt xyMax() {
-        return PosXyInt.of(parameters.getPosXMinMax().getSecond(), parameters.getPosYMinMax().getSecond());
+        return PosXyInt.of(parameters.posXMinMax().getSecond(), parameters.posYMinMax().getSecond());
     }
 
 }

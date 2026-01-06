@@ -13,11 +13,10 @@ import lombok.Getter;
 public class EnvironmentCliff implements EnvironmentGridI {
 
     public static final String NAME = "Cliff";
-    private final EnvironmentGridParametersI parameters;
-    private final InformerGridParamsI informer;
+    private final InformerCliff informer;
 
     public static EnvironmentCliff of(EnvironmentParametersCliff gridParameters) {
-        return new EnvironmentCliff(gridParameters,InformerCliff.create(gridParameters));
+        return new EnvironmentCliff(InformerCliff.create(gridParameters));
     }
 
     @Override
@@ -34,10 +33,10 @@ public class EnvironmentCliff implements EnvironmentGridI {
      */
     @Override
     public StepReturnGrid step(StateGrid s, ActionGrid a) {
-        parameters.validateStateAndAction(s,a);
+        informer.validateStateAndAction(s,a);
         var sNext = getNextState(s, a);
-        var isFail = parameters.isFail(sNext);
-        var isTerminal = parameters.isTerminalNonFail(sNext) || isFail;
+        var isFail = informer.isFail(sNext);
+        var isTerminal = informer.isTerminalNonFail(sNext) || isFail;
         var reward = getReward(sNext,isTerminal);
         return StepReturnGrid.builder()
                 .sNext(sNext).reward(reward)
@@ -51,12 +50,14 @@ public class EnvironmentCliff implements EnvironmentGridI {
     }
 
     private StateGrid getNextState(StateGrid s, ActionGrid a) {
-        return s.ofApplyingAction(a).clip(parameters);
+        var xyMin=informer.xyMin();
+        var xyMax=informer.xyMax();
+        return s.ofApplyingAction(a).clip(xyMin,xyMax);
     }
 
     private double getReward(StateGrid sNext, boolean isTerminal) {
-        double rTerminal=isTerminal ? parameters.rewardAtTerminalPos(sNext):0;
-        return rTerminal+parameters.rewardMove();
+        double rTerminal=isTerminal ? informer.rewardAtTerminalPos(sNext):0;
+        return rTerminal+informer.rewardMove();
     }
 
 

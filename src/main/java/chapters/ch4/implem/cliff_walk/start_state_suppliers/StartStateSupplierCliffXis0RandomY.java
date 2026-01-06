@@ -27,8 +27,8 @@ public class StartStateSupplierCliffXis0RandomY implements StartStateGridSupplie
 
     @Override
     public StateGrid getStartState() {
-        var parameters = environment.getParameters();
-        var yMinMax = parameters.getPosYMinMax();
+        var inf = environment.informer();
+        var yMinMax = inf.getPosYMinMax();
         int y = RandUtils.getRandomIntNumber(yMinMax.getFirst(), yMinMax.getSecond() - 1);
         return StateGrid.of(0, y);
     }

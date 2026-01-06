@@ -1,36 +1,33 @@
 package chapters.ch3.implem.splitting_path_problem;
 
-import com.google.common.base.Preconditions;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.With;
 import org.apache.commons.math3.util.Pair;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
-@Getter
 @Builder
 @With
-public class EnvironmentParametersSplitting implements EnvironmentGridParametersI {
+public record EnvironmentParametersSplitting (
 
-    private Pair<Integer, Integer> posXMinMax;
-    private Pair<Integer, Integer> posYMinMax;
-    private List<ActionGrid> validActions;
-    private Set<StateGrid> terminalNonFailsStates;
-    private Set<StateGrid> failStates;
-    private Set<StateGrid> wallStates;
-    private Set<StateGrid> splitState;
-    private Set<StateGrid> statesExceptSplit;
-    private Function<StateGrid, Double> rewardAtGoalPos;
-    private Double rewardAtFailPos;
-    private Double rewardMove;
+     Pair<Integer, Integer> posXMinMax,
+     Pair<Integer, Integer> posYMinMax,
+     List<ActionGrid> validActions,
+     Set<StateGrid> terminalNonFailsStates,
+     Set<StateGrid> failStates,
+     Set<StateGrid> wallStates,
+     Set<StateGrid> splitState,
+     Set<StateGrid> statesExceptSplit,
+     Function<StateGrid, Double> rewardAtGoalPos,
+     Double rewardAtFailPos,
+     Double rewardMove)
 
+{}
+/*
 
     //TODO NEDAN METODER VECK CH6
 
@@ -94,5 +91,5 @@ public class EnvironmentParametersSplitting implements EnvironmentGridParameters
         return allStates;
     }
 
+*/
 
-}

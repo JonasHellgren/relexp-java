@@ -4,6 +4,7 @@ import chapters.ch4.domain.param.InformerGridParamsI;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentParametersRoad;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import com.google.common.base.Preconditions;
+import core.foundation.gadget.pos.PosXyInt;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
@@ -21,7 +22,6 @@ public class InformerCliff implements InformerGridParamsI {
         return new InformerCliff(parameters);
     }
 
-
     @Override
     public void validateStateAndAction(StateGrid s, ActionGrid a) {
         Preconditions.checkArgument(isValidState(s),"invalid state="+ s);
@@ -35,27 +35,27 @@ public class InformerCliff implements InformerGridParamsI {
 
     @Override
     public Pair<Integer, Integer> getPosXMinMax() {
-        return par.getPosXMinMax();
+        return par.posXMinMax();
     }
 
     @Override
     public Pair<Integer, Integer> getPosYMinMax() {
-        return par.getPosYMinMax();
+        return par.posYMinMax();
     }
 
     @Override
     public List<ActionGrid> getValidActions() {
-        return par.getValidActions();
+        return par.validActions();
     }
 
     @Override
     public boolean isTerminalNonFail(StateGrid state) {
-        return par.getTerminalNonFailsStates().contains(state);
+        return par.terminalNonFailsStates().contains(state);
     }
 
     @Override
     public boolean isFail(StateGrid state) {
-        return par.getFailStates().contains(state);
+        return par.failStates().contains(state);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class InformerCliff implements InformerGridParamsI {
     @Override
     public Double rewardAtTerminalPos(StateGrid state) {
         validateTerminalState(state);
-        return (isFail(state)) ? par.getRewardAtFailPos() : par.getRewardAtGoalPos();
+        return (isFail(state)) ? par.rewardAtFailPos() : par.rewardAtGoalPos();
     }
 
     @Override
@@ -77,15 +77,23 @@ public class InformerCliff implements InformerGridParamsI {
 
     @Override
     public boolean isValidState(StateGrid state) {
-        return state.x() >= par.getPosXMinMax().getFirst() && state.x() <= par.getPosXMinMax().getSecond() &&
-                state.y() >= par.getPosYMinMax().getFirst() && state.y() <= par.getPosYMinMax().getSecond();
+        return state.x() >= par.posXMinMax().getFirst() && state.x() <= par.posXMinMax().getSecond() &&
+                state.y() >= par.posYMinMax().getFirst() && state.y() <= par.posYMinMax().getSecond();
     }
 
     @Override
     public boolean isValidAction(ActionGrid action) {
-        return par.getValidActions().contains(action);
+        return par.validActions().contains(action);
     }
 
+
+    public PosXyInt xyMin() {
+        return PosXyInt.of(par.posXMinMax().getFirst(), par.posYMinMax().getFirst());
+    }
+
+    public PosXyInt xyMax() {
+        return PosXyInt.of(par.posXMinMax().getSecond(), par.posYMinMax().getSecond());
+    }
 
 
 }

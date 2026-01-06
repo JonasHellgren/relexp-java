@@ -16,7 +16,7 @@ import core.gridrl.StateGrid;
 
 public class AgentGridMultiStepRandomActionSplitting extends AgentGridMultiStepBestActionSplitting {
 
-    public AgentGridMultiStepRandomActionSplitting(EnvironmentGridParametersI gridParameters, StateActionMemoryGrid memory) {
+    public AgentGridMultiStepRandomActionSplitting(StateActionMemoryGrid memory) {
         //super(gridParameters, memory);
         super(memory);
     }
@@ -24,7 +24,7 @@ public class AgentGridMultiStepRandomActionSplitting extends AgentGridMultiStepB
     public static AgentGridMultiStepRandomActionSplitting of(AgentGridParameters agentParameters,
                                                              EnvironmentParametersSplitting gridParameters) {
         var informer= InformerSplitting.create(gridParameters);
-        return new AgentGridMultiStepRandomActionSplitting(gridParameters, StateActionMemoryGrid.of(agentParameters, informer));
+        return new AgentGridMultiStepRandomActionSplitting(StateActionMemoryGrid.of(agentParameters, informer));
     }
 
 

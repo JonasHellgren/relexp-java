@@ -27,7 +27,7 @@ class TestSplittingPathPolicyRandom {
 
     @Test
     void givenRandomPosExceptSplit_whenStepping_thenCorrect() {
-        var stateSet=parameters.getStatesExceptSplit();
+        var stateSet=parameters.statesExceptSplit();
         var anyFromSet= SetUtils.getAnyFromSet(stateSet);
         var sNext = getsNext(anyFromSet);
         var sNextExpected = StateGrid.of(anyFromSet.x()+1,anyFromSet.y());

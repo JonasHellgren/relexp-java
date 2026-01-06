@@ -28,14 +28,14 @@ public class StartStateSupplierCliffRandomNotTerminal implements StartStateGridS
     @Override
     public StateGrid getStartState() {
         var state=StateGrid.of(0,0);
-        var parameters = environment.getParameters();
+        var informer = environment.getInformer();
         do {
-            var xMinMax = parameters.getPosXMinMax();
-            var yMinMax = parameters.getPosYMinMax();
+            var xMinMax = informer.getPosXMinMax();
+            var yMinMax = informer.getPosYMinMax();
             int x = RandUtils.getRandomIntNumber(xMinMax.getFirst(), xMinMax.getSecond() - 1);
             int y = RandUtils.getRandomIntNumber(yMinMax.getFirst(), yMinMax.getSecond() - 1);
             state=StateGrid.of(x,y);
-        }while (parameters.isTerminal(state));
+        }while (informer.isTerminal(state));
         return state;
     }
 }

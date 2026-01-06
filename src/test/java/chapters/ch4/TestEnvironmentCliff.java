@@ -1,7 +1,9 @@
 package chapters.ch4;
 
+import chapters.ch4.domain.param.InformerGridParamsI;
 import chapters.ch4.implem.cliff_walk.core.EnvironmentCliff;
 import chapters.ch4.implem.cliff_walk.core.EnvironmentParametersCliff;
+import chapters.ch4.implem.cliff_walk.core.InformerCliff;
 import chapters.ch4.implem.cliff_walk.factory.FactoryEnvironmentParametersCliff;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
@@ -54,7 +56,7 @@ class TestEnvironmentCliff {
     @Test
     void givenPos00_moveToFailState_thenCorrect() {
         var sr = environment.step(state00, actionE);
-        var rFail=parameters.rewardAtTerminalPos(StateGrid.of(1, 0));
+        var rFail= getInformer().rewardAtTerminalPos(StateGrid.of(1, 0));
         double rMove=parameters.rewardMove();
         assertEquals(rFail+rMove,sr.reward());
         assertTrue(sr.isTerminal());
@@ -65,7 +67,7 @@ class TestEnvironmentCliff {
     void moveToGoalState_thenCorrect() {
         StateGrid state = StateGrid.of(10, 1);
         var sr = environment.step(state, actionS);
-        var rGoal=parameters.rewardAtTerminalPos(StateGrid.of(10, 0));
+        var rGoal= getInformer().rewardAtTerminalPos(StateGrid.of(10, 0));
         double rMove=parameters.rewardMove();
         assertEquals(rGoal+rMove,sr.reward());
         assertTrue(sr.isTerminal());
@@ -74,11 +76,15 @@ class TestEnvironmentCliff {
 
     @Test
     void moveNorthInUpper_thenSameNextPos() {
-        StateGrid state = StateGrid.of(1, parameters.getPosYMinMax().getSecond());
+        StateGrid state = StateGrid.of(1, getInformer().getPosYMinMax().getSecond());
         var sr = environment.step(state, actionN);
         assertEquals(parameters.rewardMove(),sr.reward());
         assertFalse(sr.isTerminal());
         assertEquals(state,sr.sNext());
+    }
+
+    private InformerGridParamsI getInformer() {
+        return environment.informer();
     }
 
 }
