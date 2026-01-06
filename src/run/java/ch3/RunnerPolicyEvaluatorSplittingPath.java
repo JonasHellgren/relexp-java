@@ -35,10 +35,7 @@ public class RunnerPolicyEvaluatorSplittingPath {
         initFields(parameters);
         var policy = policesMap.get(polChosen);
         getEvaluator().evaluate(policy);
-        var plotter= StateValueMemoryPlotterFactory.produce(parameters,memory);
-        var name = "splitting_path_values"+ polChosen.name();
-        plotter.plotAndSaveStateValues(ConfigFactory.pathPicsConfig().ch3(),name);
-
+        plotting(parameters, memory);
     }
 
     private static PolicyEvaluatorSplittingPath getEvaluator() {
@@ -59,5 +56,13 @@ public class RunnerPolicyEvaluatorSplittingPath {
                 Policy.RANDOM, SplittingPathPolicyRandom.of(parameters),
                 Policy.OPTIMAL, SplittingPathPolicyOptimal.of(parameters));
         memory = StateValueMemoryGrid.createZeroDefault();
+    }
+
+    private static void plotting(EnvironmentParametersSplitting parameters, StateValueMemoryGrid mem) {
+        var plotter= StateValueMemoryPlotterFactory.produce(parameters, mem);
+        var fileName = "splitting_path_values"+ polChosen.name();
+        var picPath = ConfigFactory.pathPicsConfig().ch3();
+        var plotCfg=ConfigFactory.plotConfig();
+        plotter.plotAndSaveStateValues(picPath,fileName,plotCfg);
     }
 }

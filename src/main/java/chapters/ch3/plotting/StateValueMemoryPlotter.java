@@ -1,6 +1,7 @@
 package chapters.ch3.plotting;
 
 import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
+import core.foundation.config.PlotConfig;
 import core.gridrl.StateValueMemoryGrid;
 import core.foundation.configOld.PathAndFile;
 import core.foundation.util.formatting.NumberFormatterUtil;
@@ -28,18 +29,18 @@ public class StateValueMemoryPlotter {
 
 
     @SneakyThrows
-    public void plotAndSaveStateValues(String filePath, String fileName) {
-        HeatMapChart chart = getValueChart();
+    public void plotAndSaveStateValues(String filePath, String fileName, PlotConfig plotCfg) {
+        HeatMapChart chart = getValueChart(plotCfg);
         ChartSaver.saveHeatMapChart(chart, PathAndFile.ofPng(filePath, fileName));
         new SwingWrapper<>(chart).displayChart();
     }
 
 
-    private HeatMapChart getValueChart() throws IOException {
+    private HeatMapChart getValueChart(PlotConfig plotCfg) throws IOException {
         int nCols = parameters.getPosXMinMax().getSecond()+1;
         int nRows = parameters.getPosYMinMax().getSecond()+1;
         String[][] valueData = getStringData(nRows, nCols);
-        return StringTextChartFactory.produce(valueData, nCols, nRows,VALUE_TEXT_FONT);
+        return StringTextChartFactory.produce(valueData, nCols, nRows,plotCfg);
     }
 
     private String[][] getStringData(int nRows, int nCols) {

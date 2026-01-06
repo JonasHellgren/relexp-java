@@ -17,4 +17,8 @@ public class ConfigFactory {
         return PropertiesLoader.createForRelexp();
     }
 
+    public static PlotConfig plotConfig() {
+        var loader = getPropertiesLoader();
+        return PlotConfig.extract(loader.loadProperties());
+    }
 }

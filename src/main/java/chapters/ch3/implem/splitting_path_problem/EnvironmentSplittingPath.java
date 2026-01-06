@@ -10,10 +10,10 @@ public class EnvironmentSplittingPath implements EnvironmentGridI {
 
     public static final String NAME="Splitting";
     private final EnvironmentParametersSplitting parameters;
-    private final Informer informer;
+    private final InformerSplitting informer;
 
     public static EnvironmentSplittingPath of(EnvironmentParametersSplitting parameters) {
-        return new EnvironmentSplittingPath(parameters,Informer.create(parameters));
+        return new EnvironmentSplittingPath(parameters, InformerSplitting.create(parameters));
     }
 
     public String name() {

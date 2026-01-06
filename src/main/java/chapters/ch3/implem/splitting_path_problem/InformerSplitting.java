@@ -3,7 +3,6 @@ package chapters.ch3.implem.splitting_path_problem;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.pos.PosXyInt;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -11,12 +10,12 @@ import lombok.AllArgsConstructor;
 import java.util.HashSet;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Informer {
+public class InformerSplitting {
 
     EnvironmentParametersSplitting parameters;
 
-    public static Informer create(EnvironmentParametersSplitting parameters) {
-        return new Informer(parameters);
+    public static InformerSplitting create(EnvironmentParametersSplitting parameters) {
+        return new InformerSplitting(parameters);
     }
 
     public void validateStateAndAction(StateGrid s, ActionGrid a) {

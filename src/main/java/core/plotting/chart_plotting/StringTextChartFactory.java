@@ -1,5 +1,6 @@
 package core.plotting.chart_plotting;
 
+import core.foundation.config.PlotConfig;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ArrayCreator;
 import core.plotting.base.shared.PlotSettings;
@@ -18,11 +19,11 @@ public class StringTextChartFactory {
     public static HeatMapChart produce(String[][] valueData,
                                        int nCols,
                                        int nRows,
-                                       Font font) throws IOException {
-        var properties = ProjectPropertiesReader.create();
+                                       PlotConfig plotCfg) throws IOException {
+
         var settings = PlotSettings.stringTextInHeatMap()
-                .withWidth(properties.xyChartWidth2Col()).withHeight(properties.xyChartHeight())
-                .withAnnotationTextFont(font)
+                .withWidth(plotCfg.xyChartWidth2Col()).withHeight(plotCfg.xyChartHeight())
+                .withAnnotationTextFont(plotCfg.font())
                 .withMinCellMargin(0).withMaxCellMargin(0);
         var creator = HeatMapWithStringTextInCellsCreator.ofStringData(
                 settings,
