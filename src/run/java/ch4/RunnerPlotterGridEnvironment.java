@@ -7,6 +7,7 @@ import chapters.ch4.implem.cliff_walk.factory.FactoryEnvironmentParametersCliff;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
 import chapters.ch4.implem.treasure.factory.EnvironmentParametersTreasureFactor;
 import chapters.ch4.plotting.GridEnvironmentPlotter;
+import core.foundation.config.ConfigFactory;
 import core.gridrl.EnvironmentGridI;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class RunnerPlotterGridEnvironment {
     public static void main(String[] args) {
         var environments = getEnvironments();
         var plotter= GridEnvironmentPlotter.of(environments.get(INDEX_ENVIRONMENT_TO_SHOW));
-        plotter.plot();
+        plotter.plot(ConfigFactory.plotConfig());
     }
 
     private static List<EnvironmentGridI> getEnvironments() {

@@ -1,13 +1,14 @@
 package chapters.ch4.domain.agent;
 
-import chapters.ch4.domain.helper.ActionSelectorGrid;
-import chapters.ch4.domain.memory.StateActionMemoryGrid;
-import chapters.ch4.domain.param.AgentGridParameters;
-import chapters.ch4.domain.param.InformerGridParamsI;
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
+import core.gridrl.ActionSelectorGrid;
+import core.gridrl.StateActionMemoryGrid;
+import core.gridrl.AgentGridParameters;
+import core.gridrl.InformerGridParamsI;
+import core.gridrl.ExperienceGrid;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.training.ValueCalculator;
 import core.gridrl.ActionGrid;
+import core.gridrl.AgentGridI;
 import core.gridrl.StateGrid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,10 +1,6 @@
-package chapters.ch4.domain.helper;
+package core.gridrl;
 
-import chapters.ch4.domain.memory.StateActionMemoryGrid;
-import chapters.ch4.domain.param.InformerGridParamsI;
 import core.foundation.util.rand.RandUtils;
-import core.gridrl.ActionGrid;
-import core.gridrl.StateGrid;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
 

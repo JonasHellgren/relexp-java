@@ -1,8 +1,5 @@
-package chapters.ch4.domain.helper;
+package core.gridrl;
 
-import chapters.ch4.domain.agent.AgentGridI;
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
-import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
 import core.foundation.util.collections.MyListUtils;
 import core.plotting.progress_plotting.ProgressMeasureTrajectories;
 import core.plotting.progress_plotting.ProgressMeasures;

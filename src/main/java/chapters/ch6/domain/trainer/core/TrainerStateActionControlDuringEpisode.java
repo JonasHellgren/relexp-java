@@ -1,8 +1,8 @@
 package chapters.ch6.domain.trainer.core;
 
 
-import chapters.ch4.domain.memory.StateActionGrid;
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
+import core.gridrl.StateActionGrid;
+import core.gridrl.ExperienceGrid;
 import chapters.ch6.domain.trainer.mutlisteps_during_epis.MultiStepMemoryUpdater;
 import chapters.ch6.domain.trainer.mutlisteps_during_epis.ProgressMeasuresExtractorDuring;
 import core.foundation.gadget.cond.Counter;

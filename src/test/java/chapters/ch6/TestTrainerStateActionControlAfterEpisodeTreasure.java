@@ -1,6 +1,6 @@
 package chapters.ch6;
 
-import chapters.ch4.domain.memory.StateActionGrid;
+import core.gridrl.StateActionGrid;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import chapters.ch6.domain.trainer.core.TrainerStateActionControlAfterEpisode;
 import chapters.ch6.implem.factory.TrainerDependenciesFactory;

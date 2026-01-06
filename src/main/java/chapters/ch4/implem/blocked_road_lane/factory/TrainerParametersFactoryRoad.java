@@ -1,6 +1,6 @@
 package chapters.ch4.implem.blocked_road_lane.factory;
 
-import chapters.ch4.domain.trainer.param.TrainerGridParameters;
+import chapters.ch4.domain.trainer.TrainerGridParameters;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.math3.util.Pair;

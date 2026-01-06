@@ -1,9 +1,7 @@
-package chapters.ch4.domain.param;
+package core.gridrl;
 
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.pos.PosXyInt;
-import core.gridrl.ActionGrid;
-import core.gridrl.StateGrid;
 import org.apache.commons.math3.util.Pair;
 import java.util.List;
 

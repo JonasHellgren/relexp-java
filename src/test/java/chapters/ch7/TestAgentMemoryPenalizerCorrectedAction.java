@@ -1,8 +1,8 @@
 package chapters.ch7;
 
 import chapters.ch4.domain.agent.AgentQLearningGrid;
-import chapters.ch4.domain.memory.StateActionGrid;
-import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
+import core.gridrl.StateActionGrid;
+import core.gridrl.TrainerGridDependencies;
 import chapters.ch7.domain.trainer.AgentMemoryPenalizerCorrectedAction;
 import chapters.ch7.domain.trainer.ExperienceGridCorrectedAction;
 import chapters.ch7.factory.TrainerDependencySafeFactory;

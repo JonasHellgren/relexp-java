@@ -1,7 +1,7 @@
 package chapters.ch6.domain.trainer.core;
 
 
-import chapters.ch4.domain.start_state_supplier.StartStateGridSupplierI;
+import core.gridrl.StartStateGridSupplierI;
 import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.param.TrainerParametersMultiStepGrid;
 import core.foundation.gadget.cond.Counter;

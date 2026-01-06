@@ -1,6 +1,6 @@
 package chapters.ch3.implem.splitting_path_problem;
 
-import chapters.ch4.domain.param.InformerGridParamsI;
+import core.gridrl.InformerGridParamsI;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.pos.PosXyInt;
 import core.gridrl.ActionGrid;

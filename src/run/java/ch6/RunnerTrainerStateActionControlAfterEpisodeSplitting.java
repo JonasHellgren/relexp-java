@@ -4,6 +4,7 @@ import chapters.ch6._shared.plotting.GridAgentPlotterMultiStep;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import chapters.ch6.domain.trainer.core.TrainerStateActionControlAfterEpisode;
 import chapters.ch6.implem.factory.TrainerDependenciesFactory;
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting.progress_plotting.PlotterProgressMeasures;
 import core.plotting.progress_plotting.ProgressMeasureEnum;
@@ -36,7 +37,8 @@ public class RunnerTrainerStateActionControlAfterEpisodeSplitting {
     public static void showAndSavePlots(TrainerDependenciesMultiStep dependencies,
                                         RecorderProgressMeasures recorder,
                                         String fileNameAddOns, int nofDigits) {
-        var agentPlotter= GridAgentPlotterMultiStep.of(dependencies, fileNameAddOns, nofDigits);
+        var plotCfg= ConfigFactory.plotConfig();
+        var agentPlotter= GridAgentPlotterMultiStep.of(dependencies, fileNameAddOns, nofDigits,plotCfg);
         agentPlotter.plotAndSaveStateValuesInFolderTempDiff();
         agentPlotter.plotAndSavePolicyInFolderTempDiff();
         var path= ProjectPropertiesReader.create().pathMultiStep();

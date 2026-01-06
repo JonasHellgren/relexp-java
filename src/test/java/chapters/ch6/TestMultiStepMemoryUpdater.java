@@ -1,6 +1,6 @@
 package chapters.ch6;
 
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
+import core.gridrl.ExperienceGrid;
 import chapters.ch6.domain.trainer.mutlisteps_during_epis.MultiStepMemoryUpdater;
 import chapters.ch6.implem.factory.TrainerDependenciesFactory;
 import core.gridrl.ActionGrid;

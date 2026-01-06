@@ -1,6 +1,6 @@
 package chapters.ch7.domain.fail_learner;
 
-import chapters.ch4.domain.memory.StateActionGrid;
+import core.gridrl.StateActionGrid;
 import chapters.ch7.domain.safety_layer.SafetyLayer;
 import chapters.ch7.domain.trainer.ExperienceGridCorrectedAction;
 import lombok.AccessLevel;

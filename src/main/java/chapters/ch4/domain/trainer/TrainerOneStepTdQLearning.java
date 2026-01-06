@@ -1,6 +1,9 @@
-package chapters.ch4.domain.trainer.core;
+package chapters.ch4.domain.trainer;
 
 import com.google.common.base.Preconditions;
+import core.gridrl.ExperienceGrid;
+import core.gridrl.TrainerGridDependencies;
+import core.gridrl.TrainerGridI;
 import core.plotting.progress_plotting.RecorderProgressMeasures;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,7 +19,7 @@ import lombok.extern.java.Log;
 @Log
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class TrainerOneStepTdQLearning implements TrainerGridI  {
+public class TrainerOneStepTdQLearning implements TrainerGridI {
 
     private final TrainerGridDependencies dependencies;
     private final RecorderProgressMeasures recorder;
@@ -42,7 +45,7 @@ public class TrainerOneStepTdQLearning implements TrainerGridI  {
             while (d.notTerminalStateAndNotToManySteps(s)) {
                 var action = d.chooseAction(s, ei);
                 var sr = d.takeAction(s, action);
-                var e=ExperienceGrid.ofSars(s, action, sr);
+                var e= ExperienceGrid.ofSars(s, action, sr);
                 d.updateAgentMemoryFromExperience(e,ei);
                 s = sr.sNext();
                 d.increaseStepCounter();

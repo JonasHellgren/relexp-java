@@ -1,8 +1,4 @@
-package chapters.ch4.domain.trainer.core;
-
-import core.gridrl.ActionGrid;
-import core.gridrl.StateGrid;
-import core.gridrl.StepReturnGrid;
+package core.gridrl;
 
 import java.util.Optional;
 

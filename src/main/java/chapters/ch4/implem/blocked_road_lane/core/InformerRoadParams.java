@@ -1,6 +1,6 @@
 package chapters.ch4.implem.blocked_road_lane.core;
 
-import chapters.ch4.domain.param.InformerGridParamsI;
+import core.gridrl.InformerGridParamsI;
 import core.foundation.gadget.normal_distribution.NormalSampler;
 import core.foundation.gadget.pos.PosXyInt;
 import core.gridrl.ActionGrid;

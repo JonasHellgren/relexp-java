@@ -1,8 +1,8 @@
 package chapters.ch6.domain.trainer.multisteps_after_episode;
 
-import chapters.ch4.domain.helper.EpisodeGridInfo;
-import chapters.ch4.domain.memory.StateActionGrid;
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
+import core.gridrl.EpisodeGridInfo;
+import core.gridrl.StateActionGrid;
+import core.gridrl.ExperienceGrid;
 import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import core.foundation.util.collections.MyListUtils;

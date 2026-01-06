@@ -1,7 +1,7 @@
 package chapters.ch6._shared.info;
 
-import chapters.ch4.domain.memory.StateActionGrid;
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
+import core.gridrl.StateActionGrid;
+import core.gridrl.ExperienceGrid;
 import core.foundation.util.collections.MyListUtils;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;

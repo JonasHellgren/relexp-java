@@ -1,21 +1,17 @@
 package core.plotting.chart_plotting;
 
-import chapters.ch4.domain.agent.AgentGridI;
-import chapters.ch4.domain.param.InformerGridParamsI;
-import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
+import core.foundation.config.PlotConfig;
+import core.gridrl.AgentGridI;
+import core.gridrl.InformerGridParamsI;
+import core.gridrl.TrainerGridDependencies;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.EnvironmentGridI;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.knowm.xchart.HeatMapChart;
-
-import java.awt.*;
-import java.io.IOException;
-
-import static chapters.ch4.domain.helper.GridPlotHelper.*;
+import static chapters.ch4.plotting.GridPlotHelper.*;
 import static core.plotting.chart_plotting.ChartSaverAndPlotter.showAndSaveHeatMapFolderSafe;
 import static core.plotting.chart_plotting.ChartSaverAndPlotter.showAndSaveHeatMapFolderTempDiff;
 
@@ -27,35 +23,33 @@ import static core.plotting.chart_plotting.ChartSaverAndPlotter.showAndSaveHeatM
 @Getter
 public class GridAgentPlotter {
 
-
-    private final Font ARROW_TEXT_FONT = new Font("Arial", Font.PLAIN, 22);
-    private final Font VALUE_TEXT_FONT = new Font("Arial", Font.PLAIN, 12);
     private final EnvironmentGridI environment;
     private final AgentGridI agent;
     private final String fileNameAddOn;
     private final int nofDigits;
-
-
+    PlotConfig plotCfg;
 
     public static GridAgentPlotter of(TrainerGridDependencies dependencies,
-                                      String fileNameAddO, int nofDigits) {
+                                      String fileNameAddO, int nofDigits,PlotConfig plotCfg) {
         return GridAgentPlotter.of(
                 dependencies.environment(),
                 dependencies.agent(),
                 fileNameAddO,
-                nofDigits);
+                nofDigits,
+                plotCfg);
     }
 
     public static GridAgentPlotter of(EnvironmentGridI environment,
                                       AgentGridI agent,
-                                      String fileNameAddO) {
-        return new GridAgentPlotter(environment, agent, fileNameAddO, 1);
+                                      String fileNameAddO,
+                                      PlotConfig plotCfg) {
+        return new GridAgentPlotter(environment, agent, fileNameAddO, 1,plotCfg);
     }
 
     public static GridAgentPlotter of(EnvironmentGridI environment,
                                       AgentGridI agent,
-                                      String fileNameAddO, int nofDigits) {
-        return new GridAgentPlotter(environment, agent, fileNameAddO, nofDigits);
+                                      String fileNameAddO, int nofDigits, PlotConfig plotCfg) {
+        return new GridAgentPlotter(environment, agent, fileNameAddO, nofDigits,plotCfg);
     }
 
     @SneakyThrows
@@ -88,18 +82,18 @@ public class GridAgentPlotter {
         int nCols = getNofCols(environment);
         int nRows = getNofRows(environment);
         var data = getPolicyData(nRows, nCols);
-        return getStringTextChart(data, nCols, nRows, ARROW_TEXT_FONT);
+        return getStringTextChart(data, nCols, nRows,plotCfg);
     }
 
     private static boolean isNoDecisionCell(InformerGridParamsI informer, StateGrid state) {
         return informer.isTerminal(state) || informer.isWall(state);
     }
 
-    private HeatMapChart getValueChart() throws IOException {
+    private HeatMapChart getValueChart() {
         int nCols = getNofCols(environment);
         int nRows = getNofRows(environment);
         String[][] valueData = getValueData(nRows, nCols);
-        return getStringTextChart(valueData, nCols, nRows, VALUE_TEXT_FONT);
+        return getStringTextChart(valueData, nCols, nRows,plotCfg);
     }
 
     private String[][] getValueData(int nRows, int nCols) {

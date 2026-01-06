@@ -3,6 +3,7 @@ package chapters.ch6._shared.plotting;
 
 import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
+import core.foundation.config.PlotConfig;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.StateGrid;
 import core.plotting.chart_plotting.GridAgentPlotter;
@@ -16,14 +17,14 @@ public class GridAgentPlotterMultiStep extends GridAgentPlotter {
     AgentGridMultiStepI agentMultiStep;
 
     public static GridAgentPlotterMultiStep of(TrainerDependenciesMultiStep dependencies,
-                                               String fileNameAddO, int nofDigits) {
-        return new GridAgentPlotterMultiStep(dependencies, fileNameAddO, nofDigits);
+                                               String fileNameAddO, int nofDigits, PlotConfig plotCfg) {
+        return new GridAgentPlotterMultiStep(dependencies, fileNameAddO, nofDigits,plotCfg);
     }
 
 
     public GridAgentPlotterMultiStep (TrainerDependenciesMultiStep dependencies,
-                                      String fileNameAddO, int nofDigits) {
-        super(dependencies.environment(), null, fileNameAddO, nofDigits);
+                                      String fileNameAddO, int nofDigits, PlotConfig plotCfg) {
+        super(dependencies.environment(), null, fileNameAddO, nofDigits,plotCfg);
         this.agentMultiStep =  dependencies.agent();
     }
 

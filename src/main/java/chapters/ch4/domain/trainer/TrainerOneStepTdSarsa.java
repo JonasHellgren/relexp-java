@@ -1,5 +1,8 @@
-package chapters.ch4.domain.trainer.core;
+package chapters.ch4.domain.trainer;
 
+import core.gridrl.ExperienceGrid;
+import core.gridrl.TrainerGridDependencies;
+import core.gridrl.TrainerGridI;
 import core.plotting.progress_plotting.RecorderProgressMeasures;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

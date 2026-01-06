@@ -1,6 +1,6 @@
 package chapters.ch6._shared.episode_generator;
 
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
+import core.gridrl.ExperienceGrid;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.Conditionals;

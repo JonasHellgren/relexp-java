@@ -1,6 +1,6 @@
 package chapters.ch4.implem.treasure.factory;
 
-import chapters.ch4.domain.param.AgentGridParameters;
+import core.gridrl.AgentGridParameters;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

@@ -2,9 +2,9 @@ package chapters.ch4.implem.cliff_walk.factory;
 
 import chapters.ch4.domain.agent.AgentQLearningGrid;
 import chapters.ch4.domain.agent.AgentSarsaGrid;
-import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
-import chapters.ch4.domain.trainer.core.TrainerOneStepTdQLearning;
-import chapters.ch4.domain.trainer.core.TrainerOneStepTdSarsa;
+import core.gridrl.TrainerGridDependencies;
+import chapters.ch4.domain.trainer.TrainerOneStepTdQLearning;
+import chapters.ch4.domain.trainer.TrainerOneStepTdSarsa;
 import chapters.ch4.implem.cliff_walk.core.EnvironmentCliff;
 import chapters.ch4.implem.cliff_walk.core.InformerCliff;
 import chapters.ch4.implem.cliff_walk.start_state_suppliers.StartStateSupplierCliffXis0RandomY;

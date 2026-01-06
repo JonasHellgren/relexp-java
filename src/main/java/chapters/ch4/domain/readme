@@ -1,2 +1,0 @@
-Core classes such as StateGrid are located in _shared.grid.core
-This are used by additional project folders, for ex d_multi_step

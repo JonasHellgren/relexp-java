@@ -1,7 +1,7 @@
 package chapters.ch4.implem.blocked_road_lane.start_state_suppliers;
 
 
-import chapters.ch4.domain.start_state_supplier.StartStateGridSupplierI;
+import core.gridrl.StartStateGridSupplierI;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import core.foundation.util.rand.RandUtils;
 import core.gridrl.StateGrid;

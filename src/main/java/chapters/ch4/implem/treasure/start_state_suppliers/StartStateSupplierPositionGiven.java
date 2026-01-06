@@ -1,6 +1,6 @@
 package chapters.ch4.implem.treasure.start_state_suppliers;
 
-import chapters.ch4.domain.start_state_supplier.StartStateGridSupplierI;
+import core.gridrl.StartStateGridSupplierI;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;

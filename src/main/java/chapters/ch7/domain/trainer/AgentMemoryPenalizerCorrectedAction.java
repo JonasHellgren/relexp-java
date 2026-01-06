@@ -1,8 +1,8 @@
 package chapters.ch7.domain.trainer;
 
 import chapters.ch4.domain.agent.AgentQLearningGrid;
-import chapters.ch4.domain.memory.StateActionGrid;
-import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
+import core.gridrl.StateActionGrid;
+import core.gridrl.TrainerGridDependencies;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.List;

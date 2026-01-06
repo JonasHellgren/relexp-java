@@ -2,9 +2,10 @@ package ch4;
 
 
 import chapters.ch4.implem.treasure.factory.TreasureRunnerFactory;
+import core.foundation.config.ConfigFactory;
 import core.foundation.gadget.timer.CpuTimer;
 
-import static chapters.ch4.plotting.GridPlotHelper.showAndSavePlots;
+import static chapters.ch4.plotting.GridPlotShowAndSave.showAndSavePlots;
 
 public class RunnerTrainerTreasure {
 
@@ -27,16 +28,19 @@ public class RunnerTrainerTreasure {
     }
 
     private static void plot() {
+        var picPath = ConfigFactory.pathPicsConfig().ch4();
+        var plotCfg= ConfigFactory.plotConfig();
+
         showAndSavePlots(
                 dependencies.lowExploration(),
                 trainers.lowExploration().getRecorder(),
                 "_treasureLowExpl",
-                NOF_DIGITS);
+                NOF_DIGITS, picPath,plotCfg);
         showAndSavePlots(
                 dependencies.highExploration(),
                 trainers.highExploration().getRecorder(),
                 "_treasureHighExpl",
-                NOF_DIGITS);
+                NOF_DIGITS, picPath,plotCfg);
     }
 
 }

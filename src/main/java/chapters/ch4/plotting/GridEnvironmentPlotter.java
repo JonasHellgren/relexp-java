@@ -1,5 +1,6 @@
 package chapters.ch4.plotting;
 
+import core.foundation.config.PlotConfig;
 import core.gridrl.EnvironmentGridI;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
@@ -12,7 +13,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Map;
 
-import static chapters.ch4.domain.helper.GridPlotHelper.*;
+import static chapters.ch4.plotting.GridPlotHelper.*;
 
 
 /**
@@ -38,16 +39,16 @@ public class GridEnvironmentPlotter {
     }
 
     @SneakyThrows
-    public void plot() {
-        HeatMapChart chart = getValueChart();
+    public void plot(PlotConfig plotCfg) {
+        HeatMapChart chart = getValueChart(plotCfg);
         new SwingWrapper<>(chart).displayChart();
     }
 
-    private HeatMapChart getValueChart() throws IOException {
+    private HeatMapChart getValueChart(PlotConfig plotCfg) throws IOException {
         int nCols = getNofCols(environment);
         int nRows = getNofRows(environment);
         String[][] valueData = getValueData(nRows, nCols);
-        return getStringTextChart(valueData, nCols, nRows, VALUE_TEXT_FONT);
+        return getStringTextChart(valueData, nCols, nRows, plotCfg);
     }
 
     private String[][] getValueData(int nRows, int nCols) {

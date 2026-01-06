@@ -1,4 +1,4 @@
-package chapters.ch4.domain.trainer.param;
+package chapters.ch4.domain.trainer;
 
 import lombok.Builder;
 import lombok.With;

@@ -1,9 +1,8 @@
 package chapters.ch4.implem.treasure.factory;
 
 import chapters.ch4.domain.agent.AgentQLearningGrid;
-import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
-import chapters.ch4.domain.trainer.core.TrainerOneStepTdQLearning;
-import chapters.ch4.implem.cliff_walk.core.InformerCliff;
+import core.gridrl.TrainerGridDependencies;
+import chapters.ch4.domain.trainer.TrainerOneStepTdQLearning;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
 import chapters.ch4.implem.treasure.core.InformerTreasure;
 import chapters.ch4.implem.treasure.start_state_suppliers.StartStateSupplierTreasureMostLeft;

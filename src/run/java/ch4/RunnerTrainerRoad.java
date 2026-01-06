@@ -2,7 +2,9 @@ package ch4;
 
 
 import chapters.ch4.implem.blocked_road_lane.factory.RoadRunnerFactory;
-import static chapters.ch4.plotting.GridPlotHelper.showAndSavePlots;
+import core.foundation.config.ConfigFactory;
+
+import static chapters.ch4.plotting.GridPlotShowAndSave.showAndSavePlots;
 
 
 public class RunnerTrainerRoad {
@@ -20,14 +22,17 @@ public class RunnerTrainerRoad {
     }
 
     private static void plot() {
+        var picPath = ConfigFactory.pathPicsConfig().ch4();
+        var plotCfg=ConfigFactory.plotConfig();
+
         showAndSavePlots(dependencies.qlHighLearning(),
-                trainers.qlHighLearning().getRecorder(), "_QlRoadHighLearning", NOF_DIGITS);
+                trainers.qlHighLearning().getRecorder(), "_QlRoadHighLearning", NOF_DIGITS, picPath,plotCfg);
         showAndSavePlots(dependencies.qlLowLearning(),
-                trainers.qlLowLearning().getRecorder(), "_QlRoadLowLearning", NOF_DIGITS);
+                trainers.qlLowLearning().getRecorder(), "_QlRoadLowLearning", NOF_DIGITS, picPath,plotCfg);
         showAndSavePlots(dependencies.qlHighLearningDiscD9(),
-                trainers.qlHighLearningDiscD9().getRecorder(), "_QlRoadHighLearningDiscD9", NOF_DIGITS);
+                trainers.qlHighLearningDiscD9().getRecorder(), "_QlRoadHighLearningDiscD9", NOF_DIGITS, picPath,plotCfg);
         showAndSavePlots(dependencies.qlStochasticFailReward(),
-                trainers.qlStochasticFailReward().getRecorder(), "_QlRoadHStochastic", NOF_DIGITS);
+                trainers.qlStochasticFailReward().getRecorder(), "_QlRoadHStochastic", NOF_DIGITS, picPath,plotCfg);
     }
 
 }

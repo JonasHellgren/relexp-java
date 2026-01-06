@@ -1,6 +1,6 @@
 package chapters.ch4.implem.cliff_walk.core;
 
-import chapters.ch4.domain.param.InformerGridParamsI;
+import core.gridrl.InformerGridParamsI;
 import core.gridrl.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

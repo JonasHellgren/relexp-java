@@ -1,7 +1,6 @@
 package chapters.ch4.implem.cliff_walk.core;
 
-import chapters.ch4.domain.param.InformerGridParamsI;
-import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
+import core.gridrl.InformerGridParamsI;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.pos.PosXyInt;
 import core.gridrl.ActionGrid;

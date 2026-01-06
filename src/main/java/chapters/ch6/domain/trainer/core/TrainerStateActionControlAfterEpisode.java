@@ -1,6 +1,6 @@
 package chapters.ch6.domain.trainer.core;
 
-import chapters.ch4.domain.memory.StateActionGrid;
+import core.gridrl.StateActionGrid;
 import chapters.ch6._shared.episode_generator.EpisodeGeneratorGrid;
 import chapters.ch6._shared.info.EpisodeInfo;
 import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultsGeneratorGrid;

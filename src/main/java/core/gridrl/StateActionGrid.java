@@ -1,8 +1,5 @@
-package chapters.ch4.domain.memory;
+package core.gridrl;
 
-
-import core.gridrl.ActionGrid;
-import core.gridrl.StateGrid;
 
 /**
  * A record class representing a state-action pair.

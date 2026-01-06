@@ -1,7 +1,7 @@
 package chapters.ch6.domain.trainer.mutlisteps_during_epis;
 
-import chapters.ch4.domain.memory.StateActionGrid;
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
+import core.gridrl.StateActionGrid;
+import core.gridrl.ExperienceGrid;
 import chapters.ch6._shared.info.EpisodeInfo;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import com.google.common.base.Preconditions;

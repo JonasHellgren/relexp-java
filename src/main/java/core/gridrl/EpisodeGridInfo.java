@@ -1,6 +1,5 @@
-package chapters.ch4.domain.helper;
+package core.gridrl;
 
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
 import core.foundation.util.collections.MyListUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

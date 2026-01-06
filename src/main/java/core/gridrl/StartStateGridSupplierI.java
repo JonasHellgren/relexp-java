@@ -1,7 +1,5 @@
-package chapters.ch4.domain.start_state_supplier;
+package core.gridrl;
 
-
-import core.gridrl.StateGrid;
 
 /**
  * Interface for a supplier of start states in a grid environment.

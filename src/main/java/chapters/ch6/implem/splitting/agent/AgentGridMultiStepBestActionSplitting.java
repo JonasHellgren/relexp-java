@@ -2,9 +2,9 @@ package chapters.ch6.implem.splitting.agent;
 
 import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
 import chapters.ch3.implem.splitting_path_problem.InformerSplitting;
-import chapters.ch4.domain.memory.StateActionMemoryGrid;
-import chapters.ch4.domain.memory.StateActionGrid;
-import chapters.ch4.domain.param.AgentGridParameters;
+import core.gridrl.StateActionMemoryGrid;
+import core.gridrl.StateActionGrid;
+import core.gridrl.AgentGridParameters;
 import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultGrid;
 import core.gridrl.ActionGrid;

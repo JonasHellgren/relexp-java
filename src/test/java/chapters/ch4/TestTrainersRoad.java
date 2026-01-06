@@ -1,10 +1,9 @@
 package chapters.ch4;
 
 import chapters.ch4.domain.agent.AgentQLearningGrid;
-import chapters.ch4.domain.agent.AgentSarsaGrid;
-import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
-import chapters.ch4.domain.trainer.core.TrainerOneStepTdQLearning;
-import chapters.ch4.domain.trainer.core.TrainerOneStepTdSarsa;
+import core.gridrl.TrainerGridDependencies;
+import chapters.ch4.domain.trainer.TrainerOneStepTdQLearning;
+import chapters.ch4.domain.trainer.TrainerOneStepTdSarsa;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import chapters.ch4.implem.blocked_road_lane.core.InformerRoadParams;
 import chapters.ch4.implem.blocked_road_lane.factory.AgentGridParametersFactoryRoad;

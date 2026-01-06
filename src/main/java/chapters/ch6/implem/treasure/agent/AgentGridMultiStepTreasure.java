@@ -1,9 +1,9 @@
 package chapters.ch6.implem.treasure.agent;
 
-import chapters.ch4.domain.helper.ActionSelectorGrid;
-import chapters.ch4.domain.memory.StateActionMemoryGrid;
-import chapters.ch4.domain.memory.StateActionGrid;
-import chapters.ch4.domain.param.AgentGridParameters;
+import core.gridrl.ActionSelectorGrid;
+import core.gridrl.StateActionMemoryGrid;
+import core.gridrl.StateActionGrid;
+import core.gridrl.AgentGridParameters;
 import chapters.ch4.implem.treasure.core.EnvironmentParametersTreasure;
 import chapters.ch4.implem.treasure.core.InformerTreasure;
 import chapters.ch6.domain.agent.core.AgentGridMultiStepI;

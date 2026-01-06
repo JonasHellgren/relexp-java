@@ -1,6 +1,7 @@
 package chapters.ch7._shared;
 
-import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
+import core.foundation.config.ConfigFactory;
+import core.gridrl.TrainerGridDependencies;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting.chart_plotting.GridAgentPlotter;
 import core.plotting.progress_plotting.PlotterProgressMeasures;
@@ -21,7 +22,8 @@ public class ChartPlotterSafe {
                                         RecorderProgressMeasures recorder,
                                         String fileNameAddOns,
                                         int nofDigits) {
-        var agentPlotter = GridAgentPlotter.of(dependencies, fileNameAddOns, nofDigits);
+        var plotCfg= ConfigFactory.plotConfig();
+        var agentPlotter = GridAgentPlotter.of(dependencies, fileNameAddOns, nofDigits,plotCfg);
         agentPlotter.plotStateValuesInFolderSafe();
         agentPlotter.plotPolicyInFolderSafe();
         var path = ProjectPropertiesReader.create().pathSafe();

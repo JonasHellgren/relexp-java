@@ -1,7 +1,7 @@
 package chapters.ch7;
 
-import chapters.ch4.domain.memory.StateActionGrid;
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
+import core.gridrl.StateActionGrid;
+import core.gridrl.ExperienceGrid;
 import chapters.ch7.domain.fail_learner.FailLearnerActive;
 import chapters.ch7.domain.fail_learner.FailLearnerI;
 import chapters.ch7.domain.fail_learner.FailLearnerPassive;

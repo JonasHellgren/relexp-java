@@ -2,11 +2,10 @@ package chapters.ch6.implem.splitting.agent;
 
 import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
 import chapters.ch3.implem.splitting_path_problem.InformerSplitting;
-import chapters.ch4.domain.memory.StateActionMemoryGrid;
-import chapters.ch4.domain.param.AgentGridParameters;
+import core.gridrl.StateActionMemoryGrid;
+import core.gridrl.AgentGridParameters;
 import core.foundation.util.rand.RandUtils;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 
 /**

@@ -1,8 +1,8 @@
 package chapters.ch7.domain.trainer;
 
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
-import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
-import chapters.ch4.domain.trainer.core.TrainerGridI;
+import core.gridrl.ExperienceGrid;
+import core.gridrl.TrainerGridDependencies;
+import core.gridrl.TrainerGridI;
 import chapters.ch7._shared.EpisodeInfoSafe;
 import chapters.ch7.domain.fail_learner.FailLearnerActive;
 import chapters.ch7.domain.fail_learner.FailLearnerI;

@@ -1,4 +1,4 @@
-package chapters.ch4.domain.trainer.core;
+package core.gridrl;
 
 import core.plotting.progress_plotting.RecorderProgressMeasures;
 

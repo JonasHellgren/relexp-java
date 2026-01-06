@@ -1,4 +1,4 @@
-package chapters.ch4.domain.param;
+package core.gridrl;
 
 import lombok.Builder;
 import lombok.With;
@@ -11,10 +11,6 @@ import lombok.With;
 public record AgentGridParameters(
         String environmentName,         // Environment name
         double defaultValueStateAction, // Default state-action value
-/*
-        Pair<Double, Double> learningRateStartAndEnd, // Learning rate range
-        Pair<Double, Double> probRandomStartAndEnd,   // Random action probability range
-*/
         double discountFactor,          // Discount factor for expected return
         double tdMax                    // TD error clipping threshold, no clipping if large
 ) {

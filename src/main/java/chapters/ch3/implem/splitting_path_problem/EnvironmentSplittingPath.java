@@ -1,6 +1,6 @@
 package chapters.ch3.implem.splitting_path_problem;
 
-import chapters.ch4.domain.param.InformerGridParamsI;
+import core.gridrl.InformerGridParamsI;
 import core.gridrl.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

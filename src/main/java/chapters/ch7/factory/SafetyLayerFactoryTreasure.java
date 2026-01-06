@@ -1,7 +1,7 @@
 package chapters.ch7.factory;
 
-import chapters.ch4.domain.memory.StateActionGrid;
-import chapters.ch4.domain.trainer.core.TrainerGridDependencies;
+import core.gridrl.StateActionGrid;
+import core.gridrl.TrainerGridDependencies;
 import chapters.ch7.domain.safety_layer.SafetyLayer;
 import core.gridrl.ActionGrid;
 import lombok.experimental.UtilityClass;

@@ -1,6 +1,6 @@
 package chapters.ch4.implem.blocked_road_lane.factory;
 
-import chapters.ch4.domain.param.AgentGridParameters;
+import core.gridrl.AgentGridParameters;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

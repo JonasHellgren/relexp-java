@@ -1,8 +1,7 @@
 package core.learninggadgets;
 
-import chapters.ch4.domain.trainer.param.TrainerGridParameters;
+import chapters.ch4.domain.trainer.TrainerGridParameters;
 import core.foundation.util.math.LogarithmicDecay;
-import lombok.NonNull;
 import org.apache.commons.math3.util.Pair;
 
 public record LrAndProbRandDecay(LogarithmicDecay lrDecay, LogarithmicDecay probDecay) {

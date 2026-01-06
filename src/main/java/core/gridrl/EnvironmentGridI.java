@@ -1,8 +1,6 @@
 package core.gridrl;
 
 
-import chapters.ch4.domain.param.InformerGridParamsI;
-
 /**
  * Interface for a grid environment.
  */

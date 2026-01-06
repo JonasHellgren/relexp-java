@@ -1,9 +1,8 @@
 package chapters.ch4;
 
-import chapters.ch4.domain.param.InformerGridParamsI;
+import core.gridrl.InformerGridParamsI;
 import chapters.ch4.implem.cliff_walk.core.EnvironmentCliff;
 import chapters.ch4.implem.cliff_walk.core.EnvironmentParametersCliff;
-import chapters.ch4.implem.cliff_walk.core.InformerCliff;
 import chapters.ch4.implem.cliff_walk.factory.FactoryEnvironmentParametersCliff;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;

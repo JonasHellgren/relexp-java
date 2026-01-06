@@ -1,11 +1,7 @@
-package chapters.ch4.domain.memory;
+package core.gridrl;
 
-import chapters.ch4.domain.param.AgentGridParameters;
-import chapters.ch4.domain.param.InformerGridParamsI;
 import com.google.common.base.Preconditions;
 import core.foundation.util.math.MyMathUtils;
-import core.gridrl.ActionGrid;
-import core.gridrl.StateGrid;
 import lombok.AllArgsConstructor;
 import java.util.Collections;
 import java.util.HashMap;

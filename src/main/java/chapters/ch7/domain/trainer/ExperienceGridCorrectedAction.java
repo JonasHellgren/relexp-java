@@ -1,7 +1,7 @@
 package chapters.ch7.domain.trainer;
 
 
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
+import core.gridrl.ExperienceGrid;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 import core.gridrl.StepReturnGrid;

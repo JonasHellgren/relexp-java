@@ -1,10 +1,5 @@
-package chapters.ch4.domain.agent;
+package core.gridrl;
 
-
-import chapters.ch4.domain.param.AgentGridParameters;
-import chapters.ch4.domain.trainer.core.ExperienceGrid;
-import core.gridrl.ActionGrid;
-import core.gridrl.StateGrid;
 
 /**
  * Interface for agents in a grid environment.

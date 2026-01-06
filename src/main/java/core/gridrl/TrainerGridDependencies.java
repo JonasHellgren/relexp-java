@@ -1,23 +1,12 @@
-package chapters.ch4.domain.trainer.core;
+package core.gridrl;
 
 
-import chapters.ch4.domain.agent.AgentGridI;
-import chapters.ch4.domain.helper.ProgressMeasuresExtractorGrid;
-import chapters.ch4.domain.param.InformerGridParamsI;
-import chapters.ch4.domain.start_state_supplier.StartStateGridSupplierI;
-import chapters.ch4.domain.trainer.param.TrainerGridParameters;
-import chapters.ch9.gradient_descent.LinearFitter;
+import chapters.ch4.domain.trainer.TrainerGridParameters;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.util.math.LogarithmicDecay;
-import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridI;
-import core.gridrl.StateGrid;
-import core.gridrl.StepReturnGrid;
 import core.learninggadgets.LrAndProbRandDecay;
 import core.learninggadgets.StepAndEpisCounter;
 import core.plotting.progress_plotting.ProgressMeasures;
-import lombok.Builder;
-import lombok.NonNull;
 import lombok.With;
 
 import java.util.ArrayList;
@@ -31,15 +20,15 @@ import java.util.List;
 
 @With
 public record TrainerGridDependencies(
-        @NonNull AgentGridI agent,
-        @NonNull EnvironmentGridI environment,
-        @NonNull TrainerGridParameters trainerParameters,
-        @NonNull StartStateGridSupplierI startStateSupplier,
-        @NonNull InformerGridParamsI informerParams,
-        @NonNull LrAndProbRandDecay lrAndProbRandDecay,
-        @NonNull StepAndEpisCounter counters,
-        @NonNull CpuTimer timer,
-        @NonNull List<ExperienceGrid>experiences
+         AgentGridI agent,
+         EnvironmentGridI environment,
+         TrainerGridParameters trainerParameters,
+         StartStateGridSupplierI startStateSupplier,
+         InformerGridParamsI informerParams,
+         LrAndProbRandDecay lrAndProbRandDecay,
+         StepAndEpisCounter counters,
+         CpuTimer timer,
+         List<ExperienceGrid>experiences
 
 ) {
 

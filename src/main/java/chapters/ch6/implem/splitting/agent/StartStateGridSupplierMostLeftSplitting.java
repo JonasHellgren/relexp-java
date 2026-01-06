@@ -1,7 +1,7 @@
 package chapters.ch6.implem.splitting.agent;
 
 import chapters.ch3.implem.splitting_path_problem.EnvironmentSplittingPath;
-import chapters.ch4.domain.start_state_supplier.StartStateGridSupplierI;
+import core.gridrl.StartStateGridSupplierI;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
