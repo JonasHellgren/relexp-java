@@ -11,7 +11,7 @@ import core.foundation.util.math.LogarithmicDecay;
 import core.foundation.util.math.MovingAverage;
 import core.gridrl.StateValueMemoryGrid;
 import core.plotting.chart_plotting.ChartSaverAndPlotter;
-import core.plotting.chart_plotting.PlotterFactory;
+import core.plotting_rl.chart.ManyLinesFactory;
 import core.plotting.plotting_2d.ManyLinesChartCreator;
 import lombok.SneakyThrows;
 import org.apache.commons.math3.util.Pair;
@@ -51,7 +51,7 @@ public class RunnerPlotErrorVersusIterationForSplittingPath {
     }
 
     private static ManyLinesChartCreator getChartCreator(List<Double> errorListMc) throws IOException {
-        var factory = PlotterFactory.builder()
+        var factory = ManyLinesFactory.builder()
                 .spaceBetweenXTicks(SPACE_BETWEEN_X_TICKS)
                 .nItems(errorListMc.size())
                 .xLabel("Iteration")

@@ -3,7 +3,7 @@ package chapters.ch4.domain.trainer;
 import core.gridrl.ExperienceGrid;
 import core.gridrl.TrainerGridDependencies;
 import core.gridrl.TrainerGridI;
-import core.plotting.progress_plotting.RecorderProgressMeasures;
+import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.java.Log;

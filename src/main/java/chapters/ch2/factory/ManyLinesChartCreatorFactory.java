@@ -1,6 +1,6 @@
 package chapters.ch2.factory;
 
-import core.plotting.chart_plotting.PlotterFactory;
+import core.plotting_rl.chart.ManyLinesFactory;
 import core.plotting.plotting_2d.ManyLinesChartCreator;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -13,7 +13,7 @@ public class ManyLinesChartCreatorFactory {
 
     @SneakyThrows
     public static ManyLinesChartCreator produce(int nofIterations) {
-        var factor = PlotterFactory.builder()
+        var factor = ManyLinesFactory.builder()
                 .xLabel("Iteration").yLabel("w")
                 .spaceBetweenXTicks(SPACE_BETWEEN_X_TICKS)
                 .nItems(nofIterations+ NOF_TIME0_ITEMS)

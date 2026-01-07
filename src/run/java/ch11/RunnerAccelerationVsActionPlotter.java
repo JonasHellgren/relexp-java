@@ -7,7 +7,7 @@ import core.foundation.util.collections.ListCreator;
 import core.foundation.util.unit_converter.MyUnitConverter;
 import core.foundation.util.unit_converter.NonSIUnits;
 import core.plotting.base.shared.PlotSettings;
-import core.plotting.chart_plotting.ChartCreatorFactory;
+import core.plotting_rl.chart.ChartCreatorFactory;
 import core.plotting.chart_plotting.ChartSaverAndPlotter;
 import core.plotting.plotting_2d.ScatterWithLineChartCreator;
 import lombok.SneakyThrows;

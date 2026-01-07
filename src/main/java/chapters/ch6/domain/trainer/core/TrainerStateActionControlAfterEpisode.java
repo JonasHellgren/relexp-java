@@ -6,7 +6,7 @@ import chapters.ch6._shared.info.EpisodeInfo;
 import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultsGeneratorGrid;
 import chapters.ch6.domain.trainer.multisteps_after_episode.ProgressMeasureExtractorMultiStep;
 import core.foundation.util.math.LogarithmicDecay;
-import core.plotting.progress_plotting.RecorderProgressMeasures;
+import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

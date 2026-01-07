@@ -4,7 +4,7 @@ import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.domain.trainer.core.TrainerI;
 import chapters.ch11.factory.ProgressMeasuresFactory;
 import chapters.ch11.helper.EpisodeCreator;
-import core.plotting.progress_plotting.RecorderProgressMeasures;
+import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.java.Log;

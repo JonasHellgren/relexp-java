@@ -1,6 +1,6 @@
 package core.plotting.factory;
 
-import core.plotting.chart_plotting.ChartCreatorFactory;
+import core.plotting_rl.chart.ChartCreatorFactory;
 import lombok.experimental.UtilityClass;
 import org.knowm.xchart.XYChart;
 

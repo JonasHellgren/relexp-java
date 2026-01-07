@@ -6,7 +6,7 @@ import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import core.foundation.config.PlotConfig;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.StateGrid;
-import core.plotting.chart_plotting.GridAgentPlotter;
+import core.plotting_rl.chart.GridAgentPlotter;
 
 /***
  * Reusing code, but with multi-step agent

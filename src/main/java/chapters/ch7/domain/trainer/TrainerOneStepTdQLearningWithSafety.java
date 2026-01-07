@@ -11,7 +11,7 @@ import chapters.ch7.domain.safety_layer.SafetyLayer;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.gadget.timer.CpuTimer;
 import core.gridrl.StateGrid;
-import core.plotting.progress_plotting.RecorderProgressMeasures;
+import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

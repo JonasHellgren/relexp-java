@@ -1,6 +1,6 @@
 package core.gridrl;
 
-import core.plotting.progress_plotting.RecorderProgressMeasures;
+import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 
 /**
  * This interface represents a trainer for a grid world domain.

@@ -11,7 +11,7 @@ import chapters.ch5.implem.dice.StateMemoryDice;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.util.math.MovingAverage;
 import core.plotting.chart_plotting.ChartSaverAndPlotter;
-import core.plotting.chart_plotting.PlotterFactory;
+import core.plotting_rl.chart.ManyLinesFactory;
 import core.plotting.plotting_2d.ManyLinesChartCreator;
 
 import java.io.IOException;
@@ -84,7 +84,7 @@ public class RunnerPolicyEvaluationDice {
     }
 
     private static ManyLinesChartCreator getChartCreator(List<Double> errorListMc) throws IOException {
-        var factory = PlotterFactory.builder()
+        var factory = ManyLinesFactory.builder()
                 .spaceBetweenXTicks(SPACE_BETWEEN_X_TICKS)
                 .nItems(errorListMc.size())
                 .xLabel("Fit")

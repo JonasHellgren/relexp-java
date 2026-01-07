@@ -8,7 +8,7 @@ import chapters.ch6.domain.trainer.mutlisteps_during_epis.ProgressMeasuresExtrac
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.Conditionals;
 import core.foundation.util.math.LogarithmicDecay;
-import core.plotting.progress_plotting.RecorderProgressMeasures;
+import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

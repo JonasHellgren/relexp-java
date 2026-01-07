@@ -1,8 +1,8 @@
 package core.gridrl;
 
 import core.foundation.util.collections.MyListUtils;
-import core.plotting.progress_plotting.ProgressMeasureTrajectories;
-import core.plotting.progress_plotting.ProgressMeasures;
+import core.plotting_rl.progress_plotting.ProgressMeasureTrajectories;
+import core.plotting_rl.progress_plotting.ProgressMeasures;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.List;

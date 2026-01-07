@@ -1,14 +1,12 @@
-package core.plotting.chart_plotting;
+package core.plotting_rl.chart;
 
 import core.foundation.config.PlotConfig;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ArrayCreator;
 import core.plotting.base.shared.PlotSettings;
 import core.plotting.plotting_3d.HeatMapWithStringTextInCellsCreator;
 import lombok.experimental.UtilityClass;
 import org.knowm.xchart.HeatMapChart;
 
-import java.awt.*;
 import java.io.IOException;
 
 

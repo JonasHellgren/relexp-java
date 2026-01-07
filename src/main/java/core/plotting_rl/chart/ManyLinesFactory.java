@@ -1,4 +1,4 @@
-package core.plotting.chart_plotting;
+package core.plotting_rl.chart;
 
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ListCreator;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class PlotterFactory {
+public class ManyLinesFactory {
 
     private  String yLabel;
     private  String xLabel;

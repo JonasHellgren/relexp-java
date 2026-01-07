@@ -6,9 +6,9 @@ import chapters.ch6.domain.trainer.core.TrainerStateActionControlAfterEpisode;
 import chapters.ch6.implem.factory.TrainerDependenciesFactory;
 import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
-import core.plotting.progress_plotting.PlotterProgressMeasures;
-import core.plotting.progress_plotting.ProgressMeasureEnum;
-import core.plotting.progress_plotting.RecorderProgressMeasures;
+import core.plotting_rl.progress_plotting.PlotterProgressMeasures;
+import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
+import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.SneakyThrows;
 import java.util.List;
 

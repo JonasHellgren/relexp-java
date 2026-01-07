@@ -2,10 +2,10 @@ package chapters.ch4.plotting;
 
 import core.foundation.config.PlotConfig;
 import core.gridrl.TrainerGridDependencies;
-import core.plotting.chart_plotting.GridAgentPlotter;
-import core.plotting.progress_plotting.PlotterProgressMeasures;
-import core.plotting.progress_plotting.ProgressMeasureEnum;
-import core.plotting.progress_plotting.RecorderProgressMeasures;
+import core.plotting_rl.chart.GridAgentPlotter;
+import core.plotting_rl.progress_plotting.PlotterProgressMeasures;
+import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
+import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 

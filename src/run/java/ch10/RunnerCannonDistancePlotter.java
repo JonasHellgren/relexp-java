@@ -3,7 +3,7 @@ package ch10;
 import chapters.ch10.cannon.domain.envrionment.EnvironmentCannon;
 import chapters.ch10.cannon.factory.FactoryEnvironmentParametersCannon;
 import core.foundation.util.unit_converter.MyUnitConverter;
-import core.plotting.chart_plotting.ChartCreatorFactory;
+import core.plotting_rl.chart.ChartCreatorFactory;
 import core.plotting.chart_plotting.ChartSaverAndPlotter;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;

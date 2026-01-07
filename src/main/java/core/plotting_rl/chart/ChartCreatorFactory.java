@@ -1,4 +1,4 @@
-package core.plotting.chart_plotting;
+package core.plotting_rl.chart;
 
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting.plotting_2d.ScatterWithLineChartCreator;

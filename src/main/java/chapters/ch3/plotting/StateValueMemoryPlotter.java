@@ -8,7 +8,7 @@ import core.foundation.configOld.PathAndFile;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.StateGrid;
 import core.plotting.chart_plotting.ChartSaver;
-import core.plotting.chart_plotting.StringTextChartFactory;
+import core.plotting_rl.chart.StringTextChartFactory;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

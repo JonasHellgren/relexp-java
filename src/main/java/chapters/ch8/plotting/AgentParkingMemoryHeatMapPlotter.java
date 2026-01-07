@@ -19,7 +19,7 @@ import org.knowm.xchart.SwingWrapper;
 import java.awt.*;
 import java.io.IOException;
 
-import static core.plotting.chart_plotting.StringTextChartFactory.getXData;
+import static core.plotting_rl.chart.StringTextChartFactory.getXData;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AgentParkingMemoryHeatMapPlotter {

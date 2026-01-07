@@ -3,9 +3,9 @@ package ch7;
 import chapters.ch7.domain.trainer.TrainerOneStepTdQLearningWithSafety;
 import chapters.ch7.factory.TrainerDependencySafeFactory;
 import core.foundation.gadget.timer.CpuTimer;
-import core.plotting.progress_plotting.ProgressMeasureEnum;
-import core.plotting.progress_plotting.ProgressMeasures;
-import core.plotting.progress_plotting.RecorderProgressMeasures;
+import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
+import core.plotting_rl.progress_plotting.ProgressMeasures;
+import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 
 import static chapters.ch7._shared.ChartPlotterSafe.showAndSavePlots;
 

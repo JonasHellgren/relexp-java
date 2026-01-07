@@ -3,7 +3,7 @@ package ch11;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.domain.trainer.core.TrainerLunarMultiStep;
 import core.foundation.util.collections.ListCreator;
-import core.plotting.progress_plotting.ProgressMeasureEnum;
+import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
 import lombok.extern.java.Log;
 import java.util.List;
 import static ch11.RunnerHelper.getDependencies;
