@@ -1,7 +1,7 @@
 package ch5;
 
 import chapters.ch5.domain.policy_evaluator.StateActionPolicyEvaluationMc;
-import chapters.ch5.factory.StateActionPolicyEvaluationFactory;
+import chapters.ch5.factory.DiceDependenciesFactory;
 import chapters.ch5.plotting.ValueMemoryMcPlotter;
 import chapters.ch5.domain.memory.StateActionMemoryMcI;
 import chapters.ch5.implem.dice.ActionDice;
@@ -30,7 +30,8 @@ public class RunnerPolicyEvaluationDice {
 
     public static void main(String[] args) throws IOException {
         var timer= CpuTimer.empty();
-        var policyEvaluation = StateActionPolicyEvaluationFactory.createDice();
+        var dep = DiceDependenciesFactory.dice();
+        var policyEvaluation = StateActionPolicyEvaluationMc.of(dep); //createDice();
         policyEvaluation.evaluate();
         timer.printInMs();
         saveAndPlotMemory(policyEvaluation);
@@ -38,7 +39,7 @@ public class RunnerPolicyEvaluationDice {
     }
 
     private static void saveAndPlotTdError(StateActionPolicyEvaluationMc policyEvaluation) throws IOException {
-        var errors=getFilteredList(policyEvaluation.getErrorList());
+        var errors=getFilteredList(policyEvaluation.getDependencies().errorList());
         var creator = getChartCreator(errors);
         creator.addLine("Monte Carlo",errors);
         var chart = creator.create();
@@ -48,7 +49,7 @@ public class RunnerPolicyEvaluationDice {
     }
 
     private static void saveAndPlotMemory(StateActionPolicyEvaluationMc policyEvaluation) {
-        var memoryPolicy = policyEvaluation.getMemory();
+        var memoryPolicy = policyEvaluation.getDependencies().stateActionMemory();
         var stateMemoryT = getStateMemoryDice(memoryPolicy, ActionDice.T);
         var stateMemoryS = getStateMemoryDice(memoryPolicy, ActionDice.S);
         saveAndPlot(stateMemoryT, "Dice"+ActionDice.T);

@@ -6,10 +6,7 @@ import chapters.ch5.domain.environment.StartStateSupplierI;
 import chapters.ch5.domain.memory.StateMemoryMcI;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.math.LogarithmicDecay;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.math3.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,22 +18,29 @@ import static chapters.ch5.domain.policy_evaluator.ExperiencesInfo.isFirstVisit;
  * It updates the value function of a policy based on experiences gathered from an environment.
  */
 
-@Builder
-@NonNull
+@Getter
 @Setter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class StatePolicyEvaluationMc {
     public static final double LEARNING_RATE = 0.001;
-    public static final Settings DEFAULT_SETTINGS = Settings.of(Pair.create(LEARNING_RATE, LEARNING_RATE), 1, 10_000);
+    public static final EvaluatorSettings DEFAULT_SETTINGS =
+            EvaluatorSettings.of(Pair.create(LEARNING_RATE, LEARNING_RATE), 1, 10_000);
 
-    StartStateSupplierI startStateSupplier;
+/*    StartStateSupplierI startStateSupplier;
     EpisodeGeneratorI episodeGenerator;
     @Getter
     StateMemoryMcI memory;
     LogarithmicDecay learningRate;
-    Settings settings;
+    EvaluatorSettings settings;
     @Getter
     @Builder.Default
-    List<Double> errorList = new ArrayList<>();
+    List<Double> errorList = new ArrayList<>();*/
+
+    EvaluatorDependencies dependencies;
+
+    public static StatePolicyEvaluationMc of(EvaluatorDependencies dependencies) {
+        return new StatePolicyEvaluationMc(dependencies);
+    }
 
     /**
      * Evaluates the policy using Monte Carlo methods.
@@ -44,29 +48,31 @@ public class StatePolicyEvaluationMc {
      * and repeats this process for a specified number of iterations.
      */
     public void evaluate() {
-        var counter = Counter.ofMaxCount(settings.nIterations());
-        errorList.clear();
+        var d=dependencies;
+        var counter = Counter.ofMaxCount(d.settings().nIterations());
+        d.errorList().clear();
         while (counter.isNotExceeded()) {
-            var stateStart = startStateSupplier.getStartState();
-            var experiences = episodeGenerator.generate(stateStart);
+            var stateStart = d.startStateSupplier().getStartState();
+            var experiences = d.episodeGenerator().generate(stateStart);
             updateMemoryFromExperiences(experiences, counter.getCount());
             counter.increase();
         }
     }
 
     private void updateMemoryFromExperiences(List<ExperienceMc> experiences, int iIter) {
+        var d=dependencies;
         int nExperiences = experiences.size();
         double sumRewards = 0;
         for (int i = nExperiences - 1; i >= 0; i--) {
             var exp = experiences.get(i);
-            sumRewards = settings.gamma() * sumRewards + exp.stepReturn().reward();
+            sumRewards = d.settings().gamma() * sumRewards + exp.stepReturn().reward();
             var state = exp.state();
             boolean firstVisit = isFirstVisit(exp.state(), i, experiences);
             if (firstVisit) {
-                double value = memory.read(state);
-                double lr = learningRate.calcOut(iIter);
-                memory.write(state, value + lr * (sumRewards - value));
-                errorList.add(Math.abs(sumRewards - value));
+                double value = d.stateMemory().read(state);
+                double lr = d.learningRate().calcOut(iIter);
+                d.stateMemory().write(state, value + lr * (sumRewards - value));
+                d.errorList().add(Math.abs(sumRewards - value));
             }
         }
     }

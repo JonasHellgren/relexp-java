@@ -14,7 +14,7 @@ public class RunnerPolicyEvaluationWalk {
         var evaluator = StatePolicyEvaluationFactory.createWalk(StatePolicyEvaluationMc.DEFAULT_SETTINGS);
         evaluator.evaluate();
         timer.printInMs();
-        var memory = evaluator.getMemory();
+        var memory = evaluator.getDependencies().stateMemory();
         var plotter= ValueMemoryMcPlotter.of(
                 memory,
                 ValueMemoryMcPlotter.Settings.builder()

@@ -15,21 +15,21 @@ import org.apache.commons.math3.util.Pair;
  */
 @Builder
 @With
-public record Settings(
+public record EvaluatorSettings(
         Pair<Double, Double> startAndEndLearningRate,
         double gamma,
         int nIterations,
         double probRandomAction
 ) {
-    public static Settings of(Pair<Double, Double> learningRate, double gamma, int nIterations) {
-        return Settings.ofRandomActionAlso(learningRate, gamma, nIterations,0.0);
+    public static EvaluatorSettings of(Pair<Double, Double> learningRate, double gamma, int nIterations) {
+        return EvaluatorSettings.ofRandomActionAlso(learningRate, gamma, nIterations,0.0);
     }
 
-    public static Settings ofRandomActionAlso(Pair<Double, Double> learningRate,
-                                              double gamma,
-                                              int nIterations,
-                                              double probRandomAction) {
-        return Settings.builder()
+    public static EvaluatorSettings ofRandomActionAlso(Pair<Double, Double> learningRate,
+                                                       double gamma,
+                                                       int nIterations,
+                                                       double probRandomAction) {
+        return EvaluatorSettings.builder()
                 .startAndEndLearningRate(learningRate)
                 .gamma(gamma)
                 .nIterations(nIterations)

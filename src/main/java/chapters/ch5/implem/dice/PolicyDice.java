@@ -1,6 +1,6 @@
 package chapters.ch5.implem.dice;
 
-import chapters.ch5.domain.policy_evaluator.Settings;
+import chapters.ch5.domain.policy_evaluator.EvaluatorSettings;
 import chapters.ch5.domain.environment.ActionMcI;
 import chapters.ch5.domain.environment.StateMcI;
 import chapters.ch5.domain.memory.StateActionMemoryMcI;
@@ -17,9 +17,9 @@ import lombok.AllArgsConstructor;
 public class PolicyDice implements PolicyMcI {
 
     StateActionMemoryMcI memory;
-    Settings settings;
+    EvaluatorSettings settings;
 
-    public static PolicyDice of(StateActionMemoryMcI memory, Settings settings) {
+    public static PolicyDice of(StateActionMemoryMcI memory, EvaluatorSettings settings) {
         return new PolicyDice(memory, settings);
     }
 

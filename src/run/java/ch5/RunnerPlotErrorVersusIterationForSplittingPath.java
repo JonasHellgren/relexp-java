@@ -3,7 +3,7 @@ package ch5;
 import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import chapters.ch3.implem.splitting_path_problem.*;
 import chapters.ch3.policies.SplittingPathPolicyOptimal;
-import chapters.ch5.domain.policy_evaluator.Settings;
+import chapters.ch5.domain.policy_evaluator.EvaluatorSettings;
 import chapters.ch5.domain.policy_evaluator.StatePolicyEvaluationMc;
 import chapters.ch5.factory.StatePolicyEvaluationFactory;
 import chapters.ch5.implem.splitting.StartStateSupplierRandomSplitting;
@@ -44,7 +44,7 @@ public class RunnerPlotErrorVersusIterationForSplittingPath {
         ChartSaverAndPlotter.showChartSaveInFolderMonteCarlo(chart, "error-vs-fit-mc-td");
     }
 
-    private static Settings getSettings() {
+    private static EvaluatorSettings getSettings() {
         return StatePolicyEvaluationMc.DEFAULT_SETTINGS
                 .withNIterations(N_ITERATIONS_MC)
                 .withStartAndEndLearningRate(Pair.create(LEARNING_RATE,LEARNING_RATE));
@@ -60,16 +60,17 @@ public class RunnerPlotErrorVersusIterationForSplittingPath {
         return factory.getManyLinesChartCreator();
     }
 
-    private static List<Double> getErrorListMc(Settings settings) {
+    private static List<Double> getErrorListMc(EvaluatorSettings settings) {
         var policyMc = StatePolicyEvaluationFactory.
                 createSplittingOptimalPolicy(settings);
-        policyMc.setStartStateSupplier(StartStateSupplierRandomSplitting.create());
+        var dep=policyMc.getDependencies().withStartStateSupplier(StartStateSupplierRandomSplitting.create());
+        policyMc.setDependencies(dep);
         policyMc.evaluate();
-        var errorList0= policyMc.getErrorList();
+        var errorList0= policyMc.getDependencies().errorList();
         return getFilteredSubList(errorList0);
     }
 
-    private static List<Double> getErrorListTd(Settings settings) {
+    private static List<Double> getErrorListTd(EvaluatorSettings settings) {
         var parameters = EnvironmentParametersSplittingFactory.produce();
         var environment = EnvironmentSplittingPath.of(parameters);
         var policyTd = SplittingPathPolicyOptimal.of(parameters);

@@ -23,7 +23,7 @@ public class TestPolicyEvaluationWalk {
     void whenEvaluating_thenCorrect() {
 
         evaluator.evaluate();
-        var memory = evaluator.getMemory();
+        var memory = evaluator.getDependencies().stateMemory();
         System.out.println(memory);
 
         assertAll(
