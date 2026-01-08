@@ -2,7 +2,7 @@ package ch5;
 
 
 import chapters.ch5.domain.policy_evaluator.StatePolicyEvaluationMc;
-import chapters.ch5.factory.StatePolicyEvaluationFactory;
+import chapters.ch5.factory.WalkDependenciesFactory;
 import chapters.ch5.plotting.ValueMemoryMcPlotter;
 import chapters.ch5.implem.walk.EnvironmentWalk;
 import core.foundation.gadget.timer.CpuTimer;
@@ -11,7 +11,7 @@ public class RunnerPolicyEvaluationWalk {
 
     public static void main(String[] args) {
         var timer= CpuTimer.empty();
-        var evaluator = StatePolicyEvaluationFactory.createWalk(StatePolicyEvaluationMc.DEFAULT_SETTINGS);
+        var evaluator = StatePolicyEvaluationMc.of(WalkDependenciesFactory.produce());
         evaluator.evaluate();
         timer.printInMs();
         var memory = evaluator.getDependencies().stateMemory();

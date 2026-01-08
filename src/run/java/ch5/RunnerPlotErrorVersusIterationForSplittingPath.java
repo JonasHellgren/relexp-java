@@ -3,9 +3,10 @@ package ch5;
 import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import chapters.ch3.implem.splitting_path_problem.*;
 import chapters.ch3.policies.SplittingPathPolicyOptimal;
+import chapters.ch3.implem.splitting_path_problem.EvaluatorDependencies;
 import chapters.ch5.domain.policy_evaluator.EvaluatorSettings;
 import chapters.ch5.domain.policy_evaluator.StatePolicyEvaluationMc;
-import chapters.ch5.factory.StatePolicyEvaluationFactory;
+import chapters.ch5.factory.SplittingDependenciesFactory;
 import chapters.ch5.implem.splitting.StartStateSupplierRandomSplitting;
 import core.foundation.util.math.LogarithmicDecay;
 import core.foundation.util.math.MovingAverage;
@@ -17,6 +18,7 @@ import lombok.SneakyThrows;
 import org.apache.commons.math3.util.Pair;
 import org.knowm.xchart.style.Styler;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RunnerPlotErrorVersusIterationForSplittingPath {
@@ -45,7 +47,7 @@ public class RunnerPlotErrorVersusIterationForSplittingPath {
     }
 
     private static EvaluatorSettings getSettings() {
-        return StatePolicyEvaluationMc.DEFAULT_SETTINGS
+        return SplittingDependenciesFactory.SETTINGS
                 .withNIterations(N_ITERATIONS_MC)
                 .withStartAndEndLearningRate(Pair.create(LEARNING_RATE,LEARNING_RATE));
     }
@@ -61,12 +63,11 @@ public class RunnerPlotErrorVersusIterationForSplittingPath {
     }
 
     private static List<Double> getErrorListMc(EvaluatorSettings settings) {
-        var policyMc = StatePolicyEvaluationFactory.
-                createSplittingOptimalPolicy(settings);
-        var dep=policyMc.getDependencies().withStartStateSupplier(StartStateSupplierRandomSplitting.create());
-        policyMc.setDependencies(dep);
-        policyMc.evaluate();
-        var errorList0= policyMc.getDependencies().errorList();
+        var dep=SplittingDependenciesFactory.optimalPolicy(settings)
+                .withStartStateSupplier(StartStateSupplierRandomSplitting.create());
+        var evaluator= StatePolicyEvaluationMc.of(dep);
+        evaluator.evaluate();
+        var errorList0= evaluator.getDependencies().errorList();
         return getFilteredSubList(errorList0);
     }
 
@@ -78,16 +79,24 @@ public class RunnerPlotErrorVersusIterationForSplittingPath {
         var decayingLearningRate = LogarithmicDecay.of(
                 pair.getFirst(),pair.getSecond(),settings.nIterations());
         var memory = StateValueMemoryGrid.createZeroDefault();
-        var fitter= PolicyEvaluatorSplittingPath.builder()
+        var dep= EvaluatorDependencies.builder()
+                .environment(environment).memory(memory)
+                .startStateSupplier(StartStateSupplierGridRandomSplitting.create())
+                .nFits(N_FITS_MAX_PLOTTING).learningRate(decayingLearningRate).discountFactor(settings.gamma())
+                .errorList(new ArrayList<>())
+                .build();
+        var evaluator= PolicyEvaluatorSplittingPath.of(dep);
+/*
+        var evaluator= PolicyEvaluatorSplittingPath.builder()
                 .environment(environment)
                 .memory(memory)
                 .startStateSupplier(StartStateSupplierGridRandomSplitting.create())
                 .nFits(N_FITS_MAX_PLOTTING)
                 .learningRate(decayingLearningRate)
                 .discountFactor(settings.gamma())
-                .build();
-        fitter.evaluate(policyTd);
-        var errorListTd0=fitter.getErrorList();
+                .build();*/
+        evaluator.evaluate(policyTd);
+        var errorListTd0=evaluator.getDependencies().errorList();
         return getFilteredSubList(errorListTd0);
     }
 

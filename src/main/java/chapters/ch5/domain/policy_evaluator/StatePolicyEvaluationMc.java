@@ -22,19 +22,6 @@ import static chapters.ch5.domain.policy_evaluator.ExperiencesInfo.isFirstVisit;
 @Setter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class StatePolicyEvaluationMc {
-    public static final double LEARNING_RATE = 0.001;
-    public static final EvaluatorSettings DEFAULT_SETTINGS =
-            EvaluatorSettings.of(Pair.create(LEARNING_RATE, LEARNING_RATE), 1, 10_000);
-
-/*    StartStateSupplierI startStateSupplier;
-    EpisodeGeneratorI episodeGenerator;
-    @Getter
-    StateMemoryMcI memory;
-    LogarithmicDecay learningRate;
-    EvaluatorSettings settings;
-    @Getter
-    @Builder.Default
-    List<Double> errorList = new ArrayList<>();*/
 
     EvaluatorDependencies dependencies;
 

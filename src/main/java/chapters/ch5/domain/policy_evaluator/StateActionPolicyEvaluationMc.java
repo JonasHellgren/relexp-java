@@ -23,19 +23,6 @@ import static chapters.ch5.domain.policy_evaluator.ExperiencesInfo.isFirstVisit;
 @Getter
 public class StateActionPolicyEvaluationMc {
 
-/*
-    StartStateSupplierI startStateSupplier;
-    EpisodeGeneratorI episodeGenerator;
-    @Getter
-    StateActionMemoryMcI memory;
-    EvaluatorSettings settings;
-    LogarithmicDecay learningRate;
-    @Getter
-    @Builder.Default
-    List<Double> errorList = new ArrayList<>();
-*/
-
-
     EvaluatorDependencies dependencies;
 
     public static StateActionPolicyEvaluationMc of(EvaluatorDependencies dependencies) {

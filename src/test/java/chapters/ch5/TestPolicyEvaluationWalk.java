@@ -1,7 +1,7 @@
 package chapters.ch5;
 
 import chapters.ch5.domain.policy_evaluator.StatePolicyEvaluationMc;
-import chapters.ch5.factory.StatePolicyEvaluationFactory;
+import chapters.ch5.factory.WalkDependenciesFactory;
 import chapters.ch5.implem.walk.StateWalk;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ public class TestPolicyEvaluationWalk {
 
     @BeforeEach
     void init() {
-        evaluator = StatePolicyEvaluationFactory.createWalk(StatePolicyEvaluationMc.DEFAULT_SETTINGS);
+        evaluator = StatePolicyEvaluationMc.of(WalkDependenciesFactory.produce());
     }
 
     @Test

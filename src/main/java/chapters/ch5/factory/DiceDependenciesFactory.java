@@ -24,27 +24,6 @@ public class DiceDependenciesFactory {
     public static final int N_ITERATIONS = 10_000; //10_000;
     public static final double PROB_RANDOM_ACTION = 1.0;
 
-/*
-    public static StateActionPolicyEvaluationMc createDice() {
-        var env = EnvironmentDice.create();
-        var settings = EvaluatorSettings.ofRandomActionAlso(
-                Pair.create(LR_START, LR_END), //initial and final values for the decaying learning rate
-                GAMMA,
-                N_ITERATIONS,
-                PROB_RANDOM_ACTION);
-        var startStateSupplier = StartStateSupplierDice.create();
-        var memory = StateActionMemoryDice.create();
-        var policy = PolicyDice.of(memory, settings);
-        var episodeGenerator = EpisodeGenerator.of(env, policy);
-        return StateActionPolicyEvaluationMc.builder()
-                .startStateSupplier(startStateSupplier)
-                .episodeGenerator(episodeGenerator)
-                .memory(memory)
-                .learningRate(settings.getDecayingLearningRate())
-                .settings(settings)
-                .build();
-    }
-*/
 
     public static EvaluatorDependencies dice() {
         var env = EnvironmentDice.create();
