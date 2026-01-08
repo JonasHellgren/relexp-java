@@ -1,6 +1,6 @@
 package chapters.ch5.implem.dice;
 
-import chapters.ch5._shared.evaluation.Settings;
+import chapters.ch5.domain.policy_evaluator.Settings;
 import chapters.ch5.domain.environment.ActionMcI;
 import chapters.ch5.domain.environment.StateMcI;
 import chapters.ch5.domain.memory.StateActionMemoryMcI;

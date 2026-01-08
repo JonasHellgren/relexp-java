@@ -1,4 +1,4 @@
-package chapters.ch5._shared.plotting;
+package chapters.ch5.plotting;
 
 import chapters.ch5.domain.memory.StateMemoryMcI;
 import chapters.ch5.implem.dice.StateDice;

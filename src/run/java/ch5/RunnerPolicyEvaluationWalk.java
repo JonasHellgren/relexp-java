@@ -1,9 +1,9 @@
 package ch5;
 
 
-import chapters.ch5._shared.evaluation.StatePolicyEvaluationMc;
-import chapters.ch5._shared.factory.StatePolicyEvaluationFactory;
-import chapters.ch5._shared.plotting.ValueMemoryMcPlotter;
+import chapters.ch5.domain.policy_evaluator.StatePolicyEvaluationMc;
+import chapters.ch5.factory.StatePolicyEvaluationFactory;
+import chapters.ch5.plotting.ValueMemoryMcPlotter;
 import chapters.ch5.implem.walk.EnvironmentWalk;
 import core.foundation.gadget.timer.CpuTimer;
 

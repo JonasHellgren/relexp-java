@@ -1,4 +1,4 @@
-package chapters.ch5._shared.factory;
+package chapters.ch5.factory;
 
 import chapters.ch5.implem.walk.RandomWalkParameters;
 import chapters.ch5.implem.walk.StateWalk;

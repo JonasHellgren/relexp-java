@@ -1,8 +1,8 @@
 package ch5;
 
-import chapters.ch5._shared.evaluation.StateActionPolicyEvaluationMc;
-import chapters.ch5._shared.factory.StateActionPolicyEvaluationFactory;
-import chapters.ch5._shared.plotting.ValueMemoryMcPlotter;
+import chapters.ch5.domain.policy_evaluator.StateActionPolicyEvaluationMc;
+import chapters.ch5.factory.StateActionPolicyEvaluationFactory;
+import chapters.ch5.plotting.ValueMemoryMcPlotter;
 import chapters.ch5.domain.memory.StateActionMemoryMcI;
 import chapters.ch5.implem.dice.ActionDice;
 import chapters.ch5.implem.dice.EnvironmentDice;

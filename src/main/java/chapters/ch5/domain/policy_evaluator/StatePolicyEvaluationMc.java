@@ -1,6 +1,6 @@
-package chapters.ch5._shared.evaluation;
+package chapters.ch5.domain.policy_evaluator;
 
-import chapters.ch5._shared.episode_generator.EpisodeGeneratorI;
+import chapters.ch5.domain.episode_generator.EpisodeGeneratorI;
 import chapters.ch5.domain.environment.ExperienceMc;
 import chapters.ch5.domain.environment.StartStateSupplierI;
 import chapters.ch5.domain.memory.StateMemoryMcI;
@@ -14,7 +14,7 @@ import org.apache.commons.math3.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chapters.ch5._shared.helper.ExperiencesInfo.isFirstVisit;
+import static chapters.ch5.domain.policy_evaluator.ExperiencesInfo.isFirstVisit;
 
 /**
  * This class represents a policy evaluation algorithm using Monte Carlo methods.

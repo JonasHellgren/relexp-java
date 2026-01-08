@@ -1,6 +1,6 @@
 package chapters.ch5;
 
-import chapters.ch5._shared.factory.GridParametersWalkFactory;
+import chapters.ch5.factory.GridParametersWalkFactory;
 import chapters.ch5.domain.environment.StepReturnMc;
 import chapters.ch5.implem.walk.EnvironmentWalk;
 import org.junit.jupiter.api.BeforeEach;

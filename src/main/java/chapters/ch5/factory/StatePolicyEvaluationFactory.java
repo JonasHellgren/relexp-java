@@ -1,8 +1,8 @@
-package chapters.ch5._shared.factory;
+package chapters.ch5.factory;
 
-import chapters.ch5._shared.episode_generator.EpisodeGenerator;
-import chapters.ch5._shared.evaluation.Settings;
-import chapters.ch5._shared.evaluation.StatePolicyEvaluationMc;
+import chapters.ch5.domain.episode_generator.EpisodeGenerator;
+import chapters.ch5.domain.policy_evaluator.Settings;
+import chapters.ch5.domain.policy_evaluator.StatePolicyEvaluationMc;
 import chapters.ch5.domain.policy.PolicyMcI;
 import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting;
 import chapters.ch3.factory.EnvironmentParametersSplittingFactory;

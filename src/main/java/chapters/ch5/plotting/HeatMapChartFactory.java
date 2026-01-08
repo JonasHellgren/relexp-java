@@ -1,4 +1,4 @@
-package chapters.ch5._shared.plotting;
+package chapters.ch5.plotting;
 
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ArrayCreator;

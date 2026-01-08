@@ -1,4 +1,4 @@
-package chapters.ch5._shared.episode_generator;
+package chapters.ch5.domain.episode_generator;
 
 
 import chapters.ch5.domain.environment.ExperienceMc;

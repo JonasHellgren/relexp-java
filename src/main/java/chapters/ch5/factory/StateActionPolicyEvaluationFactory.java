@@ -1,8 +1,8 @@
-package chapters.ch5._shared.factory;
+package chapters.ch5.factory;
 
-import chapters.ch5._shared.episode_generator.EpisodeGenerator;
-import chapters.ch5._shared.evaluation.Settings;
-import chapters.ch5._shared.evaluation.StateActionPolicyEvaluationMc;
+import chapters.ch5.domain.episode_generator.EpisodeGenerator;
+import chapters.ch5.domain.policy_evaluator.Settings;
+import chapters.ch5.domain.policy_evaluator.StateActionPolicyEvaluationMc;
 import chapters.ch5.implem.dice.EnvironmentDice;
 import chapters.ch5.implem.dice.PolicyDice;
 import chapters.ch5.implem.dice.StartStateSupplierDice;
