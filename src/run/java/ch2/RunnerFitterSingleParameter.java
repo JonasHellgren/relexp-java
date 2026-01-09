@@ -5,6 +5,7 @@ import chapters.ch2.factory.ManyLinesChartCreatorFactory;
 import chapters.ch2.factory.TrainingResultsGenerator;
 import chapters.ch2.plotting.SingleParameterFittingPlotter;
 import core.foundation.config.ConfigFactory;
+import core.foundation.config.PlotConfig;
 import lombok.SneakyThrows;
 
 import java.util.List;
@@ -19,13 +20,11 @@ public class RunnerFitterSingleParameter {
     public static void main(String[] args) {
         var par = FittingParametersFactory.produceDefault()
                 .withNofIterations(NOF_ITERATIONS);
-        var creator= ManyLinesChartCreatorFactory.produce(par.nofIterations());
+        var plotCfg = ConfigFactory.plotConfig();
+        var creator= ManyLinesChartCreatorFactory.produce(par.nofIterations(), plotCfg);
         var trainingResults = TrainingResultsGenerator.getTrainingResults(par, LEARNING_RATES);
         LEARNING_RATES.forEach(lr ->  SingleParameterFittingPlotter.addResultToCreator(trainingResults, creator,lr));
         SingleParameterFittingPlotter.saveAndPlot(creator, ConfigFactory.pathPicsConfig(),FILE_NAME);
     }
-
-
-
 
 }

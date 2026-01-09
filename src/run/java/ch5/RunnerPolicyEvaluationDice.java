@@ -8,6 +8,7 @@ import chapters.ch5.implem.dice.ActionDice;
 import chapters.ch5.implem.dice.EnvironmentDice;
 import chapters.ch5.implem.dice.StateDice;
 import chapters.ch5.implem.dice.StateMemoryDice;
+import core.foundation.config.ConfigFactory;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.util.math.MovingAverage;
 import core.plotting.chart_plotting.ChartSaverAndPlotter;
@@ -91,7 +92,8 @@ public class RunnerPolicyEvaluationDice {
                 .xLabel("Fit")
                 .yLabel("Error")
                 .build();
-        return factory.getManyLinesChartCreator();
+        var plotCfg = ConfigFactory.plotConfig();
+        return factory.getManyLinesChartCreator(plotCfg);
     }
 
     private static List<Double> getFilteredList(List<Double> errorList0) {

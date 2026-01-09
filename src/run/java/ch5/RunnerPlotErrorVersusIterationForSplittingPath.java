@@ -8,6 +8,7 @@ import chapters.ch5.domain.policy_evaluator.EvaluatorSettings;
 import chapters.ch5.domain.policy_evaluator.StatePolicyEvaluationMc;
 import chapters.ch5.factory.SplittingDependenciesFactory;
 import chapters.ch5.implem.splitting.StartStateSupplierRandomSplitting;
+import core.foundation.config.ConfigFactory;
 import core.foundation.util.math.LogarithmicDecay;
 import core.foundation.util.math.MovingAverage;
 import core.gridrl.StateValueMemoryGrid;
@@ -52,14 +53,15 @@ public class RunnerPlotErrorVersusIterationForSplittingPath {
                 .withStartAndEndLearningRate(Pair.create(LEARNING_RATE,LEARNING_RATE));
     }
 
-    private static ManyLinesChartCreator getChartCreator(List<Double> errorListMc) throws IOException {
+    private static ManyLinesChartCreator getChartCreator(List<Double> errorListMc) {
         var factory = ManyLinesFactory.builder()
                 .spaceBetweenXTicks(SPACE_BETWEEN_X_TICKS)
                 .nItems(errorListMc.size())
                 .xLabel("Iteration")
                 .yLabel("Error")
                 .build();
-        return factory.getManyLinesChartCreator();
+        var plotCfg = ConfigFactory.plotConfig();
+        return factory.getManyLinesChartCreator(plotCfg);
     }
 
     private static List<Double> getErrorListMc(EvaluatorSettings settings) {

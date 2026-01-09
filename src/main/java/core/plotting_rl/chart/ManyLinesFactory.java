@@ -1,5 +1,6 @@
 package core.plotting_rl.chart;
 
+import core.foundation.config.PlotConfig;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ListCreator;
 import core.plotting.plotting_2d.ManyLinesChartCreator;
@@ -18,16 +19,14 @@ public class ManyLinesFactory {
     private double spaceBetweenXTicks;
     private int nItems;
 
-    public ManyLinesChartCreator getManyLinesChartCreator()
-            throws IOException {
-        var props = ProjectPropertiesReader.create();
+    public ManyLinesChartCreator getManyLinesChartCreator(PlotConfig plotCfg) {
         var inList = ListCreator.createFromStartWithStepWithNofItems(0,1d, nItems);
         var settings = PlotSettings.ofDefaults()
                 .withXAxisLabel(xLabel).withYAxisLabel(yLabel)
                 .withDefinedSpaceBetweenXTicks(true)
                 .withSpaceBetweenXTicks(spaceBetweenXTicks)
-                .withWidth(props.xyChartWidth1Col())
-                .withHeight(props.xyChartHeight())
+                .withWidth(plotCfg.xyChartWidth1Col())
+                .withHeight(plotCfg.xyChartHeight())
                 .withAxisTicksDecimalFormat("#.#");
         return ManyLinesChartCreator.of(settings, inList);
     }
