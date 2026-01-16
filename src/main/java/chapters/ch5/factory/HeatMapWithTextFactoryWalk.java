@@ -48,8 +48,6 @@ public class HeatMapWithTextFactoryWalk {
                 valueData[y][xi] = mem.isPresent(state)
                         ? NumberFormatterUtil.getRoundedNumberAsString(mem.read(state), NOF_DIGITS)
                         : "." ;
-
-                System.out.println("y = " + y+" x = "+x+" value = "+valueData[y][xi]);
             }
         }
         return valueData;

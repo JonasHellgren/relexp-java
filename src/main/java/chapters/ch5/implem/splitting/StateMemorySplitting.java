@@ -2,6 +2,7 @@ package chapters.ch5.implem.splitting;
 
 import chapters.ch5.domain.environment.StateMcI;
 import chapters.ch5.domain.memory.StateMemoryMcI;
+import chapters.ch5.implem.converter.StateTypeConverter;
 import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,14 +20,15 @@ public class StateMemorySplitting implements StateMemoryMcI {
 
     @Override
     public double read(StateMcI state) {
-        checkStateType(state);
-        return stateValueMap.getOrDefault((StateSplittingMc) state, DEFAULT_VALUE);
+        var s= StateTypeConverter.toSplit(state);
+        return stateValueMap.getOrDefault(s, DEFAULT_VALUE);
     }
 
     @Override
     public void write(StateMcI state, double value) {
         checkStateType(state);
-        stateValueMap.put((StateSplittingMc) state, value);
+        var s= StateTypeConverter.toSplit(state);
+        stateValueMap.put(s, value);
     }
 
     @Override

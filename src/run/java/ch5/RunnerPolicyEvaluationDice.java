@@ -3,10 +3,8 @@ package ch5;
 import chapters.ch5.domain.policy_evaluator.StateActionPolicyEvaluationMc;
 import chapters.ch5.factory.DiceDependenciesFactory;
 import chapters.ch5.factory.HeatMapWithTextFactoryDice;
-import chapters.ch5.plotting.ValueMemoryMcPlotter;
 import chapters.ch5.domain.memory.StateActionMemoryMcI;
 import chapters.ch5.implem.dice.ActionDice;
-import chapters.ch5.implem.dice.EnvironmentDice;
 import chapters.ch5.implem.dice.StateDice;
 import chapters.ch5.implem.dice.StateMemoryDice;
 import core.foundation.config.ConfigFactory;
@@ -15,7 +13,6 @@ import core.foundation.util.math.MovingAverage;
 import core.plotting.chart_plotting.ChartSaverAndPlotter;
 import core.plotting_rl.chart.ManyLinesFactory;
 import core.plotting.plotting_2d.ManyLinesChartCreator;
-import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.util.List;

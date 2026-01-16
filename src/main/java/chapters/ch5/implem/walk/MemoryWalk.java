@@ -2,6 +2,7 @@ package chapters.ch5.implem.walk;
 
 import chapters.ch5.domain.environment.StateMcI;
 import chapters.ch5.domain.memory.StateMemoryMcI;
+import chapters.ch5.implem.converter.StateTypeConverter;
 import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,17 +18,16 @@ public class MemoryWalk implements StateMemoryMcI {
         return new MemoryWalk(new HashMap<>());
     }
 
-
     @Override
     public double read(StateMcI state) {
-        checkStateType(state);
-        return stateValueMap.getOrDefault(state, DEFAULT_VALUE);
+        var s= StateTypeConverter.toWalk(state);
+        return stateValueMap.getOrDefault(s, DEFAULT_VALUE);
     }
 
     @Override
     public void write(StateMcI state, double value) {
-        checkStateType(state);
-        stateValueMap.put((StateWalk) state, value);
+        var s= StateTypeConverter.toWalk(state);
+        stateValueMap.put(s, value);
     }
 
     @Override
@@ -43,10 +43,6 @@ public class MemoryWalk implements StateMemoryMcI {
     @Override
     public int size() {
         return stateValueMap.size();
-    }
-
-    private static void checkStateType(StateMcI state) {
-        Preconditions.checkArgument(state instanceof StateWalk);
     }
 
     @Override

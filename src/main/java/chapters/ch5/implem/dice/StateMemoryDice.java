@@ -2,6 +2,7 @@ package chapters.ch5.implem.dice;
 
 import chapters.ch5.domain.environment.StateMcI;
 import chapters.ch5.domain.memory.StateMemoryMcI;
+import chapters.ch5.implem.converter.StateTypeConverter;
 import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -25,14 +26,14 @@ public class StateMemoryDice implements StateMemoryMcI {
 
     @Override
     public double read(StateMcI state) {
-        checkStateType(state);
-        return stateValueMap.getOrDefault(state, DEFAULT_VALUE);
+        var s= StateTypeConverter.toDice(state);
+        return stateValueMap.getOrDefault(s, DEFAULT_VALUE);
     }
 
     @Override
     public void write(StateMcI state, double value) {
-        checkStateType(state);
-        stateValueMap.put((StateDice) state, value);
+        var s= StateTypeConverter.toDice(state);
+        stateValueMap.put(s, value);
     }
 
     @Override
@@ -50,10 +51,6 @@ public class StateMemoryDice implements StateMemoryMcI {
         return stateValueMap.size();
     }
 
-    private static void checkStateType(StateMcI state) {
-        Preconditions.checkArgument(state instanceof StateDice);
-    }
-
     @Override
     public String toString() {
         var sb = new StringBuilder();
@@ -64,6 +61,5 @@ public class StateMemoryDice implements StateMemoryMcI {
         }
         return sb.toString();
     }
-
 
 }
