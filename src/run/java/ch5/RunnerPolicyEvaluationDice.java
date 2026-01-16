@@ -2,6 +2,7 @@ package ch5;
 
 import chapters.ch5.domain.policy_evaluator.StateActionPolicyEvaluationMc;
 import chapters.ch5.factory.DiceDependenciesFactory;
+import chapters.ch5.factory.HeatMapWithTextFactoryDice;
 import chapters.ch5.plotting.ValueMemoryMcPlotter;
 import chapters.ch5.domain.memory.StateActionMemoryMcI;
 import chapters.ch5.implem.dice.ActionDice;
@@ -14,6 +15,7 @@ import core.foundation.util.math.MovingAverage;
 import core.plotting.chart_plotting.ChartSaverAndPlotter;
 import core.plotting_rl.chart.ManyLinesFactory;
 import core.plotting.plotting_2d.ManyLinesChartCreator;
+import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,17 +60,10 @@ public class RunnerPolicyEvaluationDice {
     }
 
     private static void saveAndPlot(StateMemoryDice stateMemoryT, String dice) {
-        var plotter = ValueMemoryMcPlotter.of(
-                stateMemoryT,
-                ValueMemoryMcPlotter.Settings.builder()
-                        .nofDigits(1)
-                        .yLabel("Count").xLabel("Score")
-                        .fileNameAddOn(dice)
-                        .envName(EnvironmentDice.NAME)
-                        .nRows(2).nCols(7)
-                        .startRow(0).startColumn(0)
-                        .build());
-        plotter.plotStateValues();
+        var cfg=ConfigFactory.plotConfig();
+        var chart = HeatMapWithTextFactoryDice.produce(stateMemoryT,cfg);
+        ChartSaverAndPlotter.showAndSaveHeatMapFolderMonteCarlo(
+                chart, "values_", dice);
     }
 
     private static StateMemoryDice getStateMemoryDice(StateActionMemoryMcI memoryPolicy, ActionDice actionDice) {

@@ -63,11 +63,14 @@ public class ValueMemoryMcPlotter {
                 var state = settings.envName.equals(EnvironmentWalk.NAME)
                         ? StateWalk.of(x+(y-1)*100)
                         : StateDice.of(x, y);
-                System.out.println("state = " + state);
                 var xi=x-settings.startColumn;
                 valueData[y][xi] = valueMemory.isPresent(state)
                         ? NumberFormatterUtil.getRoundedNumberAsString(valueMemory.read(state), settings.nofDigits)
                         : "." ;
+
+                System.out.println("y = " + y+" x = "+x+" value = "+valueData[y][xi]);
+
+
             }
         }
         return valueData;
