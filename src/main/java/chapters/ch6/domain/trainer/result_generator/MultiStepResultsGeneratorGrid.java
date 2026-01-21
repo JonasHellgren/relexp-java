@@ -1,7 +1,7 @@
-package chapters.ch6.domain.trainer.multisteps_after_episode;
+package chapters.ch6.domain.trainer.result_generator;
 
 import core.gridrl.ExperienceGrid;
-import chapters.ch6._shared.info.EpisodeInfo;
+import chapters.ch6.domain.trainer.episode_generator.EpisodeInfo;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import com.google.common.base.Preconditions;
 import core.learningutils.MyRewardListUtils;

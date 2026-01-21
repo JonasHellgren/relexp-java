@@ -1,8 +1,9 @@
-package chapters.ch6.domain.trainer.core;
+package chapters.ch6.domain.trainers.during_episode;
 
 
+import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
+import chapters.ch6.domain.trainer.core.TrainerI;
 import core.gridrl.ExperienceGrid;
-import chapters.ch6.domain.trainer.mutlisteps_during_epis.MultiStepMemoryUpdater;
 import chapters.ch6.plotting.ProgressMeasuresExtractorDuring;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.Conditionals;

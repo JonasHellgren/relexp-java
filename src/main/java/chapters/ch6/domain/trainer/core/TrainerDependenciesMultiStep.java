@@ -1,9 +1,9 @@
 package chapters.ch6.domain.trainer.core;
 
 
-import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultGrid;
+import chapters.ch6.domain.trainer.result_generator.MultiStepResultGrid;
 import core.gridrl.StartStateGridSupplierI;
-import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
+import chapters.ch6.domain.agent.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.param.TrainerParametersMultiStepGrid;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.math.LogarithmicDecay;
@@ -25,8 +25,7 @@ public record TrainerDependenciesMultiStep(
         StartStateGridSupplierI startStateSupplier,
         LogarithmicDecay decLearningRate,
         LogarithmicDecay decProbRandomAction,
-        Counter stepCounter
-)
+        Counter stepCounter)
 
 {
 
@@ -49,28 +48,13 @@ public record TrainerDependenciesMultiStep(
         return trainerParameters.nEpisodes();
     }
 
-
-    public LogarithmicDecay getDecLearningRate() {
-        var lrPair = trainerParameters().learningRateStartAndEnd();
-        return LogarithmicDecay.of(lrPair, getNofEpisodes());
-    }
-
-
-    public LogarithmicDecay getDecProbRandomAction() {
-        var probPair = trainerParameters().probRandomActionStartAndEnd();
-        return LogarithmicDecay.of(probPair, getNofEpisodes());
-    }
-
-
     public StateGrid getStartState() {
         return startStateSupplier().getStartState();
     }
 
-
     public int backupHorizon() {
         return trainerParameters().backupHorizon();
     }
-
 
     public Counter getStepCounter() {
         return Counter.ofMaxCount(trainerParameters().nStepsMax());

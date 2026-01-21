@@ -1,7 +1,7 @@
-package chapters.ch6._shared.episode_generator;
+package chapters.ch6.domain.trainer.episode_generator;
 
-import core.gridrl.ExperienceGrid;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
+import core.gridrl.ExperienceGrid;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.Conditionals;
 import lombok.AccessLevel;

@@ -1,7 +1,7 @@
-package chapters.ch6._shared.plotting;
+package chapters.ch6.plotting;
 
 
-import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
+import chapters.ch6.domain.agent.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import core.foundation.config.PlotConfig;
 import core.foundation.util.formatting.NumberFormatterUtil;

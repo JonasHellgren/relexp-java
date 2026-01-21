@@ -1,6 +1,6 @@
 package chapters.ch6;
 
-import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultGrid;
+import chapters.ch6.domain.trainer.result_generator.MultiStepResultGrid;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 import org.junit.jupiter.api.Test;

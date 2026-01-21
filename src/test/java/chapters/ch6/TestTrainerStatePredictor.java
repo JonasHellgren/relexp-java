@@ -1,6 +1,6 @@
 package chapters.ch6;
 
-import chapters.ch6.domain.trainer.core.TrainerStatePredictor;
+import chapters.ch6.domain.trainers.state_predictor.TrainerStatePredictor;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.gridrl.StateGrid;
 import org.junit.jupiter.api.Assertions;

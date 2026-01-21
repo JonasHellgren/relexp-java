@@ -1,6 +1,6 @@
 package chapters.ch6.domain.trainer.core;
 
-import chapters.ch6._shared.info.EpisodeInfo;
+import chapters.ch6.domain.trainer.episode_generator.EpisodeInfo;
 import com.google.common.base.Preconditions;
 import core.gridrl.ExperienceGrid;
 import core.gridrl.StateActionGrid;

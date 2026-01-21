@@ -1,9 +1,10 @@
-package chapters.ch6.domain.trainer.multisteps_after_episode;
+package chapters.ch6.plotting;
 
+import chapters.ch6.domain.trainer.result_generator.MultiStepResultsGrid;
 import core.gridrl.EpisodeGridInfo;
 import core.gridrl.StateActionGrid;
 import core.gridrl.ExperienceGrid;
-import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
+import chapters.ch6.domain.agent.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import core.foundation.util.collections.MyListUtils;
 import core.plotting_rl.progress_plotting.ProgressMeasureTrajectories;

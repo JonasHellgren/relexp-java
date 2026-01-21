@@ -1,8 +1,8 @@
 package chapters.ch6;
 
-import chapters.ch6._shared.episode_generator.EpisodeGeneratorGrid;
-import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultGrid;
-import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultsGeneratorGrid;
+import chapters.ch6.domain.trainer.episode_generator.EpisodeGeneratorGrid;
+import chapters.ch6.domain.trainer.result_generator.MultiStepResultGrid;
+import chapters.ch6.domain.trainer.result_generator.MultiStepResultsGeneratorGrid;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

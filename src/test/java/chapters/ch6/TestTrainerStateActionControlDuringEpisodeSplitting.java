@@ -1,7 +1,7 @@
 package chapters.ch6;
 
-import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
-import chapters.ch6.domain.trainer.core.TrainerStateActionControlDuringEpisode;
+import chapters.ch6.domain.agent.AgentGridMultiStepI;
+import chapters.ch6.domain.trainers.during_episode.TrainerStateActionControlDuringEpisode;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;

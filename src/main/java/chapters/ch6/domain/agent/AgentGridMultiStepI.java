@@ -1,9 +1,9 @@
-package chapters.ch6.domain.agent.core;
+package chapters.ch6.domain.agent;
 
 
 import core.gridrl.StateActionMemoryGrid;
 import core.gridrl.StateActionGrid;
-import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultGrid;
+import chapters.ch6.domain.trainer.result_generator.MultiStepResultGrid;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 

@@ -1,8 +1,8 @@
 package ch6;
 
-import chapters.ch6._shared.plotting.GridAgentPlotterMultiStep;
+import chapters.ch6.plotting.GridAgentPlotterMultiStep;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
-import chapters.ch6.domain.trainer.core.TrainerStateActionControlDuringEpisode;
+import chapters.ch6.domain.trainers.during_episode.TrainerStateActionControlDuringEpisode;
 import chapters.ch6.implem.factory.TrainerDependenciesFactoryTreasure;
 import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;

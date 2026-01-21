@@ -1,7 +1,9 @@
-package chapters.ch6.domain.trainer.core;
+package chapters.ch6.domain.trainers.state_predictor;
 
-import chapters.ch6._shared.episode_generator.EpisodeGeneratorGrid;
-import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultsGeneratorGrid;
+import chapters.ch6.domain.trainer.episode_generator.EpisodeGeneratorGrid;
+import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
+import chapters.ch6.domain.trainer.core.TrainerI;
+import chapters.ch6.domain.trainer.result_generator.MultiStepResultsGeneratorGrid;
 import core.foundation.util.math.LogarithmicDecay;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

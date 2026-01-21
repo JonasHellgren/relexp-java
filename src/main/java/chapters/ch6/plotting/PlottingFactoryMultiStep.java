@@ -1,4 +1,4 @@
-package chapters.ch6._shared.plotting;
+package chapters.ch6.plotting;
 
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting.base.shared.PlotSettings;

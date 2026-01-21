@@ -1,6 +1,6 @@
-package chapters.ch6.domain.trainer.core;
+package chapters.ch6.domain.trainers.during_episode;
 
-import chapters.ch6.domain.trainer.mutlisteps_during_epis.MultiStepMemoryUpdater;
+import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import core.foundation.util.cond.Conditionals;
 import core.gridrl.ExperienceGrid;
 import core.gridrl.StateActionGrid;
