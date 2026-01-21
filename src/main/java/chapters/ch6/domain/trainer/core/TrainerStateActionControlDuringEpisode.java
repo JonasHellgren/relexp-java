@@ -3,7 +3,7 @@ package chapters.ch6.domain.trainer.core;
 
 import core.gridrl.ExperienceGrid;
 import chapters.ch6.domain.trainer.mutlisteps_during_epis.MultiStepMemoryUpdater;
-import chapters.ch6.domain.trainer.mutlisteps_during_epis.ProgressMeasuresExtractorDuring;
+import chapters.ch6.plotting.ProgressMeasuresExtractorDuring;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.Conditionals;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;

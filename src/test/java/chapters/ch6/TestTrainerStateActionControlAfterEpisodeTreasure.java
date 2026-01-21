@@ -1,9 +1,10 @@
 package chapters.ch6;
 
+import chapters.ch6.implem.factory.TrainerDependenciesFactoryTreasure;
 import core.gridrl.StateActionGrid;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import chapters.ch6.domain.trainer.core.TrainerStateActionControlAfterEpisode;
-import chapters.ch6.implem.factory.TrainerDependenciesFactory;
+import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -37,7 +38,7 @@ public class TestTrainerStateActionControlAfterEpisodeTreasure {
     }
 
     private TrainerStateActionControlAfterEpisode defineTrainer(int nStepsHorizon) {
-        dependencies= TrainerDependenciesFactory.treasure(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
+        dependencies= TrainerDependenciesFactoryTreasure.treasure(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
         return TrainerStateActionControlAfterEpisode.of(dependencies);
     }
 /*

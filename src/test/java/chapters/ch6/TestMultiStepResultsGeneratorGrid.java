@@ -3,7 +3,7 @@ package chapters.ch6;
 import chapters.ch6._shared.episode_generator.EpisodeGeneratorGrid;
 import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultGrid;
 import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultsGeneratorGrid;
-import chapters.ch6.implem.factory.TrainerDependenciesFactory;
+import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,11 +18,11 @@ class TestMultiStepResultsGeneratorGrid {
     @BeforeEach
     void init() {
         int nStepsHorizon = 1;
-        var dependencies = TrainerDependenciesFactory.givenOptimalPolicySplitting(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
+        var dependencies = TrainerDependenciesFactorySplitting.givenOptimalPolicySplitting(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
         episodeGenerator1 = EpisodeGeneratorGrid.of(dependencies);
         msrGenerator1 = MultiStepResultsGeneratorGrid.of(dependencies);
         nStepsHorizon = 5;
-        dependencies = TrainerDependenciesFactory.givenOptimalPolicySplitting(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
+        dependencies = TrainerDependenciesFactorySplitting.givenOptimalPolicySplitting(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
         episodeGenerator5 = EpisodeGeneratorGrid.of(dependencies);
         msrGenerator5 = MultiStepResultsGeneratorGrid.of(dependencies);
 

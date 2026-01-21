@@ -1,4 +1,4 @@
-package chapters.ch6.domain.trainer.mutlisteps_during_epis;
+package chapters.ch6.plotting;
 
 import chapters.ch6.domain.trainer.core.ReturnCalculator;
 import core.gridrl.EpisodeGridInfo;

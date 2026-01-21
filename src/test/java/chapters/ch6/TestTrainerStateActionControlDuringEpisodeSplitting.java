@@ -2,7 +2,7 @@ package chapters.ch6;
 
 import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.core.TrainerStateActionControlDuringEpisode;
-import chapters.ch6.implem.factory.TrainerDependenciesFactory;
+import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +26,7 @@ public class TestTrainerStateActionControlDuringEpisodeSplitting {
       }
 
     private TrainerStateActionControlDuringEpisode defineTrainer(int nStepsHorizon) {
-        var dependencies= TrainerDependenciesFactory.learnPolicySplittingDuringEpis(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
+        var dependencies= TrainerDependenciesFactorySplitting.learnPolicySplittingDuringEpis(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
         return TrainerStateActionControlDuringEpisode.of(dependencies);
     }
 

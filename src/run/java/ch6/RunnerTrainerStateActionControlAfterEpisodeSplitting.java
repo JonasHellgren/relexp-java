@@ -3,7 +3,7 @@ package ch6;
 import chapters.ch6._shared.plotting.GridAgentPlotterMultiStep;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
 import chapters.ch6.domain.trainer.core.TrainerStateActionControlAfterEpisode;
-import chapters.ch6.implem.factory.TrainerDependenciesFactory;
+import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting_rl.progress_plotting.PlotterProgressMeasures;
@@ -28,7 +28,7 @@ public class RunnerTrainerStateActionControlAfterEpisodeSplitting {
     }
 
     private static TrainerStateActionControlAfterEpisode defineTrainer() {
-        var dependencies= TrainerDependenciesFactory.learnPolicySplittingAfterEpis(
+        var dependencies= TrainerDependenciesFactorySplitting.learnPolicySplittingAfterEpis(
                 N_STEPS_HORIZON, N_EPISODES, LEARNING_RATE_START);
         return TrainerStateActionControlAfterEpisode.of(dependencies);
     }

@@ -1,7 +1,7 @@
 package ch6;
 
 import chapters.ch6.domain.trainer.core.TrainerStateActionControlDuringEpisode;
-import chapters.ch6.implem.factory.TrainerDependenciesFactory;
+import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.foundation.configOld.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverter;
@@ -70,7 +70,7 @@ public class RunnerPlotErrorState10VersusNstepsAndLearningRateSplitting {
 
 
     private static TrainerStateActionControlDuringEpisode defineTrainer(int nStepsHorizon, double learningRateStart) {
-        var dependencies = TrainerDependenciesFactory.learnPolicySplittingDuringEpis(nStepsHorizon, N_EPISODES, learningRateStart);
+        var dependencies = TrainerDependenciesFactorySplitting.learnPolicySplittingDuringEpis(nStepsHorizon, N_EPISODES, learningRateStart);
         return TrainerStateActionControlDuringEpisode.of(dependencies);
     }
 

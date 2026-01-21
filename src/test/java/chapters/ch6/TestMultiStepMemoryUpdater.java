@@ -2,7 +2,7 @@ package chapters.ch6;
 
 import core.gridrl.ExperienceGrid;
 import chapters.ch6.domain.trainer.mutlisteps_during_epis.MultiStepMemoryUpdater;
-import chapters.ch6.implem.factory.TrainerDependenciesFactory;
+import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 import core.gridrl.StepReturnGrid;
@@ -27,8 +27,8 @@ public class TestMultiStepMemoryUpdater {
 
     @BeforeEach
     void init() {
-        var dependencies1 = TrainerDependenciesFactory.givenOptimalPolicySplitting(1, N_EPISODES, LEARNING_RATE_START);
-        var dependencies3 = TrainerDependenciesFactory.givenOptimalPolicySplitting(N_STEPS_HORIZON_3, N_EPISODES, LEARNING_RATE_START);
+        var dependencies1 = TrainerDependenciesFactorySplitting.givenOptimalPolicySplitting(1, N_EPISODES, LEARNING_RATE_START);
+        var dependencies3 = TrainerDependenciesFactorySplitting.givenOptimalPolicySplitting(N_STEPS_HORIZON_3, N_EPISODES, LEARNING_RATE_START);
         memoryUpdater1 = MultiStepMemoryUpdater.of(dependencies1);
         memoryUpdater3 = MultiStepMemoryUpdater.of(dependencies3);
         memoryUpdater1lowGamma = MultiStepMemoryUpdater.of(dependencies1.withTrainerParameters

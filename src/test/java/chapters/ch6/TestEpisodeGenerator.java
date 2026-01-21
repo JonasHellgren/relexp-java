@@ -2,7 +2,7 @@ package chapters.ch6;
 
 import chapters.ch6._shared.episode_generator.EpisodeGeneratorGrid;
 import chapters.ch6._shared.info.EpisodeInfo;
-import chapters.ch6.implem.factory.TrainerDependenciesFactory;
+import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.foundation.util.math.MyMathUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ public class TestEpisodeGenerator {
 
     @BeforeEach
     void init() {
-        var dependencies= TrainerDependenciesFactory.givenOptimalPolicySplitting(1, 10_000, 0.1);
+        var dependencies= TrainerDependenciesFactorySplitting.givenOptimalPolicySplitting(1, 10_000, 0.1);
         episodeGenerator = EpisodeGeneratorGrid.of(dependencies);
     }
 

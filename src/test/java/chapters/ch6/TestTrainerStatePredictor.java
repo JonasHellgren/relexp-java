@@ -1,7 +1,7 @@
 package chapters.ch6;
 
 import chapters.ch6.domain.trainer.core.TrainerStatePredictor;
-import chapters.ch6.implem.factory.TrainerDependenciesFactory;
+import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.gridrl.StateGrid;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +21,7 @@ public class TestTrainerStatePredictor {
      }
 
     private TrainerStatePredictor defineTrainer(int nStepsHorizon) {
-        var dependencies= TrainerDependenciesFactory.givenOptimalPolicySplitting(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
+        var dependencies= TrainerDependenciesFactorySplitting.givenOptimalPolicySplitting(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
         return TrainerStatePredictor.of(dependencies);
     }
 

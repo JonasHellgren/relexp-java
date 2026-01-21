@@ -2,7 +2,7 @@ package ch6;
 
 import chapters.ch6._shared.plotting.PlottingFactoryMultiStep;
 import chapters.ch6.domain.trainer.core.TrainerStatePredictor;
-import chapters.ch6.implem.factory.TrainerDependenciesFactory;
+import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverter;
 import core.gridrl.StateGrid;
@@ -63,12 +63,12 @@ public class RunnerTrainerStatePredictorSplitting {
 
 
     private static TrainerStatePredictor defineTrainerOpt(int nStepsHorizon) {
-        var dependencies = TrainerDependenciesFactory.givenOptimalPolicySplitting(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
+        var dependencies = TrainerDependenciesFactorySplitting.givenOptimalPolicySplitting(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
         return TrainerStatePredictor.of(dependencies);
     }
 
     private static TrainerStatePredictor defineTrainer(int nStepsHorizon) {
-        var dependencies = TrainerDependenciesFactory.givenRandomPolicySplitting(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
+        var dependencies = TrainerDependenciesFactorySplitting.givenRandomPolicySplitting(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
         return TrainerStatePredictor.of(dependencies);
     }
 
