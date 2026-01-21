@@ -49,28 +49,6 @@ import static java.lang.Math.max;
 @Getter
 public class TrainerStateActionControlDuringEpisode implements TrainerI {
 
-    record Support(LogarithmicDecay decLearningRate, LogarithmicDecay decProbRandomAction, Counter stepCounter) {
-        public static Support of(TrainerDependenciesMultiStep dependencies) {
-            return new Support(
-                    dependencies.getDecLearningRate(),
-                    dependencies.getDecProbRandomAction(),
-                    dependencies.getStepCounter());
-        }
-
-        public double learningRate(int i) {
-            return decLearningRate.calcOut(i);
-        }
-
-        public double probRandomAction(int i) {
-            return decProbRandomAction.calcOut(i);
-        }
-
-        public int timeCount() {
-            return stepCounter.getCount();
-        }
-
-    }
-
     private final TrainerDependenciesMultiStep dependencies;
     private final RecorderProgressMeasures recorder;
     private final MultiStepMemoryUpdater memoryUpdater;
@@ -87,13 +65,12 @@ public class TrainerStateActionControlDuringEpisode implements TrainerI {
      */
     @Override
     public void train() {
-        var support=Support.of(dependencies);
         var measureExtractor= ProgressMeasuresExtractorDuring.of(dependencies,memoryUpdater);
         recorder.clear();
         for (int i = 0; i < dependencies.getNofEpisodes(); i++) {
-            var experiences = createExperiences(support,i);
-            maybeLog(support.stepCounter);
-            updateRemaining(experiences, support.learningRate(i));
+            var experiences = createExperiences(dependencies,i);
+            maybeLog(dependencies.getStepCounter());
+            updateRemaining(experiences, dependencies.calcLearningRatet(i));
             recorder.add(measureExtractor.getProgressMeasures(experiences));
         }
     }
@@ -102,27 +79,27 @@ public class TrainerStateActionControlDuringEpisode implements TrainerI {
         Conditionals.executeIfTrue(stepCounter.isExceeded(), () -> log.fine("nof steps exceeded"));
     }
 
-    private List<ExperienceGrid> createExperiences(Support support, int i) {
+    private List<ExperienceGrid> createExperiences(TrainerDependenciesMultiStep dependencies, int i) {
         List<ExperienceGrid> experiences = new ArrayList<>();
         var agent = dependencies.agent();
         var environment = dependencies.environment();
-        double probRandom = support.probRandomAction(i);
+        double probRandom = dependencies.calcProbRandomActiont(i);
         var startState = dependencies.getStartState();
         var sa= StateActionGrid.of(startState,agent.chooseAction(startState, probRandom));
         boolean isTerminal;
-        support.stepCounter().reset();
+        dependencies.stepCounter().reset();
         do {
             var sr = environment.step(sa.state(), sa.action());
             var stateAfterStep = sr.sNext();
             var actionNext = agent.chooseAction(stateAfterStep, probRandom);
             experiences.add(ExperienceGrid.ofSarsa(sa.state(), sa.action(), sr, actionNext));
-            int tau = support.timeCount()- dependencies.backupHorizon();
+            int tau = dependencies.stepCounter().getCount()- dependencies.backupHorizon();
             Conditionals.executeIfTrue(tau >= 0, () ->
-                    memoryUpdater.updateAgentMemory(tau, experiences, support.learningRate(i)));
+                    memoryUpdater.updateAgentMemory(tau, experiences, dependencies.calcLearningRatet(i)));
             sa=StateActionGrid.of(stateAfterStep, actionNext);
             isTerminal = sr.isTerminal();
-            support.stepCounter.increase();
-        } while (!isTerminal && support.stepCounter.isNotExceeded());
+            dependencies.stepCounter().increase();
+        } while (!isTerminal && dependencies.stepCounter().isNotExceeded());
         return experiences;
     }
 

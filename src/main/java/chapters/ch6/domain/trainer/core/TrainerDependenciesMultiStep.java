@@ -24,7 +24,8 @@ public record TrainerDependenciesMultiStep(
         TrainerParametersMultiStepGrid trainerParameters,
         StartStateGridSupplierI startStateSupplier,
         LogarithmicDecay decLearningRate,
-        LogarithmicDecay decProbRandomAction
+        LogarithmicDecay decProbRandomAction,
+        Counter stepCounter
 )
 
 {
@@ -39,7 +40,8 @@ public record TrainerDependenciesMultiStep(
                 tp,
                 startStateSupplier,
                 LogarithmicDecay.of(tp.learningRateStartAndEnd(), tp.nEpisodes()),
-                LogarithmicDecay.of(tp.probRandomActionStartAndEnd(), tp.nEpisodes()));
+                LogarithmicDecay.of(tp.probRandomActionStartAndEnd(), tp.nEpisodes()),
+                Counter.ofMaxCount(trainerParameters.nStepsMax()));
     }
 
 
@@ -85,4 +87,6 @@ public record TrainerDependenciesMultiStep(
     public void fitAgent(MultiStepResultGrid msrAtStep, double learningRate) {
         agent().fit(msrAtStep, learningRate);
     }
+
+
 }
