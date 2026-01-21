@@ -1,6 +1,7 @@
 package chapters.ch6.domain.trainer.core;
 
 
+import chapters.ch6.domain.trainer.multisteps_after_episode.MultiStepResultGrid;
 import core.gridrl.StartStateGridSupplierI;
 import chapters.ch6.domain.agent.core.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer.param.TrainerParametersMultiStepGrid;
@@ -21,7 +22,9 @@ public record TrainerDependenciesMultiStep(
         AgentGridMultiStepI agent,
         EnvironmentGridI environment,
         TrainerParametersMultiStepGrid trainerParameters,
-        StartStateGridSupplierI startStateSupplier
+        StartStateGridSupplierI startStateSupplier,
+        LogarithmicDecay decLearningRate,
+        LogarithmicDecay decProbRandomAction
 )
 
 {
@@ -30,7 +33,13 @@ public record TrainerDependenciesMultiStep(
                                                   EnvironmentGridI environment,
                                                   TrainerParametersMultiStepGrid trainerParameters,
                                                   StartStateGridSupplierI startStateSupplier) {
-        return new TrainerDependenciesMultiStep(agent, environment, trainerParameters, startStateSupplier);
+        var tp = trainerParameters;
+        return new TrainerDependenciesMultiStep(agent,
+                environment,
+                tp,
+                startStateSupplier,
+                LogarithmicDecay.of(tp.learningRateStartAndEnd(), tp.nEpisodes()),
+                LogarithmicDecay.of(tp.probRandomActionStartAndEnd(), tp.nEpisodes()));
     }
 
 
@@ -65,4 +74,15 @@ public record TrainerDependenciesMultiStep(
         return Counter.ofMaxCount(trainerParameters().nStepsMax());
     }
 
+    public double calcLearningRatet(int i) {
+        return decLearningRate.calcOut(i);
+    }
+
+    public double calcProbRandomActiont(int i) {
+        return decProbRandomAction.calcOut(i);
+    }
+
+    public void fitAgent(MultiStepResultGrid msrAtStep, double learningRate) {
+        agent().fit(msrAtStep, learningRate);
+    }
 }

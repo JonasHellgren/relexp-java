@@ -46,26 +46,22 @@ public class TrainerStateActionControlAfterEpisode implements TrainerI {
 
     @Override
     public void train() {
-        var generator = EpisodeGeneratorGrid.of(dependencies);
-        var lrPair = dependencies.trainerParameters().learningRateStartAndEnd();
-        var decLearningRate = LogarithmicDecay.of(lrPair, dependencies.getNofEpisodes());
-        var probPair = dependencies.trainerParameters().probRandomActionStartAndEnd();
-        var decProbRandomAction = LogarithmicDecay.of(probPair, dependencies.getNofEpisodes());
-        var msGenerator = MultiStepResultsGeneratorGrid.of(dependencies);
-        var measureExtractor = ProgressMeasureExtractorMultiStep.of(dependencies);
-        var agent = dependencies.agent();
+        var d=dependencies;
+        var generator = EpisodeGeneratorGrid.of(d);
+        var msGenerator = MultiStepResultsGeneratorGrid.of(d);
+        var measureExtractor = ProgressMeasureExtractorMultiStep.of(d);
         recorder.clear();
-        for (int i = 0; i < dependencies.getNofEpisodes(); i++) {
-            double probRandom = decProbRandomAction.calcOut(i);
-            double learningRate = decLearningRate.calcOut(i);
+        for (int i = 0; i < d.getNofEpisodes(); i++) {
+            double probRandom = d.calcProbRandomActiont(i);
+            double learningRate = d.calcLearningRatet(i);
             var experiences = generator.generate(probRandom);
             var msResults = msGenerator.generate(experiences);
             var info= EpisodeInfo.of(experiences);
             recorder.add(measureExtractor.getProgressMeasures(experiences,msResults));
             for (int j = 0; j < msResults.size(); j++) {
-                var msrAtStep = msResults.resultAtStep(j);
-                if (info.isFirstVisit(StateActionGrid.of(msrAtStep.state(),msrAtStep.action()),j)) {
-                    agent.fit(msrAtStep, learningRate);
+                var mss = msResults.resultAtStep(j);
+                if (info.isFirstVisit(StateActionGrid.of(mss.state(),mss.action()),j)) {
+                    d.fitAgent(mss, learningRate);
                 }
             }
         }
