@@ -1,20 +1,19 @@
 package chapters.ch6.domain.trainer.core;
 
 
-import core.gridrl.StateActionGrid;
 import core.gridrl.ExperienceGrid;
 import chapters.ch6.domain.trainer.mutlisteps_during_epis.MultiStepMemoryUpdater;
 import chapters.ch6.domain.trainer.mutlisteps_during_epis.ProgressMeasuresExtractorDuring;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.Conditionals;
-import core.foundation.util.math.LogarithmicDecay;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.java.Log;
-import java.util.ArrayList;
+
 import java.util.List;
+
 import static java.lang.Math.max;
 
 /***
@@ -51,13 +50,11 @@ public class TrainerStateActionControlDuringEpisode implements TrainerI {
 
     private final TrainerDependenciesMultiStep dependencies;
     private final RecorderProgressMeasures recorder;
-    private final MultiStepMemoryUpdater memoryUpdater;
 
     public static TrainerStateActionControlDuringEpisode of(TrainerDependenciesMultiStep dependencies) {
         return new TrainerStateActionControlDuringEpisode(
                 dependencies,
-                RecorderProgressMeasures.empty(),
-                MultiStepMemoryUpdater.of(dependencies));
+                RecorderProgressMeasures.empty());
     }
 
     /**
@@ -65,12 +62,14 @@ public class TrainerStateActionControlDuringEpisode implements TrainerI {
      */
     @Override
     public void train() {
-        var measureExtractor= ProgressMeasuresExtractorDuring.of(dependencies,memoryUpdater);
+        var memoryUpdater = MultiStepMemoryUpdater.of(dependencies);
+        var expListCreator = ExperienceListCreator.of(dependencies);
+        var measureExtractor = ProgressMeasuresExtractorDuring.of(dependencies);
         recorder.clear();
         for (int i = 0; i < dependencies.getNofEpisodes(); i++) {
-            var experiences = createExperiences(dependencies,i);
+            var experiences = expListCreator.createExperiences(i);
             maybeLog(dependencies.getStepCounter());
-            updateRemaining(experiences, dependencies.calcLearningRatet(i));
+            updateAgentMemory(experiences, memoryUpdater, i);
             recorder.add(measureExtractor.getProgressMeasures(experiences));
         }
     }
@@ -79,35 +78,12 @@ public class TrainerStateActionControlDuringEpisode implements TrainerI {
         Conditionals.executeIfTrue(stepCounter.isExceeded(), () -> log.fine("nof steps exceeded"));
     }
 
-    private List<ExperienceGrid> createExperiences(TrainerDependenciesMultiStep dependencies, int i) {
-        List<ExperienceGrid> experiences = new ArrayList<>();
-        var agent = dependencies.agent();
-        var environment = dependencies.environment();
-        double probRandom = dependencies.calcProbRandomActiont(i);
-        var startState = dependencies.getStartState();
-        var sa= StateActionGrid.of(startState,agent.chooseAction(startState, probRandom));
-        boolean isTerminal;
-        dependencies.stepCounter().reset();
-        do {
-            var sr = environment.step(sa.state(), sa.action());
-            var stateAfterStep = sr.sNext();
-            var actionNext = agent.chooseAction(stateAfterStep, probRandom);
-            experiences.add(ExperienceGrid.ofSarsa(sa.state(), sa.action(), sr, actionNext));
-            int tau = dependencies.stepCounter().getCount()- dependencies.backupHorizon();
-            Conditionals.executeIfTrue(tau >= 0, () ->
-                    memoryUpdater.updateAgentMemory(tau, experiences, dependencies.calcLearningRatet(i)));
-            sa=StateActionGrid.of(stateAfterStep, actionNext);
-            isTerminal = sr.isTerminal();
-            dependencies.stepCounter().increase();
-        } while (!isTerminal && dependencies.stepCounter().isNotExceeded());
-        return experiences;
-    }
-
-    private void updateRemaining(List<ExperienceGrid> experiences, double learningRate) {
+    public void updateAgentMemory(List<ExperienceGrid> experiences, MultiStepMemoryUpdater memoryUpdater, int i) {
+        double learningRate = dependencies.calcLearningRatet(i);
         int nExperiences = experiences.size();  //T in pseudo code
         int backupHorizon = dependencies.backupHorizon();  //n in pseudo code
-        int firstOfRemaining = max(0,nExperiences - backupHorizon);
-        for (int tau = firstOfRemaining; tau <= nExperiences - 1; tau++) {
+        int stepWhereUpdatingStarts = max(0, nExperiences - backupHorizon);
+        for (int tau = stepWhereUpdatingStarts; tau <= nExperiences - 1; tau++) {
             memoryUpdater.updateAgentMemory(tau, experiences, learningRate);
         }
     }

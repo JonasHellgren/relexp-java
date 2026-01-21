@@ -37,6 +37,7 @@ public class TrainerDependenciesFactory {
                 .nEpisodes(nEpisodes)
                 .gamma(1)
                 .learningRateStartAndEnd(Pair.create(learningRateStart, learningRateStart*LR_END_FRACTION))
+                .probRandomActionStartAndEnd(Pair.create(HIGH_PROB, SMALL_PROB))
                 .backupHorizon(backupHorizon)
                 .build();
         var startStateSupplier = StartStateGridSupplierMostLeftSplitting.create();

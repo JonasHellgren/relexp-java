@@ -1,5 +1,6 @@
 package chapters.ch6.domain.trainer.mutlisteps_during_epis;
 
+import chapters.ch6.domain.trainer.core.ReturnCalculator;
 import core.gridrl.StateActionGrid;
 import core.gridrl.ExperienceGrid;
 import chapters.ch6._shared.info.EpisodeInfo;
@@ -9,6 +10,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import java.util.List;
+
+import static java.lang.Math.max;
 
 
 /**
@@ -33,9 +36,10 @@ import java.util.List;
 public class MultiStepMemoryUpdater {
 
     private final TrainerDependenciesMultiStep dependencies;
+    private final ReturnCalculator returnCalculator;
 
     public static MultiStepMemoryUpdater of(TrainerDependenciesMultiStep dependencies) {
-        return new MultiStepMemoryUpdater(dependencies);
+        return new MultiStepMemoryUpdater(dependencies,ReturnCalculator.of(dependencies));
     }
 
     /**
@@ -47,31 +51,8 @@ public class MultiStepMemoryUpdater {
      */
     public void updateAgentMemory(int tau, List<ExperienceGrid> experiences, double learningRate) {
         checkTau(tau, experiences);
-        double sumOfRewards = calculateReturnAtTau(tau, experiences);
+        double sumOfRewards = returnCalculator.calculateReturnAtTau(tau, experiences);
         updateAgentMemory(experiences.get(tau), sumOfRewards, learningRate);
-    }
-
-    public double calculateReturnAtTau(int tau, List<ExperienceGrid> experiences) {
-        checkTau(tau, experiences);
-        int tn = tau + dependencies.trainerParameters().backupHorizon();  //index of future experience
-        var info = EpisodeInfo.of(experiences);
-        int T = info.nSteps();  //n steps in step
-        double gamma = dependencies.trainerParameters().gamma();
-
-        double G = 0;  //sum of rewards
-        for (int k = tau; k <= Math.min(tn-1, T-1); k++) {
-            var experienceAtK = experiences.get(k);
-            G += Math.pow(gamma, (k - tau)) * experienceAtK.reward();
-        }
-
-        var agent = dependencies.agent();
-        if (!info.isIndexOutSide(tn)) {
-            var experienceFuture = info.experienceAtTime(tn);
-            var sn = experienceFuture.state();
-            var an = experienceFuture.action();
-            G += Math.pow(gamma, (tn - tau)) * agent.read(StateActionGrid.of(sn, an));
-        }
-        return G;
     }
 
 

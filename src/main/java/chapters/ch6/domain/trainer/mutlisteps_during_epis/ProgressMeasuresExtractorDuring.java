@@ -1,5 +1,6 @@
 package chapters.ch6.domain.trainer.mutlisteps_during_epis;
 
+import chapters.ch6.domain.trainer.core.ReturnCalculator;
 import core.gridrl.EpisodeGridInfo;
 import core.gridrl.ExperienceGrid;
 import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
@@ -19,10 +20,12 @@ import java.util.List;
 public class ProgressMeasuresExtractorDuring {
 
     TrainerDependenciesMultiStep dependencies;
-    MultiStepMemoryUpdater memoryUpdater;
+    ReturnCalculator returnCalculator;
 
-    public static ProgressMeasuresExtractorDuring of(TrainerDependenciesMultiStep dependencies, MultiStepMemoryUpdater updater) {
-        return new ProgressMeasuresExtractorDuring(dependencies,updater);
+    public static ProgressMeasuresExtractorDuring of(TrainerDependenciesMultiStep dependencies) {
+        return new ProgressMeasuresExtractorDuring(
+                dependencies,
+                ReturnCalculator.of(dependencies));
     }
 
     public ProgressMeasures getProgressMeasures(List<ExperienceGrid> experiences) {
@@ -33,8 +36,8 @@ public class ProgressMeasuresExtractorDuring {
                 .nSteps(info.nSteps())
                 .tdError(MyListUtils.findAverage(errors).orElseThrow())
                 .tdBestAction(0d)
-                .build();    }
-
+                .build();
+    }
 
     private List<Double> getTdErrors(
             List<ExperienceGrid> experiences) {
@@ -42,7 +45,7 @@ public class ProgressMeasuresExtractorDuring {
         for (int t = 0; t < experiences.size(); t++) {
             var exp = experiences.get(t);
             double valueSa = dependencies.agent().read(exp.state(), exp.action());
-            double returnAtTau = memoryUpdater.calculateReturnAtTau(t, experiences);
+            double returnAtTau = returnCalculator.calculateReturnAtTau(t, experiences);
             tdErrors.add(Math.abs(returnAtTau - valueSa));
         }
         return tdErrors;
