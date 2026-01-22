@@ -27,9 +27,8 @@ public class TrainerParking {
 
     public void train() {
         var d = dependencies;
-        var agent = d.agent();
         var s = d.startStateSupplier().state();
-        var a = d.chooseAction(agent, s, d.probRandom(s.nSteps()));
+        var a = d.chooseAction(s, d.probRandom(s.nSteps()));
         var stats = TrainingStats.empty();
         var sr = StepReturnParking.empty();
         do {
@@ -38,9 +37,9 @@ public class TrainerParking {
             double lr = d.learningRate(step);
             sr = d.step(s, a);
             var stateNew = sr.stateNew();
-            var aNew = d.chooseAction(agent, stateNew, probRandom);
+            var aNew = d.chooseAction(stateNew, probRandom);
             var exp = ExperienceParking.of(s, a, sr, aNew, stats.rewardAverage());
-            double tdError = d.updateAgentMemory(agent, exp, lr);  //Update memory at s and a
+            double tdError = d.updateAgentMemory(exp, lr);  //Update memory at s and a
             s = stateNew.copy();
             a = aNew.copy();
             double lrRewardAvg = d.learningRateAvgReward(step);

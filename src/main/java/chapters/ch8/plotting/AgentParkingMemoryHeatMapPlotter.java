@@ -5,7 +5,7 @@ import chapters.ch8.domain.environment.core.FeeEnum;
 import chapters.ch8.domain.environment.core.StateParking;
 import chapters.ch8.domain.trainer.core.TrainerDependenciesParking;
 import core.foundation.config.PathAndFile;
-import core.foundation.configOld.ProjectPropertiesReader;
+import core.foundation.config.PlotConfig;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.chart_plotting.ChartSaver;
@@ -17,8 +17,6 @@ import org.apache.commons.math3.util.Pair;
 import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.SwingWrapper;
 import java.awt.*;
-import java.io.IOException;
-
 import static core.plotting_rl.chart.StringTextChartFactory.getXData;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -28,25 +26,30 @@ public class AgentParkingMemoryHeatMapPlotter {
     public static final int NOF_DIGITS = 1;
 
     TrainerDependenciesParking dependencies;
+    String path;
+    PlotConfig plotCfg;
 
-    public static AgentParkingMemoryHeatMapPlotter of(TrainerDependenciesParking dependencies) {
-        return new AgentParkingMemoryHeatMapPlotter(dependencies);
+    public static AgentParkingMemoryHeatMapPlotter of(TrainerDependenciesParking dependencies,
+                                                      String path,
+                                                      PlotConfig plotCfg) {
+        return new AgentParkingMemoryHeatMapPlotter(dependencies,path,plotCfg);
     }
 
     @SneakyThrows
     public void plotMemory(Pair<Double, Double> fees) {
-        var path = ProjectPropertiesReader.create().pathNonEpisodic();
-        saveAndShow(path, "park_actions_fee" + fees.getSecond(), fees, true);
-        saveAndShow(path, "park_values_fee" + fees.getSecond(), fees, false);
+        saveAndShow("park_actions_fee" + fees.getSecond(), fees, true);
+        saveAndShow("park_values_fee" + fees.getSecond(), fees, false);
     }
 
-    private void saveAndShow(String path, String parkActions, Pair<Double, Double> fees, boolean isActions) throws IOException {
+    private void saveAndShow(String fileName,
+                             Pair<Double, Double> fees,
+                             boolean isActions)  {
         HeatMapChart chart = getValueChart(isActions, fees);
-        ChartSaver.saveHeatMapChart(chart, PathAndFile.ofPng(path, parkActions));
+        ChartSaver.saveHeatMapChart(chart, PathAndFile.ofPng(path, fileName));
         new SwingWrapper<>(chart).displayChart();
     }
 
-    private HeatMapChart getValueChart(boolean isActions, Pair<Double, Double> fees) throws IOException {
+    private HeatMapChart getValueChart(boolean isActions, Pair<Double, Double> fees)  {
         var parameters = dependencies.environment().getParameters();
         int nCols = parameters.nSpots();
         int nRows = ActionParking.maxNofActions();
@@ -68,12 +71,11 @@ public class AgentParkingMemoryHeatMapPlotter {
         return valueData;
     }
 
-    public static HeatMapChart getStringTextChart(String[][] valueData,
+    public HeatMapChart getStringTextChart(String[][] valueData,
                                                   int nCols,
-                                                  Pair<Double, Double> fees) throws IOException {
-        var properties = ProjectPropertiesReader.create();
+                                                  Pair<Double, Double> fees)  {
         var settings = PlotSettings.stringTextInHeatMap()
-                .withWidth(properties.xyChartWidth3Col()).withHeight(properties.xyChartHeight())
+                .withWidth(plotCfg.xyChartWidth3Col()).withHeight(plotCfg.xyChartHeight())
                 .withXAxisLabel("Nof. occupied").withYAxisLabel("Fee")
                 .withAnnotationTextFont(VALUE_TEXT_FONT)
                 .withShowMarker(false)

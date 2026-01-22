@@ -1,7 +1,6 @@
 package chapters.ch8.plotting;
 
 import chapters.ch8.domain.trainer.core.TrainerParking;
-import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import java.util.List;
@@ -11,17 +10,17 @@ public class TrainerPlotter {
 
     static final int N_WINDOWS_FILTERING = 10;
 
-    public static void plotTrainEvolution(TrainerParking trainer) {
-        plotMeasure(trainer, "parking_training_rAvg_", MeasuresParkingTrainingEnum.REWARD_AVG);
-        plotMeasure(trainer, "parking_training_rAvg_", MeasuresParkingTrainingEnum.NOCCUP_AVG);
+    public static void plotTrainEvolution(String path,TrainerParking trainer) {
+        plotMeasure(trainer,path, "parking_training_rAvg_", MeasuresParkingTrainingEnum.REWARD_AVG);
+        plotMeasure(trainer,path, "parking_training_rAvg_", MeasuresParkingTrainingEnum.NOCCUP_AVG);
     }
 
     @SneakyThrows
     private static void plotMeasure(TrainerParking trainer,
+                                    String path,
                                    String fileName,
                                    MeasuresParkingTrainingEnum measuresPendulumTrainingEnum) {
         var recorder = trainer.getRecorder();
-        var path = ProjectPropertiesReader.create().pathNonEpisodic();
         var plotter = ErrorBandPlotterParking.ofFiltering(
                 recorder, path, fileName, N_WINDOWS_FILTERING);
         plotter.plotAndSave(List.of(measuresPendulumTrainingEnum));

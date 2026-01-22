@@ -6,23 +6,18 @@ import chapters.ch8.domain.environment.core.FeeEnum;
 import chapters.ch8.domain.environment.core.StateParking;
 import chapters.ch8.domain.trainer.core.TrainerDependenciesParking;
 import core.foundation.config.PathAndFile;
-import core.foundation.configOld.ProjectPropertiesReader;
+import core.foundation.config.PlotConfig;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.chart_plotting.ChartSaver;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
-
 import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AgentParkingMemoryCurvePlotter {
@@ -36,25 +31,18 @@ public class AgentParkingMemoryCurvePlotter {
         return new AgentParkingMemoryCurvePlotter(dependencies);
     }
 
-    @SneakyThrows
-    public void plotMemory(double feeCharging) {
-        var path = ProjectPropertiesReader.create().pathNonEpisodic();
-        saveAndShow(path, "park_values_curve_fee"+feeCharging);
-    }
-
-    private void saveAndShow(String path, String parkActions) throws IOException {
-        XYChart chart = getChart();
+    public void saveAndShow(String path, String parkActions, PlotConfig plotCfg) {
+        XYChart chart = getChart(plotCfg);
         ChartSaver.saveXYChart(chart, PathAndFile.ofPng(path, parkActions));
         new SwingWrapper<>(chart).displayChart();
     }
 
-    private XYChart getChart() throws IOException {
+    private XYChart getChart(PlotConfig plotCfg)  {
         int nSpots = dependencies.environment().getParameters().nSpots();
         var parameters = dependencies.environment().getParameters();
         var memory = dependencies.agent().getMemory();
-        var properties = ProjectPropertiesReader.create();
         var xData = ListCreatorUtil.createFromZeroToNofItems(nSpots);
-        var chartCreator = ManyLinesChartCreator.of(getPlotSettings(properties),xData);
+        var chartCreator = ManyLinesChartCreator.of(getPlotSettings(plotCfg),xData);
         Map<FeeEnum, List<Double>> diffeMap = new HashMap<>();
         for (FeeEnum fee : FeeEnum.allFees()) {
             List<Double> diffList = new ArrayList<>();
@@ -72,10 +60,9 @@ public class AgentParkingMemoryCurvePlotter {
 
     }
 
-    private static PlotSettings getPlotSettings(ProjectPropertiesReader properties) {
-        //.withAnnotationTextFont(font)
+    private static PlotSettings getPlotSettings(PlotConfig plotCfg) {
         return PlotSettings.ofDefaults()
-                .withWidth(properties.xyChartWidth3Col()).withHeight(properties.xyChartHeight())
+                .withWidth(plotCfg.xyChartWidth3Col()).withHeight(plotCfg.xyChartHeight())
                 .withXAxisLabel("Nof. occupied").withYAxisLabel("Accept advantage")
                 .withShowLegend(false)
                 .withColorRangeSeries(new Color[]{Color.BLACK, Color.GRAY})

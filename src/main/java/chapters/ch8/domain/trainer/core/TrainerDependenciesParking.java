@@ -43,7 +43,7 @@ public record TrainerDependenciesParking(
         return learningRateDecay.calcOut(step);
     }
 
-    public ActionParking chooseAction(AgentParking agent, StateParking stateNew, double probRandom) {
+    public ActionParking chooseAction(StateParking stateNew, double probRandom) {
         return agent.chooseAction(stateNew, probRandom);
     }
 
@@ -52,7 +52,7 @@ public record TrainerDependenciesParking(
     }
 
 
-    public double updateAgentMemory(AgentParking agent, ExperienceParking exp, double lr) {
+    public double updateAgentMemory(ExperienceParking exp, double lr) {
         return agent.fitMemory(exp, lr);
     }
 
