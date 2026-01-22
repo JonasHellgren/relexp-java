@@ -41,18 +41,7 @@ public class ArchitectureTest {
         importedClasses = new ClassFileImporter()
                 .importPath(mainClasses);
         log.info("Setup complete. Classes imported, nof = " + importedClasses.size());
-        //   log.info("Classes imported="+ importedClasses);
     }
-
-    private static List<Path> getAllModuleClassPaths() throws IOException {
-        Path rootPath = new File(System.getProperty("user.dir")).toPath();
-        try (Stream<Path> pathStream = Files.walk(rootPath)) {
-            return pathStream
-                    .filter(path -> path.toString().endsWith("build/classes/java/main"))
-                    .collect(Collectors.toList());
-        }
-    }
-
 
 
     @Test
@@ -108,7 +97,7 @@ public class ArchitectureTest {
                                 "..plotting_rl..")
                         .should().dependOnClassesThat()
                         .resideInAnyPackage(
-                                "chapters.."         // if you want to block chapter code
+                                "..chapters.."
                         )
                         .because("gridrl should only depend on foundation (and external libs), not other project layers.")
         );

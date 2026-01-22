@@ -24,8 +24,6 @@ public class TrainerParking {
     }
 
     public void train() {
-        var timer = CpuTimer.empty();
-        log.info("starting training");
         var agent = dependencies.agent();
         var environment = dependencies.environment();
         var s = dependencies.startStateSupplier().state();
@@ -52,6 +50,9 @@ public class TrainerParking {
                     .nOoccupAvg(helper.stats.getMean())
                     .build());
         }
-        log.info("Finished training, in time (seconds) = " + timer.timeInSecondsAsString());
+    }
+
+    public void logTimer() {
+        log.info("Finished training, in time (seconds) = " + dependencies.timer().timeInSecondsAsString());
     }
 }

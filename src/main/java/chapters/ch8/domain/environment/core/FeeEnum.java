@@ -3,13 +3,14 @@ package chapters.ch8.domain.environment.core;
 import chapters.ch8.domain.environment.param.ParkingParameters;
 import core.foundation.util.rand.RandUtil;
 import lombok.AllArgsConstructor;
+
 import java.util.List;
 
 /**
  * Enum representing the possible fees in a parking environment.
  */
 @AllArgsConstructor
-public enum              FeeEnum {
+public enum FeeEnum {
     NotCharging, Charging;
 
     public double feeValue(ParkingParameters parameters) {
@@ -29,8 +30,6 @@ public enum              FeeEnum {
     public static FeeEnum random() {
         return allFees().get(RandUtil.getRandomIntNumber(0, nofFees()));
     }
-
-
 
 
 }

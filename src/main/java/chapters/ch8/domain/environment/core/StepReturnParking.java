@@ -18,7 +18,7 @@ public record StepReturnParking(
         double reward
 ) {
 
-    public static StepReturnParking of(EnvironmentParking.NewStateResult result,
+    public static StepReturnParking of(NewStateResult result,
                                        boolean isTerminal,
                                        double reward) {
         return StepReturnParking.builder()

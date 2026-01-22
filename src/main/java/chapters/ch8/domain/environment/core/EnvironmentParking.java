@@ -15,11 +15,7 @@ import lombok.extern.java.Log;
 @Getter
 public class EnvironmentParking {
 
-    public record NewStateResult(StateParking state, boolean isPark, boolean isDeparting) {
-        public static NewStateResult of(StateParking state, boolean isPark, boolean isDeparted) {
-            return new NewStateResult(state, isPark, isDeparted);
-        }
-    }
+
 
     ParkingParameters parameters;
 
@@ -37,7 +33,7 @@ public class EnvironmentParking {
     public StepReturnParking step(StateParking state, ActionParking action) {
         var res = getStateNew(state, action);
         boolean isTerminal = parameters.isMaxStepsExceeded(state);
-        return StepReturnParking.of(res, isTerminal, getReward(state, res.isPark));
+        return StepReturnParking.of(res, isTerminal, getReward(state, res.isPark()));
     }
 
     private NewStateResult getStateNew(StateParking state, ActionParking action) {

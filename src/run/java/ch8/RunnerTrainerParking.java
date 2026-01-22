@@ -20,11 +20,10 @@ public class RunnerTrainerParking {
     public static final double FEE_CHARGING = 2;  //2 or 3
 
     public static void main(String[] args) {
-        var timer = CpuTimer.empty();
         var dependencies = getDependenciesParking();
         var trainer = TrainerParking.of(dependencies);
         trainer.train();
-        timer.printInMs();
+        trainer.logTimer();
         TrainerPlotter.plotTrainEvolution(trainer);
         var agentPlotter= AgentParkingMemoryHeatMapPlotter.of(dependencies);
         double feeNoCharging = dependencies.environment().getParameters().feeNoCharging();
@@ -43,6 +42,7 @@ public class RunnerTrainerParking {
                 .environment(EnvironmentParking.of(envPar))
                 .trainerParameters(trainerPar)
                 .startStateSupplier(startSup)
+                .timer(CpuTimer.empty())
                 .build();
     }
 
