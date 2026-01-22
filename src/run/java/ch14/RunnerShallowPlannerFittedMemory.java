@@ -14,7 +14,7 @@ import chapters.ch14.factory.FactoryPlotData;
 import chapters.ch14.plotting.MeasuresCombLPEnum;
 import chapters.ch14.plotting.Recorder;
 import chapters.ch14.plotting.RecorderPlotter;
-import core.foundation.configOld.PathAndFile;
+import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import core.plotting.base.shared.PlotSettings;

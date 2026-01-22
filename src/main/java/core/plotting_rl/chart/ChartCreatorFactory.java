@@ -1,5 +1,6 @@
 package core.plotting_rl.chart;
 
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting.plotting_2d.ScatterWithLineChartCreator;
 import core.plotting.base.shared.PlotSettings;
@@ -17,7 +18,7 @@ public class ChartCreatorFactory {
 
     @SneakyThrows
     public static ScatterWithLineChartCreator produceXYLine() {
-        var props = ProjectPropertiesReader.create();
+        var props= ConfigFactory.plotConfig();
         var settings = PlotSettings.ofDefaults()
                 .withXAxisLabel("x").withYAxisLabel("y")
                 .withWidth(props.xyChartWidth1Col())
@@ -29,7 +30,7 @@ public class ChartCreatorFactory {
 
     @SneakyThrows
     public static ScatterWithLineChartCreator produceLine(String xLabel, String yLabel) {
-        var props = ProjectPropertiesReader.create();
+        var props= ConfigFactory.plotConfig();
         var settings = PlotSettings.ofDefaults()
                 .withXAxisLabel(xLabel).withYAxisLabel(yLabel)
                 .withWidth(props.xyChartWidth1Col())

@@ -4,7 +4,7 @@ import chapters.ch3.implem.splitting_path_problem.EnvironmentParametersSplitting
 import chapters.ch3.implem.splitting_path_problem.InformerSplitting;
 import core.foundation.config.PlotConfig;
 import core.gridrl.StateValueMemoryGrid;
-import core.foundation.configOld.PathAndFile;
+import core.foundation.config.PathAndFile;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.StateGrid;
 import core.plotting.chart_plotting.ChartSaver;

@@ -1,14 +1,10 @@
 package chapters.ch5.domain.policy_evaluator;
 
-import chapters.ch5.domain.episode_generator.EpisodeGeneratorI;
 import chapters.ch5.domain.environment.ExperienceMc;
-import chapters.ch5.domain.environment.StartStateSupplierI;
-import chapters.ch5.domain.memory.StateActionMemoryMcI;
 import core.foundation.gadget.cond.Counter;
-import core.foundation.util.math.LogarithmicDecay;
 import lombok.Builder;
 import lombok.Getter;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import static chapters.ch5.domain.policy_evaluator.ExperiencesInfo.isFirstVisit;

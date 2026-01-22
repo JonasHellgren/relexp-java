@@ -1,6 +1,6 @@
 package chapters.ch5.domain.policy_evaluator;
 
-import core.foundation.util.math.LogarithmicDecay;
+import core.foundation.gadget.math.LogarithmicDecay;
 import lombok.Builder;
 import lombok.With;
 import org.apache.commons.math3.util.Pair;

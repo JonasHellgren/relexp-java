@@ -6,7 +6,7 @@ import chapters.ch12.inv_pendulum.plotting.MeasuresPendulumTraining;
 import chapters.ch12.inv_pendulum.plotting.RecorderTrainerPendulum;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.util.cond.Conditionals;
-import core.foundation.util.math.Accumulator;
+import core.foundation.gadget.math.Accumulator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

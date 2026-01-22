@@ -6,7 +6,7 @@ import core.gridrl.StartStateGridSupplierI;
 import chapters.ch6.domain.agent.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer_dep.param.TrainerParametersMultiStepGrid;
 import core.foundation.gadget.cond.Counter;
-import core.foundation.util.math.LogarithmicDecay;
+import core.foundation.gadget.math.LogarithmicDecay;
 import core.gridrl.EnvironmentGridI;
 import core.gridrl.StateGrid;
 import lombok.With;

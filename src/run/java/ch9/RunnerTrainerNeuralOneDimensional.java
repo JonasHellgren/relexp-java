@@ -9,7 +9,7 @@ import chapters.ch9.neural.plotting.NeuralOneDimRegressionRecorder;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.util.cond.Conditionals;
-import core.foundation.util.collections.Array2ListConverter;
+import core.foundation.util.collections.Array2ListConverterUtil;
 import core.foundation.util.collections.List2ArrayConverter;
 import core.foundation.util.collections.ListCreator;
 import core.nextlevelrl.neural.MultiLayerPrinter;
@@ -115,7 +115,7 @@ public class RunnerTrainerNeuralOneDimensional {
         var outRef = inPlotting.stream().toList();
         double[] inArr = List2ArrayConverter.convertListToDoubleArr(inPlotting);
         INDArray output = getNetOutput(inArr);
-        var outNeuralList = Array2ListConverter.arrayToList(output.toDoubleVector());
+        var outNeuralList = Array2ListConverterUtil.arrayToList(output.toDoubleVector());
         chartCreator.addLine("Ref.", outRef);
         chartCreator.addLine(titleRbf, outNeuralList);
         return chartCreator.create();

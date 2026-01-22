@@ -3,7 +3,7 @@ package core.plotting_rl.progress_plotting;
 import com.google.common.base.Preconditions;
 import core.foundation.util.collections.ArrayCreator;
 import core.foundation.util.collections.List2ArrayConverter;
-import core.foundation.util.math.MovingAverage;
+import core.foundation.gadget.math.MovingAverage;
 
 import java.util.List;
 

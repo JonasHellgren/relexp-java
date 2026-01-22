@@ -1,4 +1,4 @@
-package core.foundation.configOld;
+package core.foundation.config;
 
 public record PathAndFile(
         String path,

@@ -4,7 +4,7 @@ import chapters.ch8.domain.environment.core.ActionParking;
 import chapters.ch8.domain.environment.core.FeeEnum;
 import chapters.ch8.domain.environment.core.StateParking;
 import chapters.ch8.domain.trainer.core.TrainerDependenciesParking;
-import core.foundation.configOld.PathAndFile;
+import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.plotting.base.shared.PlotSettings;

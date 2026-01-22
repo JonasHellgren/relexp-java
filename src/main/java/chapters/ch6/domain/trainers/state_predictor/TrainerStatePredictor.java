@@ -4,7 +4,7 @@ import chapters.ch6.domain.trainer_dep.episode_generator.EpisodeGeneratorGrid;
 import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import chapters.ch6.domain.trainer_dep.core.TrainerI;
 import chapters.ch6.domain.trainer_dep.result_generator.MultiStepResultsGeneratorGrid;
-import core.foundation.util.math.LogarithmicDecay;
+import core.foundation.gadget.math.LogarithmicDecay;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

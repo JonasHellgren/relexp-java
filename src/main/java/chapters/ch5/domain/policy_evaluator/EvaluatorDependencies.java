@@ -4,7 +4,7 @@ import chapters.ch5.domain.environment.StartStateSupplierI;
 import chapters.ch5.domain.episode_generator.EpisodeGeneratorI;
 import chapters.ch5.domain.memory.StateActionMemoryMcI;
 import chapters.ch5.domain.memory.StateMemoryMcI;
-import core.foundation.util.math.LogarithmicDecay;
+import core.foundation.gadget.math.LogarithmicDecay;
 import lombok.Builder;
 import lombok.With;
 

@@ -3,7 +3,7 @@ package chapters.ch3.factory;
 import chapters.ch3.implem.splitting_path_problem.EnvironmentSplittingPath;
 import chapters.ch3.implem.splitting_path_problem.EvaluatorDependencies;
 import chapters.ch3.implem.splitting_path_problem.StartStateSupplierGridRandomSplitting;
-import core.foundation.util.math.LogarithmicDecay;
+import core.foundation.gadget.math.LogarithmicDecay;
 import core.gridrl.StateValueMemoryGrid;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.math3.util.Pair;

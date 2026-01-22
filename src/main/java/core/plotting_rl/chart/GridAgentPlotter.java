@@ -1,16 +1,14 @@
 package core.plotting_rl.chart;
 
 import core.foundation.config.PlotConfig;
-import core.foundation.configOld.PathAndFile;
+import core.foundation.config.PathAndFile;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.*;
 import core.plotting.chart_plotting.ChartSaver;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.SneakyThrows;
 import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.XYChart;
 
 import static chapters.ch4.plotting.GridPlotHelper.*;
 

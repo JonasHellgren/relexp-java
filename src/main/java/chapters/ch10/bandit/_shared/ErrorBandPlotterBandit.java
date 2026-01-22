@@ -2,7 +2,7 @@ package chapters.ch10.bandit._shared;
 
 import chapters.ch10.bandit.domain.trainer.RecorderBandit;
 import com.google.common.base.Preconditions;
-import core.foundation.configOld.PathAndFile;
+import core.foundation.config.PathAndFile;
 import core.foundation.util.cond.Conditionals;
 import core.plotting.plotting_2d.ErrorBandCreator;
 import core.plotting_rl.progress_plotting.ErrorBandData;

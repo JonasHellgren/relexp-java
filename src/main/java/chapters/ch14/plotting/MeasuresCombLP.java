@@ -2,7 +2,7 @@ package chapters.ch14.plotting;
 
 
 import core.foundation.gadget.cond.Counter;
-import core.foundation.util.math.Accumulator;
+import core.foundation.gadget.math.Accumulator;
 
 public record MeasuresCombLP(
         Accumulator rewardAccumulator,

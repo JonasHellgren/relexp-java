@@ -1,7 +1,7 @@
 package chapters.ch8.domain.trainer.core;
 
 import chapters.ch8.domain.environment.core.StepReturnParking;
-import core.foundation.util.math.Accumulator;
+import core.foundation.gadget.math.Accumulator;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 

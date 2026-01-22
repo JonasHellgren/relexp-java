@@ -1,7 +1,7 @@
 package core.plotting_rl.progress_plotting;
 
 import com.google.common.base.Preconditions;
-import core.foundation.configOld.PathAndFile;
+import core.foundation.config.PathAndFile;
 import core.plotting.base.shared.PlotSettings;
 import core.plotting.plotting_2d.ErrorBandCreator;
 import lombok.AccessLevel;

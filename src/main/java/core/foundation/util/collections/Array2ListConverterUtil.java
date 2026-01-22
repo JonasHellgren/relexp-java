@@ -1,12 +1,13 @@
 package core.foundation.util.collections;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Array2ListConverter {
+@UtilityClass
+public class Array2ListConverterUtil {
 
-    private Array2ListConverter() {
-    }
 
     /**
      * Converts a double array to a list of doubles.

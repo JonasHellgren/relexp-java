@@ -2,7 +2,7 @@ package ch6;
 
 import chapters.ch6.domain.trainers.during_episode.TrainerStateActionControlDuringEpisode;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
-import core.foundation.configOld.PathAndFile;
+import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverter;
 import core.foundation.util.collections.MyListUtils;

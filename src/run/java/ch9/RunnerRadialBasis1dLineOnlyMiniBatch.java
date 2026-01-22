@@ -4,7 +4,7 @@ import chapters.ch9.radial_basis.Kernels;
 import chapters.ch9.radial_basis.RbfNetwork;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.training.TrainDataOld;
-import core.foundation.util.collections.Array2ListConverter;
+import core.foundation.util.collections.Array2ListConverterUtil;
 import core.foundation.util.collections.ArrayCreator;
 import core.foundation.util.collections.ListCreator;
 import core.plotting.base.shared.PlotSettings;
@@ -68,7 +68,7 @@ public class RunnerRadialBasis1dLineOnlyMiniBatch {
     private static void showKernelChart(RbfNetwork rb1, String titleRbf, String fileName) {
         var chartRbf = getChartRbf(titleRbf);
         var xData = getXData();
-        var yData = Array2ListConverter.arrayToList(rb1.getWeights().getArray());
+        var yData = Array2ListConverterUtil.arrayToList(rb1.getWeights().getArray());
         chartRbf.addSeries(titleRbf, xData, yData);
         ChartSaverAndPlotter.showChartSaveInFolderRbf(chartRbf, fileName);
     }

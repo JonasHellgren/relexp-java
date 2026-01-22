@@ -1,6 +1,6 @@
 package core.foundation.util.math;
 
-import core.foundation.util.collections.Array2ListConverter;
+import core.foundation.util.collections.Array2ListConverterUtil;
 import core.foundation.util.collections.List2ArrayConverter;
 import lombok.experimental.UtilityClass;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 public class SoftMax {
 
     public static List<Double> softmax(List<Double> input) {
-        return Array2ListConverter.arrayToList(
+        return Array2ListConverterUtil.arrayToList(
                 softmax(List2ArrayConverter.convertListToDoubleArr(input)));
     }
 

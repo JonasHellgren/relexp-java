@@ -1,7 +1,7 @@
 package core.learninggadgets;
 
 import core.gridrl.TrainerGridParameters;
-import core.foundation.util.math.LogarithmicDecay;
+import core.foundation.gadget.math.LogarithmicDecay;
 import org.apache.commons.math3.util.Pair;
 
 public record LrAndProbRandDecay(LogarithmicDecay lrDecay, LogarithmicDecay probDecay) {

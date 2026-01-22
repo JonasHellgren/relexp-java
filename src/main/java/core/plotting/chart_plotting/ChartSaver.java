@@ -1,6 +1,6 @@
 package core.plotting.chart_plotting;
 
-import core.foundation.configOld.PathAndFile;
+import core.foundation.config.PathAndFile;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import org.knowm.xchart.*;

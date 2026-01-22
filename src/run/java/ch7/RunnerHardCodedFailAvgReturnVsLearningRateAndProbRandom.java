@@ -3,7 +3,7 @@ package ch7;
 import chapters.ch7.domain.trainer.TrainerOneStepTdQLearningWithSafety;
 import chapters.ch7.factory.SafetyLayerFactoryTreasure;
 import chapters.ch7.factory.TrainerDependencySafeFactory;
-import core.foundation.configOld.PathAndFile;
+import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverter;
 import core.foundation.util.collections.MyListUtils;

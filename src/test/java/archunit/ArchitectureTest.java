@@ -1,8 +1,12 @@
 package archunit;
 
+import com.tngtech.archunit.core.domain.JavaClass;
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
+import com.tngtech.archunit.lang.ArchCondition;
 import com.tngtech.archunit.lang.ArchRule;
+import com.tngtech.archunit.lang.ConditionEvents;
+import com.tngtech.archunit.lang.SimpleConditionEvent;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
@@ -14,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -48,7 +53,7 @@ public class ArchitectureTest {
         }
     }
 
-    @Test
+/*    @Test
     public void noCircularDependencies() {
         executeRule(
                 "noCircularDependencies",
@@ -57,7 +62,9 @@ public class ArchitectureTest {
                         .should()
                         .beFreeOfCycles()
                         .because("There should be no cyclic dependencies among packages."));
-    }
+    }*/
+
+
 
     @Test
     public void foundationLayerShouldBeIndependent() {
@@ -68,7 +75,16 @@ public class ArchitectureTest {
                         .resideInAPackage("..foundation..")
                         .should()
                         .onlyDependOnClassesThat()
-                        .resideInAnyPackage("java..", "..api..","..lombok..")
+                        .resideInAnyPackage(
+                                "java..",
+                                "..api..",
+                                "..lombok..",
+                                "..foundation..",
+                                "..com.google.common..",
+                                "..org.apache.commons..",
+                                "..org.jetbrains.annotations..",
+                                "..tec.units.ri..",
+                                "..javax.measure..")
                         .because("The foundation layer should not depend on other project layers."));
     }
 

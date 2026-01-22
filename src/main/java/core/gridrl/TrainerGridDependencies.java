@@ -2,7 +2,7 @@ package core.gridrl;
 
 
 import core.foundation.gadget.timer.CpuTimer;
-import core.foundation.util.math.LogarithmicDecay;
+import core.foundation.gadget.math.LogarithmicDecay;
 import core.learninggadgets.LrAndProbRandDecay;
 import core.learninggadgets.StepAndEpisCounter;
 import core.plotting_rl.progress_plotting.ProgressMeasures;

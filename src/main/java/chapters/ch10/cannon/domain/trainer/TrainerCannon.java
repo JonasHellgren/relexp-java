@@ -4,7 +4,7 @@ import chapters.ch10.cannon.gradient_calculator.GradLogCalculatorContinuousActio
 import chapters.ch10.cannon.plotting.MeasuresCannon;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.MeanAndStd;
-import core.foundation.util.math.LogarithmicDecay;
+import core.foundation.gadget.math.LogarithmicDecay;
 import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

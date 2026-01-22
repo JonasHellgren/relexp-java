@@ -1,6 +1,6 @@
 package chapters.ch3.implem.splitting_path_problem;
 
-import core.foundation.util.math.LogarithmicDecay;
+import core.foundation.gadget.math.LogarithmicDecay;
 import core.gridrl.StartStateSupplierGridI;
 import core.gridrl.StateValueMemoryGrid;
 import lombok.Builder;

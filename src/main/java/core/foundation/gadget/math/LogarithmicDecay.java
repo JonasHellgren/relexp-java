@@ -1,4 +1,4 @@
-package core.foundation.util.math;
+package core.foundation.gadget.math;
 
 import com.google.common.base.Preconditions;
 import lombok.Getter;

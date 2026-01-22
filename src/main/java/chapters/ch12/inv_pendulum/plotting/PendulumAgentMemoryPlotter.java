@@ -3,7 +3,7 @@ package chapters.ch12.inv_pendulum.plotting;
 import chapters.ch12.inv_pendulum.domain.agent.memory.ActionAndItsValue;
 import chapters.ch12.inv_pendulum.domain.environment.core.StatePendulum;
 import chapters.ch12.inv_pendulum.domain.trainer.core.TrainerDependencies;
-import core.foundation.configOld.PathAndFile;
+import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverter;
 import core.plotting.base.shared.PlotSettings;

@@ -5,7 +5,7 @@ import chapters.ch12.inv_pendulum.domain.environment.core.EnvironmentPendulum;
 import chapters.ch12.inv_pendulum.domain.environment.startstate_supplier.StartStateSupplierI;
 import chapters.ch12.inv_pendulum.domain.trainer.param.TrainerParameters;
 import com.google.common.base.Preconditions;
-import core.foundation.util.math.LogarithmicDecay;
+import core.foundation.gadget.math.LogarithmicDecay;
 
 /**
  * Represents the dependencies required for a trainer in the inverted pendulum domain.

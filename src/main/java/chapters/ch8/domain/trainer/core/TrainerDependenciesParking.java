@@ -4,7 +4,7 @@ import chapters.ch8.domain.agent.core.AgentParking;
 import chapters.ch8.domain.environment.core.EnvironmentParking;
 import chapters.ch8.domain.environment.startstate_supplier.StartStateSupplierI;
 import chapters.ch8.domain.trainer.param.TrainerParametersParking;
-import core.foundation.util.math.LogarithmicDecay;
+import core.foundation.gadget.math.LogarithmicDecay;
 import lombok.Builder;
 import org.apache.commons.math3.util.Pair;
 

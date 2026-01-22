@@ -1,4 +1,4 @@
-package core.foundation.util.math;
+package core.foundation.gadget.math;
 
 /**
  * https://en.wikipedia.org/wiki/Logistic_function

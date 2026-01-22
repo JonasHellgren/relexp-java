@@ -1,4 +1,4 @@
-package core.foundation.util.math;
+package core.foundation.gadget.math;
 
 import java.util.ArrayList;
 import java.util.Deque;
