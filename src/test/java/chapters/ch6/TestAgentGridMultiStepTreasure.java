@@ -3,7 +3,7 @@ package chapters.ch6;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
 import chapters.ch4.implem.treasure.factory.EnvironmentParametersTreasureFactor;
 import chapters.ch6.domain.agent.AgentGridMultiStepI;
-import chapters.ch6.domain.trainer.result_generator.MultiStepResultGrid;
+import chapters.ch6.domain.trainer_dep.result_generator.MultiStepResultGrid;
 import chapters.ch6.implem.factory.AgentGridMultiStepFactory;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;

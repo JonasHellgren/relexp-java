@@ -1,11 +1,11 @@
 package chapters.ch6.domain.trainers.after_episode;
 
-import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
-import chapters.ch6.domain.trainer.core.TrainerI;
+import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
+import chapters.ch6.domain.trainer_dep.core.TrainerI;
 import core.gridrl.StateActionGrid;
-import chapters.ch6.domain.trainer.episode_generator.EpisodeGeneratorGrid;
-import chapters.ch6.domain.trainer.episode_generator.EpisodeInfo;
-import chapters.ch6.domain.trainer.result_generator.MultiStepResultsGeneratorGrid;
+import chapters.ch6.domain.trainer_dep.episode_generator.EpisodeGeneratorGrid;
+import chapters.ch6.domain.trainer_dep.episode_generator.EpisodeInfo;
+import chapters.ch6.domain.trainer_dep.result_generator.MultiStepResultsGeneratorGrid;
 import chapters.ch6.plotting.ProgressMeasureExtractorMultiStep;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.AccessLevel;

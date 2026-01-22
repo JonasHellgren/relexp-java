@@ -3,8 +3,8 @@ package chapters.ch6.implem.factory;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
 import chapters.ch4.implem.treasure.factory.EnvironmentParametersTreasureFactor;
 import chapters.ch4.implem.treasure.start_state_suppliers.StartStateSupplierTreasureMostLeft;
-import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
-import chapters.ch6.domain.trainer.param.TrainerParametersMultiStepGrid;
+import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
+import chapters.ch6.domain.trainer_dep.param.TrainerParametersMultiStepGrid;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.math3.util.Pair;
 

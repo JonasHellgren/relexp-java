@@ -1,4 +1,4 @@
-package chapters.ch6.domain.trainer.result_generator;
+package chapters.ch6.domain.trainer_dep.result_generator;
 
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;

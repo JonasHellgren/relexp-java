@@ -1,4 +1,4 @@
-package chapters.ch6.domain.trainer.result_generator;
+package chapters.ch6.domain.trainer_dep.result_generator;
 
 import com.google.common.collect.Lists;
 import lombok.AccessLevel;

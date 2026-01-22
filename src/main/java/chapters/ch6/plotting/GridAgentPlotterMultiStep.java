@@ -2,7 +2,7 @@ package chapters.ch6.plotting;
 
 
 import chapters.ch6.domain.agent.AgentGridMultiStepI;
-import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
+import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import core.foundation.config.PlotConfig;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.StateGrid;

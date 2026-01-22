@@ -1,8 +1,8 @@
-package chapters.ch6.domain.trainer.result_generator;
+package chapters.ch6.domain.trainer_dep.result_generator;
 
 import core.gridrl.ExperienceGrid;
-import chapters.ch6.domain.trainer.episode_generator.EpisodeInfo;
-import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
+import chapters.ch6.domain.trainer_dep.episode_generator.EpisodeInfo;
+import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import com.google.common.base.Preconditions;
 import core.learningutils.MyRewardListUtils;
 import lombok.AccessLevel;

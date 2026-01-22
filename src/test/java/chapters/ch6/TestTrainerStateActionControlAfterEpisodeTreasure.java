@@ -2,7 +2,7 @@ package chapters.ch6;
 
 import chapters.ch6.implem.factory.TrainerDependenciesFactoryTreasure;
 import core.gridrl.StateActionGrid;
-import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
+import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import chapters.ch6.domain.trainers.after_episode.TrainerStateActionControlAfterEpisode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

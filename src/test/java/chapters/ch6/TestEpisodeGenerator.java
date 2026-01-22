@@ -1,7 +1,7 @@
 package chapters.ch6;
 
-import chapters.ch6.domain.trainer.episode_generator.EpisodeGeneratorGrid;
-import chapters.ch6.domain.trainer.episode_generator.EpisodeInfo;
+import chapters.ch6.domain.trainer_dep.episode_generator.EpisodeGeneratorGrid;
+import chapters.ch6.domain.trainer_dep.episode_generator.EpisodeInfo;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.foundation.util.math.MyMathUtils;
 import org.junit.jupiter.api.Assertions;

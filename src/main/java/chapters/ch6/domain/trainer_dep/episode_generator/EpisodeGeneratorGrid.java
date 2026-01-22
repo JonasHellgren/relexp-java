@@ -1,6 +1,6 @@
-package chapters.ch6.domain.trainer.episode_generator;
+package chapters.ch6.domain.trainer_dep.episode_generator;
 
-import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
+import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import core.gridrl.ExperienceGrid;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.Conditionals;

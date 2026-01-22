@@ -2,8 +2,8 @@ package chapters.ch6.implem.factory;
 
 import chapters.ch3.factory.EnvironmentParametersSplittingFactory;
 import chapters.ch3.implem.splitting_path_problem.EnvironmentSplittingPath;
-import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
-import chapters.ch6.domain.trainer.param.TrainerParametersMultiStepGrid;
+import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
+import chapters.ch6.domain.trainer_dep.param.TrainerParametersMultiStepGrid;
 import chapters.ch6.implem.splitting.agent.StartStateGridSupplierMostLeftSplitting;
 import core.gridrl.ActionGrid;
 import lombok.AccessLevel;

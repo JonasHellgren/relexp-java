@@ -1,7 +1,7 @@
 package ch6;
 
 import chapters.ch6.plotting.GridAgentPlotterMultiStep;
-import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
+import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import chapters.ch6.domain.trainers.during_episode.TrainerStateActionControlDuringEpisode;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.foundation.config.ConfigFactory;

@@ -1,4 +1,4 @@
-package chapters.ch6.domain.trainer.episode_generator;
+package chapters.ch6.domain.trainer_dep.episode_generator;
 
 import core.gridrl.StateActionGrid;
 import core.gridrl.ExperienceGrid;

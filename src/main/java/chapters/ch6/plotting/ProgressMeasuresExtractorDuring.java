@@ -1,9 +1,9 @@
 package chapters.ch6.plotting;
 
-import chapters.ch6.domain.trainer.core.ReturnCalculator;
+import chapters.ch6.domain.trainer_dep.core.ReturnCalculator;
 import core.gridrl.EpisodeGridInfo;
 import core.gridrl.ExperienceGrid;
-import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
+import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import core.foundation.util.collections.MyListUtils;
 import core.plotting_rl.progress_plotting.ProgressMeasures;
 import lombok.AccessLevel;

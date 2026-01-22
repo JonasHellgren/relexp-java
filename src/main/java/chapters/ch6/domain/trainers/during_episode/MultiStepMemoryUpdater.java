@@ -1,9 +1,9 @@
 package chapters.ch6.domain.trainers.during_episode;
 
-import chapters.ch6.domain.trainer.core.ReturnCalculator;
+import chapters.ch6.domain.trainer_dep.core.ReturnCalculator;
 import core.gridrl.StateActionGrid;
 import core.gridrl.ExperienceGrid;
-import chapters.ch6.domain.trainer.core.TrainerDependenciesMultiStep;
+import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -1,10 +1,10 @@
-package chapters.ch6.domain.trainer.core;
+package chapters.ch6.domain.trainer_dep.core;
 
 
-import chapters.ch6.domain.trainer.result_generator.MultiStepResultGrid;
+import chapters.ch6.domain.trainer_dep.result_generator.MultiStepResultGrid;
 import core.gridrl.StartStateGridSupplierI;
 import chapters.ch6.domain.agent.AgentGridMultiStepI;
-import chapters.ch6.domain.trainer.param.TrainerParametersMultiStepGrid;
+import chapters.ch6.domain.trainer_dep.param.TrainerParametersMultiStepGrid;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.math.LogarithmicDecay;
 import core.gridrl.EnvironmentGridI;

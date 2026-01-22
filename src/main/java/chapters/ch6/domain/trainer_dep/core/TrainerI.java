@@ -1,4 +1,4 @@
-package chapters.ch6.domain.trainer.core;
+package chapters.ch6.domain.trainer_dep.core;
 
 /**
  * This interface represents a trainer in the multi-step domain.
