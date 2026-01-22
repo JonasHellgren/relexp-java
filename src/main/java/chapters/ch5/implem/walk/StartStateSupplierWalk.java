@@ -3,8 +3,8 @@ package chapters.ch5.implem.walk;
 
 import chapters.ch5.domain.environment.StartStateSupplierI;
 import chapters.ch5.domain.environment.StateMcI;
-import core.foundation.util.collections.MyListUtils;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.collections.ListUtil;
+import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -24,8 +24,8 @@ public class StartStateSupplierWalk implements StartStateSupplierI {
 
     @Override
     public StateMcI getStartState() {
-        return StateWalk.of(RandUtils.getRandomIntNumber(
-                MyListUtils.findMinInt(NON_TERMINAL_POSITIONS).orElseThrow(),
-                MyListUtils.findMaxInt(NON_TERMINAL_POSITIONS).orElseThrow()));
+        return StateWalk.of(RandUtil.getRandomIntNumber(
+                ListUtil.findMinInt(NON_TERMINAL_POSITIONS).orElseThrow(),
+                ListUtil.findMaxInt(NON_TERMINAL_POSITIONS).orElseThrow()));
     }
 }

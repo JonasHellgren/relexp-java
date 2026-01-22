@@ -1,6 +1,6 @@
 package chapters.ch8.domain.environment.core;
 
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import java.util.List;
@@ -26,7 +26,7 @@ public enum ActionParking {
     }
 
     public static ActionParking random() {
-        return allActions().get(RandUtils.getRandomIntNumber(0, maxNofActions()));
+        return allActions().get(RandUtil.getRandomIntNumber(0, maxNofActions()));
     }
 
     public ActionParking copy() {

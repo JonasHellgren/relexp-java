@@ -6,7 +6,7 @@ import core.gridrl.StateActionGrid;
 import core.gridrl.ExperienceGrid;
 import chapters.ch6.domain.agent.AgentGridMultiStepI;
 import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListUtil;
 import core.plotting_rl.progress_plotting.ProgressMeasureTrajectories;
 import core.plotting_rl.progress_plotting.ProgressMeasures;
 import lombok.AccessLevel;
@@ -32,8 +32,8 @@ public class ProgressMeasureExtractorMultiStep {
         return ProgressMeasures.builder()
                 .sumRewards(info.sumRewards())
                 .nSteps(info.nSteps())
-                .tdError(MyListUtils.findAverage(measureLists.tdList()).orElseThrow())
-                .tdBestAction(MyListUtils.findAverage(measureLists.tdBestActionList()).orElseThrow())
+                .tdError(ListUtil.findAverage(measureLists.tdList()).orElseThrow())
+                .tdBestAction(ListUtil.findAverage(measureLists.tdBestActionList()).orElseThrow())
                 .build();
 
     }

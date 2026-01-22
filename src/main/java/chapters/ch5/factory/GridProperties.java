@@ -1,8 +1,7 @@
 package chapters.ch5.factory;
 
-import core.foundation.util.collections.ArrayCreator;
+import core.foundation.util.collections.ArrayCreatorUtil;
 import lombok.Builder;
-import org.jetbrains.annotations.NotNull;
 
 @Builder
 public record GridProperties(
@@ -14,11 +13,11 @@ public record GridProperties(
 
 
     public  double[] getXData() {
-        return ArrayCreator.createArrayFromStartAndEnd(nCols, startCol,startCol+ nCols- 1);
+        return ArrayCreatorUtil.createArrayFromStartAndEnd(nCols, startCol,startCol+ nCols- 1);
     }
 
     public  double[] getYData() {
-        return ArrayCreator.createArrayFromStartAndEnd(nRows, 0, nRows- 1);
+        return ArrayCreatorUtil.createArrayFromStartAndEnd(nRows, 0, nRows- 1);
     }
 
     public  String[][] getEmptyValueData() {

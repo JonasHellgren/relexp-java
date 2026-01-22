@@ -2,7 +2,7 @@ package chapters.ch5.implem.dice;
 
 
 import chapters.ch5.domain.environment.ActionMcI;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 
 /**
  * Enum values:
@@ -25,7 +25,7 @@ public enum ActionDice implements ActionMcI {
     }
 
     public static ActionDice random() {
-        int randIndex = RandUtils.getRandomIntNumber(0,ActionDice.values().length);
+        int randIndex = RandUtil.getRandomIntNumber(0,ActionDice.values().length);
         return ActionDice.values()[randIndex];
     }
 

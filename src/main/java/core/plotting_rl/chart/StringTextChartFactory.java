@@ -1,9 +1,9 @@
 package core.plotting_rl.chart;
 
 import core.foundation.config.PlotConfig;
-import core.foundation.util.collections.ArrayCreator;
-import core.plotting.base.shared.PlotSettings;
-import core.plotting.plotting_3d.HeatMapWithStringTextInCellsCreator;
+import core.foundation.util.collections.ArrayCreatorUtil;
+import core.plotting_core.base.shared.PlotSettings;
+import core.plotting_core.plotting_3d.HeatMapWithStringTextInCellsCreator;
 import lombok.experimental.UtilityClass;
 import org.knowm.xchart.HeatMapChart;
 
@@ -32,11 +32,11 @@ public class StringTextChartFactory {
     }
 
     public static double[] getXData(int nCols) {
-        return ArrayCreator.createArrayFromStartAndEnd(nCols, 0, nCols - 1);
+        return ArrayCreatorUtil.createArrayFromStartAndEnd(nCols, 0, nCols - 1);
     }
 
     public static double[] getYData(int nRows) {
-        return ArrayCreator.createArrayFromStartAndEnd(nRows, 0, nRows - 1);
+        return ArrayCreatorUtil.createArrayFromStartAndEnd(nRows, 0, nRows - 1);
     }
 
 }

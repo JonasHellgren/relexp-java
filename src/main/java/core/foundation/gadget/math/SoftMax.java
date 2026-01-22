@@ -1,0 +1,36 @@
+package core.foundation.gadget.math;
+
+import core.foundation.util.collections.Array2ListConverterUtil;
+import core.foundation.util.collections.List2ArrayConverterUtil;
+import lombok.experimental.UtilityClass;
+import java.util.List;
+
+@UtilityClass
+public class SoftMax {
+
+    public static List<Double> softmax(List<Double> input) {
+        return Array2ListConverterUtil.arrayToList(
+                softmax(List2ArrayConverterUtil.convertListToDoubleArr(input)));
+    }
+
+    public static double[] softmax(double[] input) {
+        double max = Double.NEGATIVE_INFINITY;
+        for (double x : input) {
+            max = Math.max(max, x);
+        }
+
+        double sum = 0;
+        double[] output = new double[input.length];
+        for (int i = 0; i < input.length; i++) {
+            output[i] = Math.exp(input[i] - max);
+            sum += output[i];
+        }
+
+        for (int i = 0; i < input.length; i++) {
+            output[i] /= sum;
+        }
+
+        return output;
+    }
+
+}

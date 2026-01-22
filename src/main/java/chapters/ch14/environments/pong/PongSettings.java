@@ -6,7 +6,7 @@ import lombok.With;
 
 import java.util.List;
 
-import static core.foundation.util.collections.ListCreator.createFromStartToEndWithNofItems;
+import static core.foundation.util.collections.ListCreatorUtil.createFromStartToEndWithNofItems;
 
 
 /**

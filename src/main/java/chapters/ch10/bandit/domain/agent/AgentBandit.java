@@ -1,9 +1,9 @@
 package chapters.ch10.bandit.domain.agent;
 
 import chapters.ch10.bandit.domain.environment.ActionBandit;
-import core.foundation.util.collections.MyArrayUtil;
-import core.foundation.util.math.SoftMax;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.collections.ArrayUtil;
+import core.foundation.gadget.math.SoftMax;
+import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +31,7 @@ public class AgentBandit {
      * @return the chosen action
      */
     public ActionBandit chooseAction() {
-        int indexAction=(RandUtils.randomNumberBetweenZeroAndOne()< actionProbabilities()[0])
+        int indexAction=(RandUtil.randomNumberBetweenZeroAndOne()< actionProbabilities()[0])
                 ?ActionBandit.LEFT.getIndex()
                 :ActionBandit.RIGHT.getIndex();
         return  ActionBandit.fromIndex(indexAction);
@@ -45,7 +45,7 @@ public class AgentBandit {
      * @param gradLog the gradient of the log policy
      */
     public void updateMemory(double learningRate, double returnAtT, double[] gradLog) {
-        memory.add(MyArrayUtil.multiplyWithValue(gradLog,learningRate * returnAtT));
+        memory.add(ArrayUtil.multiplyWithValue(gradLog,learningRate * returnAtT));
     }
 
     /**

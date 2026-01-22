@@ -1,7 +1,7 @@
 package chapters.ch5.implem.dice;
 
 import chapters.ch5.domain.environment.StateMcI;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.Objects;
@@ -33,7 +33,7 @@ public class StateDice implements StateMcI {
 
     public boolean isValid() {
         return variables.count() == 0 && variables.sum() == 0  ||
-                variables.count() == 1 && MyMathUtils.isInLimits(variables.sum(), 1, 6);
+                variables.count() == 1 && MathUtil.isInLimits(variables.sum(), 1, 6);
     }
 
 

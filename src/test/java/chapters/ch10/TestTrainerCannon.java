@@ -8,7 +8,7 @@ import chapters.ch10.cannon.domain.trainer.TrainerDependenciesCannon;
 import chapters.ch10.cannon.factory.FactoryAgentParametersCannon;
 import chapters.ch10.cannon.factory.FactoryEnvironmentParametersCannon;
 import chapters.ch10.cannon.factory.FactoryTrainerParametersCannon;
-import core.foundation.util.unit_converter.MyUnitConverter;
+import core.foundation.util.unit_converter.UnitConverterUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ public class TestTrainerCannon {
     void whenTraining_thenCorrect() {
         trainer.train();
 
-        double expAngleRad= MyUnitConverter.convertDegreesToRadians(32);
+        double expAngleRad= UnitConverterUtil.convertDegreesToRadians(32);
         double expAngleMeanRad = dependencies.agent().meanAndStd().mean();
         Assertions.assertEquals(dependencies.nEpisodes(), trainer.getRecorder().size());
         Assertions.assertEquals(expAngleRad, expAngleMeanRad, TOL_ANGLE_RAD);

@@ -1,7 +1,7 @@
 package chapters.ch5.implem.walk;
 
 import chapters.ch5.domain.environment.ActionMcI;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.List;
@@ -22,7 +22,7 @@ public enum ActionWalk implements ActionMcI {
     }
 
     public static ActionMcI random() {
-        int randomIntNumber = RandUtils.getRandomIntNumber(0, maxNofActions());
+        int randomIntNumber = RandUtil.getRandomIntNumber(0, maxNofActions());
         return getAllActions().get(randomIntNumber);
     }
 

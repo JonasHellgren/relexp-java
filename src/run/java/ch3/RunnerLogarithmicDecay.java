@@ -2,11 +2,11 @@ package ch3;
 
 import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
-import core.foundation.util.collections.ListCreator;
+import core.foundation.util.collections.ListCreatorUtil;
 import core.foundation.gadget.math.LogarithmicDecay;
-import core.plotting.base.shared.PlotSettings;
-import core.plotting.chart_plotting.ChartSaver;
-import core.plotting.plotting_2d.ManyLinesChartCreator;
+import core.plotting_core.base.shared.PlotSettings;
+import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class RunnerLogarithmicDecay {
     }
 
     private static List<Double> getIterationList() {
-        return ListCreator.createFromStartWithStepWithNofItems(0d, 1.0d, ITERATION_END);
+        return ListCreatorUtil.createFromStartWithStepWithNofItems(0d, 1.0d, ITERATION_END);
     }
 
     private static void plotAndSave(XYChart chart, ProjectPropertiesReader reader) {

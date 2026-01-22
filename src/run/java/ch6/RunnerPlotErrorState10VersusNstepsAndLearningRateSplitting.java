@@ -4,9 +4,9 @@ import chapters.ch6.domain.trainers.during_episode.TrainerStateActionControlDuri
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
-import core.foundation.util.collections.List2ArrayConverter;
-import core.foundation.util.collections.MyListUtils;
-import core.plotting.plotting_2d.ErrorBandCreator;
+import core.foundation.util.collections.List2ArrayConverterUtil;
+import core.foundation.util.collections.ListUtil;
+import core.plotting_core.plotting_2d.ErrorBandCreator;
 import core.plotting_rl.progress_plotting.ErrorBandSaverAndPlotter;
 import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
 import lombok.SneakyThrows;
@@ -46,9 +46,9 @@ public class RunnerPlotErrorState10VersusNstepsAndLearningRateSplitting {
 
     private static void addDataToPlotCreator(double lr, ErrorBandCreator creator, List<Double> meanList, List<Double> stdList) {
         creator.addErrorBand(Double.toString(lr),
-                List2ArrayConverter.convertIntegerListToDoubleArr(N_STEPS),
-                List2ArrayConverter.convertListToDoubleArr(meanList),
-                List2ArrayConverter.convertListToDoubleArr(stdList),
+                List2ArrayConverterUtil.convertIntegerListToDoubleArr(N_STEPS),
+                List2ArrayConverterUtil.convertListToDoubleArr(meanList),
+                List2ArrayConverterUtil.convertListToDoubleArr(stdList),
                 Color.BLACK);
     }
 
@@ -60,7 +60,7 @@ public class RunnerPlotErrorState10VersusNstepsAndLearningRateSplitting {
                 trainer.train();
                 var recorder = trainer.getRecorder();
                 var returns = recorder.trajectory(ProgressMeasureEnum.RETURN);
-                double meanAvg = MyListUtils.findAverage(returns).orElseThrow();
+                double meanAvg = ListUtil.findAverage(returns).orElseThrow();
                 ds.addValue(meanAvg);
             }
             meanList.add(ds.getMean());

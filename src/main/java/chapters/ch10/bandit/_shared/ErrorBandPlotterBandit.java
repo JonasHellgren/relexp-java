@@ -3,8 +3,8 @@ package chapters.ch10.bandit._shared;
 import chapters.ch10.bandit.domain.trainer.RecorderBandit;
 import com.google.common.base.Preconditions;
 import core.foundation.config.PathAndFile;
-import core.foundation.util.cond.Conditionals;
-import core.plotting.plotting_2d.ErrorBandCreator;
+import core.foundation.util.cond.ConditionalsUtil;
+import core.plotting_core.plotting_2d.ErrorBandCreator;
 import core.plotting_rl.progress_plotting.ErrorBandData;
 import core.plotting_rl.progress_plotting.ErrorBandSaverAndPlotter;
 import lombok.AccessLevel;
@@ -46,7 +46,7 @@ public class ErrorBandPlotterBandit {
     private void showAndSavePlot(MeasuresBanditEnum measure, ErrorBandData errorBandData) {
         var settings= ErrorBandSaverAndPlotter.getSettings(measure.description, X_LABEL, false, false);
         var creator = ErrorBandCreator.newOfSettings(settings);
-        Conditionals.executeOneOfTwo(isFiltering,
+        ConditionalsUtil.executeOneOfTwo(isFiltering,
                 () -> addErrorBandFilter(measure, creator, errorBandData),
                 () -> addErrorBandNoFilter(measure, creator, errorBandData));
         ErrorBandSaverAndPlotter.showAndSave(creator, PathAndFile.ofPng(filePath, measure+fileNameAddOn));

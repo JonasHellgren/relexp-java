@@ -4,7 +4,7 @@ import chapters.ch14.domain.action_roller.ActionSequenceRoller;
 import chapters.ch14.domain.action_selector.ActionSelectorI;
 import chapters.ch14.domain.long_memory.LongMemory;
 import chapters.ch14.domain.settings.PlanningSettings;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -80,7 +80,7 @@ public class Planner<SI, S, A> {
     }
 
     private static <A> void maybeLog(PlanningStatus<A> status) {
-        Conditionals.executeIfTrue(status.nRollouts() == 0, () ->
+        ConditionalsUtil.executeIfTrue(status.nRollouts() == 0, () ->
             log.warning("no rollouts, status=" + status));
     }
 

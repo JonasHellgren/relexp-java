@@ -4,7 +4,7 @@ import chapters.ch4.implem.treasure.start_state_suppliers.StartStateSupplierPosi
 import chapters.ch7.domain.trainer.TrainerOneStepTdQLearningWithSafety;
 import chapters.ch7.factory.SafetyLayerFactoryTreasure;
 import chapters.ch7.factory.TrainerDependencySafeFactory;
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListUtil;
 import core.gridrl.StateGrid;
 import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
@@ -52,13 +52,13 @@ class TestTrainerOneStepTdQLearningWithSafetyHardCodedFails {
 
     private static double getMinNSteps(RecorderProgressMeasures recorder) {
         var nStepsList = recorder.trajectory(ProgressMeasureEnum.N_STEPS);
-        return MyListUtils.findMin(nStepsList).orElseThrow();
+        return ListUtil.findMin(nStepsList).orElseThrow();
     }
 
      @Test
       void whenTrained_thenGoodReturns() {
          var returns = trainerStartAt01.getRecorder().trajectory(ProgressMeasureEnum.RETURN);
-         double avgReturn = MyListUtils.findAverage(returns).orElse(0.0);
+         double avgReturn = ListUtil.findAverage(returns).orElse(0.0);
          System.out.println("avgReturn = " + avgReturn);
          Assertions.assertTrue(avgReturn > 50.0);
       }

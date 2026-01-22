@@ -1,6 +1,6 @@
 package chapters.ch10.bandit.domain.environment;
 
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -16,8 +16,8 @@ public class EnvironmentBandit {
     public StepReturnBandit step(ActionBandit action) {
         boolean isLeftArm= action.equals(ActionBandit.LEFT);
         boolean isCoin = (isLeftArm)
-                ?  RandUtils.randomNumberBetweenZeroAndOne() < parameters.probCoinLeftArm()
-                :  RandUtils.randomNumberBetweenZeroAndOne() < parameters.probCoinRightArm();
+                ?  RandUtil.randomNumberBetweenZeroAndOne() < parameters.probCoinLeftArm()
+                :  RandUtil.randomNumberBetweenZeroAndOne() < parameters.probCoinRightArm();
         double reward = isCoin ? parameters.rewardCoin() : 0.0;
         return StepReturnBandit.of(reward, isCoin);
     }

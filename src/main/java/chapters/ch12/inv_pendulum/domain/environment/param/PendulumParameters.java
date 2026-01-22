@@ -1,7 +1,7 @@
 package chapters.ch12.inv_pendulum.domain.environment.param;
 
-import core.foundation.util.collections.ListCreator;
-import core.foundation.util.unit_converter.MyUnitConverter;
+import core.foundation.util.collections.ListCreatorUtil;
+import core.foundation.util.unit_converter.UnitConverterUtil;
 import lombok.Builder;
 import lombok.With;
 import java.util.List;
@@ -33,24 +33,24 @@ public record PendulumParameters(
     }
 
     double radToDeg(double angleRad) {
-        return MyUnitConverter.convertRadiansToDegrees(angleRad);
+        return UnitConverterUtil.convertRadiansToDegrees(angleRad);
     }
 
     public List<Double> thetaSpaceInDegrees(int nItems) {
-        return ListCreator.createFromStartToEndWithNofItems(
+        return ListCreatorUtil.createFromStartToEndWithNofItems(
                 -radToDeg(angleMax()), radToDeg(angleMax()), nItems);
     }
 
     public List<Double> thetaSpace(int nItems) {
-        return ListCreator.createFromStartToEndWithNofItems(-angleMax(), angleMax(), nItems);
+        return ListCreatorUtil.createFromStartToEndWithNofItems(-angleMax(), angleMax(), nItems);
     }
 
     public List<Double> narrowSpdSpace(int nItems) {
-        return ListCreator.createFromStartToEndWithNofItems(-narrowSpd(), narrowSpd(), nItems);
+        return ListCreatorUtil.createFromStartToEndWithNofItems(-narrowSpd(), narrowSpd(), nItems);
     }
 
     public List<Double> narrowSpdSpaceInDegPerSec(int nColRowsHeatMap) {
-        return ListCreator.createFromStartToEndWithNofItems(-radToDeg(narrowSpd()), radToDeg(narrowSpd()), nColRowsHeatMap);
+        return ListCreatorUtil.createFromStartToEndWithNofItems(-radToDeg(narrowSpd()), radToDeg(narrowSpd()), nColRowsHeatMap);
     }
 
 

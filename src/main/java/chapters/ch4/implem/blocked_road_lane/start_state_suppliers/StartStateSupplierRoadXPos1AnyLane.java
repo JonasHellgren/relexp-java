@@ -2,7 +2,7 @@ package chapters.ch4.implem.blocked_road_lane.start_state_suppliers;
 
 import core.gridrl.StartStateGridSupplierI;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import core.gridrl.StateGrid;
 
 import java.util.List;
@@ -24,6 +24,6 @@ public class StartStateSupplierRoadXPos1AnyLane implements StartStateGridSupplie
     @Override
     public StateGrid getStartState() {
         var validStartStates = List.of(StateGrid.of(1, 0), StateGrid.of(1, 1));
-        return validStartStates.get(RandUtils.getRandomIntNumber(0, validStartStates.size()));
+        return validStartStates.get(RandUtil.getRandomIntNumber(0, validStartStates.size()));
     }
 }

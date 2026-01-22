@@ -1,6 +1,6 @@
 package chapters.ch12.inv_pendulum.domain.environment.core;
 
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import java.util.List;
@@ -28,7 +28,7 @@ public enum ActionPendulum {
     }
 
     public static ActionPendulum random() {
-        return getAllActions().get(RandUtils.getRandomIntNumber(0, maxNofActions()));
+        return getAllActions().get(RandUtil.getRandomIntNumber(0, maxNofActions()));
     }
 
     public double torque() {return properties.torque();}

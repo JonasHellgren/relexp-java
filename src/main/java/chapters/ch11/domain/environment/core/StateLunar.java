@@ -2,7 +2,7 @@ package chapters.ch11.domain.environment.core;
 
 import chapters.ch11.domain.environment.param.LunarParameters;
 import core.foundation.util.formatting.NumberFormatterUtil;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -40,11 +40,11 @@ public class StateLunar {
     }
 
     private static double getRandSpd(LunarParameters ep) {
-        return RandUtils.getRandomDouble(-ep.spdMax(), ep.spdMax());
+        return RandUtil.getRandomDouble(-ep.spdMax(), ep.spdMax());
     }
 
     private static double getRandY(LunarParameters ep) {
-        return RandUtils.getRandomDouble(ep.ySurface(), ep.yMax());
+        return RandUtil.getRandomDouble(ep.ySurface(), ep.yMax());
     }
 
     @Override

@@ -12,10 +12,10 @@ import chapters.ch11.domain.trainer.param.TrainerParameters;
 import chapters.ch11.helper.AgentEvaluator;
 import chapters.ch11.plotting.PlotterHeatMapsAgent;
 import core.foundation.configOld.ProjectPropertiesReader;
-import core.foundation.util.collections.ListConverter;
-import core.foundation.util.collections.ListCreator;
-import core.foundation.util.collections.MyListUtils;
-import core.plotting.chart_plotting.ChartSaverAndPlotter;
+import core.foundation.util.collections.ListConverterUtil;
+import core.foundation.util.collections.ListCreatorUtil;
+import core.foundation.util.collections.ListUtil;
+import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
 import core.plotting_rl.progress_plotting.PlotterProgressMeasures;
 import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
 import lombok.AccessLevel;
@@ -42,23 +42,23 @@ public class RunnerHelper {
         }
 
         public void add(int nSteps, double sumRewardAverage) {
-            resultMap.computeIfAbsent(nSteps, k -> ListCreator.emptyDouble()).add(sumRewardAverage);
+            resultMap.computeIfAbsent(nSteps, k -> ListCreatorUtil.emptyDouble()).add(sumRewardAverage);
         }
 
         public double average(int nSteps) {
-            return MyListUtils.findAverage(resultMap.get(nSteps)).orElseThrow();
+            return ListUtil.findAverage(resultMap.get(nSteps)).orElseThrow();
         }
 
         public double maxMinusMin(int nSteps) {
-            double max = MyListUtils.findMax(resultMap.get(nSteps)).orElseThrow();
-            double min = MyListUtils.findMin(resultMap.get(nSteps)).orElseThrow();
+            double max = ListUtil.findMax(resultMap.get(nSteps)).orElseThrow();
+            double min = ListUtil.findMin(resultMap.get(nSteps)).orElseThrow();
             return max - min;
         }
     }
 
     @SneakyThrows
     static void plotNStepResults(ResultsNStep results, List<Integer> nStepsList) {
-        var xList = ListConverter.integer2Double(nStepsList);
+        var xList = ListConverterUtil.integer2Double(nStepsList);
         var yList = nStepsList.stream()
                 .map(nSteps -> results.average(nSteps)).toList();
         var errList = nStepsList.stream()

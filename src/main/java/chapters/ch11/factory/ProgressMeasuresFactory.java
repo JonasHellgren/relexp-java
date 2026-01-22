@@ -6,7 +6,7 @@ import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.domain.trainer.multisteps.MultiStepResults;
 import chapters.ch11.helper.EpisodeInfo;
 import chapters.ch11.helper.ValueCalculatorLunar;
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListUtil;
 import core.plotting_rl.progress_plotting.ProgressMeasureTrajectories;
 import core.plotting_rl.progress_plotting.ProgressMeasures;
 import lombok.AccessLevel;
@@ -79,12 +79,12 @@ public class ProgressMeasuresFactory {
         return ProgressMeasures.builder()
                 .sumRewards(info.sumRewards())
                 .nSteps(info.nSteps())
-                .tdError(MyListUtils.findAverage(measures.tdList()).orElseThrow())
-                .tdErrorClipped(MyListUtils.findAverage(measures.tdListClipped()).orElseThrow())
-                .gradMean(MyListUtils.findAverage(measures.gradMeanList()).orElseThrow())
-                .gradMeanClipped(MyListUtils.findAverage(measures.gradMeanListClipped()).orElseThrow())
-                .stdActor(MyListUtils.findAverage(measures.stdList()).orElseThrow())
-                .tdBestAction(MyListUtils.findAverage(measures.tdBestActionList()).orElseThrow())
+                .tdError(ListUtil.findAverage(measures.tdList()).orElseThrow())
+                .tdErrorClipped(ListUtil.findAverage(measures.tdListClipped()).orElseThrow())
+                .gradMean(ListUtil.findAverage(measures.gradMeanList()).orElseThrow())
+                .gradMeanClipped(ListUtil.findAverage(measures.gradMeanListClipped()).orElseThrow())
+                .stdActor(ListUtil.findAverage(measures.stdList()).orElseThrow())
+                .tdBestAction(ListUtil.findAverage(measures.tdBestActionList()).orElseThrow())
                 .build();
 
     }

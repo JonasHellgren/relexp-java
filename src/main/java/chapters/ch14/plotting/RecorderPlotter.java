@@ -3,10 +3,10 @@ package chapters.ch14.plotting;
 import com.google.common.base.Preconditions;
 import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
-import core.foundation.util.collections.ArrayCreator;
-import core.foundation.util.collections.List2ArrayConverter;
-import core.plotting.chart_plotting.ChartSaver;
-import core.plotting.plotting_2d.StairDataGenerator;
+import core.foundation.util.collections.ArrayCreatorUtil;
+import core.foundation.util.collections.List2ArrayConverterUtil;
+import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.plotting_2d.StairDataGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
@@ -38,8 +38,8 @@ public class RecorderPlotter {
     }
 
     private void showAndSavePlot(MeasuresCombLPEnum measure) {
-        var yData = List2ArrayConverter.convertListToDoubleArr(recorder.trajectory(measure));
-        var xData = ArrayCreator.createArrayInRange(0, 1, yData.length - 1);
+        var yData = List2ArrayConverterUtil.convertListToDoubleArr(recorder.trajectory(measure));
+        var xData = ArrayCreatorUtil.createArrayInRange(0, 1, yData.length - 1);
         var xyDataStair = StairDataGenerator.generateWithEndStep(Pair.create(xData, yData));
         var chart = new XYChartBuilder()
                 .width(reader.xyChartWidth2Col()).height((int) (reader.xyChartHeight()))

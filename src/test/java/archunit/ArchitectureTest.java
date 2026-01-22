@@ -40,8 +40,8 @@ public class ArchitectureTest {
 
         importedClasses = new ClassFileImporter()
                 .importPath(mainClasses);
-        log.info("Setup complete. Classes imported, nof = "+ importedClasses.size());
-     //   log.info("Classes imported="+ importedClasses);
+        log.info("Setup complete. Classes imported, nof = " + importedClasses.size());
+        //   log.info("Classes imported="+ importedClasses);
     }
 
     private static List<Path> getAllModuleClassPaths() throws IOException {
@@ -52,17 +52,6 @@ public class ArchitectureTest {
                     .collect(Collectors.toList());
         }
     }
-
-/*    @Test
-    public void noCircularDependencies() {
-        executeRule(
-                "noCircularDependencies",
-                slices()
-                        .matching("..(*)..")
-                        .should()
-                        .beFreeOfCycles()
-                        .because("There should be no cyclic dependencies among packages."));
-    }*/
 
 
 
@@ -100,30 +89,40 @@ public class ArchitectureTest {
                         .because("Classes in the utility package should have names ending with 'Util'."));
     }
 
+    /**
+     * In many chapter folders there are core sub folders, hence not .that().resideInPackage("..core..")
+     */
+
     @Test
-    @Disabled
-    public void gridrlShouldUseFoundationsOnly() {
+    public void coreSubFoldersShouldNotUseChapterClasses() {
         executeRule(
-                "controllersShouldUseDTOsOnly",
+                "gridrlShouldUseFoundationsOnly",
                 noClasses()
-                        .that()
-                        .resideInAPackage("..gridrl..")
-                        .should()
-                        .dependOnClassesThat()
-                        .resideInAPackage("..foundation..")
-                        .because(
-                                "gridrl should use only foundation."));
+                        .that().resideInAnyPackage(
+                                "..foundation..",
+                                "..gridrl..",
+                                "..learninggadgets..",
+                                "..learningutils..",
+                                "..nextlevelrl..",
+                                "..plotting_core..",
+                                "..plotting_rl..")
+                        .should().dependOnClassesThat()
+                        .resideInAnyPackage(
+                                "chapters.."         // if you want to block chapter code
+                        )
+                        .because("gridrl should only depend on foundation (and external libs), not other project layers.")
+        );
     }
 
     private void executeRule(String ruleName, ArchRule rule) {
-        log.info("Executing: {}"+ ruleName);
+        log.info("Executing: {}" + ruleName);
         try {
             rule.check(importedClasses);
-            log.info("Completed: {}"+ ruleName);
+            log.info("Completed: {}" + ruleName);
         } catch (AssertionError e) {
-            log.warning("Architecture Violation in {}: {}"+ ruleName+ e.getMessage());
+            log.warning("Architecture Violation in {}: {}" + ruleName + e.getMessage());
             throw e;
         }
     }
-    
+
 }

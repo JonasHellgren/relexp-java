@@ -6,7 +6,7 @@ import chapters.ch6.domain.trainer_dep.core.TrainerI;
 import core.gridrl.ExperienceGrid;
 import chapters.ch6.plotting.ProgressMeasuresExtractorDuring;
 import core.foundation.gadget.cond.Counter;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -76,7 +76,7 @@ public class TrainerStateActionControlDuringEpisode implements TrainerI {
     }
 
     private static void maybeLog(Counter stepCounter) {
-        Conditionals.executeIfTrue(stepCounter.isExceeded(), () -> log.fine("nof steps exceeded"));
+        ConditionalsUtil.executeIfTrue(stepCounter.isExceeded(), () -> log.fine("nof steps exceeded"));
     }
 
     public void updateAgentMemory(List<ExperienceGrid> experiences, MultiStepMemoryUpdater memoryUpdater, int i) {

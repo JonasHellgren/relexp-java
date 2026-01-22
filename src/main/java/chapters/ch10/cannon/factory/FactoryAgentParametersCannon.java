@@ -2,7 +2,7 @@ package chapters.ch10.cannon.factory;
 
 import chapters.ch10.cannon.domain.agent.AgentParametersCannon;
 import core.foundation.gadget.math.MeanAndStd;
-import core.foundation.util.unit_converter.MyUnitConverter;
+import core.foundation.util.unit_converter.UnitConverterUtil;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -11,7 +11,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class FactoryAgentParametersCannon {
 
-    public static final double ANGLE_MAX_RAD = MyUnitConverter.convertDegreesToRadians(45);
+    public static final double ANGLE_MAX_RAD = UnitConverterUtil.convertDegreesToRadians(45);
     public static final double INIT_ANGLE_MEAN = Math.PI / 16;  // 11 degrees
     public static final double INIT_ANGLE_STD = Math.PI / 16;   // 11 degrees
     public static final double GRADZ_MEAN_MAX = 1e-3;

@@ -3,7 +3,7 @@ package chapters.ch14.factory;
 import chapters.ch14.domain.long_memory.LongMemory;
 import chapters.ch14.environments.pong.PongSettings;
 import chapters.ch14.environments.pong.StateLongPong;
-import core.foundation.util.collections.ArrayCreator;
+import core.foundation.util.collections.ArrayCreatorUtil;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -27,11 +27,11 @@ public class FactoryPlotData {
     }
 
     public static double[] getXData(int length, PongSettings settings) {
-        return ArrayCreator.createArrayFromStartAndEnd(length, 0, settings.xMax());
+        return ArrayCreatorUtil.createArrayFromStartAndEnd(length, 0, settings.xMax());
     }
 
     public static double[] getYData(int length, PongSettings settings) {
-        return ArrayCreator.createArrayFromStartAndEnd(length, 0, settings.timeMaxHitBottom());
+        return ArrayCreatorUtil.createArrayFromStartAndEnd(length, 0, settings.timeMaxHitBottom());
     }
 
 

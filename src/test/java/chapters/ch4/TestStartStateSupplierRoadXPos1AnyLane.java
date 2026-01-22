@@ -3,7 +3,7 @@ package chapters.ch4;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import chapters.ch4.implem.blocked_road_lane.start_state_suppliers.StartStateSupplierRoadXPos1AnyLane;
 import core.foundation.gadget.cond.Counter;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import core.gridrl.StateGrid;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,8 +39,8 @@ public class TestStartStateSupplierRoadXPos1AnyLane {
         var counter1= Counter.empty();
         for (int i = 0; i <100 ; i++) {
             StateGrid startState = supplier.getStartState();
-            Conditionals.executeIfTrue(startState.equals(StateGrid.of(1, 0)), () -> counter0.increase());
-            Conditionals.executeIfTrue(startState.equals(StateGrid.of(1, 1)), () -> counter1.increase());
+            ConditionalsUtil.executeIfTrue(startState.equals(StateGrid.of(1, 0)), () -> counter0.increase());
+            ConditionalsUtil.executeIfTrue(startState.equals(StateGrid.of(1, 1)), () -> counter1.increase());
         }
 
         System.out.println("counter0 = " + counter0);

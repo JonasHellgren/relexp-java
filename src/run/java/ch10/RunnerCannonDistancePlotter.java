@@ -2,14 +2,14 @@ package ch10;
 
 import chapters.ch10.cannon.domain.envrionment.EnvironmentCannon;
 import chapters.ch10.cannon.factory.FactoryEnvironmentParametersCannon;
-import core.foundation.util.unit_converter.MyUnitConverter;
+import core.foundation.util.unit_converter.UnitConverterUtil;
 import core.plotting_rl.chart.ChartCreatorFactory;
-import core.plotting.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import static core.foundation.util.collections.ListCreator.createFromStartToEndWithNofItems;
+import static core.foundation.util.collections.ListCreatorUtil.createFromStartToEndWithNofItems;
 
 public class RunnerCannonDistancePlotter {
 
@@ -31,7 +31,7 @@ public class RunnerCannonDistancePlotter {
     private static List<Double> getDistances(List<Double> anglesInDegrees, EnvironmentCannon environment) {
         List<Double> distances= new ArrayList<>();
         for (int i = 0; i < N_POINTS ; i++) {
-            double angle = MyUnitConverter.convertDegreesToRadians(anglesInDegrees.get(i));
+            double angle = UnitConverterUtil.convertDegreesToRadians(anglesInDegrees.get(i));
             var sr= environment.step(angle);
             distances.add(sr.distance());
         }

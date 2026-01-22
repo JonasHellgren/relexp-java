@@ -5,8 +5,8 @@ import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import com.google.common.base.Preconditions;
-import core.foundation.util.collections.ListCreator;
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListCreatorUtil;
+import core.foundation.util.collections.ListUtil;
 import lombok.AllArgsConstructor;
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class EpisodeInfo {
     }
 
     public Double sumRewards() {
-        return MyListUtils.sumList(rewards());
+        return ListUtil.sumList(rewards());
     }
 
     public Integer nSteps() {
@@ -62,7 +62,7 @@ public class EpisodeInfo {
 
     public List<Double> times(double dt) {
         int nSteps=nSteps();
-        return ListCreator.createFromStartWithStepWithNofItems(0, dt,nSteps);
+        return ListCreatorUtil.createFromStartWithStepWithNofItems(0, dt,nSteps);
     }
 
     public ExperienceLunar experienceAtTime(int timeStep) {

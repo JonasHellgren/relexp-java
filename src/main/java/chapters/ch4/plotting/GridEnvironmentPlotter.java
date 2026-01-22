@@ -13,7 +13,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Map;
 
-import static chapters.ch4.plotting.GridPlotHelper.*;
+import static core.plotting_rl.chart.GridPlotHelper.*;
 
 
 /**

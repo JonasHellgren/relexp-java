@@ -1,6 +1,6 @@
 package core.foundation.gadget.training;
 
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public record TrainDataInOut(
     }
 
     public TrainDataInOut createBatch(int len) {
-        var randomIndices = RandUtils.randomIndices(len, nSamples());
+        var randomIndices = RandUtil.randomIndices(len, nSamples());
         var newInputs = new ArrayList<List<Double>>();
         var newOutputs = new ArrayList<Double>();
         for (int i : randomIndices) {

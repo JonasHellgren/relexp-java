@@ -1,11 +1,11 @@
 package chapters.ch11.domain.environment.param;
 
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import lombok.Builder;
 import lombok.With;
 import java.util.List;
 
-import static core.foundation.util.collections.ListCreator.createFromStartToEndWithNofItems;
+import static core.foundation.util.collections.ListCreatorUtil.createFromStartToEndWithNofItems;
 
 
 /**
@@ -77,6 +77,6 @@ public record LunarParameters(
      * @return the clipped force in kN.
      */
     public double clippedForce(double forceInNewton) {
-        return MyMathUtils.clip(forceInNewton, forceMin(), forceMax());
+        return MathUtil.clip(forceInNewton, forceMin(), forceMax());
     }
 }

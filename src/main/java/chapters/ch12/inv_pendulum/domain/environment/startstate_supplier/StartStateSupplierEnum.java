@@ -2,7 +2,7 @@ package chapters.ch12.inv_pendulum.domain.environment.startstate_supplier;
 
 import chapters.ch12.inv_pendulum.domain.environment.core.StatePendulum;
 import chapters.ch12.inv_pendulum.domain.environment.param.PendulumParameters;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.extern.java.Log;
 
 
@@ -34,7 +34,7 @@ public enum StartStateSupplierEnum {
             case ZERO_ANGLE_ZERO_SPEED -> () -> StatePendulum.ofStart(0, 0);
             case SMALL_ANGLE_ZERO_SPEED -> () -> StatePendulum.ofStart(ANGLE_CAN_RECOVER, 0);
             case RANDOM_SMALL_ANGLE_ZERO_SPEED -> () -> StatePendulum.ofStart(
-                    RandUtils.doubleInInterval(-ANGLE_CAN_RECOVER, ANGLE_CAN_RECOVER),
+                    RandUtil.doubleInInterval(-ANGLE_CAN_RECOVER, ANGLE_CAN_RECOVER),
             0);
             default -> throw new IllegalArgumentException(EXCEPTION_MESSAGE);
         };
@@ -47,10 +47,10 @@ public enum StartStateSupplierEnum {
     public StartStateSupplierI of(PendulumParameters pp) {
         return switch (this) {
             case RANDOM_FEASIBLE_ANGLE_ZERO_SPEED -> () -> StatePendulum.ofStart(
-                    RandUtils.doubleInInterval(-pp.angleMax()* K_ANGLE, pp.angleMax())* K_ANGLE, 0);
+                    RandUtil.doubleInInterval(-pp.angleMax()* K_ANGLE, pp.angleMax())* K_ANGLE, 0);
             case RANDOM_FEASIBLE_ANGLE_AND_SPEED -> () -> StatePendulum.ofStart(
-                    RandUtils.doubleInInterval(-pp.angleMax()* K_ANGLE, pp.angleMax()* K_ANGLE),
-                    RandUtils.doubleInInterval(-pp.angleSpeedMax()* K_SPD, pp.angleSpeedMax())* K_SPD);
+                    RandUtil.doubleInInterval(-pp.angleMax()* K_ANGLE, pp.angleMax()* K_ANGLE),
+                    RandUtil.doubleInInterval(-pp.angleSpeedMax()* K_SPD, pp.angleSpeedMax())* K_SPD);
             default -> throw new IllegalArgumentException(EXCEPTION_MESSAGE);
         };
     }

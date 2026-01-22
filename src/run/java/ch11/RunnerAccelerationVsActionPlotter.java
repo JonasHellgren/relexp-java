@@ -3,13 +3,13 @@ package ch11;
 import chapters.ch11.domain.environment.core.EnvironmentLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import core.foundation.configOld.ProjectPropertiesReader;
-import core.foundation.util.collections.ListCreator;
-import core.foundation.util.unit_converter.MyUnitConverter;
-import core.foundation.util.unit_converter.NonSIUnits;
-import core.plotting.base.shared.PlotSettings;
+import core.foundation.util.collections.ListCreatorUtil;
+import core.foundation.util.unit_converter.UnitConverterUtil;
+import core.foundation.util.unit_converter.NonSIUnitsUtil;
+import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_rl.chart.ChartCreatorFactory;
-import core.plotting.chart_plotting.ChartSaverAndPlotter;
-import core.plotting.plotting_2d.ScatterWithLineChartCreator;
+import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.plotting_2d.ScatterWithLineChartCreator;
 import lombok.SneakyThrows;
 import tec.units.ri.unit.Units;
 
@@ -25,7 +25,7 @@ public class RunnerAccelerationVsActionPlotter {
     public static void main(String[] args) {
         var ep = LunarParameters.defaultProps();
         var environment = (EnvironmentLunar) EnvironmentLunar.of(ep);
-        var forces = ListCreator.createFromStartToEndWithStep(START, END, STEP);
+        var forces = ListCreatorUtil.createFromStartToEndWithStep(START, END, STEP);
         var accList = getAccList(forces, environment);
         var factory = getFactory();
         factory.addLine(forces, accList);
@@ -52,7 +52,7 @@ public class RunnerAccelerationVsActionPlotter {
 
 
     private static double getForceInKn(int intValue) {
-        return MyUnitConverter.convertForce(intValue, Units.NEWTON, NonSIUnits.KILO_NEWTON);
+        return UnitConverterUtil.convertForce(intValue, Units.NEWTON, NonSIUnitsUtil.KILO_NEWTON);
     }
 
 }

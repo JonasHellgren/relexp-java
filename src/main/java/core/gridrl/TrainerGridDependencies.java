@@ -6,6 +6,7 @@ import core.foundation.gadget.math.LogarithmicDecay;
 import core.learninggadgets.LrAndProbRandDecay;
 import core.learninggadgets.StepAndEpisCounter;
 import core.plotting_rl.progress_plotting.ProgressMeasures;
+import core.plotting_rl.progress_plotting.ProgressMeasuresExtractorGrid;
 import lombok.With;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public record TrainerGridDependencies(
          LrAndProbRandDecay lrAndProbRandDecay,
          StepAndEpisCounter counters,
          CpuTimer timer,
-         List<ExperienceGrid>experiences
+         List<ExperienceGrid> experiences
 
 ) {
 

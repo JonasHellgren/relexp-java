@@ -4,7 +4,7 @@ import chapters.ch12.inv_pendulum.domain.trainer.core.TrainerDependencies;
 import chapters.ch12.inv_pendulum.domain.trainer.core.TrainerPendulum;
 import chapters.ch12.inv_pendulum.factory.TrainerDependenciesFactory;
 import chapters.ch12.inv_pendulum.plotting.MeasuresPendulumTrainingEnum;
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -30,7 +30,7 @@ public class TestTrainer {
 
         System.out.println("nStepsTrajectory.size() = " + nStepsTrajectory.size());
         double nStepsMax=dependencies.environment().getParameters().maxSteps();
-        Assertions.assertTrue(MyListUtils.findMax(nStepsTrajectory).orElseThrow() > nStepsMax*0.9 );
+        Assertions.assertTrue(ListUtil.findMax(nStepsTrajectory).orElseThrow() > nStepsMax*0.9 );
     }
 
 

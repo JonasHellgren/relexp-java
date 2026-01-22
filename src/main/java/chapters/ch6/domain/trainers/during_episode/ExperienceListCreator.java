@@ -1,7 +1,7 @@
 package chapters.ch6.domain.trainers.during_episode;
 
 import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import core.gridrl.ExperienceGrid;
 import core.gridrl.StateActionGrid;
 import lombok.AccessLevel;
@@ -35,7 +35,7 @@ public class ExperienceListCreator {
             var actionNext = agent.chooseAction(stateAfterStep, probRandom);
             experiences.add(ExperienceGrid.ofSarsa(sa.state(), sa.action(), sr, actionNext));
             int tau = dependencies.stepCounter().getCount()- dependencies.backupHorizon();
-            Conditionals.executeIfTrue(tau >= 0, () ->
+            ConditionalsUtil.executeIfTrue(tau >= 0, () ->
                     memoryUpdater.updateAgentMemory(tau, experiences, dependencies.calcLearningRatet(i)));
             sa=StateActionGrid.of(stateAfterStep, actionNext);
             isTerminal = sr.isTerminal();

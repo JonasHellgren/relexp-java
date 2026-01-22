@@ -3,7 +3,7 @@ package core.nextlevelrl.gradient;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
 
-import static core.foundation.util.math.MyFunctions.sqr2;
+import static core.foundation.util.math.FunctionsUtil.sqr2;
 
 /**
  * This class provides methods for calculating the gradient of a normal distribution with respect to its mean

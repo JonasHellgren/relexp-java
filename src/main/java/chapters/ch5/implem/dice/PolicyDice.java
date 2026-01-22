@@ -5,7 +5,7 @@ import chapters.ch5.domain.environment.ActionMcI;
 import chapters.ch5.domain.environment.StateMcI;
 import chapters.ch5.domain.memory.StateActionMemoryMcI;
 import chapters.ch5.domain.policy.PolicyMcI;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -32,7 +32,7 @@ public class PolicyDice implements PolicyMcI {
 
 
     private boolean isRandomAction() {
-        return RandUtils.randomNumberBetweenZeroAndOne() < settings.probRandomAction();
+        return RandUtil.randomNumberBetweenZeroAndOne() < settings.probRandomAction();
     }
 
     private ActionDice getBestActionDice(StateMcI state) {

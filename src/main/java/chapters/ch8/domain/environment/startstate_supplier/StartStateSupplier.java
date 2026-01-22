@@ -3,7 +3,7 @@ package chapters.ch8.domain.environment.startstate_supplier;
 import chapters.ch8.domain.environment.core.FeeEnum;
 import chapters.ch8.domain.environment.core.StateParking;
 import chapters.ch8.domain.environment.param.ParkingParameters;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.extern.java.Log;
 
 
@@ -31,7 +31,7 @@ public enum StartStateSupplier {
     public StartStateSupplierI of(ParkingParameters pp) {
         return switch (this) {
             case RANDOMOCCUP_RANDOMFEE -> () -> StateParking.ofStart(
-                    RandUtils.getRandomIntNumber(0,pp.nSpots()+1),
+                    RandUtil.getRandomIntNumber(0,pp.nSpots()+1),
                     FeeEnum.random());
             case ZEROOCCUP_RANDOMFEE -> () -> StateParking.ofStart(
                     0,

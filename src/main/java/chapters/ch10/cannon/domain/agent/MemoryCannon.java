@@ -1,7 +1,7 @@
 package chapters.ch10.cannon.domain.agent;
 
 import core.foundation.gadget.math.MeanAndStdMemoryParameters;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -63,8 +63,8 @@ public class MemoryCannon {
     public void clip() {
         var msMin = parameters.meanAndStdMin();
         var msMax = parameters.meanAndStdMax();
-        double zmNew = MyMathUtils.clip(memoryParameters.zMean(), msMin.mean(), msMax.mean());
-        double zsNew = MyMathUtils.clip(memoryParameters.zStd(), parameters.minZStd(), parameters.maxZStd());
+        double zmNew = MathUtil.clip(memoryParameters.zMean(), msMin.mean(), msMax.mean());
+        double zsNew = MathUtil.clip(memoryParameters.zStd(), parameters.minZStd(), parameters.maxZStd());
         memoryParameters = MeanAndStdMemoryParameters.of(zmNew, zsNew);
     }
 }

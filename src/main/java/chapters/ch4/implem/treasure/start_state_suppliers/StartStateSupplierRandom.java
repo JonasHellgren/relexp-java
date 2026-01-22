@@ -4,7 +4,7 @@ import core.gridrl.StartStateGridSupplierI;
 import chapters.ch4.implem.treasure.core.EnvironmentParametersTreasure;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
 import chapters.ch4.implem.treasure.core.InformerTreasure;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -36,8 +36,8 @@ public class StartStateSupplierRandom implements StartStateGridSupplierI {
         int x = 0;
         int y = 0;
         do {
-            x = RandUtils.getRandomIntNumber(posXMinMax.getFirst(), posXMinMax.getSecond() - 1);
-            y = RandUtils.getRandomIntNumber(posYMinMax.getFirst(), posYMinMax.getSecond() - 1);
+            x = RandUtil.getRandomIntNumber(posXMinMax.getFirst(), posXMinMax.getSecond() - 1);
+            y = RandUtil.getRandomIntNumber(posYMinMax.getFirst(), posYMinMax.getSecond() - 1);
             StateGrid state = StateGrid.of(x, y);
             isNotValid = informer.isTerminalNonFail(state) || informer.isWall(state) || informer.isFail(state);
         } while (isNotValid);

@@ -3,7 +3,7 @@ package chapters.ch14.domain.trainer;
 import chapters.ch14.plotting.MeasuresCombLP;
 import chapters.ch14.plotting.Recorder;
 import core.foundation.gadget.cond.Counter;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,7 +49,7 @@ public class Trainer<SI, S, A> {
                 var sr = dependencies.step(s, a);
                 for (int i = 0; i < dependencies.trainerSettings().nFits(); i++) {
                     var mb = dependencies.sampleMiniBatch();
-                    Conditionals.executeIfTrue(!mb.isEmpty(), () -> dependencies.fitLongMemory(mb));
+                    ConditionalsUtil.executeIfTrue(!mb.isEmpty(), () -> dependencies.fitLongMemory(mb));
                 }
                 dependencies.maybeDeleteOldExperience();
                 dependencies.addExperience(s, a, sr);

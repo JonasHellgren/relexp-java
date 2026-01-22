@@ -2,7 +2,7 @@ package chapters.ch5.implem.walk;
 
 import chapters.ch5.domain.environment.*;
 import com.google.common.base.Preconditions;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -31,7 +31,7 @@ public class EnvironmentWalk implements EnvironmentMcI {
         Preconditions.checkArgument(action instanceof ActionWalk, "invalid class of action=" + action);
         var stateWalk = (StateWalk) state;
         var actionWalk = (ActionWalk) action;
-        int xNext= MyMathUtils.clip(stateWalk.x() + actionWalk.deltaX(),parameters.getXMin(),parameters.getXMax());
+        int xNext= MathUtil.clip(stateWalk.x() + actionWalk.deltaX(),parameters.getXMin(),parameters.getXMax());
         var stateNext = StateWalk.of(xNext);
         boolean isFail = parameters.isFail(stateNext);
         boolean isTerminal = parameters.isTerminalNonFail(stateNext) || isFail;

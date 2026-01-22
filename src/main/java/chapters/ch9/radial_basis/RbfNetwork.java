@@ -3,7 +3,7 @@ package chapters.ch9.radial_basis;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.gadget.training.Weights;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import java.util.List;
@@ -102,7 +102,7 @@ public class RbfNetwork {
      */
     private void fitFromErrors(List<List<Double>> inputs, List<Double> errors, boolean updateActivations) {
         var data = TrainDataOld.ofErrors(inputs, errors);
-        Conditionals.executeIfTrue(updateActivations, () -> {
+        ConditionalsUtil.executeIfTrue(updateActivations, () -> {
             activations = createIfNotEqualNofSamples(data.nSamples(), activations);
             activations.calculateActivations(data, kernels);
         });

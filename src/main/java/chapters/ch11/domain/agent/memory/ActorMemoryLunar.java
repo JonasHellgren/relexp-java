@@ -10,7 +10,7 @@ import chapters.ch9.radial_basis.RbfNetwork;
 import core.foundation.gadget.math.MeanAndLogStd;
 import core.foundation.gadget.math.MeanAndStd;
 import core.foundation.gadget.training.TrainDataOld;
-import core.foundation.util.collections.ArrayCreator;
+import core.foundation.util.collections.ArrayCreatorUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -31,7 +31,7 @@ public class ActorMemoryLunar {
     public static ActorMemoryLunar create(AgentParameters p, LunarParameters ep) {
         var memExp = RbfMemoryFactory.createMemoryManyCenters(p, ep, p.learningRateActor());
         var memStd = RbfMemoryFactory.createMemoryManyCenters(p, ep, p.learningRateActor());
-        memStd.setWeights(ArrayCreator.createArrayWithSameDoubleNumber(memExp.nKernels(), p.initWeightLogStd()));
+        memStd.setWeights(ArrayCreatorUtil.createArrayWithSameDoubleNumber(memExp.nKernels(), p.initWeightLogStd()));
         return new ActorMemoryLunar(memExp, memStd, p);
     }
     /**

@@ -3,7 +3,7 @@ package chapters.ch8.domain.agent.memory;
 import chapters.ch8.domain.agent.param.AgentParkingParameters;
 import chapters.ch8.domain.environment.core.ActionParking;
 import chapters.ch8.domain.environment.core.StateParking;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.Collections;
@@ -49,7 +49,7 @@ public class AgentMemory {
         double tdMax=agentParameters.tdMax();
         var valOld = read(sa);
         double err0 = valueTar - valOld;
-        double clippedError = MyMathUtils.clip(err0,-tdMax,tdMax);
+        double clippedError = MathUtil.clip(err0,-tdMax,tdMax);
         write(sa, valOld + learningRate * clippedError);
         return err0;
     }

@@ -5,11 +5,11 @@ import chapters.ch9.radial_basis.RbfNetwork;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.collections.Array2ListConverterUtil;
-import core.foundation.util.collections.ArrayCreator;
-import core.foundation.util.collections.ListCreator;
-import core.plotting.base.shared.PlotSettings;
-import core.plotting.chart_plotting.ChartSaverAndPlotter;
-import core.plotting.plotting_2d.ManyLinesChartCreator;
+import core.foundation.util.collections.ArrayCreatorUtil;
+import core.foundation.util.collections.ListCreatorUtil;
+import core.plotting_core.base.shared.PlotSettings;
+import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 import org.knowm.xchart.XYChart;
@@ -46,16 +46,16 @@ public class RunnerRadialBasis1dLineOnlyMiniBatch {
     }
 
     private static void init() {
-        double[] centers = ArrayCreator.createArrayFromStartAndEndWithNofItems(0d, MAX_X, N_KERNELS);
-        double[] sigmas = ArrayCreator.createArrayWithSameDoubleNumber(N_KERNELS, SIGMA);
+        double[] centers = ArrayCreatorUtil.createArrayFromStartAndEndWithNofItems(0d, MAX_X, N_KERNELS);
+        double[] sigmas = ArrayCreatorUtil.createArrayWithSameDoubleNumber(N_KERNELS, SIGMA);
         var kernels = Kernels.empty();
         kernels.addKernelsWithCentersAndSigmas(centers, sigmas);
         rbBatch = RbfNetwork.of(kernels, LEARNING_RATE);
-        inTraining = ListCreator.createFromStartToEndWithNofItems(0d, MAX_X, BATCH_SIZE);
+        inTraining = ListCreatorUtil.createFromStartToEndWithNofItems(0d, MAX_X, BATCH_SIZE);
         inTrainingList = inTraining.stream().map(in -> List.of(in)).toList();
-        outTrainingList = ListCreator.createFromStartToEndWithNofItems(0d, MAX_Y, BATCH_SIZE);
-        outPlottingListRef = ListCreator.createFromStartToEndWithNofItems(0d, MAX_Y, N_ITEMS_PLOTTING);
-        inPlotting = ListCreator.createFromStartToEndWithNofItems(0d, MAX_X, N_ITEMS_PLOTTING);
+        outTrainingList = ListCreatorUtil.createFromStartToEndWithNofItems(0d, MAX_Y, BATCH_SIZE);
+        outPlottingListRef = ListCreatorUtil.createFromStartToEndWithNofItems(0d, MAX_Y, N_ITEMS_PLOTTING);
+        inPlotting = ListCreatorUtil.createFromStartToEndWithNofItems(0d, MAX_X, N_ITEMS_PLOTTING);
     }
 
 

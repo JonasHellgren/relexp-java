@@ -1,7 +1,7 @@
 package chapters.ch8.domain.environment.param;
 
 import chapters.ch8.domain.environment.core.StateParking;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.Builder;
 import lombok.With;
 
@@ -18,11 +18,11 @@ public record ParkingParameters(
 ) {
 
     public boolean isArriving() {
-        return RandUtils.randomNumberBetweenZeroAndOne() < probArriving();
+        return RandUtil.randomNumberBetweenZeroAndOne() < probArriving();
     }
 
     public boolean isDeparting() {
-        return RandUtils.randomNumberBetweenZeroAndOne() < probDeparting();
+        return RandUtil.randomNumberBetweenZeroAndOne() < probDeparting();
     }
 
     public boolean isMaxStepsExceeded(StateParking state) {

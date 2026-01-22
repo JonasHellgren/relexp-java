@@ -12,7 +12,7 @@ import chapters.ch8.factory.AgentMemoryFactory;
 import chapters.ch8.factory.AgentParkingParametersFactory;
 import chapters.ch8.factory.ParkingParametersFactory;
 import core.foundation.gadget.cond.Counter;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -113,7 +113,7 @@ public class TestAgentMemory {
 
          var sa1 = StateActionParking.of(s1, a);
          var sa2 = StateActionParking.of(s2, a);
-         double value = RandUtils.randomNumberBetweenZeroAndOne();
+         double value = RandUtil.randomNumberBetweenZeroAndOne();
          agentMemory.write(sa1, value);
          agentMemory.write(sa2, value);
 

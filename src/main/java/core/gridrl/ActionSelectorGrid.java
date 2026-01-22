@@ -1,6 +1,6 @@
 package core.gridrl;
 
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
 
@@ -43,7 +43,7 @@ public class ActionSelectorGrid {
      */
     private ActionGrid chooseActionRandom() {
         var validActions= informer.getValidActions();
-        int randomIndex = RandUtils.getRandomIntNumber(0, validActions.size());
+        int randomIndex = RandUtil.getRandomIntNumber(0, validActions.size());
         return validActions.get(randomIndex);
     }
 

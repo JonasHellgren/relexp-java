@@ -1,7 +1,7 @@
 package chapters.ch14.environments.pong;
 
 import core.foundation.util.formatting.NumberFormatterUtil;
-import core.foundation.util.unit_converter.MyUnitConverter;
+import core.foundation.util.unit_converter.UnitConverterUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -140,7 +140,7 @@ public class StatePong {
     public String toString() {
         return "posBall=" + posBall() +
                 ", posPaddle=" + rounded(posPaddle().x()) +
-                ", headingAngle=" + rounded(MyUnitConverter.convertRadiansToDegrees(headingAngle)) +
+                ", headingAngle=" + rounded(UnitConverterUtil.convertRadiansToDegrees(headingAngle)) +
                 ", timeStill=" + rounded(timeStill) +
                 System.lineSeparator() +
                 ", finiteState=" + finiteState;

@@ -3,7 +3,7 @@ package chapters.ch12.bandit.core;
 import chapters.ch10.bandit.domain.environment.EnvironmentParametersBandit;
 import chapters.ch12.bandit.plotting.BanditNeuralRecorder;
 import chapters.ch12.bandit.plotting.MeasuresBanditNeural;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -51,7 +51,7 @@ public class BanditActionValueTrainer {
     }
 
     private void maybeLog(int epoch, INDArray input) {
-        Conditionals.executeIfTrue(epoch % N_EPOCHS_BETWEEN_LOGGING == 0, () -> {
+        ConditionalsUtil.executeIfTrue(epoch % N_EPOCHS_BETWEEN_LOGGING == 0, () -> {
             INDArray output = memory.predict(input);
             System.out.printf("Epoch %d → Q-values: %s%n", epoch, output);
         });

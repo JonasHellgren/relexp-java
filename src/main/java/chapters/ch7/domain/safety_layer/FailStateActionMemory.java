@@ -2,7 +2,7 @@ package chapters.ch7.domain.safety_layer;
 
 import core.gridrl.StateActionGrid;
 import core.gridrl.TrainerGridDependencies;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
@@ -52,7 +52,7 @@ public class FailStateActionMemory {
                 validActions.remove(sa.action());
             }
         }
-        Conditionals.executeIfTrue(validActions.isEmpty(), () ->
+        ConditionalsUtil.executeIfTrue(validActions.isEmpty(), () ->
                 log.info("No valid actions found for state: " + s));
         return validActions;
     }

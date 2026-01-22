@@ -5,7 +5,7 @@ import chapters.ch12.inv_pendulum.domain.environment.core.StatePendulum;
 import chapters.ch12.inv_pendulum.plotting.MeasuresPendulumTraining;
 import chapters.ch12.inv_pendulum.plotting.RecorderTrainerPendulum;
 import core.foundation.gadget.timer.CpuTimer;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.gadget.math.Accumulator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -61,12 +61,12 @@ public class TrainerPendulum {
     }
 
     private void fitAgentMemory(MiniBatch mb, TargetCalculator targetCalculator, AgentPendulum agent, double lr) {
-        Conditionals.executeIfTrue(mb.size() >= dependencies.trainerParameters().sizeMiniBatch(),
+        ConditionalsUtil.executeIfTrue(mb.size() >= dependencies.trainerParameters().sizeMiniBatch(),
                 () -> agent.fit(mb.getStateList(), targetCalculator.calculateTargets(mb),lr));
     }
 
     private void maybeCopyToTargetNetwork(int i) {
-        Conditionals.executeIfTrue(i % dependencies.episodesBetweenTargetUpdates() == 0,
+        ConditionalsUtil.executeIfTrue(i % dependencies.episodesBetweenTargetUpdates() == 0,
                 () -> dependencies.agent().copyParamsToTargetNet());
     }
 

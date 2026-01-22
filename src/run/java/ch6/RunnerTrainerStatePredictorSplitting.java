@@ -4,9 +4,9 @@ import chapters.ch6.plotting.PlottingFactoryMultiStep;
 import chapters.ch6.domain.trainers.state_predictor.TrainerStatePredictor;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.foundation.configOld.ProjectPropertiesReader;
-import core.foundation.util.collections.List2ArrayConverter;
+import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.gridrl.StateGrid;
-import core.plotting.plotting_2d.ErrorBandCreator;
+import core.plotting_core.plotting_2d.ErrorBandCreator;
 import lombok.SneakyThrows;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import javax.swing.*;
@@ -52,9 +52,9 @@ public class RunnerTrainerStatePredictorSplitting {
         var creator = ErrorBandCreator.newOfSettings(settings);
         creator.addErrorBand(
                 "1",
-                List2ArrayConverter.convertListToDoubleArr(HORIZONS),
-                List2ArrayConverter.convertListToDoubleArr(meanList),
-                List2ArrayConverter.convertListToDoubleArr(stdList), Color.BLACK);
+                List2ArrayConverterUtil.convertListToDoubleArr(HORIZONS),
+                List2ArrayConverterUtil.convertListToDoubleArr(meanList),
+                List2ArrayConverterUtil.convertListToDoubleArr(stdList), Color.BLACK);
 
         var path = ProjectPropertiesReader.create().pathMultiStep();
         creator.saveAsPicture(path+"TrainerStatePredictor.png");

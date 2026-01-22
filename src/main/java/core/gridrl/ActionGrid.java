@@ -1,6 +1,6 @@
 package core.gridrl;
 
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -29,7 +29,7 @@ public enum ActionGrid  {
     }
 
     public static ActionGrid random() {
-        return getAllActions().get(RandUtils.getRandomIntNumber(0, maxNofActions()));
+        return getAllActions().get(RandUtil.getRandomIntNumber(0, maxNofActions()));
     }
 
     public int deltaX() {return properties.deltaX();}

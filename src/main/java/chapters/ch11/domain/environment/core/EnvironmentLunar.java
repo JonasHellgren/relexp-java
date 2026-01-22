@@ -1,8 +1,8 @@
 package chapters.ch11.domain.environment.core;
 
 import chapters.ch11.domain.environment.param.LunarParameters;
-import core.foundation.util.unit_converter.MyUnitConverter;
-import core.foundation.util.unit_converter.NonSIUnits;
+import core.foundation.util.unit_converter.UnitConverterUtil;
+import core.foundation.util.unit_converter.NonSIUnitsUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import tec.units.ri.unit.Units;
@@ -61,11 +61,11 @@ public class EnvironmentLunar implements EnvironmentI {
     }
 
     public static double forceInKiloNewton(double forceInNewton) {
-        return MyUnitConverter.convertForce(forceInNewton, Units.NEWTON, NonSIUnits.KILO_NEWTON);
+        return UnitConverterUtil.convertForce(forceInNewton, Units.NEWTON, NonSIUnitsUtil.KILO_NEWTON);
     }
 
     public static double forceInNewton(double forceInKiloNewton) {
-        return MyUnitConverter.convertForce(forceInKiloNewton, NonSIUnits.KILO_NEWTON, Units.NEWTON);
+        return UnitConverterUtil.convertForce(forceInKiloNewton, NonSIUnitsUtil.KILO_NEWTON, Units.NEWTON);
     }
 
     private boolean isLanded(double y) {

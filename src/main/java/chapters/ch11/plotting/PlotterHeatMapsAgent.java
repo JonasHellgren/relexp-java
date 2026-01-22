@@ -4,9 +4,9 @@ import chapters.ch11.domain.environment.core.EnvironmentLunar;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import core.foundation.config.PathAndFile;
-import core.foundation.util.collections.List2ArrayConverter;
-import core.plotting.base.shared.PlotSettings;
-import core.plotting.plotting_3d.HeatMapChartCreator;
+import core.foundation.util.collections.List2ArrayConverterUtil;
+import core.plotting_core.base.shared.PlotSettings;
+import core.plotting_core.plotting_3d.HeatMapChartCreator;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.knowm.xchart.HeatMapChart;
@@ -14,7 +14,7 @@ import org.knowm.xchart.SwingWrapper;
 import java.awt.*;
 import java.util.function.Function;
 
-import static core.plotting.chart_plotting.ChartSaver.saveHeatMapChart;
+import static core.plotting_core.chart_plotting.ChartSaver.saveHeatMapChart;
 
 
 /**
@@ -100,8 +100,8 @@ public class PlotterHeatMapsAgent {
         var creator = HeatMapChartCreator.of(
                 settingsMap,
                 data,
-                List2ArrayConverter.convertListToDoubleArr(spdList),
-                List2ArrayConverter.convertListToDoubleArr(yList));
+                List2ArrayConverterUtil.convertListToDoubleArr(spdList),
+                List2ArrayConverterUtil.convertListToDoubleArr(yList));
         return creator.create();
     }
 

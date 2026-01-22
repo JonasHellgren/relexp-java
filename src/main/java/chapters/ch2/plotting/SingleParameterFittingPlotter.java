@@ -3,8 +3,8 @@ package chapters.ch2.plotting;
 import chapters.ch2.domain.parameter_fitting.LearningRateFittingResults;
 import core.foundation.config.PathPicsConfig;
 import core.foundation.config.PathAndFile;
-import core.plotting.chart_plotting.ChartSaver;
-import core.plotting.plotting_2d.ManyLinesChartCreator;
+import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import org.knowm.xchart.SwingWrapper;
 
 public class SingleParameterFittingPlotter {

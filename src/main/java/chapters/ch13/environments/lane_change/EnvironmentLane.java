@@ -6,7 +6,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import static core.foundation.util.math.MyMathUtils.isEqualDoubles;
+import static core.foundation.util.math.MathUtil.isEqualDoubles;
 
 
 /***

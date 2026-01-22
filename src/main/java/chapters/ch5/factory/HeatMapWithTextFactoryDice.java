@@ -4,8 +4,8 @@ import chapters.ch5.implem.dice.StateDice;
 import chapters.ch5.implem.dice.StateMemoryDice;
 import core.foundation.config.PlotConfig;
 import core.foundation.util.formatting.NumberFormatterUtil;
-import core.plotting.base.shared.PlotSettings;
-import core.plotting.plotting_3d.HeatMapWithStringTextInCellsCreator;
+import core.plotting_core.base.shared.PlotSettings;
+import core.plotting_core.plotting_3d.HeatMapWithStringTextInCellsCreator;
 import lombok.experimental.UtilityClass;
 import org.knowm.xchart.HeatMapChart;
 

@@ -8,14 +8,14 @@ import chapters.ch9.neural.plotting.MeasuresOneDimRegressionNeuralEnum;
 import chapters.ch9.neural.plotting.NeuralOneDimRegressionRecorder;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.util.collections.Array2ListConverterUtil;
-import core.foundation.util.collections.List2ArrayConverter;
-import core.foundation.util.collections.ListCreator;
+import core.foundation.util.collections.List2ArrayConverterUtil;
+import core.foundation.util.collections.ListCreatorUtil;
 import core.nextlevelrl.neural.MultiLayerPrinter;
-import core.plotting.base.shared.PlotSettings;
-import core.plotting.chart_plotting.ChartSaverAndPlotter;
-import core.plotting.plotting_2d.ManyLinesChartCreator;
+import core.plotting_core.base.shared.PlotSettings;
+import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import lombok.SneakyThrows;
 import org.deeplearning4j.datasets.iterator.utilty.ListDataSetIterator;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
@@ -51,7 +51,7 @@ public class RunnerTrainerNeuralOneDimensional {
         //model = NeuralNetBuilder.buildWillFail();
         var recorder = fitModel(dataset);
         timer.printInMs();
-        var inPlotting = ListCreator.createFromStartToEndWithNofItems(0d, MAX_X, N_ITEMS_PLOTTING);
+        var inPlotting = ListCreatorUtil.createFromStartToEndWithNofItems(0d, MAX_X, N_ITEMS_PLOTTING);
         var chart = getChartCorrelation(inPlotting, "Neural prediction");
         ChartSaverAndPlotter.showChartSaveInFolderAdvConceptsNeural(chart, "neural-1d");
         lossPlotting(recorder);
@@ -91,7 +91,7 @@ public class RunnerTrainerNeuralOneDimensional {
     }
 
     private static void maybeLog(int iter) {
-        Conditionals.executeIfTrue(iter % N_EPOCHS_BETWEEN_LOGGING == 0, () -> {
+        ConditionalsUtil.executeIfTrue(iter % N_EPOCHS_BETWEEN_LOGGING == 0, () -> {
             System.out.println("Iteration=" + iter + " → Predicted y for x=5, 7.5, 10: \n" + getNetOutput(EVAL_IN));
         });
     }
@@ -113,7 +113,7 @@ public class RunnerTrainerNeuralOneDimensional {
                         .withColorRangeSeries(new Color[]{Color.BLACK, Color.GRAY}),
                 inPlotting);
         var outRef = inPlotting.stream().toList();
-        double[] inArr = List2ArrayConverter.convertListToDoubleArr(inPlotting);
+        double[] inArr = List2ArrayConverterUtil.convertListToDoubleArr(inPlotting);
         INDArray output = getNetOutput(inArr);
         var outNeuralList = Array2ListConverterUtil.arrayToList(output.toDoubleVector());
         chartCreator.addLine("Ref.", outRef);

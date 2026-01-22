@@ -1,7 +1,7 @@
 package core.gridrl;
 
 import com.google.common.base.Preconditions;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import lombok.AllArgsConstructor;
 import java.util.Collections;
 import java.util.HashMap;
@@ -106,7 +106,7 @@ public class StateActionMemoryGrid {
         double tdMax=agentParameters.tdMax();
         Preconditions.checkArgument(tdMax>0,"TD error clipping threshold must be positive");
         var valOld = read(sa);
-        double err = MyMathUtils.clip(valueTar - valOld,-tdMax,tdMax);
+        double err = MathUtil.clip(valueTar - valOld,-tdMax,tdMax);
         write(sa, valOld + learningRate * err);
         return err;
     }

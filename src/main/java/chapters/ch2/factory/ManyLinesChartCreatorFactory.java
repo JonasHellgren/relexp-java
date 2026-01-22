@@ -2,7 +2,7 @@ package chapters.ch2.factory;
 
 import core.foundation.config.PlotConfig;
 import core.plotting_rl.chart.ManyLinesFactory;
-import core.plotting.plotting_2d.ManyLinesChartCreator;
+import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 

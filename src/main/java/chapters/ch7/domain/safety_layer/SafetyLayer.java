@@ -2,7 +2,7 @@ package chapters.ch7.domain.safety_layer;
 
 import core.gridrl.StateActionGrid;
 import core.gridrl.TrainerGridDependencies;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
@@ -58,7 +58,7 @@ public class SafetyLayer {
         var sa= StateActionGrid.of(s, a);
         if (failMemory.contains(sa)) {
             List<ActionGrid> nonFailActions = failMemory.getNonFailActions(s);
-            int randIdx= RandUtils.getRandomIntNumber(0, nonFailActions.size());
+            int randIdx= RandUtil.getRandomIntNumber(0, nonFailActions.size());
             return nonFailActions.isEmpty()
                     ? a
                     : nonFailActions.get(randIdx);

@@ -2,8 +2,8 @@ package chapters.ch9.neural.plotting;
 
 import com.google.common.base.Preconditions;
 import core.foundation.config.PathAndFile;
-import core.foundation.util.collections.ArrayCreator;
-import core.plotting.plotting_2d.ErrorBandCreator;
+import core.foundation.util.collections.ArrayCreatorUtil;
+import core.plotting_core.plotting_2d.ErrorBandCreator;
 import core.plotting_rl.progress_plotting.ErrorBandData;
 import core.plotting_rl.progress_plotting.ErrorBandSaverAndPlotter;
 import lombok.AccessLevel;
@@ -48,7 +48,7 @@ public class ErrorBandPlotterNeuralOneDimRegression {
 
     private static void addErrorBandFilter(MeasuresOneDimRegressionNeuralEnum measure, ErrorBandCreator creator, ErrorBandData errorBandData) {
         //double[] errData = errorBandData.errDataFilteredAsArray();
-        double[] errData= ArrayCreator.createArrayWithSameDoubleNumber(errorBandData.xDataAsArray().length, 0.0);
+        double[] errData= ArrayCreatorUtil.createArrayWithSameDoubleNumber(errorBandData.xDataAsArray().length, 0.0);
         creator.addErrorBand(measure.description,
                 errorBandData.xDataAsArray(),
                 errorBandData.yDataFilteredAsArray(),

@@ -1,7 +1,7 @@
 package chapters.ch12.inv_pendulum.domain.trainer.core;
 
 import chapters.ch12.inv_pendulum.domain.trainer.param.TrainerParameters;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class ReplayBuffer {
     }
 
     private int getRandomIndexInBuffer() {
-        return RandUtils.getRandomIntNumber(0, buffer.size());
+        return RandUtil.getRandomIntNumber(0, buffer.size());
     }
 
 }

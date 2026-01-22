@@ -2,7 +2,7 @@ package chapters.ch14.domain.trainer;
 
 import chapters.ch14.domain.environment.Experience;
 import chapters.ch14.domain.settings.TrainerSettings;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -74,7 +74,7 @@ public class ReplayBuffer<SI,S,A> {
     }
 
     private int getRandomIndexInBuffer() {
-        return RandUtils.getRandomIntNumber(0, buffer.size());
+        return RandUtil.getRandomIntNumber(0, buffer.size());
     }
 
 }

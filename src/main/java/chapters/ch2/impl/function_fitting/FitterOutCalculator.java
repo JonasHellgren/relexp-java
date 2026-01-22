@@ -2,7 +2,7 @@ package chapters.ch2.impl.function_fitting;
 
 import chapters.ch2.domain.fitting.FittingParameters;
 import chapters.ch2.domain.fitting.MemoryFitterI;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -22,7 +22,7 @@ public class FitterOutCalculator {
         double range= parameters.range();
         double margin= parameters.margin();
         return xList.stream()
-                .map(x -> fitter.read(MyMathUtils.clip(x,-range,range- margin)))
+                .map(x -> fitter.read(MathUtil.clip(x,-range,range- margin)))
                 .toList();
     }
 }

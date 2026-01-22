@@ -7,7 +7,7 @@ import chapters.ch5.factory.HeatMapWithTextFactoryWalk;
 import chapters.ch5.factory.WalkDependenciesFactory;
 import core.foundation.config.ConfigFactory;
 import core.foundation.gadget.timer.CpuTimer;
-import core.plotting.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
 
 public class RunnerPolicyEvaluationWalk {
 

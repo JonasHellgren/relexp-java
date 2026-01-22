@@ -2,11 +2,11 @@ package ch9;
 
 import chapters.ch9.radial_basis.Kernels;
 import chapters.ch9.radial_basis.RbfNetwork;
-import core.foundation.util.collections.ArrayCreator;
-import core.foundation.util.collections.ListCreator;
-import core.plotting.base.shared.PlotSettings;
-import core.plotting.chart_plotting.ChartSaverAndPlotter;
-import core.plotting.plotting_2d.ManyLinesChartCreator;
+import core.foundation.util.collections.ArrayCreatorUtil;
+import core.foundation.util.collections.ListCreatorUtil;
+import core.plotting_core.base.shared.PlotSettings;
+import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import org.apache.commons.compress.utils.Lists;
 import org.knowm.xchart.XYChart;
 
@@ -26,7 +26,7 @@ public class RunnerPlotSingleRbf {
     public static final int N_POINTS = 50;
 
     public static void main(String[] args) {
-        var inList = ListCreator.createFromStartToEndWithNofItems(MIN_X, MAX_X, N_POINTS);
+        var inList = ListCreatorUtil.createFromStartToEndWithNofItems(MIN_X, MAX_X, N_POINTS);
         var sigmIdx2OutListMap = getPlotDataMap(inList);
         var chart = getChart(inList, sigmIdx2OutListMap);
         ChartSaverAndPlotter.showChartSaveInFolderRbf(chart, "single_rbf");
@@ -69,12 +69,12 @@ public class RunnerPlotSingleRbf {
     private static RbfNetwork createOneKernelRbf(double sigma) {
         double dummyLearningRate = 1d;
         int nKernels = 1;
-        double[] centers = ArrayCreator.createArrayFromStartAndEndWithNofItems(0d, MAX_X, nKernels);
-        double[] sigmas = ArrayCreator.createArrayWithSameDoubleNumber(nKernels, sigma);
+        double[] centers = ArrayCreatorUtil.createArrayFromStartAndEndWithNofItems(0d, MAX_X, nKernels);
+        double[] sigmas = ArrayCreatorUtil.createArrayWithSameDoubleNumber(nKernels, sigma);
         var kernels = Kernels.empty();
         kernels.addKernelsWithCentersAndSigmas(centers, sigmas);
         var rbf = RbfNetwork.of(kernels, dummyLearningRate);
-        rbf.setWeights(ArrayCreator.createArrayWithSameDoubleNumber(1, MAX_Y));
+        rbf.setWeights(ArrayCreatorUtil.createArrayWithSameDoubleNumber(1, MAX_Y));
         return rbf;
     }
 

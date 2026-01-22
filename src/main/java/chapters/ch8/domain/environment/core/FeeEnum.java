@@ -1,7 +1,7 @@
 package chapters.ch8.domain.environment.core;
 
 import chapters.ch8.domain.environment.param.ParkingParameters;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AllArgsConstructor;
 import java.util.List;
 
@@ -27,7 +27,7 @@ public enum              FeeEnum {
     }
 
     public static FeeEnum random() {
-        return allFees().get(RandUtils.getRandomIntNumber(0, nofFees()));
+        return allFees().get(RandUtil.getRandomIntNumber(0, nofFees()));
     }
 
 

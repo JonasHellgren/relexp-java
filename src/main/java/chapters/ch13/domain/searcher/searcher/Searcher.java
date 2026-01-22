@@ -5,7 +5,7 @@ import chapters.ch13.domain.searcher.tree.Tree;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
-import static core.foundation.util.cond.Conditionals.executeIfTrue;
+import static core.foundation.util.cond.ConditionalsUtil.executeIfTrue;
 
 
 /**

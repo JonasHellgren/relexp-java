@@ -1,7 +1,7 @@
 package chapters.ch10.cannon.plotting;
 
 
-import core.foundation.util.unit_converter.MyUnitConverter;
+import core.foundation.util.unit_converter.UnitConverterUtil;
 import lombok.AllArgsConstructor;
 import java.util.function.Function;
 
@@ -17,7 +17,7 @@ public enum MeasuresCannonEnum {
     STD("Std. nOccupied (Degrees)", pm -> getDegrees(pm.std()));
 
     private static double getDegrees(double mean) {
-        return MyUnitConverter.convertRadiansToDegrees(mean);
+        return UnitConverterUtil.convertRadiansToDegrees(mean);
     }
 
     public final String description;

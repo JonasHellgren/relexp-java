@@ -5,7 +5,7 @@ import chapters.ch5.domain.environment.EnvironmentMcI;
 import chapters.ch5.domain.environment.StateMcI;
 import chapters.ch5.domain.environment.StepReturnMc;
 import com.google.common.base.Preconditions;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -60,7 +60,7 @@ public class EnvironmentDice implements EnvironmentMcI {
     private int getScore(ActionDice actionDice) {
         return actionDice.isStopThrowing()
                 ? 0
-                : RandUtils.getRandomIntNumber(parameters.minScore(),parameters.maxScore()+1);
+                : RandUtil.getRandomIntNumber(parameters.minScore(),parameters.maxScore()+1);
     }
 
     private static StateDice getNewState(boolean isFail, int newCount, int newSum) {

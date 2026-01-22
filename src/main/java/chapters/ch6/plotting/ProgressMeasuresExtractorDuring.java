@@ -4,7 +4,7 @@ import chapters.ch6.domain.trainer_dep.core.ReturnCalculator;
 import core.gridrl.EpisodeGridInfo;
 import core.gridrl.ExperienceGrid;
 import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListUtil;
 import core.plotting_rl.progress_plotting.ProgressMeasures;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,7 +34,7 @@ public class ProgressMeasuresExtractorDuring {
         return ProgressMeasures.builder()
                 .sumRewards(info.sumRewards())
                 .nSteps(info.nSteps())
-                .tdError(MyListUtils.findAverage(errors).orElseThrow())
+                .tdError(ListUtil.findAverage(errors).orElseThrow())
                 .tdBestAction(0d)
                 .build();
     }

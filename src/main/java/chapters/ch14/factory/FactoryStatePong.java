@@ -3,7 +3,7 @@ package chapters.ch14.factory;
 import chapters.ch14.environments.pong.PongSettings;
 import chapters.ch14.environments.pong.PosXy;
 import chapters.ch14.environments.pong.StatePong;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -19,12 +19,12 @@ public class FactoryStatePong {
 
     public StatePong random() {
         boolean isHeadNorth=Math.random()>0.5;
-        double headingAngle = RandUtils.getRandomDouble(
+        double headingAngle = RandUtil.getRandomDouble(
                 pongSetting.minHeadingAngleRad(),
                 pongSetting.maxHeadingAngleRad());
-        double xBall = RandUtils.getRandomDouble(pongSetting.radiusBall(), pongSetting.xMaxMinusHalfRadiusBall());
-        double yBall = RandUtils.getRandomDouble(pongSetting.radiusBall(), pongSetting.yMaxMinusHalfRadiusBall());
-        double xPaddle = RandUtils.getRandomDouble(0, pongSetting.xMax());
+        double xBall = RandUtil.getRandomDouble(pongSetting.radiusBall(), pongSetting.xMaxMinusHalfRadiusBall());
+        double yBall = RandUtil.getRandomDouble(pongSetting.radiusBall(), pongSetting.yMaxMinusHalfRadiusBall());
+        double xPaddle = RandUtil.getRandomDouble(0, pongSetting.xMax());
         return StatePong.of(
                 PosXy.of(xBall, yBall),
                 xPaddle,

@@ -2,7 +2,7 @@ package chapters.ch10;
 
 import chapters.ch10.cannon.domain.agent.AgentCannon;
 import chapters.ch10.cannon.factory.FactoryAgentParametersCannon;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +42,7 @@ public class TestAgentCannon {
 
         IntStream.range(MEAN, 10).forEach(i -> {
             double a = agent.chooseAction();
-            Assertions.assertTrue(MyMathUtils.isInLimits(a, -3 * STD, 3 * STD));
+            Assertions.assertTrue(MathUtil.isInLimits(a, -3 * STD, 3 * STD));
         });
     }
 

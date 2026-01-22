@@ -5,7 +5,7 @@ import chapters.ch8.domain.agent.memory.StateActionParking;
 import chapters.ch8.domain.agent.param.AgentParkingParameters;
 import chapters.ch8.domain.environment.core.ActionParking;
 import chapters.ch8.domain.environment.core.StateParking;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,7 +39,7 @@ public class AgentParking {
      * @return the chosen action
      */
     public ActionParking chooseAction(StateParking s, double probRandom) {
-        return RandUtils.randomNumberBetweenZeroAndOne() < probRandom
+        return RandUtil.randomNumberBetweenZeroAndOne() < probRandom
                 ? ActionParking.random()
                 : chooseActionNoExploration(s);
     }

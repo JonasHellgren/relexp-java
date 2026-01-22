@@ -4,7 +4,7 @@ import chapters.ch2.domain.fitting.FittingParameters;
 import chapters.ch2.domain.parameter_fitting.LearningRateFittingResults;
 import chapters.ch2.impl.parameter_fitting.FitterSingleParameter;
 import core.foundation.gadget.training.TrainDataInOut;
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListUtil;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class TrainingResultsGenerator {
             var fitter = FitterSingleParameter.of(par1);
             var data = TrainDataInOut.empty();
             var outputs0 = getOutputs(data, par0, fitter);
-            var outputs = MyListUtils.merge(List.of(START_W),outputs0);
+            var outputs = ListUtil.merge(List.of(START_W),outputs0);
             trainingResults.add(learningRate, outputs);
         }
         return trainingResults;

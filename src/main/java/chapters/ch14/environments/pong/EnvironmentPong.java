@@ -2,7 +2,7 @@ package chapters.ch14.environments.pong;
 
 import chapters.ch14.domain.environment.EnvironmentI;
 import chapters.ch14.domain.environment.StepReturn;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -51,15 +51,15 @@ public class EnvironmentPong implements EnvironmentI<StatePong, ActionPong> {
     }
 
     private PosXy clipXForPaddle(PosXy pos) {
-        return PosXy.of(MyMathUtils.clip(
+        return PosXy.of(MathUtil.clip(
                 pos.x(),settings.halfPaddleLength(),settings.xMaxMinusHalfPaddle()),
                 pos.y());
     }
 
     private PosXy clipXAndYForBall(PosXy newPosBall) {
         return PosXy.of(
-                MyMathUtils.clip(newPosBall.x(),settings.xMinPlusHalfRadiusBall(),settings.xMaxMinusHalfRadiusBall()),
-                MyMathUtils.clip(newPosBall.y(),settings.yMinPlusHalfRadiusBall(),settings.yMaxMinusHalfRadiusBall()));
+                MathUtil.clip(newPosBall.x(),settings.xMinPlusHalfRadiusBall(),settings.xMaxMinusHalfRadiusBall()),
+                MathUtil.clip(newPosBall.y(),settings.yMinPlusHalfRadiusBall(),settings.yMaxMinusHalfRadiusBall()));
     }
 
 

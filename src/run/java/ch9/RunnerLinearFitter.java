@@ -5,12 +5,12 @@ import chapters.ch9.gradient_descent.PhiExtractor;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.gadget.training.TrainDataOld;
-import core.foundation.util.collections.ListCreator;
-import core.plotting.base.shared.PlotSettings;
-import core.plotting.chart_plotting.ChartSaverAndPlotter;
-import core.plotting.plotting_2d.ChartUtility;
-import core.plotting.plotting_2d.ManyLinesChartCreator;
-import core.plotting.plotting_2d.ScatterWithLineChartCreator;
+import core.foundation.util.collections.ListCreatorUtil;
+import core.plotting_core.base.shared.PlotSettings;
+import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.plotting_2d.ChartUtility;
+import core.plotting_core.plotting_2d.ManyLinesChartCreator;
+import core.plotting_core.plotting_2d.ScatterWithLineChartCreator;
 import lombok.SneakyThrows;
 import org.knowm.xchart.XYChart;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class RunnerLinearFitter {
         var fitter = LinearFitter.of(data, getPhiExtractor(), LEARNING_RATE);
         var errors = fitter.fitAndReturnErrorPerEpoch(N_EPOCHS, BATCH_SIZE);
         timer.printInMs();
-        var xLineList = ListCreator.createFromStartToEndWithNofItems(MIN_X, MAX_X, N_ITEMS_LINE);
+        var xLineList = ListCreatorUtil.createFromStartToEndWithNofItems(MIN_X, MAX_X, N_ITEMS_LINE);
         var yLineList = getOutListFromFitter(xLineList, fitter);
         var scatterChart = getScatterWithLineChartCreator(data, xLineList, yLineList);
         scatterChart.getStyler().setXAxisTickMarkSpacingHint(10);
@@ -49,7 +49,7 @@ public class RunnerLinearFitter {
         var weight = ProjectPropertiesReader.create().xyChartWidth2Col();
         var height = ProjectPropertiesReader.create().xyChartHeight();
         System.out.println("errors.size() = " + errors.size());
-        List<Double> xData = ListCreator.createFromStartToEndWithNofItems(1, errors.size(), errors.size());
+        List<Double> xData = ListCreatorUtil.createFromStartToEndWithNofItems(1, errors.size(), errors.size());
         var errorChartCreator = ManyLinesChartCreator.of(
                 PlotSettings.ofDefaults()
                         .withWidth(weight).withHeight(height)
@@ -112,7 +112,7 @@ public class RunnerLinearFitter {
                 5.0 + 10.0
         );
 
-        var inList = ListCreator.createFromStartToEndWithNofItems(MIN_X, MAX_X, outList.size());
+        var inList = ListCreatorUtil.createFromStartToEndWithNofItems(MIN_X, MAX_X, outList.size());
         inList.stream().forEach(in ->
                 data.addIAndOut(List.of(in), outList.get(inList.indexOf(in))));
         return data;
@@ -120,7 +120,7 @@ public class RunnerLinearFitter {
 
     private static TrainDataOld getTrainData0() {
         var data = TrainDataOld.emptyFromOutputs();
-        var inList = ListCreator.createFromStartToEndWithNofItems(MIN_X, MAX_X, 10);
+        var inList = ListCreatorUtil.createFromStartToEndWithNofItems(MIN_X, MAX_X, 10);
         var outList = List.of(
                 4.5 + 1.0,
                 5.2 + 2.0,

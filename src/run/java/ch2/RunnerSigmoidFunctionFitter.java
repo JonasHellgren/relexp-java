@@ -2,19 +2,19 @@ package ch2;
 
 import chapters.ch2.impl.function_fitting.FitterFunctionOutput;
 import core.foundation.config.ConfigFactory;
-import core.plotting.chart_plotting.ChartSaver;
-import core.plotting.factory.ChartFactory;
+import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.factory.ChartFactory;
 import chapters.ch2.factory.FitterFunctionFactory;
 import chapters.ch2.factory.FittingParametersFactory;
 import core.foundation.gadget.training.TrainDataInOut;
-import core.foundation.util.math.SigmoidFunctions;
-import core.foundation.util.rand.RandUtils;
-import core.plotting.plotting_2d.ChartUtility;
+import core.foundation.util.math.SigmoidFunctionsUtil;
+import core.foundation.util.rand.RandUtil;
+import core.plotting_core.plotting_2d.ChartUtility;
 import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.XYChart;
 import java.util.List;
 import java.util.stream.IntStream;
-import static core.foundation.util.collections.ListCreator.createFromStartToEndWithNofItems;
+import static core.foundation.util.collections.ListCreatorUtil.createFromStartToEndWithNofItems;
 
 public class RunnerSigmoidFunctionFitter {
     public static final int N_EPOCHS = 1000;
@@ -46,8 +46,8 @@ public class RunnerSigmoidFunctionFitter {
     private static TrainDataInOut getTrainData(double range) {
         var data = TrainDataInOut.empty();
         for (int i = 0; i < N_SAMPLES; i++) {
-            double xRand= RandUtils.doubleInInterval(-range, range);
-            double y= SigmoidFunctions.sigmoid.applyAsDouble(xRand);
+            double xRand= RandUtil.doubleInInterval(-range, range);
+            double y= SigmoidFunctionsUtil.sigmoid.applyAsDouble(xRand);
             data.add(List.of(xRand), y);
         }
         return data;

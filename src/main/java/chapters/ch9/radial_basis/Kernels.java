@@ -1,7 +1,7 @@
 package chapters.ch9.radial_basis;
 
 import com.google.common.base.Preconditions;
-import core.foundation.util.collections.List2ArrayConverter;
+import core.foundation.util.collections.List2ArrayConverterUtil;
 import lombok.AllArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class Kernels {
                 ,"input size should be same as kernels dimensions");
         List<Double> activations = new ArrayList<>();
         for (Kernel kernel : kernels) {
-            var inputArr = List2ArrayConverter.convertListToDoubleArr(input);
+            var inputArr = List2ArrayConverterUtil.convertListToDoubleArr(input);
             activations.add(kernel.activation(inputArr));
         }
         return activations;

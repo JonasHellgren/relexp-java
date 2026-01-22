@@ -1,14 +1,12 @@
 package core.plotting_rl.chart;
 
 import core.foundation.config.PlotConfig;
-import core.foundation.configOld.ProjectPropertiesReader;
-import core.foundation.util.collections.ListCreator;
-import core.plotting.plotting_2d.ManyLinesChartCreator;
-import core.plotting.base.shared.PlotSettings;
+import core.foundation.util.collections.ListCreatorUtil;
+import core.plotting_core.plotting_2d.ManyLinesChartCreator;
+import core.plotting_core.base.shared.PlotSettings;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import java.io.IOException;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
@@ -20,7 +18,7 @@ public class ManyLinesFactory {
     private int nItems;
 
     public ManyLinesChartCreator getManyLinesChartCreator(PlotConfig plotCfg) {
-        var inList = ListCreator.createFromStartWithStepWithNofItems(0,1d, nItems);
+        var inList = ListCreatorUtil.createFromStartWithStepWithNofItems(0,1d, nItems);
         var settings = PlotSettings.ofDefaults()
                 .withXAxisLabel(xLabel).withYAxisLabel(yLabel)
                 .withDefinedSpaceBetweenXTicks(true)

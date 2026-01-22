@@ -3,7 +3,7 @@ package chapters.ch9.gradient_descent;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.gadget.training.Weights;
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -77,9 +77,9 @@ public class LinearFitter {
 
     private double getErrAvg(List<Double> outRef) {
         var out = calcOutputs(data.inputs());
-        var diffList=(MyListUtils.elementSubtraction(out, outRef));
-        var diffAbs=MyListUtils.everyItemAbsolute(diffList);
-        return MyListUtils.findAverage(diffAbs).orElseThrow();
+        var diffList=(ListUtil.elementSubtraction(out, outRef));
+        var diffAbs= ListUtil.everyItemAbsolute(diffList);
+        return ListUtil.findAverage(diffAbs).orElseThrow();
     }
 
     private static void validateFit(TrainDataOld data, int nEpochs, int batchSize) {

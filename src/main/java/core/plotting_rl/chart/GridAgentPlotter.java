@@ -4,13 +4,12 @@ import core.foundation.config.PlotConfig;
 import core.foundation.config.PathAndFile;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.*;
-import core.plotting.chart_plotting.ChartSaver;
+import core.plotting_core.chart_plotting.ChartSaver;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.SwingWrapper;
-
-import static chapters.ch4.plotting.GridPlotHelper.*;
+import static core.plotting_rl.chart.GridPlotHelper.*;
 
 
 /**

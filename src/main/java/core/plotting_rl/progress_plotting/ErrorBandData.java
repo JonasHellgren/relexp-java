@@ -1,14 +1,14 @@
 package core.plotting_rl.progress_plotting;
 
 import com.google.common.base.Preconditions;
-import core.foundation.util.collections.ArrayCreator;
-import core.foundation.util.collections.List2ArrayConverter;
+import core.foundation.util.collections.ArrayCreatorUtil;
+import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.foundation.gadget.math.MovingAverage;
 
 import java.util.List;
 
-import static core.foundation.util.collections.MyListUtils.elementSubtraction;
-import static core.foundation.util.collections.MyListUtils.everyItemAbsolute;
+import static core.foundation.util.collections.ListUtil.elementSubtraction;
+import static core.foundation.util.collections.ListUtil.everyItemAbsolute;
 
 
 /**
@@ -46,26 +46,26 @@ public record ErrorBandData(List<Double> yData0, int nWindows) {
     }
 
     public double[] errDataFilteredAsArray() {
-        return List2ArrayConverter.convertListToDoubleArr(errDataFiltered());
+        return List2ArrayConverterUtil.convertListToDoubleArr(errDataFiltered());
     }
 
 
     public double[] zeroErrDataAsArray() {
-        return ArrayCreator.createArrayWithSameDoubleNumber(length(),0d);
+        return ArrayCreatorUtil.createArrayWithSameDoubleNumber(length(),0d);
     }
 
     public double[] yDataFilteredAsArray() {
-        return List2ArrayConverter.convertListToDoubleArr(yDataFiltered());
+        return List2ArrayConverterUtil.convertListToDoubleArr(yDataFiltered());
     }
 
 
     public double[] yDataNotFilteredAsArray() {
-        return List2ArrayConverter.convertListToDoubleArr(yData0);
+        return List2ArrayConverterUtil.convertListToDoubleArr(yData0);
     }
 
 
     public double[] xDataAsArray() {
-        return ArrayCreator.createArrayFromStartAndEndWithNofItems(0d, length() - 1.0, length());
+        return ArrayCreatorUtil.createArrayFromStartAndEndWithNofItems(0d, length() - 1.0, length());
     }
 
     private static List<Double> filter(List<Double> inList, int lengthWindow) {

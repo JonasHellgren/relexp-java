@@ -1,7 +1,7 @@
 package core.plotting_rl.progress_plotting;
 
 
-import core.foundation.util.collections.ListCreator;
+import core.foundation.util.collections.ListCreatorUtil;
 
 import java.util.List;
 
@@ -23,12 +23,12 @@ public record ProgressMeasureTrajectories(
 
     public static ProgressMeasureTrajectories empty() {
         return new ProgressMeasureTrajectories(
-                ListCreator.emptyDouble(),
-                ListCreator.emptyDouble(),
-                ListCreator.emptyDouble(),
-                ListCreator.emptyDouble(),
-                ListCreator.emptyDouble(),
-                ListCreator.emptyDouble());
+                ListCreatorUtil.emptyDouble(),
+                ListCreatorUtil.emptyDouble(),
+                ListCreatorUtil.emptyDouble(),
+                ListCreatorUtil.emptyDouble(),
+                ListCreatorUtil.emptyDouble(),
+                ListCreatorUtil.emptyDouble());
     }
 
     public void addTd(double td) {

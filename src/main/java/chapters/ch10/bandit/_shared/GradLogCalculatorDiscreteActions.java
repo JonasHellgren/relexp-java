@@ -1,8 +1,8 @@
 package chapters.ch10.bandit._shared;
 
-import core.foundation.util.collections.List2ArrayConverter;
-import core.foundation.util.collections.ListCreator;
-import core.foundation.util.collections.MyArrayUtil;
+import core.foundation.util.collections.List2ArrayConverterUtil;
+import core.foundation.util.collections.ListCreatorUtil;
+import core.foundation.util.collections.ArrayUtil;
 import lombok.experimental.UtilityClass;
 
 /***
@@ -13,10 +13,10 @@ import lombok.experimental.UtilityClass;
 public class GradLogCalculatorDiscreteActions {
 
     public static double[] calc(int indexAction, double[] probArray) {
-        var oh= ListCreator.createListWithOneHot(probArray.length,indexAction);
-        return MyArrayUtil.add(
-                List2ArrayConverter.convertListToDoubleArr(oh),
-                MyArrayUtil.negate(probArray));
+        var oh= ListCreatorUtil.createListWithOneHot(probArray.length,indexAction);
+        return ArrayUtil.add(
+                List2ArrayConverterUtil.convertListToDoubleArr(oh),
+                ArrayUtil.negate(probArray));
     }
 
 }

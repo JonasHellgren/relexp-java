@@ -1,7 +1,7 @@
 package core.foundation.gadget.pos;
 
 import core.foundation.util.formatting.NumberFormatterUtil;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -32,19 +32,19 @@ public record PosXyDouble(
     }
 
     public boolean yBelowOrEqual(double v) {
-        return MyMathUtils.isInLimits(y,-INF, v+ EPS);
+        return MathUtil.isInLimits(y,-INF, v+ EPS);
     }
 
     public boolean yAboveOrEqual(double v) {
-        return MyMathUtils.isInLimits(y,v- EPS, INF);
+        return MathUtil.isInLimits(y,v- EPS, INF);
     }
 
     public boolean xBelowOrEqual(double v) {
-        return MyMathUtils.isInLimits(x,-INF, v+ EPS);
+        return MathUtil.isInLimits(x,-INF, v+ EPS);
     }
 
     public boolean xAboveOrEqual(double v) {
-        return MyMathUtils.isInLimits(x,v- EPS, INF);
+        return MathUtil.isInLimits(x,v- EPS, INF);
     }
 
 

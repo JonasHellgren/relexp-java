@@ -1,7 +1,7 @@
 package core.foundation.gadget.training;
 
 import com.google.common.base.Preconditions;
-import core.foundation.util.collections.List2ArrayConverter;
+import core.foundation.util.collections.List2ArrayConverterUtil;
 import lombok.AllArgsConstructor;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +24,7 @@ public class Weights {
     }
 
     public static Weights of(List<Double> list) {
-        return new Weights(List2ArrayConverter.convertListToDoubleArr(list));
+        return new Weights(List2ArrayConverterUtil.convertListToDoubleArr(list));
     }
 
     public double get(int index) {

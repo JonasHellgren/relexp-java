@@ -3,7 +3,7 @@ package chapters.ch6;
 import chapters.ch6.domain.trainer_dep.episode_generator.EpisodeGeneratorGrid;
 import chapters.ch6.domain.trainer_dep.episode_generator.EpisodeInfo;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,8 +26,8 @@ public class TestEpisodeGenerator {
         double sumRewards = info.sumRewards();
         Assertions.assertTrue(info.nSteps() > 0);
         Assertions.assertTrue(info.endExperience().isTransitionToTerminal());
-        Assertions.assertTrue(MyMathUtils.compareDoubleScalars(0, sumRewards, TOL) ||
-                MyMathUtils.compareDoubleScalars(1, sumRewards, TOL));
+        Assertions.assertTrue(MathUtil.compareDoubleScalars(0, sumRewards, TOL) ||
+                MathUtil.compareDoubleScalars(1, sumRewards, TOL));
     }
 
 

@@ -9,7 +9,7 @@ import chapters.ch10.bandit.domain.trainer.TrainerDependenciesBandit;
 import chapters.ch10.bandit.factory.FactoryAgentParametersBandit;
 import chapters.ch10.bandit.factory.FactoryEnvironmentParametersBandit;
 import chapters.ch10.bandit.factory.FactoryTrainerParameters;
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ public class TestTrainerBandit {
         var agent = trainer.getDependencies().agent();
         var trajG = recorder.trajectory(MeasuresBanditEnum.SUMREWARDS);
         var probs = agent.actionProbabilities();
-        double avgG = MyListUtils.findAverage(trajG).orElseThrow();
+        double avgG = ListUtil.findAverage(trajG).orElseThrow();
 
         Assertions.assertTrue(probs[0] > HIGH_PROB && probs[1] < LOW_PROB);
         Assertions.assertTrue(avgG > 0.5);

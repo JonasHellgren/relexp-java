@@ -10,10 +10,10 @@ import chapters.ch12.inv_pendulum.factory.PendulumParametersFactory;
 import chapters.ch12.inv_pendulum.plotting.MeasuresPendulumSimulation;
 import chapters.ch12.inv_pendulum.plotting.MeasuresPendulumSimulationEnum;
 import chapters.ch12.inv_pendulum.plotting.PendulumRecorder;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.util.formatting.NumberFormatterUtil;
-import core.foundation.util.unit_converter.MyUnitConverter;
-import core.plotting.chart_plotting.ChartSaverAndPlotter;
+import core.foundation.util.unit_converter.UnitConverterUtil;
+import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
 
 public class RunnerPendulumSimulation {
     public static final double MAX_ANGLE_FRACTION = 0.2;  //0.8 or 0.2
@@ -45,13 +45,13 @@ public class RunnerPendulumSimulation {
             var sr = environment.step(state, action);
             var measures = MeasuresPendulumSimulation.of(state, action, parameters);
             state = sr.stateNew();
-            Conditionals.executeIfTrue(i % N_STEPS_BETWEEN_RECORDING == 0, () -> recorder.add(measures));
+            ConditionalsUtil.executeIfTrue(i % N_STEPS_BETWEEN_RECORDING == 0, () -> recorder.add(measures));
         }
     }
 
     private static void plotting(double angleTorqueActivation, PendulumRecorder recorder) {
         String title = "Theta limit (deg) = " + NumberFormatterUtil.getRoundedNumberAsString(
-                MyUnitConverter.convertRadiansToDegrees(angleTorqueActivation), NOF_DIGITS_TITLETEXT);
+                UnitConverterUtil.convertRadiansToDegrees(angleTorqueActivation), NOF_DIGITS_TITLETEXT);
         var cc = ManyLinesChartCreatorFactory.createChartCreatorForSimulation(
                 title, recorder.trajectory(MeasuresPendulumSimulationEnum.TIME), SHOW_LEGEND);
         cc.addLine("Theta (deg)", recorder.trajectory(MeasuresPendulumSimulationEnum.ANGLE_DEG));

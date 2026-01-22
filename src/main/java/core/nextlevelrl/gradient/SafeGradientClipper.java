@@ -1,6 +1,6 @@
 package core.nextlevelrl.gradient;
 
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import lombok.Builder;
 
 /***
@@ -37,6 +37,6 @@ public final class SafeGradientClipper {
         double minValueDelta = valueMin - currentValue;
         double minGradient = (currentValue <= valueMin) ? 0 : Math.max(gradMin, minValueDelta);
         double maxGradient = (currentValue >= valueMax) ? 0 : Math.min(gradMax, maxValueDelta);
-        return MyMathUtils.clip(originalGradient, minGradient, maxGradient);
+        return MathUtil.clip(originalGradient, minGradient, maxGradient);
     }
 }

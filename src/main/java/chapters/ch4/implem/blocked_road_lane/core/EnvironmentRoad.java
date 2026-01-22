@@ -1,7 +1,7 @@
 package chapters.ch4.implem.blocked_road_lane.core;
 
 import core.gridrl.InformerGridParamsI;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import core.gridrl.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -66,8 +66,8 @@ public class EnvironmentRoad implements EnvironmentGridI {
     }
 
     private double getReward(StateGrid sNext, boolean isTerminal, boolean isMove) {
-        return Conditionals.numIfTrueElseZero.apply(isTerminal, informer.rewardAtTerminalPos(sNext)) +
-                Conditionals.numIfTrueElseZero.apply(isMove, informer.rewardMove());
+        return ConditionalsUtil.numIfTrueElseZero.apply(isTerminal, informer.rewardAtTerminalPos(sNext)) +
+                ConditionalsUtil.numIfTrueElseZero.apply(isMove, informer.rewardMove());
     }
 
     private boolean isMovingSouthOrNorth(ActionGrid a) {

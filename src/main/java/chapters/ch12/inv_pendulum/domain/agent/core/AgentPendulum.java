@@ -8,7 +8,7 @@ import chapters.ch12.inv_pendulum.domain.environment.core.ActionPendulum;
 import chapters.ch12.inv_pendulum.domain.environment.core.StatePendulum;
 import chapters.ch12.inv_pendulum.domain.trainer.param.TrainerParameters;
 import com.google.common.base.Preconditions;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import core.nextlevelrl.neural.Dl4JUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -54,7 +54,7 @@ public class AgentPendulum {
      * @return the chosen action
      */
     public ActionPendulum chooseAction(StatePendulum state, double probRandom) {
-        return (RandUtils.randomNumberBetweenZeroAndOne() < probRandom)
+        return (RandUtil.randomNumberBetweenZeroAndOne() < probRandom)
                 ? ActionPendulum.random()
                 : chooseActionNoExploration(state);
     }

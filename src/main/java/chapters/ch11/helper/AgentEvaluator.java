@@ -6,11 +6,11 @@ import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.cond.Counter;
-import core.foundation.util.cond.Conditionals;
-import core.plotting.base.shared.FormattedAsString;
-import core.plotting.base.shared.PlotSettings;
-import core.plotting.chart_plotting.ChartSaverAndPlotter;
-import core.plotting.plotting_2d.ManyLinesChartCreator;
+import core.foundation.util.cond.ConditionalsUtil;
+import core.plotting_core.base.shared.FormattedAsString;
+import core.plotting_core.base.shared.PlotSettings;
+import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
@@ -87,7 +87,7 @@ public class AgentEvaluator {
     private static void increaseFailCounterAndLogIfFailedEnd(ExperienceLunar endExperience,
                                                              Counter failCounter,
                                                              ExperienceLunar startExperience) {
-        Conditionals.executeIfTrue(endExperience.isTransitionToFail(), () -> {
+        ConditionalsUtil.executeIfTrue(endExperience.isTransitionToFail(), () -> {
             failCounter.increase();
             log.info("FAIL: (start,end)=("+ startExperience.toStringShort()+
                     "," + endExperience.toStringShort()+")");

@@ -4,7 +4,7 @@ import chapters.ch13.domain.environment.EnvironmentI;
 import chapters.ch13.domain.environment.Experience;
 import chapters.ch13.domain.searcher.node.Node;
 import com.google.common.base.Preconditions;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.function.Function;
@@ -49,7 +49,7 @@ public class Expander<S, A> {
     private A selectFromNonTriedActions(Node<S, A> node) {
         var actions = node.info().nonTriedActions();
         Preconditions.checkArgument(!actions.isEmpty(),"No actions available");
-        int randIdx= RandUtils.getRandomIntNumber(0,actions.size());
+        int randIdx= RandUtil.getRandomIntNumber(0,actions.size());
         return actions.get(randIdx);
     }
 

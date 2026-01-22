@@ -2,7 +2,7 @@ package chapters.ch6.domain.trainer_dep.episode_generator;
 
 import core.gridrl.StateActionGrid;
 import core.gridrl.ExperienceGrid;
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListUtil;
 import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
@@ -33,7 +33,7 @@ public class EpisodeInfo {
     }
 
     public Double sumRewards() {
-        return MyListUtils.sumList(rewards());
+        return ListUtil.sumList(rewards());
     }
 
     public Integer nSteps() {

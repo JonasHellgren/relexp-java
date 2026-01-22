@@ -1,6 +1,6 @@
 package core.gridrl;
 
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -28,7 +28,7 @@ public class EpisodeGridInfo {
     }
 
     public Double sumRewards() {
-        return MyListUtils.sumList(rewards());
+        return ListUtil.sumList(rewards());
     }
 
     public Integer nSteps() {

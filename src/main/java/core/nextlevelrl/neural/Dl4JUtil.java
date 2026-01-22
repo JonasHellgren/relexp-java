@@ -1,8 +1,8 @@
 package core.nextlevelrl.neural;
 
 import com.google.common.base.Preconditions;
-import core.foundation.util.collections.ListCreator;
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListCreatorUtil;
+import core.foundation.util.collections.ListUtil;
 import lombok.extern.java.Log;
 import org.apache.commons.math3.util.Pair;
 import org.deeplearning4j.datasets.iterator.utilty.ListDataSetIterator;
@@ -53,12 +53,12 @@ public class Dl4JUtil {
 
 
     public static INDArray convertListToOneRow(List<Double> in) {
-        return Nd4j.create(MyListUtils.toArray(in), new int[]{1, in.size()});
+        return Nd4j.create(ListUtil.toArray(in), new int[]{1, in.size()});
     }
 
 
     public static INDArray convertListToOneColumn(List<Double> in) {
-        return Nd4j.create(MyListUtils.toArray(in), new int[]{in.size(), 1});
+        return Nd4j.create(ListUtil.toArray(in), new int[]{in.size(), 1});
     }
 
     public static void replaceRow(INDArray original, INDArray toReplace, int rowIndex) {
@@ -99,7 +99,7 @@ public class Dl4JUtil {
     }
 
     public static List<Double> createListWithOneHotWithValue(int nofInputs, int hotIndex, double v) {
-        List<Double> onHot = ListCreator.createListWithEqualElementValues(nofInputs, 0d);
+        List<Double> onHot = ListCreatorUtil.createListWithEqualElementValues(nofInputs, 0d);
         onHot.set(hotIndex, v);
         return onHot;
     }
@@ -121,8 +121,8 @@ public class Dl4JUtil {
         List<Double> minInList = minMaxList.stream().map(p -> p.getFirst()).toList();
         List<Double> maxInList = minMaxList.stream().map(p -> p.getSecond()).toList();
         normalizer.setFeatureStats(
-                Nd4j.create(MyListUtils.toArray(minInList)),
-                Nd4j.create(MyListUtils.toArray(maxInList)));
+                Nd4j.create(ListUtil.toArray(minInList)),
+                Nd4j.create(ListUtil.toArray(maxInList)));
 
         return normalizer;
     }
@@ -143,11 +143,11 @@ public class Dl4JUtil {
         List<Double> minOutList = outMinMax.stream().map(p -> p.getFirst()).toList();
         List<Double> maxOutList = outMinMax.stream().map(p -> p.getSecond()).toList();
         normalizer.setFeatureStats(
-                Nd4j.create(MyListUtils.toArray(minInList)),
-                Nd4j.create(MyListUtils.toArray(maxInList)));
+                Nd4j.create(ListUtil.toArray(minInList)),
+                Nd4j.create(ListUtil.toArray(maxInList)));
         normalizer.setLabelStats(
-                Nd4j.create(MyListUtils.toArray(minOutList)),
-                Nd4j.create(MyListUtils.toArray(maxOutList)));
+                Nd4j.create(ListUtil.toArray(minOutList)),
+                Nd4j.create(ListUtil.toArray(maxOutList)));
         return normalizer;
     }
 

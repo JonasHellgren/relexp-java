@@ -6,7 +6,7 @@ import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.lossfunctions.ILossFunction;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 
-import static core.foundation.util.cond.DefaultIf.*;
+import static core.foundation.util.cond.DefaultIfUtil.*;
 
 
 public record NetSettings(

@@ -3,7 +3,7 @@ package chapters.ch12.inv_pendulum.plotting;
 import chapters.ch12.inv_pendulum.domain.environment.core.ActionPendulum;
 import chapters.ch12.inv_pendulum.domain.environment.core.StatePendulum;
 import chapters.ch12.inv_pendulum.domain.environment.param.PendulumParameters;
-import core.foundation.util.unit_converter.MyUnitConverter;
+import core.foundation.util.unit_converter.UnitConverterUtil;
 import lombok.Builder;
 
 @Builder
@@ -49,7 +49,7 @@ public record MeasuresPendulumSimulation(
     }
 
     double radToDeg(double angleRad) {
-        return MyUnitConverter.convertRadiansToDegrees(angleRad);
+        return UnitConverterUtil.convertRadiansToDegrees(angleRad);
     }
 
 }

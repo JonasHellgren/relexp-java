@@ -3,7 +3,7 @@ package chapters.ch13.domain.searcher.path;
 import chapters.ch13.domain.environment.Experience;
 import chapters.ch13.domain.searcher.node.Node;
 import com.google.common.base.Preconditions;
-import core.foundation.util.collections.MyListUtils;
+import core.foundation.util.collections.ListUtil;
 import core.learningutils.MyRewardListUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -71,7 +71,7 @@ public class PathInfo<S, A> {
     }
 
     public List<Double> rewardsTreeAndSimulation() {
-        return MyListUtils.merge(rewardsTree(), rewardsSimulation());
+        return ListUtil.merge(rewardsTree(), rewardsSimulation());
     }
 
     public int lengthRewardsTreeAndSimulation() {
@@ -96,7 +96,7 @@ public class PathInfo<S, A> {
         Preconditions.checkArgument(pos < lengthNodesTree(), "pos out of bounds");
         var rewardsFromPos = rewardsTreeAndSimulation().subList(pos, lengthRewardsTreeAndSimulation());
         var rewardsDiscounted = MyRewardListUtils.discountedElements(rewardsFromPos, discount);
-        return MyListUtils.sumList(rewardsDiscounted);
+        return ListUtil.sumList(rewardsDiscounted);
     }
 
     @Override

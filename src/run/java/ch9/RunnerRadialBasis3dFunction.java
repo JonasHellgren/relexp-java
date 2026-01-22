@@ -6,11 +6,11 @@ import chapters.ch9.radial_basis.RbfNetwork;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.gadget.training.TrainDataOld;
-import core.foundation.util.collections.ArrayCreator;
-import core.foundation.util.collections.ListCreator;
-import core.plotting.base.shared.PlotSettings;
-import core.plotting.chart_plotting.ChartSaverAndPlotter;
-import core.plotting.plotting_3d.HeatMapChartCreator;
+import core.foundation.util.collections.ArrayCreatorUtil;
+import core.foundation.util.collections.ListCreatorUtil;
+import core.plotting_core.base.shared.PlotSettings;
+import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.plotting_3d.HeatMapChartCreator;
 import lombok.SneakyThrows;
 import java.util.List;
 import java.util.function.DoubleBinaryOperator;
@@ -47,8 +47,8 @@ class RunnerRadialBasis3dFunction {
         double yMax = getYData()[getYData().length - 1];
         double sigmaX = K_SIGMA * ((xMax - xMin) / (N_KERNELS_EACH_DIM - 1));
         double sigmaY = K_SIGMA * ((yMax - yMin) / (N_KERNELS_EACH_DIM - 1));
-        var xList = ListCreator.createFromStartToEndWithNofItems(xMin, xMax, N_KERNELS_EACH_DIM);
-        var yList = ListCreator.createFromStartToEndWithNofItems(yMin, yMax, N_KERNELS_EACH_DIM);
+        var xList = ListCreatorUtil.createFromStartToEndWithNofItems(xMin, xMax, N_KERNELS_EACH_DIM);
+        var yList = ListCreatorUtil.createFromStartToEndWithNofItems(yMin, yMax, N_KERNELS_EACH_DIM);
         for (double x : xList) {
             for (double y : yList) {
                 kernels.addKernel(Kernel.ofSigmas(new double[]{x, y}, new double[]{sigmaX, sigmaY}));
@@ -91,11 +91,11 @@ class RunnerRadialBasis3dFunction {
     }
 
     private static double[] getXData() {
-        return ArrayCreator.createArrayFromStartAndEnd(LENGTH, -3, 3);
+        return ArrayCreatorUtil.createArrayFromStartAndEnd(LENGTH, -3, 3);
     }
 
     private static double[] getYData() {
-        return ArrayCreator.createArrayFromStartAndEnd(LENGTH, 0, 7);
+        return ArrayCreatorUtil.createArrayFromStartAndEnd(LENGTH, 0, 7);
     }
 
 

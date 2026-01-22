@@ -5,7 +5,7 @@ import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import com.beust.jcommander.internal.Lists;
 import core.foundation.gadget.cond.Counter;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import java.util.List;
@@ -48,7 +48,7 @@ public class EpisodeCreator {
             state=sr.stateNew();
             counter.increase();
         }
-        Conditionals.executeIfTrue(counter.isExceeded(), () -> log.info("Nof steps exceeded"));
+        ConditionalsUtil.executeIfTrue(counter.isExceeded(), () -> log.info("Nof steps exceeded"));
         return experienceList;
     }
 

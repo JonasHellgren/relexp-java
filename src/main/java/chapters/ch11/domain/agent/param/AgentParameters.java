@@ -1,7 +1,7 @@
 package chapters.ch11.domain.agent.param;
 
 import chapters.ch11.domain.environment.param.LunarParameters;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import lombok.Builder;
 import lombok.With;
 
@@ -64,11 +64,11 @@ public record AgentParameters(
 
 
     public double clipAdvantage(double adv0) {
-        return MyMathUtils.clip(adv0, -advMax, advMax);
+        return MathUtil.clip(adv0, -advMax, advMax);
     }
 
     public double clipTdError(double e0) {
-        return MyMathUtils.clip(e0, -tdMax(), tdMax());
+        return MathUtil.clip(e0, -tdMax(), tdMax());
     }
 
     private static double getSigmaSpd(LunarParameters ep, int nKernelsSpd) {

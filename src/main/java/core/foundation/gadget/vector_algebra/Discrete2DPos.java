@@ -1,7 +1,7 @@
 package core.foundation.gadget.vector_algebra;
 
 import com.google.common.math.IntMath;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 
 import java.util.Optional;
 
@@ -47,8 +47,8 @@ public record Discrete2DPos(
 
     public Discrete2DPos clip(Discrete2DPos minPos, Discrete2DPos maxPos) {
         return  Discrete2DPos.of(
-                MyMathUtils.clip(x,minPos.x,maxPos.x),
-                MyMathUtils.clip(y,minPos.y,maxPos.y));
+                MathUtil.clip(x,minPos.x,maxPos.x),
+                MathUtil.clip(y,minPos.y,maxPos.y));
     }
 
 

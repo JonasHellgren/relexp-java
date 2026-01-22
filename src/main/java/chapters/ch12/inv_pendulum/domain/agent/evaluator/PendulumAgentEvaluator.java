@@ -5,7 +5,7 @@ import chapters.ch12.inv_pendulum.domain.trainer.core.TrainerDependencies;
 import chapters.ch12.inv_pendulum.plotting.MeasuresPendulumSimulation;
 import chapters.ch12.inv_pendulum.plotting.PendulumRecorder;
 import core.foundation.gadget.cond.Counter;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -59,7 +59,7 @@ public class PendulumAgentEvaluator {
     }
 
     private void addMeasure(Counter counter, MeasuresPendulumSimulation measures) {
-        Conditionals.executeIfTrue(counter.getCount() % N_STEPS_BETWEEN_RECORDING == 0,
+        ConditionalsUtil.executeIfTrue(counter.getCount() % N_STEPS_BETWEEN_RECORDING == 0,
                 () -> recorder.add(measures));
     }
 

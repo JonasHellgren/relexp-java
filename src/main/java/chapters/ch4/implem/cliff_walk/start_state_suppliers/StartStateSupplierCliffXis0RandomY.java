@@ -2,7 +2,7 @@ package chapters.ch4.implem.cliff_walk.start_state_suppliers;
 
 import core.gridrl.StartStateGridSupplierI;
 import chapters.ch4.implem.cliff_walk.core.EnvironmentCliff;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -29,7 +29,7 @@ public class StartStateSupplierCliffXis0RandomY implements StartStateGridSupplie
     public StateGrid getStartState() {
         var inf = environment.informer();
         var yMinMax = inf.getPosYMinMax();
-        int y = RandUtils.getRandomIntNumber(yMinMax.getFirst(), yMinMax.getSecond() - 1);
+        int y = RandUtil.getRandomIntNumber(yMinMax.getFirst(), yMinMax.getSecond() - 1);
         return StateGrid.of(0, y);
     }
 }

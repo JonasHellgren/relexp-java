@@ -1,6 +1,6 @@
 package core.foundation.gadget.set;
 
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -73,7 +73,7 @@ public class SetUtils {
      * @throws IllegalArgumentException if the set is empty
      */
     public static <T> T getAnyFromSet(Set<T> set) {
-        int randomIntNumber = RandUtils.getRandomIntNumber(0, set.size());
+        int randomIntNumber = RandUtil.getRandomIntNumber(0, set.size());
         return new ArrayList<>(set).get(randomIntNumber);
     }
 

@@ -3,7 +3,7 @@ package chapters.ch6.domain.trainer_dep.episode_generator;
 import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import core.gridrl.ExperienceGrid;
 import core.foundation.gadget.cond.Counter;
-import core.foundation.util.cond.Conditionals;
+import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -38,7 +38,7 @@ public class EpisodeGeneratorGrid {
             isTerminal = sr.isTerminal();
             counter.increase();
         } while (!isTerminal && counter.isNotExceeded());
-        Conditionals.executeIfTrue(counter.isExceeded(),() -> log.info("nof steps exceeded"));
+        ConditionalsUtil.executeIfTrue(counter.isExceeded(),() -> log.info("nof steps exceeded"));
         return experiences;
     }
 

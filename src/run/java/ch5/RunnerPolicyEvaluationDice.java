@@ -10,9 +10,9 @@ import chapters.ch5.implem.dice.StateMemoryDice;
 import core.foundation.config.ConfigFactory;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.gadget.math.MovingAverage;
-import core.plotting.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
 import core.plotting_rl.chart.ManyLinesFactory;
-import core.plotting.plotting_2d.ManyLinesChartCreator;
+import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,7 +1,7 @@
 package chapters.ch6.plotting;
 
 import core.foundation.configOld.ProjectPropertiesReader;
-import core.plotting.base.shared.PlotSettings;
+import core.plotting_core.base.shared.PlotSettings;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;

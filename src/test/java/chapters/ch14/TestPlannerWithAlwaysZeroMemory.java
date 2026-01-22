@@ -9,7 +9,7 @@ import chapters.ch14.factory.FactoryPlanner;
 import chapters.ch14.factory.FactoryPongSettings;
 import chapters.ch14.factory.FactoryStatePong;
 import chapters.ch14.factory.FactoryTrainerSettings;
-import core.foundation.util.unit_converter.MyUnitConverter;
+import core.foundation.util.unit_converter.UnitConverterUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -135,7 +135,7 @@ public class TestPlannerWithAlwaysZeroMemory {
         Supplier<StatePong> stateXMax = () -> StatePong.of(
                 PosXy.of(0.38,0.8),
                 0.24,  //paddle right
-                MyUnitConverter.convertDegreesToRadians(-116.06),
+                UnitConverterUtil.convertDegreesToRadians(-116.06),
                 STILL_FOR_A_WHILE);
 
         var result = planner.plan(stateXMax, memory);
@@ -148,7 +148,7 @@ public class TestPlannerWithAlwaysZeroMemory {
         Supplier<StatePong> ss = () -> StatePong.of(
                 PosXy.of(0.47,0.53),
                 0.92,  //paddle right
-                MyUnitConverter.convertDegreesToRadians(-122.25),
+                UnitConverterUtil.convertDegreesToRadians(-122.25),
                 STILL_FOR_A_WHILE);
 
         var result = planner.plan(ss, memory);

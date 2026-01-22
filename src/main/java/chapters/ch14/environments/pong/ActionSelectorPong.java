@@ -2,7 +2,7 @@ package chapters.ch14.environments.pong;
 
 import chapters.ch14.domain.action_selector.ActionSelectorI;
 import chapters.ch14.domain.settings.PlanningSettings;
-import core.foundation.util.rand.RandUtils;
+import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -60,11 +60,11 @@ public class ActionSelectorPong implements ActionSelectorI<ActionPong> {
 
     @NotNull
     private List<ActionPong> getActionPongList(int depth, List<ActionPong> selectedItems) {
-        var currentAction = selectedItems.get(RandUtils.getRandomIntNumber(0, N_ACTIONS - 1));
+        var currentAction = selectedItems.get(RandUtil.getRandomIntNumber(0, N_ACTIONS - 1));
         List<ActionPong> newList = new ArrayList<>();
         newList.add(currentAction);
         for (int j = 0; j < depth-1; j++) {
-            currentAction = RandUtils.randomNumberBetweenZeroAndOne() < probChange
+            currentAction = RandUtil.randomNumberBetweenZeroAndOne() < probChange
                     ? getDifferentItem(currentAction, selectedItems)
                     : currentAction;
             newList.add(currentAction);

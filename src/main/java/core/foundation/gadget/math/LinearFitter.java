@@ -1,7 +1,7 @@
 package core.foundation.gadget.math;
 
 import com.google.common.base.Preconditions;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -64,7 +64,7 @@ public class LinearFitter {
         double loss=0;
         for (int i = 0; i < nDim + 1; i++) {
             double x = i == nDim ? 1 : xArr[i];
-            double deltaTheta = MyMathUtils.clip(alphaLearning * e * x, -deltaThetaMax, deltaThetaMax);
+            double deltaTheta = MathUtil.clip(alphaLearning * e * x, -deltaThetaMax, deltaThetaMax);
             theta[i] = theta[i] + deltaTheta;
             loss+=Math.abs(deltaTheta);
         }

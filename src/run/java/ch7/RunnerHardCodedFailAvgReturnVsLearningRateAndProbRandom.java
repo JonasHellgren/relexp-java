@@ -5,9 +5,9 @@ import chapters.ch7.factory.SafetyLayerFactoryTreasure;
 import chapters.ch7.factory.TrainerDependencySafeFactory;
 import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
-import core.foundation.util.collections.List2ArrayConverter;
-import core.foundation.util.collections.MyListUtils;
-import core.plotting.plotting_2d.ErrorBandCreator;
+import core.foundation.util.collections.List2ArrayConverterUtil;
+import core.foundation.util.collections.ListUtil;
+import core.plotting_core.plotting_2d.ErrorBandCreator;
 import core.plotting_rl.progress_plotting.ErrorBandSaverAndPlotter;
 import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
 import lombok.SneakyThrows;
@@ -48,9 +48,9 @@ public class RunnerHardCodedFailAvgReturnVsLearningRateAndProbRandom {
             standardDeviations.add(statistics.getStandardDeviation());
         }
         creator.addErrorBand(Double.toString(lr),
-                List2ArrayConverter.convertListToDoubleArr(PROB_STARTS),
-                List2ArrayConverter.convertListToDoubleArr(meanValues),
-                List2ArrayConverter.convertListToDoubleArr(standardDeviations),
+                List2ArrayConverterUtil.convertListToDoubleArr(PROB_STARTS),
+                List2ArrayConverterUtil.convertListToDoubleArr(meanValues),
+                List2ArrayConverterUtil.convertListToDoubleArr(standardDeviations),
                 Color.BLACK);
     }
     private static DescriptiveStatistics getStatistics(double learningRate, double probability) {
@@ -67,7 +67,7 @@ public class RunnerHardCodedFailAvgReturnVsLearningRateAndProbRandom {
         var trainer = TrainerOneStepTdQLearningWithSafety.givenSafetyLayerOf(dependencies, safetyLayer);
         trainer.train();
         var returnList = trainer.getRecorder().trajectory(ProgressMeasureEnum.RETURN);
-        return MyListUtils.findAverage(returnList).orElseThrow();
+        return ListUtil.findAverage(returnList).orElseThrow();
     }
 
 }

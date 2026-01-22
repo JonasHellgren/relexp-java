@@ -1,8 +1,7 @@
 package core.gridrl;
 
-import core.foundation.gadget.pos.PosXyDouble;
 import core.foundation.gadget.pos.PosXyInt;
-import core.foundation.util.math.MyMathUtils;
+import core.foundation.util.math.MathUtil;
 import lombok.AllArgsConstructor;
 import java.util.Objects;
 
@@ -69,8 +68,8 @@ public class StateGrid {
         Integer minY = parameters.getPosYMinMax().getFirst();
         Integer maxY = parameters.getPosYMinMax().getSecond();
         return StateGrid.of(
-                MyMathUtils.clip(x(), minX, maxX),
-                MyMathUtils.clip(y(), minY, maxY));
+                MathUtil.clip(x(), minX, maxX),
+                MathUtil.clip(y(), minY, maxY));
     }
 
 /**
@@ -78,8 +77,8 @@ public class StateGrid {
  */
  public StateGrid clip(PosXyInt minXy, PosXyInt maxXy) {
         return StateGrid.of(
-                MyMathUtils.clip(x(), minXy.x(), maxXy.x()),
-                MyMathUtils.clip(y(), minXy.y(), maxXy.y()));
+                MathUtil.clip(x(), minXy.x(), maxXy.x()),
+                MathUtil.clip(y(), minXy.y(), maxXy.y()));
     }
 
 
