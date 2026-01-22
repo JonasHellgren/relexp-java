@@ -26,7 +26,7 @@ public class AgentMemoryFactory {
     public static void fillMemory(ParkingParameters parameters, Counter counter, AgentMemory am) {
         for (ActionParking a : ActionParking.allActions()) {
             for (FeeEnum f : FeeEnum.values()) {
-                for (int nOcc = 0; nOcc <= 5; nOcc++) {
+                for (int nOcc = 0; nOcc <= parameters.nSpots(); nOcc++) {
                     var s = StateParking.ofStart(nOcc, f);
                     var sa = StateActionParking.of(s, a);
                     am.write(sa, getMockedValue(s, a, parameters));

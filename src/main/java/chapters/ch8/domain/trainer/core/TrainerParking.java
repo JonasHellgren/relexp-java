@@ -34,7 +34,7 @@ public class TrainerParking {
             int step = s.nSteps();
             double probRandom = dependencies.probRandom(step);
             double lr = dependencies.learningRate(step);
-            double lrRewardAvg = dependencies.lrRewardAverage(step);
+            double lrRewardAvg = dependencies.learningRateAvgReward(step);
             var sr = environment.step(s, a);
             var stateNew = sr.stateNew();
             var aNew = agent.chooseAction(stateNew, probRandom);

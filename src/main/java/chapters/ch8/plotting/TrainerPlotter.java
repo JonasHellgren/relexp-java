@@ -22,11 +22,8 @@ public class TrainerPlotter {
                                    MeasuresParkingTrainingEnum measuresPendulumTrainingEnum) {
         var recorder = trainer.getRecorder();
         var path = ProjectPropertiesReader.create().pathNonEpisodic();
-        System.out.println("path = " + path);
         var plotter = ErrorBandPlotterParking.ofFiltering(
                 recorder, path, fileName, N_WINDOWS_FILTERING);
         plotter.plotAndSave(List.of(measuresPendulumTrainingEnum));
     }
-
-
 }

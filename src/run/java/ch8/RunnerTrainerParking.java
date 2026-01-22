@@ -11,6 +11,7 @@ import chapters.ch8.factory.TrainerParametersFactory;
 import chapters.ch8.plotting.AgentParkingMemoryCurvePlotter;
 import chapters.ch8.plotting.AgentParkingMemoryHeatMapPlotter;
 import chapters.ch8.plotting.TrainerPlotter;
+import core.foundation.gadget.math.LogarithmicDecay;
 import core.foundation.gadget.timer.CpuTimer;
 import org.apache.commons.math3.util.Pair;
 
@@ -33,17 +34,23 @@ public class RunnerTrainerParking {
     }
 
     private static TrainerDependenciesParking getDependenciesParking() {
-        var agentPar= AgentParkingParametersFactory.forRunning();
         var envPar= ParkingParametersFactory.forRunning().withFeeCharging(FEE_CHARGING);
-        var trainerPar= TrainerParametersFactory.forRunning();
-        var startSup = StartStateSupplier.ZEROOCCUP_RANDOMFEE.of(envPar);
+        var tp= TrainerParametersFactory.forRunning();
         return TrainerDependenciesParking.builder()
-                .agent(AgentParking.of(agentPar))
+                .agent(AgentParking.of(AgentParkingParametersFactory.forRunning()))
                 .environment(EnvironmentParking.of(envPar))
-                .trainerParameters(trainerPar)
-                .startStateSupplier(startSup)
+                .trainerParameters(tp)
+                .startStateSupplier(StartStateSupplier.ZEROOCCUP_RANDOMFEE.of(envPar))
                 .timer(CpuTimer.empty())
+                .probRandomDecay(decaying(tp.probRandomActionStartEnd(), envPar.maxSteps()))
+                .learningRateDecay(decaying(tp.learningRateActionValueStartEnd(), envPar.maxSteps()))
+                .learningRateRewardDecay(decaying(tp.learningRateRewardAverageStartEnd(), envPar.maxSteps()))
                 .build();
+    }
+
+
+    private static LogarithmicDecay decaying(Pair<Double, Double> minMaxPar, int maxSteps) {
+        return LogarithmicDecay.of(minMaxPar, maxSteps);
     }
 
 }

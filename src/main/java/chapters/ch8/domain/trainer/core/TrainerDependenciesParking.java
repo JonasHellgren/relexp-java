@@ -19,24 +19,24 @@ public record TrainerDependenciesParking(
         EnvironmentParking environment,
         TrainerParametersParking trainerParameters,
         StartStateSupplierI startStateSupplier,
-        CpuTimer timer
+        CpuTimer timer,
+        LogarithmicDecay probRandomDecay,
+        LogarithmicDecay learningRateRewardDecay,
+        LogarithmicDecay learningRateDecay
 ) {
 
 
     public double probRandom(int step) {
-        return decaying(trainerParameters.probRandomActionStartEnd(), step);
+        return probRandomDecay.calcOut(step);
     }
+
+    public double learningRateAvgReward(int step) {
+        return learningRateRewardDecay.calcOut(step);
+    }
+
 
     public double learningRate(int step) {
-        return decaying(trainerParameters.learningRateActionValueStartEnd(),step);
+        return learningRateDecay.calcOut(step);
     }
 
-    public double lrRewardAverage(int step) {
-        return decaying(trainerParameters.learningRateRewardAverageStartEnd(),step);
-    }
-
-    private double decaying(Pair<Double, Double> trainerParameters, int step) {
-        var pr = LogarithmicDecay.of(trainerParameters, environment.getParameters().maxSteps());
-        return pr.calcOut(step);
-    }
 }
