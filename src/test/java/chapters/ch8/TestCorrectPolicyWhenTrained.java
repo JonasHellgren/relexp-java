@@ -1,20 +1,27 @@
 package chapters.ch8;
 
 import chapters.ch8.domain.agent.core.AgentParking;
+import chapters.ch8.domain.agent.param.AgentParkingParameters;
 import chapters.ch8.domain.environment.core.EnvironmentParking;
 import chapters.ch8.domain.environment.core.FeeEnum;
 import chapters.ch8.domain.environment.core.StateParking;
+import chapters.ch8.domain.environment.param.ParkingParameters;
 import chapters.ch8.domain.environment.startstate_supplier.StartStateSupplier;
+import chapters.ch8.domain.environment.startstate_supplier.StartStateSupplierI;
 import chapters.ch8.domain.trainer.core.TrainerDependenciesParking;
 import chapters.ch8.domain.trainer.core.TrainerParking;
+import chapters.ch8.domain.trainer.param.TrainerParametersParking;
 import chapters.ch8.factory.AgentParkingParametersFactory;
 import chapters.ch8.factory.ParkingParametersFactory;
 import chapters.ch8.factory.TrainerParametersFactory;
+import core.foundation.gadget.math.LogarithmicDecay;
+import org.apache.commons.math3.util.Pair;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static chapters.ch8.factory.TrainerDepFactory.getTrainerDependenciesParking;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestCorrectPolicyWhenTrained {
@@ -79,15 +86,11 @@ public class TestCorrectPolicyWhenTrained {
     private static TrainerDependenciesParking getDependenciesParking(double feeCharging) {
         var agentPar = AgentParkingParametersFactory.forRunning();
         var envPar = ParkingParametersFactory.forRunning().withFeeCharging(feeCharging);
-        var trainerPar = TrainerParametersFactory.forRunning();
+        var tp = TrainerParametersFactory.forRunning();
         var startSup = StartStateSupplier.ZEROOCCUP_RANDOMFEE.of(envPar);
-        return TrainerDependenciesParking.builder()
-                .agent(AgentParking.of(agentPar))
-                .environment(EnvironmentParking.of(envPar))
-                .trainerParameters(trainerPar)
-                .startStateSupplier(startSup)
-                .build();
+        return getTrainerDependenciesParking(agentPar, envPar, tp, startSup);
     }
+
 
 
 }

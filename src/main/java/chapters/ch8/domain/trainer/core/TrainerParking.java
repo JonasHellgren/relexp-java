@@ -1,10 +1,13 @@
 package chapters.ch8.domain.trainer.core;
 
 
+import chapters.ch8.domain.agent.core.AgentParking;
 import chapters.ch8.domain.agent.core.ExperienceParking;
+import chapters.ch8.domain.environment.core.ActionParking;
+import chapters.ch8.domain.environment.core.StateParking;
+import chapters.ch8.domain.environment.core.StepReturnParking;
 import chapters.ch8.plotting.MeasuresParkingTraining;
 import chapters.ch8.plotting.RecorderTrainerParking;
-import core.foundation.gadget.timer.CpuTimer;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +17,6 @@ import lombok.extern.java.Log;
 @Log
 public class TrainerParking {
 
-    public static final int PROB_RANDOM_START = 1;
     private final TrainerDependenciesParking dependencies;
     @Getter
     private final RecorderTrainerParking recorder;
@@ -24,32 +26,28 @@ public class TrainerParking {
     }
 
     public void train() {
-        var agent = dependencies.agent();
-        var environment = dependencies.environment();
-        var s = dependencies.startStateSupplier().state();
-        var a = agent.chooseAction(s, PROB_RANDOM_START);
-        double rewardAverage = 0;
-        var helper=TrainerHelper.empty();
-        while (!helper.termState) {
+        var d = dependencies;
+        var agent = d.agent();
+        var s = d.startStateSupplier().state();
+        var a = d.chooseAction(agent, s, d.probRandom(s.nSteps()));
+        var stats = TrainingStats.empty();
+        var sr = StepReturnParking.empty();
+        do {
             int step = s.nSteps();
-            double probRandom = dependencies.probRandom(step);
-            double lr = dependencies.learningRate(step);
-            double lrRewardAvg = dependencies.learningRateAvgReward(step);
-            var sr = environment.step(s, a);
+            double probRandom = d.probRandom(step);
+            double lr = d.learningRate(step);
+            sr = d.step(s, a);
             var stateNew = sr.stateNew();
-            var aNew = agent.chooseAction(stateNew, probRandom);
-            var exp = ExperienceParking.of(s, a, sr, aNew, rewardAverage);
-            double tdError = agent.fitMemory(exp, lr);  //Update memory at s and a
-            rewardAverage = rewardAverage + lrRewardAvg * tdError;
+            var aNew = d.chooseAction(agent, stateNew, probRandom);
+            var exp = ExperienceParking.of(s, a, sr, aNew, stats.rewardAverage());
+            double tdError = d.updateAgentMemory(agent, exp, lr);  //Update memory at s and a
             s = stateNew.copy();
             a = aNew.copy();
+            double lrRewardAvg = d.learningRateAvgReward(step);
+            stats.update(sr.reward(), lrRewardAvg * tdError, s.nOccupied());
+            recorder.add(MeasuresParkingTraining.getMeasures(s, stats));
+        } while (!sr.isTerminal());
 
-            helper.update(sr,s.nOccupied());
-            recorder.add(MeasuresParkingTraining.builder()
-                    .step(s.nSteps()).sumRewards(helper.accum.value()).rewardAverage(rewardAverage)
-                    .nOoccupAvg(helper.stats.getMean())
-                    .build());
-        }
     }
 
     public void logTimer() {

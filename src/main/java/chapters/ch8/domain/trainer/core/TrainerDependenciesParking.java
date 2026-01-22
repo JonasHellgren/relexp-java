@@ -1,7 +1,11 @@
 package chapters.ch8.domain.trainer.core;
 
 import chapters.ch8.domain.agent.core.AgentParking;
+import chapters.ch8.domain.agent.core.ExperienceParking;
+import chapters.ch8.domain.environment.core.ActionParking;
 import chapters.ch8.domain.environment.core.EnvironmentParking;
+import chapters.ch8.domain.environment.core.StateParking;
+import chapters.ch8.domain.environment.core.StepReturnParking;
 import chapters.ch8.domain.environment.startstate_supplier.StartStateSupplierI;
 import chapters.ch8.domain.trainer.param.TrainerParametersParking;
 import core.foundation.gadget.math.LogarithmicDecay;
@@ -38,5 +42,19 @@ public record TrainerDependenciesParking(
     public double learningRate(int step) {
         return learningRateDecay.calcOut(step);
     }
+
+    public ActionParking chooseAction(AgentParking agent, StateParking stateNew, double probRandom) {
+        return agent.chooseAction(stateNew, probRandom);
+    }
+
+    public StepReturnParking step(StateParking s, ActionParking a) {
+        return environment.step(s, a);
+    }
+
+
+    public double updateAgentMemory(AgentParking agent, ExperienceParking exp, double lr) {
+        return agent.fitMemory(exp, lr);
+    }
+
 
 }

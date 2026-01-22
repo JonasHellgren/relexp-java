@@ -18,6 +18,10 @@ public record StepReturnParking(
         double reward
 ) {
 
+    public static StepReturnParking empty() {
+        return StepReturnParking.builder().build();
+    }
+
     public static StepReturnParking of(NewStateResult result,
                                        boolean isTerminal,
                                        double reward) {

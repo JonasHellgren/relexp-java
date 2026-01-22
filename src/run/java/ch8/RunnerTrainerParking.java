@@ -15,6 +15,8 @@ import core.foundation.gadget.math.LogarithmicDecay;
 import core.foundation.gadget.timer.CpuTimer;
 import org.apache.commons.math3.util.Pair;
 
+import static chapters.ch8.factory.TrainerDepFactory.getTrainerDependenciesParking;
+
 
 public class RunnerTrainerParking {
 
@@ -36,21 +38,10 @@ public class RunnerTrainerParking {
     private static TrainerDependenciesParking getDependenciesParking() {
         var envPar= ParkingParametersFactory.forRunning().withFeeCharging(FEE_CHARGING);
         var tp= TrainerParametersFactory.forRunning();
-        return TrainerDependenciesParking.builder()
-                .agent(AgentParking.of(AgentParkingParametersFactory.forRunning()))
-                .environment(EnvironmentParking.of(envPar))
-                .trainerParameters(tp)
-                .startStateSupplier(StartStateSupplier.ZEROOCCUP_RANDOMFEE.of(envPar))
-                .timer(CpuTimer.empty())
-                .probRandomDecay(decaying(tp.probRandomActionStartEnd(), envPar.maxSteps()))
-                .learningRateDecay(decaying(tp.learningRateActionValueStartEnd(), envPar.maxSteps()))
-                .learningRateRewardDecay(decaying(tp.learningRateRewardAverageStartEnd(), envPar.maxSteps()))
-                .build();
+        var agentPar = AgentParkingParametersFactory.forRunning();
+        var startSup = StartStateSupplier.ZEROOCCUP_RANDOMFEE.of(envPar);
+        return getTrainerDependenciesParking(agentPar, envPar, tp, startSup);
     }
 
-
-    private static LogarithmicDecay decaying(Pair<Double, Double> minMaxPar, int maxSteps) {
-        return LogarithmicDecay.of(minMaxPar, maxSteps);
-    }
 
 }
