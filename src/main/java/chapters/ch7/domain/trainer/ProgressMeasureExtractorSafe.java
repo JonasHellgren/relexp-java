@@ -1,6 +1,5 @@
 package chapters.ch7.domain.trainer;
 
-import chapters.ch7._shared.EpisodeInfoSafe;
 import chapters.ch7.domain.safety_layer.SafetyLayer;
 import core.plotting_rl.progress_plotting.ProgressMeasures;
 import lombok.AccessLevel;

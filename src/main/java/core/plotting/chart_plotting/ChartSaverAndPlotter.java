@@ -82,6 +82,9 @@ public class ChartSaverAndPlotter {
         showAndSaveHeatMap(chart, policy, fileNameAddOn, SAFE );
     }
 
+
+
+
     @SneakyThrows
     private static void showAndSaveXyChart(XYChart chart,
                                            String fileName,

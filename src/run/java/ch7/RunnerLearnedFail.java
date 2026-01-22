@@ -2,12 +2,11 @@ package ch7;
 
 import chapters.ch7.domain.trainer.TrainerOneStepTdQLearningWithSafety;
 import chapters.ch7.factory.TrainerDependencySafeFactory;
-import core.foundation.gadget.timer.CpuTimer;
+import chapters.ch7.plotter.ChartPlotterSafe;
+import core.foundation.config.ConfigFactory;
 import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
 import core.plotting_rl.progress_plotting.ProgressMeasures;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
-
-import static chapters.ch7._shared.ChartPlotterSafe.showAndSavePlots;
 
 public class RunnerLearnedFail {
 
@@ -17,21 +16,30 @@ public class RunnerLearnedFail {
     public static final int N_EPISODES_FEWER = 200;
 
     public static void main(String[] args) {
-        var timer = CpuTimer.empty();
         var dependencies = TrainerDependencySafeFactory.treasure(
                 N_EPISODES,
                 LEARNING_RATE_START,
                 PROB_RAND_START);
         var trainer = TrainerOneStepTdQLearningWithSafety.activeLearnerOf(dependencies);
         trainer.train();
-        timer.printInMs();
+        trainer.logTrainingTime();
+        plotting(trainer);
+    }
 
+    private static void plotting(TrainerOneStepTdQLearningWithSafety trainer) {
         var recorder1 = trainer.getRecorder();
-        showAndSavePlots(trainer.getDependencies(), recorder1, "safe_learnedfails", 1);
+        ChartPlotterSafe.showAndSavePlots(trainer.getDependencies(),
+                trainer.getRecorder(),
+                "safe_learnedfails",
+                ConfigFactory.plotConfig(),
+                ConfigFactory.pathPicsConfig().ch7());
 
         var recorder2 = getRecorder2(recorder1, N_EPISODES_FEWER);
-        showAndSavePlots(trainer.getDependencies(), recorder2, "safe_learnedfails_fewerIter", 1);
-
+        ChartPlotterSafe.showAndSavePlots(trainer.getDependencies(),
+                recorder2,
+                "safe_learnedfails_fewerIter",
+                ConfigFactory.plotConfig(),
+                ConfigFactory.pathPicsConfig().ch7());
     }
 
     private static RecorderProgressMeasures getRecorder2(RecorderProgressMeasures recorder1, int i1) {

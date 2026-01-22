@@ -3,7 +3,7 @@ package chapters.ch7.factory;
 import chapters.ch4.domain.agent.AgentQLearningGrid;
 import core.gridrl.AgentGridParameters;
 import core.gridrl.TrainerGridDependencies;
-import chapters.ch4.domain.trainer.TrainerGridParameters;
+import core.gridrl.TrainerGridParameters;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
 import chapters.ch4.implem.treasure.core.InformerTreasure;
 import chapters.ch4.implem.treasure.factory.EnvironmentParametersTreasureFactor;

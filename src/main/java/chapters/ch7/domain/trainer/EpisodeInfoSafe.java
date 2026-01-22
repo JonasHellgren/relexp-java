@@ -1,6 +1,5 @@
-package chapters.ch7._shared;
+package chapters.ch7.domain.trainer;
 
-import chapters.ch7.domain.trainer.ExperienceGridCorrectedAction;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.List;
@@ -16,16 +15,6 @@ public class EpisodeInfoSafe {
 
     public static EpisodeInfoSafe of(List<ExperienceGridCorrectedAction> experiences) {
         return new EpisodeInfoSafe(experiences);
-    }
-
-    public double fractionOfCorrectSteps() {
-        int nCorrected=0;
-        for (ExperienceGridCorrectedAction e : experiences) {
-            if (e.isCorrected()) {
-                nCorrected++;
-            }
-        }
-        return nCorrected / (double) experiences.size();
     }
 
     public Double sumRewards() {

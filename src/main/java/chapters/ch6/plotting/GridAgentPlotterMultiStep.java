@@ -6,13 +6,13 @@ import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import core.foundation.config.PlotConfig;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.StateGrid;
-import core.plotting_rl.chart.GridAgentPlotter;
+import core.plotting_rl.chart.GridAgentPlotterOld;
 
 /***
  * Reusing code, but with multi-step agent
  */
 
-public class GridAgentPlotterMultiStep extends GridAgentPlotter {
+public class GridAgentPlotterMultiStep extends GridAgentPlotterOld {
 
     AgentGridMultiStepI agentMultiStep;
 

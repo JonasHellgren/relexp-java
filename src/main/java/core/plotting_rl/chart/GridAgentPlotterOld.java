@@ -1,22 +1,19 @@
 package core.plotting_rl.chart;
 
 import core.foundation.config.PlotConfig;
-import core.foundation.configOld.PathAndFile;
+import core.gridrl.AgentGridI;
+import core.gridrl.InformerGridParamsI;
+import core.gridrl.TrainerGridDependencies;
 import core.foundation.util.formatting.NumberFormatterUtil;
-import core.gridrl.*;
-import core.plotting.chart_plotting.ChartSaver;
-import core.plotting.chart_plotting.ProjectFoldersKeyInterpreter;
+import core.gridrl.EnvironmentGridI;
+import core.gridrl.StateGrid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.knowm.xchart.HeatMapChart;
-import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.XYChart;
-
 import static chapters.ch4.plotting.GridPlotHelper.*;
 import static core.plotting.chart_plotting.ChartSaverAndPlotter.showAndSaveHeatMapFolderSafe;
 import static core.plotting.chart_plotting.ChartSaverAndPlotter.showAndSaveHeatMapFolderTempDiff;
-import static core.plotting.chart_plotting.ProjectFoldersKeyInterpreter.getPath;
 
 
 /**
@@ -24,43 +21,60 @@ import static core.plotting.chart_plotting.ProjectFoldersKeyInterpreter.getPath;
  */
 @AllArgsConstructor
 @Getter
-public class GridAgentPlotter {
+public class GridAgentPlotterOld {
 
     private final EnvironmentGridI environment;
     private final AgentGridI agent;
+    private final String fileNameAddOn;
     private final int nofDigits;
     PlotConfig plotCfg;
-    private final String path;
 
-    public static GridAgentPlotter of(TrainerGridDependencies dependencies,
-                                      int nofDigits, PlotConfig plotCfg,String path) {
-        return GridAgentPlotter.of(
+    public static GridAgentPlotterOld of(TrainerGridDependencies dependencies,
+                                         String fileNameAddO, int nofDigits, PlotConfig plotCfg) {
+        return GridAgentPlotterOld.of(
                 dependencies.environment(),
                 dependencies.agent(),
+                fileNameAddO,
                 nofDigits,
-                plotCfg,
-                path);
+                plotCfg);
     }
 
-
-    public static GridAgentPlotter of(EnvironmentGridI environment,
-                                      AgentGridI agent,
-                                      int nofDigits, PlotConfig plotCfg,
-                                      String path) {
-        return new GridAgentPlotter(environment, agent, nofDigits,plotCfg,path);
+    public static GridAgentPlotterOld of(EnvironmentGridI environment,
+                                         AgentGridI agent,
+                                         String fileNameAddO,
+                                         PlotConfig plotCfg) {
+        return new GridAgentPlotterOld(environment, agent, fileNameAddO, 1,plotCfg);
     }
 
+    public static GridAgentPlotterOld of(EnvironmentGridI environment,
+                                         AgentGridI agent,
+                                         String fileNameAddO, int nofDigits, PlotConfig plotCfg) {
+        return new GridAgentPlotterOld(environment, agent, fileNameAddO, nofDigits,plotCfg);
+    }
 
     @SneakyThrows
-    public void plotStateValuesInFolderSafe(String fileName) {
+    public void plotAndSaveStateValuesInFolderTempDiff() {
         HeatMapChart chart = getValueChart();
-        showAndSaveHeatMap(chart,fileName);
+        showAndSaveHeatMapFolderTempDiff(chart, "values", fileNameAddOn);
     }
 
     @SneakyThrows
-    public void plotPolicyInFolderSafe(String fileName) {
+    public void plotAndSavePolicyInFolderTempDiff() {
         HeatMapChart chart = getPolicyChart();
-        showAndSaveHeatMap(chart,fileName);
+        showAndSaveHeatMapFolderTempDiff(chart, "policy", fileNameAddOn);
+    }
+
+    @SneakyThrows
+    public void plotStateValuesInFolderSafe() {
+        HeatMapChart chart = getValueChart();
+        showAndSaveHeatMapFolderSafe(chart, "values", fileNameAddOn);
+    }
+
+    @SneakyThrows
+    public void plotPolicyInFolderSafe() {
+        HeatMapChart chart = getPolicyChart();
+       // ChartSaverAndPlotter.showAndSaveHeatMap(chart, pathAndFile);
+        showAndSaveHeatMapFolderSafe(chart, "policy", fileNameAddOn);
     }
 
 
@@ -116,20 +130,6 @@ public class GridAgentPlotter {
     public String getActionAsString(StateGrid state) {
         return agent.chooseActionNoExploration(state).toString();
     }
-
-    @SneakyThrows
-    private  void showAndSaveXyChart(XYChart chart,String fileName) {
-        ChartSaver.saveXYChart(chart, PathAndFile.ofPng(path, fileName));
-        new SwingWrapper<>(chart).displayChart();
-    }
-
-    @SneakyThrows
-    private  void showAndSaveHeatMap(HeatMapChart chart,String fileName) {
-        PathAndFile pathAndFile = PathAndFile.ofPng(path, fileName);
-        ChartSaver.saveHeatMapChart(chart, pathAndFile);
-        new SwingWrapper<>(chart).displayChart();
-    }
-
 
 }
 

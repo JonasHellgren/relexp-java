@@ -1,6 +1,6 @@
 package core.learninggadgets;
 
-import chapters.ch4.domain.trainer.TrainerGridParameters;
+import core.gridrl.TrainerGridParameters;
 import core.foundation.util.math.LogarithmicDecay;
 import org.apache.commons.math3.util.Pair;
 

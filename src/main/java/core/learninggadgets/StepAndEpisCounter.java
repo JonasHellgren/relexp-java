@@ -1,6 +1,6 @@
 package core.learninggadgets;
 
-import chapters.ch4.domain.trainer.TrainerGridParameters;
+import core.gridrl.TrainerGridParameters;
 import core.foundation.gadget.cond.Counter;
 
 public record StepAndEpisCounter(

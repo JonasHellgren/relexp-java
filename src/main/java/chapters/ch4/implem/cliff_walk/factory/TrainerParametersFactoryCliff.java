@@ -1,6 +1,6 @@
 package chapters.ch4.implem.cliff_walk.factory;
 
-import chapters.ch4.domain.trainer.TrainerGridParameters;
+import core.gridrl.TrainerGridParameters;
 import chapters.ch4.implem.cliff_walk.core.EnvironmentCliff;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

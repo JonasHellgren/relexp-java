@@ -3,7 +3,6 @@ package chapters.ch7.domain.trainer;
 import core.gridrl.ExperienceGrid;
 import core.gridrl.TrainerGridDependencies;
 import core.gridrl.TrainerGridI;
-import chapters.ch7._shared.EpisodeInfoSafe;
 import chapters.ch7.domain.fail_learner.FailLearnerActive;
 import chapters.ch7.domain.fail_learner.FailLearnerI;
 import chapters.ch7.domain.fail_learner.FailLearnerPassive;
@@ -17,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.java.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,50 +55,38 @@ public class TrainerOneStepTdQLearningWithSafety implements TrainerGridI {
 
     @Override
     public void train() {
+        var d = dependencies;  //gives more readable and shorter code
         recorder.clear();
         var measureExtractor = ProgressMeasureExtractorSafe.of();
-        var penalizer = AgentMemoryPenalizerCorrectedAction.of(dependencies);
-        var timer = CpuTimer.empty();
-        log.fine("Starting training");
-        for (int ei = 0; ei < dependencies.getNofEpisodes(); ei++) {
-            var s = dependencies.getStartState();
+        var penalizer = AgentMemoryPenalizerCorrectedAction.of(d);
+        for (int ei = 0; ei < d.getNofEpisodes(); ei++) {
+            var s = d.getStartState();
             var experiences = runEpisode(s, ei);
             failLearner.updateLayer(safetyLayer, experiences);
             penalizer.penalize(experiences);
-            logFractionCorrected(experiences);
-            recorder.add(measureExtractor.getProgressMeasures(experiences,safetyLayer));
+            recorder.add(measureExtractor.getProgressMeasures(experiences, safetyLayer));
         }
-        log.fine("Training finished in (s): " + timer.timeInSecondsAsString());
+    }
+
+    public  void logTrainingTime() {
+        log.info("Training finished in (s): " + dependencies.timer().timeInSecondsAsString());
     }
 
     private List<ExperienceGridCorrectedAction> runEpisode(StateGrid s, int ei) {
-        var d = dependencies;  //gives more readable and shorter code
+        var d = dependencies;
         List<ExperienceGridCorrectedAction> experiences = new ArrayList<>();
         var counter = Counter.ofMaxCount(d.maxNofSteps());
         while (!d.isTerminal(s) && counter.isNotExceeded()) {
-            var a = d.agent().chooseAction(s, getProbRandom(ei, d));
+            var a = d.chooseAction(s, ei);
             var aC = safetyLayer.correct(s, a);
             var sr = d.environment().step(s, aC);  //learn from applied action, not agent proposed
             var e = ExperienceGridCorrectedAction.ofSars(s, a, aC, sr);
             experiences.add(e);
-            updateAgentMemoryFromExperience(e, getLearningRate(ei, d));
+            updateAgentMemoryFromExperience(e, d.learningRate(ei));
             s = sr.sNext();
             counter.increase();
         }
         return experiences;
-    }
-
-    private static double getLearningRate(int ei, TrainerGridDependencies d) {
-        return d.lrDecay().calcOut(ei);
-    }
-
-    private static double getProbRandom(int ei, TrainerGridDependencies d) {
-        return d.probRandomDecay().calcOut(ei);
-    }
-
-    private void logFractionCorrected(List<ExperienceGridCorrectedAction> experiences) {
-        var info = EpisodeInfoSafe.of(experiences);
-        log.fine("Fraction of corrected action corrected steps: " + info.fractionOfCorrectSteps());
     }
 
     private void updateAgentMemoryFromExperience(ExperienceGridCorrectedAction e, double learningRate) {

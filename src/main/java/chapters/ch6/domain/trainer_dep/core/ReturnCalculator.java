@@ -67,9 +67,9 @@ public class ReturnCalculator {
     private double addStateActionValueOfFutureStep(CommonParams c, double G) {
         var agent = dependencies.agent();
         if (!c.info.isIndexOutSide(c.stepFutureExp)) {
-            var experienceFuture = c.info.experienceAtTime(c.stepFutureExp);
-            var sn = experienceFuture.state();
-            var an = experienceFuture.action();
+            var expFuture = c.info.experienceAtTime(c.stepFutureExp);
+            var sn = expFuture.state();
+            var an = expFuture.action();
             G += Math.pow(c.gamma, (c.stepFutureExp - c.tau)) * agent.read(StateActionGrid.of(sn, an));
         }
         return G;

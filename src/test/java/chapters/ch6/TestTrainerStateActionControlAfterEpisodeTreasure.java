@@ -40,13 +40,7 @@ public class TestTrainerStateActionControlAfterEpisodeTreasure {
         dependencies= TrainerDependenciesFactoryTreasure.treasure(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
         return TrainerStateActionControlAfterEpisode.of(dependencies);
     }
-/*
-    @Test
-    void whenPredicted_thenCorrect() {
 
-        var returns= trainer.getReturnList().stream().filter(r -> r>0).toList();
-        Assertions.assertTrue(MyListUtils.findMax(returns).orElseThrow()>0);
-    }*/
 
 
     @ParameterizedTest

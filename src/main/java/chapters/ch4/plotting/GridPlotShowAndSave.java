@@ -2,7 +2,7 @@ package chapters.ch4.plotting;
 
 import core.foundation.config.PlotConfig;
 import core.gridrl.TrainerGridDependencies;
-import core.plotting_rl.chart.GridAgentPlotter;
+import core.plotting_rl.chart.GridAgentPlotterOld;
 import core.plotting_rl.progress_plotting.PlotterProgressMeasures;
 import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
@@ -22,7 +22,7 @@ public class GridPlotShowAndSave {
                                         int nofDigits,
                                         String picPath,
                                         PlotConfig plotCfg) {
-        var agentPlotter= GridAgentPlotter.of(dependencies, fileNameAddOns, nofDigits,plotCfg);
+        var agentPlotter= GridAgentPlotterOld.of(dependencies, fileNameAddOns, nofDigits,plotCfg);
         agentPlotter.plotAndSaveStateValuesInFolderTempDiff();
         agentPlotter.plotAndSavePolicyInFolderTempDiff();
         var progressPlotter = PlotterProgressMeasures.of(recorder, picPath, fileNameAddOns);

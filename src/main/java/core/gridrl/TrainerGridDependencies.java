@@ -1,7 +1,6 @@
 package core.gridrl;
 
 
-import chapters.ch4.domain.trainer.TrainerGridParameters;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.util.math.LogarithmicDecay;
 import core.learninggadgets.LrAndProbRandDecay;
@@ -71,18 +70,17 @@ public record TrainerGridDependencies(
                 startStateSupplier.environmentName().equals(name);
     }
 
-    public LogarithmicDecay lrDecay() {
-        return lrAndProbRandDecay.lrDecay();
-    }
-
-    public LogarithmicDecay probRandomDecay() {
-        return lrAndProbRandDecay.probDecay();
-    }
-
     public ActionGrid chooseAction(StateGrid s, int ei) {
         return agent().chooseAction(s, probRandomDecay().calcOut(ei));
     }
 
+    public double learningRate(int ei) {
+        return lrDecay().calcOut(ei);
+    }
+
+    public double probRandom(int ei) {
+        return probRandomDecay().calcOut(ei);
+    }
 
     public void updateAgentMemoryFromExperience(ExperienceGrid e, int ei) {
         agent().fitMemory(e, lrDecay().calcOut(ei));
@@ -96,11 +94,9 @@ public record TrainerGridDependencies(
         counters.stepCounter().increase();
     }
 
-
     public StepReturnGrid takeAction(StateGrid s, ActionGrid action) {
         return environment().step(s, action);
     }
-
 
     public void resetBeforeEpisode() {
         counters.stepCounter().reset();
@@ -118,6 +114,14 @@ public record TrainerGridDependencies(
     public ProgressMeasures getProgressMeasures() {
         var factory= ProgressMeasuresExtractorGrid.of(this);
         return factory.produce(experiences);
+    }
+
+    private LogarithmicDecay lrDecay() {
+        return lrAndProbRandDecay.lrDecay();
+    }
+
+    private LogarithmicDecay probRandomDecay() {
+        return lrAndProbRandDecay.probDecay();
     }
 
 

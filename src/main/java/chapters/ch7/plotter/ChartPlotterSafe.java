@@ -1,8 +1,9 @@
-package chapters.ch7._shared;
+package chapters.ch7.plotter;
 
+import chapters.ch7.domain.trainer.TrainerOneStepTdQLearningWithSafety;
 import core.foundation.config.ConfigFactory;
+import core.foundation.config.PlotConfig;
 import core.gridrl.TrainerGridDependencies;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting_rl.chart.GridAgentPlotter;
 import core.plotting_rl.progress_plotting.PlotterProgressMeasures;
 import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
@@ -17,19 +18,24 @@ import java.util.List;
 @UtilityClass
 public class ChartPlotterSafe {
 
-    @SneakyThrows
+    public static final int NOF_DIGITS = 1;
+
+    public static void showAndSavePlots(TrainerOneStepTdQLearningWithSafety trainer,
+                                        String fileName, PlotConfig plotCfg, String path) {
+        showAndSavePlots(trainer.getDependencies(), trainer.getRecorder(), fileName, plotCfg, path);
+    }
+
+
     public static void showAndSavePlots(TrainerGridDependencies dependencies,
                                         RecorderProgressMeasures recorder,
-                                        String fileNameAddOns,
-                                        int nofDigits) {
-        var plotCfg= ConfigFactory.plotConfig();
-        var agentPlotter = GridAgentPlotter.of(dependencies, fileNameAddOns, nofDigits,plotCfg);
-        agentPlotter.plotStateValuesInFolderSafe();
-        agentPlotter.plotPolicyInFolderSafe();
-        var path = ProjectPropertiesReader.create().pathSafe();
-        var progressPlotter = PlotterProgressMeasures.of(recorder, path, fileNameAddOns);
+                                        String fileName, PlotConfig plotCfg, String path) {
+        var agentPlotter = GridAgentPlotter.of(dependencies, NOF_DIGITS,plotCfg, path);
+        agentPlotter.plotStateValuesInFolderSafe(fileName+"values");
+        agentPlotter.plotPolicyInFolderSafe(fileName+"policy");
+        var progressPlotter = PlotterProgressMeasures.of(recorder, path, fileName);
         progressPlotter.plotAndSave(List.of(ProgressMeasureEnum.RETURN, ProgressMeasureEnum.N_STEPS));
         progressPlotter.plotAndSaveNoFiltering(List.of(ProgressMeasureEnum.SIZE_MEMORY));
+
     }
 
 }

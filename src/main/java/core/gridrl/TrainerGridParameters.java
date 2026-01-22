@@ -1,4 +1,4 @@
-package chapters.ch4.domain.trainer;
+package core.gridrl;
 
 import lombok.Builder;
 import lombok.With;
