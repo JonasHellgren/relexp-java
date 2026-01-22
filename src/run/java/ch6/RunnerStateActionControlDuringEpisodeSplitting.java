@@ -43,13 +43,13 @@ public class RunnerStateActionControlDuringEpisodeSplitting {
     @SneakyThrows
     public static void showAndSavePlots(TrainerDependenciesMultiStep dependencies,
                                         RecorderProgressMeasures recorder,
-                                        String fileNameAddOns, int nofDigits) {
+                                        String fileName, int nofDigits) {
         var plotCfg= ConfigFactory.plotConfig();
-        var agentPlotter= GridAgentPlotterMultiStep.of(dependencies, fileNameAddOns, nofDigits,plotCfg);
-        agentPlotter.plotAndSaveStateValuesInFolderTempDiff();
-        agentPlotter.plotAndSavePolicyInFolderTempDiff();
-        var path = ProjectPropertiesReader.create().pathMultiStep();
-        var progressPlotter = PlotterProgressMeasures.of(recorder, path, fileNameAddOns);
+        var path=ConfigFactory.pathPicsConfig().ch6();
+        var agentPlotter= GridAgentPlotterMultiStep.of(dependencies, nofDigits,plotCfg,path);
+        agentPlotter.saveAndPlotStateValues(fileName+"_values");
+        agentPlotter.saveAndPlotPolicy(fileName+"policy");;
+        var progressPlotter = PlotterProgressMeasures.of(recorder, path, fileName);
         progressPlotter.plotAndSave(List.of(
                 ProgressMeasureEnum.RETURN,
                 ProgressMeasureEnum.TD_ERROR,

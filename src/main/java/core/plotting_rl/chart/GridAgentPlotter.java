@@ -5,7 +5,6 @@ import core.foundation.configOld.PathAndFile;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.*;
 import core.plotting.chart_plotting.ChartSaver;
-import core.plotting.chart_plotting.ProjectFoldersKeyInterpreter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -14,9 +13,6 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
 import static chapters.ch4.plotting.GridPlotHelper.*;
-import static core.plotting.chart_plotting.ChartSaverAndPlotter.showAndSaveHeatMapFolderSafe;
-import static core.plotting.chart_plotting.ChartSaverAndPlotter.showAndSaveHeatMapFolderTempDiff;
-import static core.plotting.chart_plotting.ProjectFoldersKeyInterpreter.getPath;
 
 
 /**
@@ -50,21 +46,17 @@ public class GridAgentPlotter {
         return new GridAgentPlotter(environment, agent, nofDigits,plotCfg,path);
     }
 
-
-    @SneakyThrows
-    public void plotStateValuesInFolderSafe(String fileName) {
-        HeatMapChart chart = getValueChart();
+    public void saveAndPlotStateValues(String fileName) {
+        var chart = getValueChart();
         showAndSaveHeatMap(chart,fileName);
     }
 
-    @SneakyThrows
-    public void plotPolicyInFolderSafe(String fileName) {
-        HeatMapChart chart = getPolicyChart();
+    public void saveAndPlotPolicy(String fileName) {
+        var chart = getPolicyChart();
         showAndSaveHeatMap(chart,fileName);
     }
 
 
-    @SneakyThrows
     private HeatMapChart getPolicyChart() {
         int nCols = getNofCols(environment);
         int nRows = getNofRows(environment);
@@ -117,13 +109,6 @@ public class GridAgentPlotter {
         return agent.chooseActionNoExploration(state).toString();
     }
 
-    @SneakyThrows
-    private  void showAndSaveXyChart(XYChart chart,String fileName) {
-        ChartSaver.saveXYChart(chart, PathAndFile.ofPng(path, fileName));
-        new SwingWrapper<>(chart).displayChart();
-    }
-
-    @SneakyThrows
     private  void showAndSaveHeatMap(HeatMapChart chart,String fileName) {
         PathAndFile pathAndFile = PathAndFile.ofPng(path, fileName);
         ChartSaver.saveHeatMapChart(chart, pathAndFile);

@@ -1,14 +1,12 @@
 package chapters.ch7.plotter;
 
 import chapters.ch7.domain.trainer.TrainerOneStepTdQLearningWithSafety;
-import core.foundation.config.ConfigFactory;
 import core.foundation.config.PlotConfig;
 import core.gridrl.TrainerGridDependencies;
 import core.plotting_rl.chart.GridAgentPlotter;
 import core.plotting_rl.progress_plotting.PlotterProgressMeasures;
 import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
-import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import java.util.List;
 
@@ -30,8 +28,8 @@ public class ChartPlotterSafe {
                                         RecorderProgressMeasures recorder,
                                         String fileName, PlotConfig plotCfg, String path) {
         var agentPlotter = GridAgentPlotter.of(dependencies, NOF_DIGITS,plotCfg, path);
-        agentPlotter.plotStateValuesInFolderSafe(fileName+"values");
-        agentPlotter.plotPolicyInFolderSafe(fileName+"policy");
+        agentPlotter.saveAndPlotStateValues(fileName+"values");
+        agentPlotter.saveAndPlotPolicy(fileName+"policy");
         var progressPlotter = PlotterProgressMeasures.of(recorder, path, fileName);
         progressPlotter.plotAndSave(List.of(ProgressMeasureEnum.RETURN, ProgressMeasureEnum.N_STEPS));
         progressPlotter.plotAndSaveNoFiltering(List.of(ProgressMeasureEnum.SIZE_MEMORY));

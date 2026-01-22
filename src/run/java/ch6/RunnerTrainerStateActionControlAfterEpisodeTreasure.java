@@ -39,10 +39,10 @@ public class RunnerTrainerStateActionControlAfterEpisodeTreasure {
                                         RecorderProgressMeasures recorder,
                                         String fileNameAddOns, int nofDigits) {
         var plotCfg= ConfigFactory.plotConfig();
-        var agentPlotter= GridAgentPlotterMultiStep.of(dependencies, fileNameAddOns, nofDigits,plotCfg);
-        agentPlotter.plotAndSaveStateValuesInFolderTempDiff();
-        agentPlotter.plotAndSavePolicyInFolderTempDiff();
-        var path= ProjectPropertiesReader.create().pathMultiStep();
+        var path=ConfigFactory.pathPicsConfig().ch6();
+        var agentPlotter= GridAgentPlotterMultiStep.of(dependencies, nofDigits,plotCfg,path);
+        agentPlotter.saveAndPlotStateValues(fileNameAddOns+"_values");
+        agentPlotter.saveAndPlotPolicy(fileNameAddOns+"_policy");;
         var progressPlotter = PlotterProgressMeasures.of(recorder, path, fileNameAddOns);
         progressPlotter.plotAndSave(List.of(
                 ProgressMeasureEnum.RETURN,

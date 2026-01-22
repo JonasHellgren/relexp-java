@@ -5,7 +5,6 @@ import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import chapters.ch6.domain.trainers.after_episode.TrainerStateActionControlAfterEpisode;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.foundation.config.ConfigFactory;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting_rl.progress_plotting.PlotterProgressMeasures;
 import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
@@ -14,9 +13,10 @@ import java.util.List;
 
 public class RunnerTrainerStateActionControlAfterEpisodeSplitting {
 
-    public static final int N_EPISODES = 1000;
-    public static final double LEARNING_RATE_START = 0.1;
-    public static final int N_STEPS_HORIZON = 3;
+    static final int N_EPISODES = 1000;
+    static final double LEARNING_RATE_START = 0.1;
+    static final int N_STEPS_HORIZON = 3;
+    static final int NOF_DIGITS = 2;
 
     public static void main(String[] args) {
         var trainer =defineTrainer();
@@ -24,7 +24,7 @@ public class RunnerTrainerStateActionControlAfterEpisodeSplitting {
         var dependencies=trainer.getDependencies();
         var memory=dependencies.agent().getMemory();
         System.out.println("memory = " + memory);
-        showAndSavePlots(dependencies, trainer.getRecorder(), "_splitting_after_episode", 2);
+        showAndSavePlots(dependencies, trainer.getRecorder(), "_splitting_after_episode");
     }
 
     private static TrainerStateActionControlAfterEpisode defineTrainer() {
@@ -36,13 +36,12 @@ public class RunnerTrainerStateActionControlAfterEpisodeSplitting {
     @SneakyThrows
     public static void showAndSavePlots(TrainerDependenciesMultiStep dependencies,
                                         RecorderProgressMeasures recorder,
-                                        String fileNameAddOns, int nofDigits) {
+                                        String fileNameAddOns) {
         var plotCfg= ConfigFactory.plotConfig();
-        var agentPlotter= GridAgentPlotterMultiStep.of(dependencies, fileNameAddOns, nofDigits,plotCfg);
-        agentPlotter.plotAndSaveStateValuesInFolderTempDiff();
-        agentPlotter.plotAndSavePolicyInFolderTempDiff();
-        var path= ProjectPropertiesReader.create().pathMultiStep();
-        System.out.println("path = " + path);
+        var path=ConfigFactory.pathPicsConfig().ch6();
+        var agentPlotter= GridAgentPlotterMultiStep.of(dependencies, NOF_DIGITS,plotCfg,path);
+        agentPlotter.saveAndPlotStateValues(fileNameAddOns+"_values");
+        agentPlotter.saveAndPlotPolicy(fileNameAddOns+"policy");;
         var progressPlotter = PlotterProgressMeasures.of(recorder, path, fileNameAddOns);
         progressPlotter.plotAndSave(List.of(
                 ProgressMeasureEnum.RETURN,
