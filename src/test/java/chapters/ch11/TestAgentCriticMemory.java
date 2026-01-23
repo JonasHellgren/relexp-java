@@ -7,6 +7,7 @@ import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.factory.LunarAgentParamsFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -105,9 +106,9 @@ class TestAgentCriticMemory {
     private static void fitMemory(CriticMemoryLunar criticMemoryLunar, StateLunar state, double vTarget) {
         for (int i = 0; i < N_FITS; i++) {
             double error = vTarget - criticMemoryLunar.read(state);
-            var data = TrainDataOld.emptyFromErrors();
+            var data = TrainData.empty();
             var in = RadialBasisAdapter.asInput(state);
-            data.addInAndError(in, error);
+            data.addListIn(in, error);
             criticMemoryLunar.fit(data);
         }
     }

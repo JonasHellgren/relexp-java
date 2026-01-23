@@ -7,6 +7,7 @@ import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.factory.LunarAgentParamsFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -73,9 +74,9 @@ class TestAgent {
     void testFitActorWithNegativeAction() {
         double action0 = agent.readActor(state0and0).mean();
         int actionApplied = -1;
-        var dataMean = TrainDataOld.emptyFromErrors();
+        var dataMean = TrainData.empty();
         var in = RadialBasisAdapter.asInput(state0and0);
-        dataMean.addInAndError(in, actionApplied*ADV);
+        dataMean.addListIn(in, actionApplied*ADV);
         int valTarget = 10;
         fitCritic(valTarget);
         var dummyData=dataMean;
@@ -89,9 +90,9 @@ class TestAgent {
     void testFitActorWithPositiveAction() {
         double action0 = agent.readActor(state0and0).mean();
         int actionApplied = 1;
-        var dataMean = TrainDataOld.emptyFromErrors();
+        var dataMean = TrainData.empty();
         var in = RadialBasisAdapter.asInput(state0and0);
-        dataMean.addInAndError(in, actionApplied*ADV);
+        dataMean.addListIn(in, actionApplied*ADV);
         int valTarget = 10;
         fitCritic(valTarget);
         var dummyData=dataMean;
@@ -123,9 +124,9 @@ class TestAgent {
 
 
     private void fitCritic(int valTarget) {
-        var data= TrainDataOld.emptyFromOutputs();
+        var data= TrainData.empty();
         var in = RadialBasisAdapter.asInput(state0and0);
-        data.addIAndOut(in, valTarget);
+        data.addListIn(in, valTarget);
         agent.fitCritic(data);
     }
 

@@ -20,7 +20,12 @@ public record Kernel(
                 .mapToDouble(i -> gamma(sigmas[i]))
                 .toArray();
         return new Kernel(centers, gammas, FastExpNegInput.createDefault());
+    }
 
+    public static Kernel ofGammas(double[] centers, double[] gammas) {
+        Preconditions.checkArgument(centers.length == gammas.length,
+                "centerCoordinates and gammas should have same length");
+        return new Kernel(centers, gammas,FastExpNegInput.createDefault());
     }
 
     /**

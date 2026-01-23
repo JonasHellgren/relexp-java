@@ -17,6 +17,7 @@ import chapters.ch11.factory.LunarAgentParamsFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.factory.TrainerParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -201,9 +202,9 @@ class TestMultiStepResultsGenerator {
 
     private void fitMemory(AgentLunar agent, double vTarget) {
         StateLunar state = StateLunar.zeroPosAndSpeed();
-        var data= TrainDataOld.emptyFromOutputs();
+        var data= TrainData.empty();
         var in = RadialBasisAdapter.asInput(state);
-        data.addIAndOut(in,vTarget);
+        data.addListIn(in,vTarget);
         agent.fitCritic(data);
     }
 

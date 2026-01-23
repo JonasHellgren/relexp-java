@@ -3,6 +3,7 @@ package core.nextlevelrl.radial_basis;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.Accumulator;
 import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import java.util.List;
 import java.util.function.DoubleSupplier;
 import java.util.stream.IntStream;
+
 
 
 @AllArgsConstructor
@@ -102,17 +104,58 @@ public class RbfNetwork {
         var errors = getErrors(data.inputs(), data.outputs());
         var errorsClipped=clipper.clip(errors);
         lossCalculator.add(errorsClipped.stream().mapToDouble(Math::abs).sum());
-        fitFromErrors(TrainData.of(data.inputs(), errorsClipped));
+        fitFromErrors(TrainData.of(data.inputs(), errorsClipped), true);
+    }
+
+    /**
+     * Handy to save computation time if you already have the activations in other identical rbf
+     *
+     * @param other, the other rbf to copy from
+     */
+    public void fitUsingActivationsOtherRbf(TrainData data, int nEpochs, int batchSize, RbfNetwork other) {
+        copyActivations(other);
+        fitWithUpdateActivationFlag(data, nEpochs, batchSize, false);
+    }
+
+    public void copyActivations(RbfNetwork other) {
+        //validateOtherRbf(other, nKernels());
+        var activationsOther = other.activations;
+        activations = RbfNetworkHelper.createIfNotEqualNofSamples(activationsOther.nSamples(), activations);
+        RbfNetworkHelper.copyActivations(activationsOther, activations);
+    }
+
+    private void fitWithUpdateActivationFlag(TrainData data0, int nEpochs, int batchSize, boolean updateActivations) {
+      //  validate(data, nEpochs, batchSize);
+        var errors = getErrors(data0.inputs(), data0.outputs());
+        var data=TrainData.of(data0.inputs(), errors);
+        IntStream.range(0, nEpochs).forEach(i -> fitFromErrors(data, updateActivations));
     }
 
     /**
      * Updates the weights of the RBF network based on the input data and error values.
      */
-    private void fitFromErrors(TrainData data) {
+    private void fitFromErrorsOld(TrainData data) {
         int nInputs = data.inputs().size();
         Preconditions.checkArgument(!data.isEmpty(), "data must not be empty");
         ConditionalsUtil.executeIfTrue(nInputs != activations.nSamples(), () -> activations.reset(nInputs));
         activations.calculateActivations(data, kernels);
+        updater.updateWeights(data, activations, weights);
+    }
+
+    /**
+     * Updates the weights of the RBF network based on the input data and error values.
+     */
+    private void fitFromErrors(TrainData data, boolean updateActivation) {
+        int nInputs = data.inputs().size();
+        Preconditions.checkArgument(!data.isEmpty(), "data must not be empty");
+        ConditionalsUtil.executeIfTrue(nInputs != activations.nSamples(), () -> activations.reset(nInputs));
+        //activations.calculateActivations(data, kernels);
+
+        ConditionalsUtil.executeIfTrue(updateActivation, () -> {
+            activations = RbfNetworkHelper.createIfNotEqualNofSamples(data.nSamples(), activations);
+            activations.calculateActivations(data, kernels);
+        });
+
         updater.updateWeights(data, activations, weights);
     }
 

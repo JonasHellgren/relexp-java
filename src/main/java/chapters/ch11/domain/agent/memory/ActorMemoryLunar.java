@@ -6,11 +6,12 @@ import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.factory.RbfMemoryFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
-import chapters.ch9.radial_basis_old.RbfNetwork;
 import core.foundation.gadget.math.MeanAndLogStd;
 import core.foundation.gadget.math.MeanAndStd;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.collections.ArrayCreatorUtil;
+import core.nextlevelrl.radial_basis.RbfNetwork;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -43,17 +44,17 @@ public class ActorMemoryLunar {
      * @param dataStd the training data for the standard deviation
      */
     @Deprecated(since = "slow and not recommended")
-    public void fit(TrainDataOld dataMean, TrainDataOld dataStd) {
+    public void fit(TrainData dataMean, TrainData dataStd) {
         int batchSize = Math.min(dataMean.nSamples(), agentParameters.batchSize());
-        memoryMean.fit(dataMean, agentParameters.nEpochs(),batchSize);
-        memoryLogStd.fit(dataStd, agentParameters.nEpochs(),batchSize);
+        memoryMean.fit(dataMean, agentParameters.nEpochs()*batchSize);
+        memoryLogStd.fit(dataStd, agentParameters.nEpochs()*batchSize);
     }
 
     /**
      * Same but saves computation time using activations from other rbf
      */
 
-    public void fitUsingActivationsOtherRbfMean(TrainDataOld dataMean, TrainDataOld dataStd, RbfNetwork other) {
+    public void fitUsingActivationsOtherRbfMean(TrainData dataMean, TrainData dataStd, RbfNetwork other) {
         int batchSize = Math.min(dataMean.nSamples(), agentParameters.batchSize());
         memoryMean.fitUsingActivationsOtherRbf(dataMean, agentParameters.nEpochs(),batchSize,other);
         memoryLogStd.fitUsingActivationsOtherRbf(dataStd, agentParameters.nEpochs(),batchSize,other);
@@ -68,12 +69,12 @@ public class ActorMemoryLunar {
 
     public MeanAndStd actorMeanAndStd(StateLunar state) {
         var in = RadialBasisAdapter.asInput(state);
-        return MeanAndStd.of(memoryMean.outPut(in), Math.exp(memoryLogStd.outPut(in)));
+        return MeanAndStd.of(memoryMean.outPutListIn(in), Math.exp(memoryLogStd.outPutListIn(in)));
     }
 
     public MeanAndLogStd actorMeanAndLogStd(StateLunar state) {
         var in = RadialBasisAdapter.asInput(state);
-        return MeanAndLogStd.of(memoryMean.outPut(in), memoryLogStd.outPut(in));
+        return MeanAndLogStd.of(memoryMean.outPutListIn(in), memoryLogStd.outPutListIn(in));
     }
 
 }

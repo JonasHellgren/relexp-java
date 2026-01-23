@@ -32,7 +32,6 @@ public class TrainerLunarMultiStep {
         var epCreator = EpisodeCreator.of(dependencies);
         var measuresFactory = ProgressMeasuresFactory.of(dependencies);
         var msrGenerator = MultiStepResultsGenerator.of(dependencies);
-        var timer= CpuTimer.empty();
         recorder.clear();
         log.info("starting training");
         for (int i = 0; i < dependencies.getNofEpisodes(); i++) {
@@ -41,7 +40,6 @@ public class TrainerLunarMultiStep {
             fit(msr);
             recorder.add(measuresFactory.getMeasures(experiences,msr));
         }
-        log.info("Training finished in (s): " + timer.timeInSecondsAsString());
     }
 
     private void fit(MultiStepResults msr) {
@@ -54,4 +52,7 @@ public class TrainerLunarMultiStep {
         }
     }
 
+    public void logTimer() {
+        log.info("timer: " + dependencies.timeInSecondsAsString());
+    }
 }

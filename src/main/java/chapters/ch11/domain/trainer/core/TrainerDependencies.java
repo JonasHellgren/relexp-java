@@ -5,6 +5,7 @@ import chapters.ch11.domain.environment.core.EnvironmentI;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierI;
 import chapters.ch11.domain.trainer.param.TrainerParameters;
+import core.foundation.gadget.timer.CpuTimer;
 import lombok.Builder;
 import lombok.With;
 
@@ -20,7 +21,8 @@ public record TrainerDependencies(
         AgentLunar agent,
         EnvironmentI environment,
         TrainerParameters trainerParameters,
-        StartStateSupplierI startStateSupplier
+        StartStateSupplierI startStateSupplier,
+        CpuTimer timer
 ) {
 
     public StateLunar startState() {
@@ -35,4 +37,7 @@ public record TrainerDependencies(
         return trainerParameters().nEpisodes();
     }
 
+    public String timeInSecondsAsString() {
+        return timer.timeInSecondsAsString();
+    }
 }

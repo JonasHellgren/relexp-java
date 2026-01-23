@@ -5,8 +5,8 @@ import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.factory.RbfMemoryFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
-import chapters.ch9.radial_basis_old.RbfNetwork;
-import core.foundation.gadget.training.TrainDataOld;
+import core.foundation.gadget.training.TrainData;
+import core.nextlevelrl.radial_basis.RbfNetwork;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -36,7 +36,7 @@ public class CriticMemoryLunar {
      */
     public double read(StateLunar state) {
         var in = RadialBasisAdapter.asInput(state);
-        return memory.outPut(in);
+        return memory.outPutListIn(in);
     }
 
     /**
@@ -44,9 +44,9 @@ public class CriticMemoryLunar {
      *
      * @param data the training data to fit the memory to
      */
-    public void fit(TrainDataOld data) {
+    public void fit(TrainData data) {
         int batchSize = Math.min(data.nSamples(), agentParameters.batchSize());
-        memory.fit(data, agentParameters.nEpochs(),batchSize);
+        memory.fit(data, agentParameters.nEpochs()*batchSize);
     }
 
 }

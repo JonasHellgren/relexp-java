@@ -1,12 +1,11 @@
 package ch11;
 
-import chapters.ch11.domain.agent.core.AgentLunar;
-import chapters.ch11.domain.environment.param.LunarParameters;
+import chapters.ch11.factory.DependencyFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
-import chapters.ch9.radial_basis_old.RbfNetwork;
 import com.google.common.collect.Lists;
 import core.foundation.configOld.ProjectPropertiesReader;
+import core.nextlevelrl.radial_basis.RbfNetwork;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
 import core.plotting_core.plotting_2d.ScatterWithLineChartCreator;
@@ -14,8 +13,6 @@ import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.knowm.xchart.XYChart;
 import java.util.List;
-
-import static ch11.RunnerHelper.getDependencies;
 
 
 public class RunnerKernelsPlotter {
@@ -61,7 +58,7 @@ public class RunnerKernelsPlotter {
     private static RbfNetwork getRbfNetwork() {
         int dummyValue=0;
         var ep = LunarEnvParamsFactory.produceDefault();
-        var tp = getDependencies(ep, dummyValue, dummyValue);
+        var tp = DependencyFactory.produce(ep, dummyValue, dummyValue);
         var agent= tp.agent();
         var memory=agent.getCriticMemory();
         return memory.getMemory();

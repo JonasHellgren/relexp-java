@@ -5,14 +5,14 @@ import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierI
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierRandomAndClipped;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.domain.trainer.core.TrainerLunarMultiStep;
+import chapters.ch11.factory.DependencyFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
-import core.foundation.gadget.timer.CpuTimer;
+import chapters.ch11.helper.AgentEvaluator;
+import chapters.ch11.plotting.LunarTrainerPlotter;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 import org.apache.commons.math3.util.Pair;
 import org.jetbrains.annotations.NotNull;
-
-import static ch11.RunnerHelper.*;
 
 @Log
 public class RunnerTrainerLunarMultiStep {
@@ -23,14 +23,15 @@ public class RunnerTrainerLunarMultiStep {
 
     @SneakyThrows
     public static void main(String[] args) {
-        var timer = CpuTimer.empty();
         var ep = LunarEnvParamsFactory.produceDefault();
-        var trainerDependencies = getDependencies(ep, STEP_HORIZON, N_EPISODES);
+        var trainerDependencies = DependencyFactory.produce(ep, STEP_HORIZON, N_EPISODES);
         var trainer = TrainerLunarMultiStep.of(trainerDependencies);
         trainer.train();
-        timer.printInMs();
-        plot(trainer, trainerDependencies);
-        evaluate(trainerDependencies, getStartStateEvaluation(ep), N_EVALS);
+        trainer.logTimer();
+        LunarTrainerPlotter.plot(trainer, trainerDependencies);
+        var evaluator=AgentEvaluator.of(trainerDependencies, getStartStateEvaluation(ep));
+        double fractFails=evaluator.fractionFails(N_EVALS);
+        log.info("frac fails: " + fractFails);
         testSimulations(trainerDependencies);
     }
 
@@ -44,6 +45,17 @@ public class RunnerTrainerLunarMultiStep {
         simulateTrainedAgent(trainerDependencies, 2d, 1d, "lunar_simulationSpdPlus1");
         simulateTrainedAgent(trainerDependencies, 5d, -1d, "lunar_simulationSpd1");
         simulateTrainedAgent(trainerDependencies, 5.0d, -4d, "lunar_simulationSpd4");
+    }
+
+    private static void simulateTrainedAgent(TrainerDependencies trainerDependencies,
+                                     double startHeight,
+                                     double startSpd,
+                                     String fileName) {
+        var ep = trainerDependencies.environment().getParameters();
+        trainerDependencies = trainerDependencies.withStartStateSupplier(new StartStateSupplierRandomAndClipped(
+                ep, Pair.create(startHeight, startHeight), Pair.create(startSpd, startSpd)));
+        var evaluatorSim = AgentEvaluator.of(trainerDependencies);
+        evaluatorSim.plotAndSavePicFromSimulation(fileName);
     }
 
 }

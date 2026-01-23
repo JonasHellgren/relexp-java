@@ -2,9 +2,7 @@ package chapters.ch11.factory;
 
 import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.param.LunarParameters;
-import chapters.ch9.radial_basis_old.Kernel;
-import chapters.ch9.radial_basis_old.Kernels;
-import chapters.ch9.radial_basis_old.RbfNetwork;
+import core.nextlevelrl.radial_basis.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +19,7 @@ public class RbfMemoryFactory {
                 kernels.addKernel(kernel);
             }
         }
-        return RbfNetwork.of(kernels,learningRate);
+        return RbfNetwork.of(kernels,learningRate, 2);
     }
 
 }

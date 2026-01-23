@@ -4,6 +4,7 @@ import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.helper.RadialBasisAdapter;
 import chapters.ch11.helper.ValueCalculatorLunar;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.TrainDataOld;
 import lombok.AllArgsConstructor;
 
@@ -24,9 +25,9 @@ public class MemoryUpdaterSingleStepTrainer {
         var agent = dependencies.agent();
         var tp = dependencies.trainerParameters();
         var ap = agent.getAgentParameters();
-        var dataMean = TrainDataOld.emptyFromErrors();
-        var dataStd = TrainDataOld.emptyFromErrors();
-        var data = TrainDataOld.emptyFromErrors();
+        var dataMean = TrainData.empty();
+        var dataStd = TrainData.empty();
+        var data = TrainData.empty();
         for (ExperienceLunar experience : experiences) {
             double tdError = ap.clipTdError(calculator.calcTemporalDifferenceError(experience));
             var state = experience.state();
@@ -36,9 +37,9 @@ public class MemoryUpdaterSingleStepTrainer {
             dataStd.clear();
             data.clear();
             var in = RadialBasisAdapter.asInput(state);
-            dataMean.addInAndError(in, grad.mean() * tdError);
-            dataStd.addInAndError(in, grad.std() * tdError);
-            data.addInAndError(in, tdError);
+            dataMean.addListIn(in, grad.mean() * tdError);
+            dataStd.addListIn(in, grad.std() * tdError);
+            data.addListIn(in, tdError);
             agent.fitActorUseCriticActivations(dataMean, dataStd);
             agent.fitCritic(data);
         }

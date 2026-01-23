@@ -2,6 +2,7 @@ package chapters.ch11.domain.trainer.multisteps;
 
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.helper.RadialBasisAdapter;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.TrainDataOld;
 import lombok.AllArgsConstructor;
 
@@ -23,12 +24,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TrainingDataCreator {
 
-    public record DataContainer (TrainDataOld dataCritic, TrainDataOld dataMean, TrainDataOld dataStd) {
+    public record DataContainer (TrainData dataCritic, TrainData dataMean, TrainData dataStd) {
         public static DataContainer empty() {
             return new DataContainer(
-                    TrainDataOld.emptyFromErrors(),
-                    TrainDataOld.emptyFromErrors(),
-                    TrainDataOld.emptyFromErrors());
+                    TrainData.empty(),
+                    TrainData.empty(),
+                    TrainData.empty());
         }
     }
 
@@ -47,10 +48,10 @@ public class TrainingDataCreator {
         var grad = agent.gradientMeanAndLogStd(state, msr.actionAtStep(step));
         grad = grad.clip(ap.gradMeanMax(), ap.gradStdMax());
         var in = RadialBasisAdapter.asInput(state);
-        data.dataMean.addInAndError(in, grad.mean() * adv);
-        data.dataStd.addInAndError(in, grad.std() * adv);
+        data.dataMean.addListIn(in, grad.mean() * adv);
+        data.dataStd.addListIn(in, grad.std() * adv);
         var inAtStep = RadialBasisAdapter.asInput(msr.stateAtStep(step));
-        data.dataCritic.addInAndError(inAtStep, adv);
+        data.dataCritic.addListIn(inAtStep, adv);
         return data;
     }
 

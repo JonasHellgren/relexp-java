@@ -2,6 +2,7 @@ package chapters.ch11.helper;
 
 import chapters.ch11.domain.environment.core.EnvironmentLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
+import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierI;
 import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import core.foundation.configOld.ProjectPropertiesReader;
@@ -33,6 +34,13 @@ public class AgentEvaluator {
 
     public static AgentEvaluator of(TrainerDependencies dependencies) {
         return new AgentEvaluator(dependencies);
+    }
+
+
+    public static AgentEvaluator of(TrainerDependencies trainerDependencies,
+                                  StartStateSupplierI startStateSupplier) {
+        trainerDependencies = trainerDependencies.withStartStateSupplier(startStateSupplier);
+        return  AgentEvaluator.of(trainerDependencies);
     }
 
     /**
