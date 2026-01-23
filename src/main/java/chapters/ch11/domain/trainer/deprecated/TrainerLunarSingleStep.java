@@ -1,7 +1,6 @@
 package chapters.ch11.domain.trainer.deprecated;
 
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
-import chapters.ch11.domain.trainer.core.TrainerI;
 import chapters.ch11.factory.ProgressMeasuresFactory;
 import chapters.ch11.helper.EpisodeCreator;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
@@ -17,7 +16,7 @@ import lombok.extern.java.Log;
 @AllArgsConstructor
 @Getter
 @Log
-public class TrainerLunarSingleStep implements TrainerI {
+public class TrainerLunarSingleStep {
 
     TrainerDependencies dependencies;
     RecorderProgressMeasures recorder;
@@ -30,7 +29,6 @@ public class TrainerLunarSingleStep implements TrainerI {
                 MemoryUpdaterSingleStepTrainer.of(dependencies));
     }
 
-    @Override
     public void train() {
         var epCreator = EpisodeCreator.of(dependencies);
         var measuresFactory = ProgressMeasuresFactory.of(dependencies);

@@ -18,7 +18,7 @@ import lombok.extern.java.Log;
 @AllArgsConstructor
 @Getter
 @Log
-public class TrainerLunarMultiStep implements TrainerI {
+public class TrainerLunarMultiStep {
 
     private final TrainerDependencies dependencies;
     private final RecorderProgressMeasures recorder;
@@ -28,7 +28,6 @@ public class TrainerLunarMultiStep implements TrainerI {
                 RecorderProgressMeasures.empty());
     }
 
-    @Override
     public void train() {
         var epCreator = EpisodeCreator.of(dependencies);
         var measuresFactory = ProgressMeasuresFactory.of(dependencies);

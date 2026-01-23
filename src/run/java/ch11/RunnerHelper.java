@@ -7,7 +7,7 @@ import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierI;
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierRandomAndClipped;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
-import chapters.ch11.domain.trainer.core.TrainerI;
+import chapters.ch11.domain.trainer.core.TrainerLunarMultiStep;
 import chapters.ch11.domain.trainer.param.TrainerParameters;
 import chapters.ch11.helper.AgentEvaluator;
 import chapters.ch11.plotting.PlotterHeatMapsAgent;
@@ -104,7 +104,7 @@ public class RunnerHelper {
     }
 
     @SneakyThrows
-    static void plot(TrainerI trainer, TrainerDependencies trainerDependencies) {
+    static void plot(TrainerLunarMultiStep trainer, TrainerDependencies trainerDependencies) {
         var pathPics = ProjectPropertiesReader.create().pathActorCriticPics();
         var progressPlotter = PlotterProgressMeasures.of(trainer.getRecorder(), pathPics);
         progressPlotter.plotAndSave(
