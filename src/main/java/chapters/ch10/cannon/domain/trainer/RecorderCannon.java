@@ -2,6 +2,8 @@ package chapters.ch10.cannon.domain.trainer;
 
 import chapters.ch10.plotting.MeasuresCannon;
 import chapters.ch10.plotting.MeasuresCannonEnum;
+import core.foundation.gadget.math.MeanAndStd;
+import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.ArrayList;
@@ -22,6 +24,16 @@ public class RecorderCannon {
 
     public void add(MeasuresCannon measuresCannon) {
         measures.add(measuresCannon);
+    }
+
+
+    void addRecording(double gMinusBase,
+                      double base,
+                      ExperienceCannon experience,
+                      GradientMeanAndLogStd gradLog,
+                      MeanAndStd meanAndStd) {
+        var measures= MeasuresCannon.getMeasures(gMinusBase, base, experience, gradLog, meanAndStd);
+        add(measures);
     }
 
     public boolean isEmpty() {

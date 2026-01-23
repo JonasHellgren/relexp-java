@@ -1,6 +1,5 @@
 package chapters.ch10.bandit.domain.trainer;
 
-import chapters.ch10.bandit.domain.agent.AgentBandit;
 import chapters.ch10.plotting.MeasuresBandit;
 import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
@@ -41,7 +40,7 @@ public class TrainerBandit {
             var experiences = generator.generate();
             for (var experience : experiences) {  //looping through single experience
                 int t = experiences.indexOf(experience);
-                double returnAtT = getReturnAtT(experiences, t);
+                double returnAtT = getReturnAtTime(experiences, t);
                 var probs = d.actionProbabilities();
                 double lr = d.learningRate();
                 var gradLog = d.calculateGradLog(experience, probs);
@@ -51,7 +50,7 @@ public class TrainerBandit {
         }
     }
 
-    private double getReturnAtT(List<ExperienceBandit> experiences, int t) {
+    private double getReturnAtTime(List<ExperienceBandit> experiences, int t) {
         Preconditions.checkArgument(t == 0, "calculateReturnAtT only works for t=0");
         return experiences.get(t).stepReturn().reward();
     }
