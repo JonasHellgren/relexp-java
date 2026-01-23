@@ -1,6 +1,6 @@
 package chapters.ch11.helper;
 
-import chapters.ch11.domain.agent.core.AgentI;
+import chapters.ch11.domain.agent.core.AgentLunar;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
@@ -46,7 +46,7 @@ public class ValueCalculatorLunar {
      * @param value the value of taking an action in the given state
      * @return the advantage of taking an action in the given state
      */
-    public  double calcAdvantage(@NotNull AgentI agent, StateLunar state, double value) {
+    public  double calcAdvantage(@NotNull AgentLunar agent, StateLunar state, double value) {
         double valueCritic = agent.readCritic(state);
         return calculateAdvantage(value, valueCritic);
     }

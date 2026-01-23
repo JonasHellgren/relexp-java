@@ -1,7 +1,6 @@
 package chapters.ch11;
 
 
-import chapters.ch11.domain.agent.core.AgentI;
 import chapters.ch11.domain.agent.core.AgentLunar;
 import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.core.EnvironmentLunar;
@@ -196,7 +195,7 @@ class TestMultiStepResultsGenerator {
                 state, 0d, StepReturnLunar.ofNotFail(stateNew, isTerminal, reward));
     }
 
-    private void fitMemory(AgentI agent, double vTarget) {
+    private void fitMemory(AgentLunar agent, double vTarget) {
         StateLunar state = StateLunar.zeroPosAndSpeed();
         var data= TrainDataOld.emptyFromOutputs();
         var in = RadialBasisAdapter.asInput(state);

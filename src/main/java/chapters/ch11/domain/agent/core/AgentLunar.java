@@ -21,7 +21,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class AgentLunar implements AgentI{
+public class AgentLunar{
 
     AgentParameters agentParameters;
     ActorMemoryLunar actorMemory;
@@ -43,40 +43,33 @@ public class AgentLunar implements AgentI{
      * @param state the current state
      * @return the chosen action
      */
-    @Override
     public double chooseAction(StateLunar state) {
         var meanAndStd= readActor(state);
         return sampler.sampleFromNormDistribution(meanAndStd.mean(),meanAndStd.std());
     }
 
-    @Override
     public double chooseActionNoExploration(StateLunar state) {
         var meanAndStd= readActor(state);
         double std = 0;
         return sampler.sampleFromNormDistribution(meanAndStd.mean(), std);
     }
 
-    @Override
     public void fitCritic(TrainDataOld data) {
         criticMemory.fit(data);
     }
 
-    @Override
     public void fitActorUseCriticActivations(TrainDataOld dataMean, TrainDataOld dataStd) {
         validate();
         actorMemory.fitUsingActivationsOtherRbfMean(dataMean,dataStd,criticMemory.getMemory());
     }
 
-    @Override
     public double readCritic(StateLunar state) {
         return criticMemory.read(state);
     }
 
-    @Override
     public MeanAndStd readActor(StateLunar state) {
         return actorMemory.actorMeanAndStd(state);
     }
-
 
     /**
      * Computes the gradient of the actor's policy for the given state and action.
@@ -85,7 +78,7 @@ public class AgentLunar implements AgentI{
      * @param action the action
      * @return the gradient of the actor's policy
      */
-    @Override
+
     public GradientMeanAndLogStd gradientMeanAndLogStd(StateLunar state, double action) {
         var meanAndStd= readActor(state);
         var meanAndLogStd=actorMemory.actorMeanAndLogStd(state);

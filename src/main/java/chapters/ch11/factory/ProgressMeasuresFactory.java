@@ -1,6 +1,6 @@
 package chapters.ch11.factory;
 
-import chapters.ch11.domain.agent.core.AgentI;
+import chapters.ch11.domain.agent.core.AgentLunar;
 import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.domain.trainer.multisteps.MultiStepResults;
@@ -50,7 +50,7 @@ public class ProgressMeasuresFactory {
     }
 
     private static void addStandardDeviation(ExperienceLunar experience,
-                                             AgentI agent,
+                                             AgentLunar agent,
                                              ProgressMeasureTrajectories measureLists) {
         var mAndStd = agent.readActor(experience.state());
         measureLists.addStd(mAndStd.std());

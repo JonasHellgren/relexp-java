@@ -1,6 +1,5 @@
 package chapters.ch11;
 
-import chapters.ch11.domain.agent.core.AgentI;
 import chapters.ch11.domain.agent.core.AgentLunar;
 import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.core.StateLunar;
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TestAgent {
 
     public static final int ADV = 1;
-    AgentI agent;
+    AgentLunar agent;
     LunarParameters lunarParameters;
     StateLunar stateRandomPosAndSpeed, state0and0;
 

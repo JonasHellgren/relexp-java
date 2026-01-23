@@ -1,6 +1,6 @@
 package chapters.ch11.domain.trainer.core;
 
-import chapters.ch11.domain.agent.core.AgentI;
+import chapters.ch11.domain.agent.core.AgentLunar;
 import chapters.ch11.domain.environment.core.EnvironmentI;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierI;
@@ -17,7 +17,7 @@ import lombok.With;
 @Builder
 @With
 public record TrainerDependencies(
-        AgentI agent,
+        AgentLunar agent,
         EnvironmentI environment,
         TrainerParameters trainerParameters,
         StartStateSupplierI startStateSupplier
