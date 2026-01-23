@@ -1,4 +1,4 @@
-package chapters.ch9.neural.core;
+package chapters.ch9.factory;
 
 import lombok.experimental.UtilityClass;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;

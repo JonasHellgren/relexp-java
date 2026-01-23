@@ -1,4 +1,4 @@
-package chapters.ch9.neural.plotting;
+package chapters.ch9.plotting;
 
 import lombok.Builder;
 

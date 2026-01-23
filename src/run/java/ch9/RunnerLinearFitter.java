@@ -1,7 +1,9 @@
 package ch9;
 
+import chapters.ch9.factory.TrainDataFactoryLinearFitter;
 import chapters.ch9.gradient_descent.LinearFitter;
 import chapters.ch9.gradient_descent.PhiExtractor;
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.gadget.training.TrainData;
@@ -28,11 +30,27 @@ public class RunnerLinearFitter {
 
     @SneakyThrows
     public static void main(String[] args) {
-        var timer = CpuTimer.empty();
-        var data = getTrainData();
+        var data = TrainDataFactoryLinearFitter.getTrainData(MIN_X,MAX_X);
         var fitter = LinearFitter.of(data, getPhiExtractor(), LEARNING_RATE);
         var errors = fitter.fitAndReturnErrorPerEpoch(N_EPOCHS, BATCH_SIZE);
-        timer.printInMs();
+        fitter.logTimer();
+        plotting(fitter, data, errors);
+    }
+
+    private static List<Double> getOutListFromFitter(List<Double> inList, LinearFitter fitter) {
+        List<List<Double>> listOfLists = new ArrayList<>();
+        inList.forEach(x -> listOfLists.add(List.of(x)));
+        return fitter.calcOutputs(listOfLists);
+    }
+
+    private static PhiExtractor getPhiExtractor() {
+        var phiExtractor = PhiExtractor.empty();
+        phiExtractor.functionList.add(x -> 1);
+        phiExtractor.functionList.add(x -> x.get(0));
+        return phiExtractor;
+    }
+
+    private static void plotting(LinearFitter fitter, TrainData data, List<Double> errors) {
         var xLineList = ListCreatorUtil.createFromStartToEndWithNofItems(MIN_X, MAX_X, N_ITEMS_LINE);
         var yLineList = getOutListFromFitter(xLineList, fitter);
         var scatterChart = getScatterWithLineChartCreator(data, xLineList, yLineList);
@@ -44,15 +62,15 @@ public class RunnerLinearFitter {
         System.out.println("fitter.getWeights() = " + fitter.getWeights());
     }
 
+
     @SneakyThrows
     private static XYChart getLineChartCreator(List<Double> errors) {
-        var weight = ProjectPropertiesReader.create().xyChartWidth2Col();
-        var height = ProjectPropertiesReader.create().xyChartHeight();
+        var plotCfg = ConfigFactory.plotConfig();
         System.out.println("errors.size() = " + errors.size());
         List<Double> xData = ListCreatorUtil.createFromStartToEndWithNofItems(1, errors.size(), errors.size());
         var errorChartCreator = ManyLinesChartCreator.of(
                 PlotSettings.ofDefaults()
-                        .withWidth(weight).withHeight(height)
+                        .withWidth(plotCfg.xyChartWidth2Col()).withHeight(plotCfg.xyChartHeight())
                         .withXAxisLabel("Iteration").withYAxisLabel("Loss")
                         .withShowLegend(false),
                 xData);
@@ -74,67 +92,6 @@ public class RunnerLinearFitter {
         return chartCreator.create();
     }
 
-    private static List<Double> getOutListFromFitter(List<Double> inList, LinearFitter fitter) {
-        List<List<Double>> listOfLists = new ArrayList<>();
-        inList.forEach(x -> listOfLists.add(List.of(x)));
-        return fitter.calcOutputs(listOfLists);
-    }
 
-    private static PhiExtractor getPhiExtractor() {
-        var phiExtractor = PhiExtractor.empty();
-        phiExtractor.functionList.add(x -> 1);
-        phiExtractor.functionList.add(x -> x.get(0));
-        return phiExtractor;
-    }
-
-    private static TrainData getTrainData() {
-        var data = TrainData.empty();
-        var outList = List.of(
-                4.5 + 1.0,
-                4.2 + 1.0,
-                5.2 + 2.0,
-                5.4 + 2.0,
-                5.0 + 3.0,
-                5.6 + 3.0,
-                5.0 + 4.0,
-                5.2 + 4.0,
-                5.3 + 5.0,
-                5.6 + 5.0,
-                5.0 + 6.0,
-                5.2 + 6.0,
-                5.0 + 7.0,
-                5.1 + 7.0,
-                4.7 + 8.0,
-                4.9 + 8.0,
-                4.9 + 9.0,
-                4.7 + 9.0,
-                5.2 + 10.0,
-                5.0 + 10.0
-        );
-
-        var inList = ListCreatorUtil.createFromStartToEndWithNofItems(MIN_X, MAX_X, outList.size());
-        inList.stream().forEach(in ->
-                data.addListIn(List.of(in), outList.get(inList.indexOf(in))));
-        return data;
-    }
-
-    private static TrainDataOld getTrainData0() {
-        var data = TrainDataOld.emptyFromOutputs();
-        var inList = ListCreatorUtil.createFromStartToEndWithNofItems(MIN_X, MAX_X, 10);
-        var outList = List.of(
-                4.5 + 1.0,
-                5.2 + 2.0,
-                5.0 + 3.0,
-                5.0 + 4.0,
-                5.3 + 5.0,
-                5.0 + 6.0,
-                5.0 + 7.0,
-                4.7 + 8.0,
-                4.9 + 9.0,
-                5.0 + 10.0);
-        inList.stream().forEach(in ->
-                data.addIAndOut(List.of(in), outList.get(inList.indexOf(in))));
-        return data;
-    }
 
 }

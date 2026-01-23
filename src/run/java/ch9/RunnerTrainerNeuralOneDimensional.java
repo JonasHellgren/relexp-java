@@ -1,11 +1,11 @@
 package ch9;
 
-import chapters.ch9.neural.core.DataGenerator;
-import chapters.ch9.neural.core.NeuralNetBuilder;
-import chapters.ch9.neural.plotting.ErrorBandPlotterNeuralOneDimRegression;
-import chapters.ch9.neural.plotting.MeasuresOneDimRegressionNeural;
-import chapters.ch9.neural.plotting.MeasuresOneDimRegressionNeuralEnum;
-import chapters.ch9.neural.plotting.NeuralOneDimRegressionRecorder;
+import chapters.ch9.factory.DataGeneratorNeuralFactory;
+import chapters.ch9.factory.NeuralNetBuilder;
+import chapters.ch9.plotting.ErrorBandPlotterNeuralOneDimRegression;
+import chapters.ch9.plotting.MeasuresOneDimRegressionNeural;
+import chapters.ch9.plotting.MeasuresOneDimRegressionNeuralEnum;
+import chapters.ch9.plotting.NeuralOneDimRegressionRecorder;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.util.cond.ConditionalsUtil;
@@ -36,6 +36,7 @@ import java.util.List;
 public class RunnerTrainerNeuralOneDimensional {
 
     public static final double MAX_X = 10d;
+    public static final double MIN_X = 0;
     public static final int N_ITEMS_PLOTTING = 100;
     public static final int BATCH_SIZE = 10;
     public static final int N_ITER = 100, N_EPOCHS_BETWEEN_LOGGING = 10;
@@ -50,7 +51,7 @@ public class RunnerTrainerNeuralOneDimensional {
     @SneakyThrows
     public static void main(String[] args) {
         var timer = CpuTimer.empty();
-        INDArray[] data = DataGenerator.generateData(N_SAMPLES);
+        INDArray[] data = DataGeneratorNeuralFactory.generateData(N_SAMPLES, (int) MIN_X, (int) MAX_X);
         var dataset = new DataSet(data[0], data[1]);
         model = NeuralNetBuilder.buildWillWork();
         var recorder = fitModel(dataset);
@@ -95,7 +96,7 @@ public class RunnerTrainerNeuralOneDimensional {
     }
 
     private static void maybeLog(int iter) {
-        ConditionalsUtil.executeIfTrue(iter % N_EPOCHS_BETWEEN_LOGGING == 0, () -> {
+        ConditionalsUtil.executeIfTrue(iter % N_EPOCHS_BETWEEN_LOGGING == MIN_X, () -> {
             System.out.println("Iteration=" + iter + " → Predicted y for x=5, 7.5, 10: \n" + getNetOutput(EVAL_IN));
         });
     }

@@ -1,12 +1,8 @@
 package ch9;
 
-import core.foundation.configOld.ProjectPropertiesReader;
+import chapters.ch9.factory.Radial3dFactory;
+import core.foundation.config.ConfigFactory;
 import core.foundation.gadget.timer.CpuTimer;
-import core.foundation.gadget.training.TrainData;
-import core.foundation.util.collections.ArrayCreatorUtil;
-import core.foundation.util.collections.ListCreatorUtil;
-import core.nextlevelrl.radial_basis.Kernel;
-import core.nextlevelrl.radial_basis.Kernels;
 import core.nextlevelrl.radial_basis.RbfNetwork;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
@@ -16,86 +12,39 @@ import java.util.List;
 import java.util.function.DoubleBinaryOperator;
 
 class RunnerRadialBasis3dFunction {
-
-    static final int LENGTH = 50;
     static final double F_MAX = 10.0;
     static final int N_FITS = 500;
-    static final int N_KERNELS_EACH_DIM = 20;  //10 20
-    static final double K_SIGMA = 0.5;
     static final double LEARNING_RATE = 0.9;
     static RbfNetwork rbfn;
 
     public static void main(String[] args) {
         var timer = CpuTimer.empty();
         DoubleBinaryOperator fcn = (x, y) -> F_MAX * Math.sin((Math.PI / 3) * x * (7 - y));
-        var kernels = createKernels();
+        var kernels = Radial3dFactory.createKernels();
         rbfn = RbfNetwork.of(kernels, LEARNING_RATE,2);
-        var trainData = createTrainData(fcn);
+        var trainData = Radial3dFactory.createTrainData(fcn);
         rbfn.fit(trainData, N_FITS);
         timer.printInMs();
-        showAndSaveData(createArrayData(fcn), "Reference HeatMap");
+        showAndSaveData(Radial3dFactory.createArrayData(fcn), "Reference HeatMap");
         DoubleBinaryOperator fcnRbn = (x, y) -> rbfn.outPutListIn(List.of(x, y));
-        showAndSaveData(createArrayData(fcnRbn), "RBF HeatMap");
-    }
-
-    private static Kernels createKernels() {
-        var kernels = Kernels.empty();
-        double xMin = getXData()[0];
-        double xMax = getXData()[getXData().length - 1];
-        double yMin = getYData()[0];
-        double yMax = getYData()[getYData().length - 1];
-        double sigmaX = K_SIGMA * ((xMax - xMin) / (N_KERNELS_EACH_DIM - 1));
-        double sigmaY = K_SIGMA * ((yMax - yMin) / (N_KERNELS_EACH_DIM - 1));
-        var xList = ListCreatorUtil.createFromStartToEndWithNofItems(xMin, xMax, N_KERNELS_EACH_DIM);
-        var yList = ListCreatorUtil.createFromStartToEndWithNofItems(yMin, yMax, N_KERNELS_EACH_DIM);
-        for (double x : xList) {
-            for (double y : yList) {
-                kernels.addKernel(Kernel.ofSigmas(new double[]{x, y}, new double[]{sigmaX, sigmaY}));
-            }
-        }
-        return kernels;
-    }
-
-    private static TrainData createTrainData(DoubleBinaryOperator fcn) {
-        var trainData = TrainData.empty();
-        for (double x : getXData()) {
-            for (double y : getYData()) {
-                trainData.addListIn(List.of(x, y), fcn.applyAsDouble(x, y));
-            }
-        }
-        return trainData;
+        showAndSaveData(Radial3dFactory.createArrayData(fcnRbn), "RBF HeatMap");
     }
 
     @SneakyThrows
     private static void showAndSaveData(double[][] data, String title) {
-        var weight= ProjectPropertiesReader.create().xyChartWidth2Col();
+        var plotCfg = ConfigFactory.plotConfig();
         var settings = PlotSettings.defaultBuilder()
                 .title(title).showDataValues(false)
-                .width(weight).height(250)
+                .width(plotCfg.width()).height(plotCfg.height())
                 .showAxisTicks(true).build();
-        var creator = HeatMapChartCreator.of(settings, data, getXData(), getYData());
+        var creator = HeatMapChartCreator.of(
+                settings,
+                data,
+                Radial3dFactory.getXData(),
+                Radial3dFactory.getYData());
         ChartSaverAndPlotter.showAndSaveHeatMapRbf(creator.create(), title);
     }
 
-    private static double[][] createArrayData(DoubleBinaryOperator fcn) {
-        double[][] data = new double[LENGTH][LENGTH];
-        for (int xi = 0; xi < getXData().length; xi++) {
-            for (int yi = 0; yi < getYData().length; yi++) {
-                double x = getXData()[xi];
-                double y = getYData()[yi];
-                data[yi][xi] = fcn.applyAsDouble(x, y);
-            }
-        }
-        return data;
-    }
-
-    private static double[] getXData() {
-        return ArrayCreatorUtil.createArrayFromStartAndEnd(LENGTH, -3, 3);
-    }
-
-    private static double[] getYData() {
-        return ArrayCreatorUtil.createArrayFromStartAndEnd(LENGTH, 0, 7);
-    }
 
 
 }

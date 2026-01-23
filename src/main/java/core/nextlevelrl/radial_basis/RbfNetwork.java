@@ -94,12 +94,6 @@ public class RbfNetwork {
         return kernels.getActivationOfSingleInput(input);
     }
 
-/*
-    public Double outFromActivation(double[] activation, ActionPark a) {
-        return calcOutput(activation, weights);
-    }
-*/
-
     public void copyWeights(RbfNetwork rbfNetwork) {
         weights.setWeights(rbfNetwork.weights.getWeights());
     }
@@ -110,7 +104,6 @@ public class RbfNetwork {
         lossCalculator.add(errorsClipped.stream().mapToDouble(Math::abs).sum());
         fitFromErrors(TrainData.of(data.inputs(), errorsClipped));
     }
-
 
     /**
      * Updates the weights of the RBF network based on the input data and error values.

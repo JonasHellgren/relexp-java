@@ -1,12 +1,15 @@
 package chapters.ch9.gradient_descent;
 
 import com.google.common.base.Preconditions;
+import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.Weights;
 import core.foundation.util.collections.ListUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.java.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,18 +19,25 @@ import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@Log
 public class LinearFitter {
     private final TrainData data;
     private final WeightUpdaterLinear updater;
     private final Weights weights;
     private final OutPutCalculator calculator;
+    private final CpuTimer timer;
 
     public static LinearFitter of(TrainData data, PhiExtractor phiExtractor, double learningRate) {
         return new LinearFitter(
                 data,
                 WeightUpdaterLinear.of(learningRate, phiExtractor),
                 Weights.allZero(phiExtractor.nPhis()),
-                OutPutCalculator.of(phiExtractor));
+                OutPutCalculator.of(phiExtractor),
+                CpuTimer.empty());
+    }
+
+    public void logTimer() {
+        log.info("Fitting time (s)=" + timer.timeInSecondsAsString());
     }
 
     /**
@@ -38,6 +48,7 @@ public class LinearFitter {
      */
     public void fit(int nEpochs, int batchSize) {
         validateFit(data, nEpochs, batchSize);
+        timer.reset();
         for (int epoch = 0; epoch < nEpochs; epoch++) {
             updater.updateWeights(data.createBatch(batchSize), weights);
         }
@@ -45,6 +56,7 @@ public class LinearFitter {
 
     public List<Double> fitAndReturnErrorPerEpoch(int nEpochs, int batchSize) {
         validateFit(data, nEpochs, batchSize);
+        timer.reset();
         var errors = new ArrayList<Double>();
         var outRef=data.outputs();
         for (int epoch = 0; epoch < nEpochs; epoch++) {

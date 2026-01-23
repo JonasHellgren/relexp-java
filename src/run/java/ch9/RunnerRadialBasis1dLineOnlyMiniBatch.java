@@ -1,6 +1,6 @@
 package ch9;
 
-import core.foundation.configOld.ProjectPropertiesReader;
+import core.foundation.config.ConfigFactory;
 import core.foundation.gadget.training.TrainData;
 import core.foundation.util.collections.Array2ListConverterUtil;
 import core.foundation.util.collections.ArrayCreatorUtil;
@@ -94,11 +94,10 @@ public class RunnerRadialBasis1dLineOnlyMiniBatch {
 
     @SneakyThrows
     private static XYChart getChartRbf(String titleRbf) {
-        var weight= ProjectPropertiesReader.create().xyChartWidth2Col();
-        var height=ProjectPropertiesReader.create().xyChartHeight();
+        var plotCfg = ConfigFactory.plotConfig();
         var chartRbf = new XYChartBuilder()
                 .title(titleRbf).xAxisTitle("x").yAxisTitle("w")
-                .width(weight).height(height).build();
+                .width(plotCfg.xyChartWidth2Col()).height(plotCfg.xyChartHeight()).build();
         var styler = chartRbf.getStyler();
         styler.setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter);
         styler.setChartTitleVisible(true);
@@ -108,19 +107,16 @@ public class RunnerRadialBasis1dLineOnlyMiniBatch {
         return chartRbf;
     }
 
-
     private static List<Double> getOutPlottingRbfList(RbfNetwork rb) {
         return inPlotting.stream().map(in -> rb.outPut(new double[]{in})).toList();
     }
 
-
     @SneakyThrows
     private static XYChart getChartCorrelation(String titleRbf, List<Double> outRbfList) {
-        var weight=ProjectPropertiesReader.create().xyChartWidth2Col();
-        var height=ProjectPropertiesReader.create().xyChartHeight();
+        var plotCfg = ConfigFactory.plotConfig();
         var chartCreator = ManyLinesChartCreator.of(
                 PlotSettings.ofDefaults()
-                        .withWidth(weight).withHeight(height)
+                        .withWidth(plotCfg.xyChartWidth2Col()).withHeight(plotCfg.xyChartHeight())
                         .withLegendPosition(Styler.LegendPosition.InsideSE)
                         .withColorRangeSeries(new Color[]{Color.BLACK, Color.GRAY}),
                 inPlotting);
