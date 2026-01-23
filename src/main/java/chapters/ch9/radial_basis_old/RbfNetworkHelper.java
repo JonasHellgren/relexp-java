@@ -1,9 +1,7 @@
-package chapters.ch9.radial_basis;
+package chapters.ch9.radial_basis_old;
 
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.training.Weights;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;

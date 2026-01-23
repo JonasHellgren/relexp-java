@@ -1,4 +1,4 @@
-package chapters.ch9.radial_basis;
+package chapters.ch9.radial_basis_old;
 
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.training.TrainDataOld;
@@ -9,7 +9,7 @@ import lombok.Getter;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static chapters.ch9.radial_basis.RbfNetworkHelper.*;
+import static chapters.ch9.radial_basis_old.RbfNetworkHelper.*;
 
 
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package chapters.ch9.radial_basis;
+package chapters.ch9.radial_basis_old;
 
 import com.google.common.base.Preconditions;
 import core.foundation.util.collections.List2ArrayConverterUtil;

@@ -3,7 +3,7 @@ package ch11;
 import chapters.ch11.domain.agent.core.AgentLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.helper.RadialBasisAdapter;
-import chapters.ch9.radial_basis.RbfNetwork;
+import chapters.ch9.radial_basis_old.RbfNetwork;
 import com.google.common.collect.Lists;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting_core.base.shared.PlotSettings;

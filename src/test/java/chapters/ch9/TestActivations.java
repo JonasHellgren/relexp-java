@@ -1,8 +1,8 @@
 package chapters.ch9;
 
-import chapters.ch9.radial_basis.Activations;
-import chapters.ch9.radial_basis.Kernel;
-import chapters.ch9.radial_basis.Kernels;
+import chapters.ch9.radial_basis_old.Activations;
+import chapters.ch9.radial_basis_old.Kernel;
+import chapters.ch9.radial_basis_old.Kernels;
 import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;

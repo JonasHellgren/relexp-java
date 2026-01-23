@@ -1,7 +1,7 @@
 package ch9;
 
-import chapters.ch9.radial_basis.Kernels;
-import chapters.ch9.radial_basis.RbfNetwork;
+import chapters.ch9.radial_basis_old.Kernels;
+import chapters.ch9.radial_basis_old.RbfNetwork;
 import core.foundation.util.collections.ArrayCreatorUtil;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.plotting_core.base.shared.PlotSettings;

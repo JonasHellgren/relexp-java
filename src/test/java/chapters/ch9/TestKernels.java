@@ -1,7 +1,7 @@
 package chapters.ch9;
 
-import chapters.ch9.radial_basis.Kernel;
-import chapters.ch9.radial_basis.Kernels;
+import chapters.ch9.radial_basis_old.Kernel;
+import chapters.ch9.radial_basis_old.Kernels;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;

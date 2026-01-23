@@ -5,7 +5,7 @@ import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.factory.RbfMemoryFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
-import chapters.ch9.radial_basis.RbfNetwork;
+import chapters.ch9.radial_basis_old.RbfNetwork;
 import core.foundation.gadget.training.TrainDataOld;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

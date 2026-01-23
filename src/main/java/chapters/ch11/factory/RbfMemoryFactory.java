@@ -2,9 +2,9 @@ package chapters.ch11.factory;
 
 import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.param.LunarParameters;
-import chapters.ch9.radial_basis.Kernel;
-import chapters.ch9.radial_basis.Kernels;
-import chapters.ch9.radial_basis.RbfNetwork;
+import chapters.ch9.radial_basis_old.Kernel;
+import chapters.ch9.radial_basis_old.Kernels;
+import chapters.ch9.radial_basis_old.RbfNetwork;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

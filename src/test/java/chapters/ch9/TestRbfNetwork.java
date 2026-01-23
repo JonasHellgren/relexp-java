@@ -1,8 +1,8 @@
 package chapters.ch9;
 
-import chapters.ch9.radial_basis.Kernel;
-import chapters.ch9.radial_basis.Kernels;
-import chapters.ch9.radial_basis.RbfNetwork;
+import chapters.ch9.radial_basis_old.Kernel;
+import chapters.ch9.radial_basis_old.Kernels;
+import chapters.ch9.radial_basis_old.RbfNetwork;
 import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,8 +1,8 @@
 package ch9;
 
-import chapters.ch9.radial_basis.Kernel;
-import chapters.ch9.radial_basis.Kernels;
-import chapters.ch9.radial_basis.RbfNetwork;
+import chapters.ch9.radial_basis_old.Kernel;
+import chapters.ch9.radial_basis_old.Kernels;
+import chapters.ch9.radial_basis_old.RbfNetwork;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.gadget.training.TrainDataOld;
