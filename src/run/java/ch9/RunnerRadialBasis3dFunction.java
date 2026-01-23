@@ -1,13 +1,13 @@
 package ch9;
 
-import chapters.ch9.radial_basis_old.Kernel;
-import chapters.ch9.radial_basis_old.Kernels;
-import chapters.ch9.radial_basis_old.RbfNetwork;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
-import core.foundation.gadget.training.TrainDataOld;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.util.collections.ArrayCreatorUtil;
 import core.foundation.util.collections.ListCreatorUtil;
+import core.nextlevelrl.radial_basis.Kernel;
+import core.nextlevelrl.radial_basis.Kernels;
+import core.nextlevelrl.radial_basis.RbfNetwork;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
 import core.plotting_core.plotting_3d.HeatMapChartCreator;
@@ -19,8 +19,7 @@ class RunnerRadialBasis3dFunction {
 
     static final int LENGTH = 50;
     static final double F_MAX = 10.0;
-    static final int N_EPOCHS = 200;
-    static final int BATCH_LEN = 10;
+    static final int N_FITS = 500;
     static final int N_KERNELS_EACH_DIM = 20;  //10 20
     static final double K_SIGMA = 0.5;
     static final double LEARNING_RATE = 0.9;
@@ -30,12 +29,12 @@ class RunnerRadialBasis3dFunction {
         var timer = CpuTimer.empty();
         DoubleBinaryOperator fcn = (x, y) -> F_MAX * Math.sin((Math.PI / 3) * x * (7 - y));
         var kernels = createKernels();
-        rbfn = RbfNetwork.of(kernels, LEARNING_RATE);
+        rbfn = RbfNetwork.of(kernels, LEARNING_RATE,2);
         var trainData = createTrainData(fcn);
-        rbfn.fit(trainData,N_EPOCHS,BATCH_LEN);
+        rbfn.fit(trainData, N_FITS);
         timer.printInMs();
         showAndSaveData(createArrayData(fcn), "Reference HeatMap");
-        DoubleBinaryOperator fcnRbn = (x, y) -> rbfn.outPut(List.of(x, y));
+        DoubleBinaryOperator fcnRbn = (x, y) -> rbfn.outPutListIn(List.of(x, y));
         showAndSaveData(createArrayData(fcnRbn), "RBF HeatMap");
     }
 
@@ -57,11 +56,11 @@ class RunnerRadialBasis3dFunction {
         return kernels;
     }
 
-    private static TrainDataOld createTrainData(DoubleBinaryOperator fcn) {
-        var trainData = TrainDataOld.emptyFromOutputs();
+    private static TrainData createTrainData(DoubleBinaryOperator fcn) {
+        var trainData = TrainData.empty();
         for (double x : getXData()) {
             for (double y : getYData()) {
-                trainData.addIAndOut(List.of(x, y), fcn.applyAsDouble(x, y));
+                trainData.addListIn(List.of(x, y), fcn.applyAsDouble(x, y));
             }
         }
         return trainData;

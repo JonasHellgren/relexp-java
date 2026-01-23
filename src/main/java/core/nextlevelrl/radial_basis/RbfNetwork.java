@@ -3,6 +3,7 @@ package core.nextlevelrl.radial_basis;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.Accumulator;
 import core.foundation.gadget.training.TrainData;
+import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,13 +25,6 @@ public class RbfNetwork {
     public static RbfNetwork of(Kernels kernels, double learningRate, int nDim) {
         return of(kernels,learningRate,()->0, Double.MAX_VALUE,nDim);
     }
-
-/*
-    public static RbfNetwork of(Kernels kernels, MemoryParameters mp, int nDim) {
-        return of(kernels,mp.learningRate(),mp.initValueSupplier(),mp.errorBound(),nDim);
-    }
-*/
-
 
     public static RbfNetwork of(Kernels kernels,
                                 double learningRate,
@@ -89,6 +83,11 @@ public class RbfNetwork {
      */
     public double outPut(double[] input) {
         return calcOutput(getActivation(input), weights);
+    }
+
+
+    public double outPutListIn(List<Double> in) {
+        return calcOutput(getActivation(List2ArrayConverterUtil.convertListToDoubleArr(in)), weights);
     }
 
     public double[] getActivation(double[] input) {

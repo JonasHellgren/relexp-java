@@ -38,7 +38,6 @@ public class RunnerLinearFitter {
         var scatterChart = getScatterWithLineChartCreator(data, xLineList, yLineList);
         scatterChart.getStyler().setXAxisTickMarkSpacingHint(10);
         var errorChart = getLineChartCreator(errors);
-        //errorChart.getStyler().setXAxisTickMarkSpacingHint(100);
         ChartUtility.reduceXAxisTicksClutter(errorChart,10, "0");
         ChartSaverAndPlotter.showChartSaveInFolderGradientLearning(scatterChart, "scatterAndLine" + BATCH_SIZE);
         ChartSaverAndPlotter.showChartSaveInFolderGradientLearning(errorChart, "errorChart" + BATCH_SIZE);

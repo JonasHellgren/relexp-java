@@ -28,6 +28,11 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * replaceing model = .. with //model = NeuralNetBuilder.buildWillFail();
+ * gives fail due to negative init weights
+ */
+
 public class RunnerTrainerNeuralOneDimensional {
 
     public static final double MAX_X = 10d;
@@ -48,7 +53,6 @@ public class RunnerTrainerNeuralOneDimensional {
         INDArray[] data = DataGenerator.generateData(N_SAMPLES);
         var dataset = new DataSet(data[0], data[1]);
         model = NeuralNetBuilder.buildWillWork();
-        //model = NeuralNetBuilder.buildWillFail();
         var recorder = fitModel(dataset);
         timer.printInMs();
         var inPlotting = ListCreatorUtil.createFromStartToEndWithNofItems(0d, MAX_X, N_ITEMS_PLOTTING);

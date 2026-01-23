@@ -1,12 +1,12 @@
 package ch9;
 
-import chapters.ch9.radial_basis_old.Kernels;
-import chapters.ch9.radial_basis_old.RbfNetwork;
 import core.foundation.configOld.ProjectPropertiesReader;
-import core.foundation.gadget.training.TrainDataOld;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.util.collections.Array2ListConverterUtil;
 import core.foundation.util.collections.ArrayCreatorUtil;
 import core.foundation.util.collections.ListCreatorUtil;
+import core.nextlevelrl.radial_basis.Kernels;
+import core.nextlevelrl.radial_basis.RbfNetwork;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
@@ -28,9 +28,10 @@ public class RunnerRadialBasis1dLineOnlyMiniBatch {
     public static final int N_KERNELS = 6;
     public static final double SIGMA = 0.5 * (MAX_X / (N_KERNELS - 1));
     public static final double LEARNING_RATE = 0.1;
-    public static final int N_EPOCHS = 1000;
+    public static final int N_FITS = 1000;
     public static final int N_ITEMS_PLOTTING = 100;
     public static final int BATCH_SIZE = 10;
+    public static final int N_DIM = 1;
     static RbfNetwork rbBatch;
     static List<Double> inTraining;
     static List<List<Double>> inTrainingList;
@@ -50,7 +51,7 @@ public class RunnerRadialBasis1dLineOnlyMiniBatch {
         double[] sigmas = ArrayCreatorUtil.createArrayWithSameDoubleNumber(N_KERNELS, SIGMA);
         var kernels = Kernels.empty();
         kernels.addKernelsWithCentersAndSigmas(centers, sigmas);
-        rbBatch = RbfNetwork.of(kernels, LEARNING_RATE);
+        rbBatch = RbfNetwork.of(kernels, LEARNING_RATE, N_DIM);
         inTraining = ListCreatorUtil.createFromStartToEndWithNofItems(0d, MAX_X, BATCH_SIZE);
         inTrainingList = inTraining.stream().map(in -> List.of(in)).toList();
         outTrainingList = ListCreatorUtil.createFromStartToEndWithNofItems(0d, MAX_Y, BATCH_SIZE);
@@ -68,17 +69,17 @@ public class RunnerRadialBasis1dLineOnlyMiniBatch {
     private static void showKernelChart(RbfNetwork rb1, String titleRbf, String fileName) {
         var chartRbf = getChartRbf(titleRbf);
         var xData = getXData();
-        var yData = Array2ListConverterUtil.arrayToList(rb1.getWeights().getArray());
+        var yData = Array2ListConverterUtil.arrayToList(rb1.getWeights().getWeights());
         chartRbf.addSeries(titleRbf, xData, yData);
         ChartSaverAndPlotter.showChartSaveInFolderRbf(chartRbf, fileName);
     }
 
     static void fitWeights(RbfNetwork rb) {
-        var data = TrainDataOld.emptyFromOutputs();
+        var data = TrainData.empty();
         for (int i = 0; i < inTrainingList.size(); i++) {
-            data.addIAndOut(inTrainingList.get(i), outTrainingList.get(i));
+            data.addListIn(inTrainingList.get(i), outTrainingList.get(i));
         }
-        rb.fit(data, N_EPOCHS,BATCH_SIZE);  // int nEpochs, int batchSize
+        rb.fit(data, N_FITS);
     }
 
 
@@ -109,7 +110,7 @@ public class RunnerRadialBasis1dLineOnlyMiniBatch {
 
 
     private static List<Double> getOutPlottingRbfList(RbfNetwork rb) {
-        return inPlotting.stream().map(in -> rb.outPut(List.of(in))).toList();
+        return inPlotting.stream().map(in -> rb.outPut(new double[]{in})).toList();
     }
 
 
