@@ -3,7 +3,7 @@ package chapters.ch2.factory;
 import chapters.ch2.domain.fitting.FittingParameters;
 import chapters.ch2.domain.parameter_fitting.LearningRateFittingResults;
 import chapters.ch2.impl.parameter_fitting.FitterSingleParameter;
-import core.foundation.gadget.training.TrainDataInOut;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.util.collections.ListUtil;
 import lombok.experimental.UtilityClass;
 
@@ -20,7 +20,7 @@ public class TrainingResultsGenerator {
         for (double learningRate : learningRates) {
             var par1 = par0.withLearningRate(learningRate);
             var fitter = FitterSingleParameter.of(par1);
-            var data = TrainDataInOut.empty();
+            var data = TrainData.empty();
             var outputs0 = getOutputs(data, par0, fitter);
             var outputs = ListUtil.merge(List.of(START_W),outputs0);
             trainingResults.add(learningRate, outputs);
@@ -28,8 +28,8 @@ public class TrainingResultsGenerator {
         return trainingResults;
     }
 
-    private static List<Double> getOutputs(TrainDataInOut data, FittingParameters par0, FitterSingleParameter fitter) {
-        data.add(List.of(0d), OUTPUT_TARGET);
+    private static List<Double> getOutputs(TrainData data, FittingParameters par0, FitterSingleParameter fitter) {
+        data.addListIn(List.of(0d), OUTPUT_TARGET);
         List<Double> results = new ArrayList<>();
         for (int i = 0; i < par0.nofIterations(); i++) {
             fitter.fit(data);

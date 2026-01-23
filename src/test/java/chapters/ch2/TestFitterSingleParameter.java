@@ -2,8 +2,7 @@ package chapters.ch2;
 
 import chapters.ch2.factory.FittingParametersFactory;
 import chapters.ch2.impl.parameter_fitting.FitterSingleParameter;
-import core.foundation.gadget.training.TrainDataInOut;
-import core.foundation.gadget.training.TrainDataOld;
+import core.foundation.gadget.training.TrainData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,8 +25,8 @@ public class TestFitterSingleParameter {
 
     @Test
     void whenFitted_thenCorrect() {
-        var data = TrainDataInOut.empty();
-        data.add(List.of(DUMMY_IN), 1.0);
+        var data = TrainData.empty();
+        data.addListIn(List.of(DUMMY_IN), 1.0);
         IntStream.range(0, N_EPOCHS).forEach(i -> fitter.fit(data));
         assertEquals(1.0, fitter.read(DUMMY_IN), TOL);
     }

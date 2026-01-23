@@ -3,7 +3,7 @@ package chapters.ch2.impl.function_fitting;
 import chapters.ch2.domain.fitting.FitterFunctionI;
 import chapters.ch2.domain.fitting.MemoryFitterOutput;
 import chapters.ch2.domain.fitting.TabularMemory;
-import core.foundation.gadget.training.TrainDataInOut;
+import core.foundation.gadget.training.TrainData;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -24,7 +24,7 @@ public class FitterFunctionOutput implements FitterFunctionI {
     }
 
     @Override
-    public void fit(TrainDataInOut data) {
+    public void fit(TrainData data) {
         fitter.fit(data);
     }
 

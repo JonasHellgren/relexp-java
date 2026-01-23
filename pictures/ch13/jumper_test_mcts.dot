@@ -1,41 +1,23 @@
 digraph MCTS {
 node [shape=ellipse];
 Nroot [label="(root)
-<100|2,6>"];
-Nroot -> N920[penwidth=3];
-N920 [label="(920|up)
-<93|2,8>"];
-N920 -> N394[penwidth=3];
-N394 [label="(394|up)
-<91|2,0>"];
-N394 -> N507[penwidth=3];
-N507 [label="(507|up)
-<87|1,0>"];
-N394 -> N933[penwidth=1];
-N933 [label="(933|n)
-<3|-0,2>"];
-N920 -> N76[penwidth=1];
-N76 [label="(76|n)
+<100|2,9>"];
+Nroot -> N973[penwidth=3];
+N973 [label="(973|up)
+<99|3,0>"];
+N973 -> N617[penwidth=1];
+N617 [label="(617|n)
 <1|-0,3>"];
-Nroot -> N99[penwidth=1];
-N99 [label="(99|n)
-<7|0,0>"];
-N99 -> N723[penwidth=1];
-N723 [label="(723|up)
-<3|0,0>"];
-N723 -> N572[penwidth=1];
-N572 [label="(572|n)
-<1|0,0>"];
-N723 -> N179[penwidth=1];
-N179 [label="(179|up)
-<1|0,0>"];
-N99 -> N250[penwidth=1];
-N250 [label="(250|n)
-<3|0,0>"];
-N250 -> N34[penwidth=1];
-N34 [label="(34|n)
-<1|0,0>"];
-N250 -> N223[penwidth=1];
-N223 [label="(223|up)
+N973 -> N777[penwidth=3];
+N777 [label="(777|up)
+<97|2,0>"];
+N777 -> N816[penwidth=3];
+N816 [label="(816|up)
+<93|1,0>"];
+N777 -> N534[penwidth=1];
+N534 [label="(534|n)
+<3|-0,2>"];
+Nroot -> N756[penwidth=1];
+N756 [label="(756|n)
 <1|0,0>"];
 }

@@ -1,9 +1,9 @@
 package core.radial_basis;
 
+import core.foundation.gadget.training.TrainData;
 import core.nextlevelrl.radial_basis.Kernel;
 import core.nextlevelrl.radial_basis.Kernels;
 import core.nextlevelrl.radial_basis.RbfNetwork;
-import core.nextlevelrl.radial_basis.TrainData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,8 +46,8 @@ public class TestRbfNetwork1D {
 
     private TrainData createData() {
         data=TrainData.empty();
-        data.addIAndOut(new double[]{0.0}, 1.0);
-        data.addIAndOut(new double[]{1.0}, 2.0);
+        data.add(new double[]{0.0}, 1.0);
+        data.add(new double[]{1.0}, 2.0);
         return data;
     }
 

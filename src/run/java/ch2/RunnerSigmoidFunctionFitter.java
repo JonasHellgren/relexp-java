@@ -6,7 +6,7 @@ import core.plotting_core.chart_plotting.ChartSaver;
 import core.plotting_core.factory.ChartFactory;
 import chapters.ch2.factory.FitterFunctionFactory;
 import chapters.ch2.factory.FittingParametersFactory;
-import core.foundation.gadget.training.TrainDataInOut;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.util.math.SigmoidFunctionsUtil;
 import core.foundation.util.rand.RandUtil;
 import core.plotting_core.plotting_2d.ChartUtility;
@@ -26,7 +26,7 @@ public class RunnerSigmoidFunctionFitter {
         var parameters = FittingParametersFactory.produceDefault();
         double range= parameters.range();
         double margin= parameters.margin();
-        TrainDataInOut data = getTrainData(range);
+        TrainData data = getTrainData(range);
         var fitter = FitterFunctionFactory.produceOutput(parameters);
         IntStream.range(0, N_EPOCHS).forEach(i -> fitter.fit(data));
         var chart = getXyChart(range, margin, fitter);
@@ -43,12 +43,12 @@ public class RunnerSigmoidFunctionFitter {
     }
 
 
-    private static TrainDataInOut getTrainData(double range) {
-        var data = TrainDataInOut.empty();
+    private static TrainData getTrainData(double range) {
+        var data = TrainData.empty();
         for (int i = 0; i < N_SAMPLES; i++) {
             double xRand= RandUtil.doubleInInterval(-range, range);
             double y= SigmoidFunctionsUtil.sigmoid.applyAsDouble(xRand);
-            data.add(List.of(xRand), y);
+            data.addListIn(List.of(xRand), y);
         }
         return data;
     }

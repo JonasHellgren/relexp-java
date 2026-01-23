@@ -2,6 +2,7 @@ package core.nextlevelrl.radial_basis;
 
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.Accumulator;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

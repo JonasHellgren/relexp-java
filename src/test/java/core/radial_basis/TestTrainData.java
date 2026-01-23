@@ -1,13 +1,12 @@
 package core.radial_basis;
 
-import core.nextlevelrl.radial_basis.TrainData;
+import core.foundation.gadget.training.TrainData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
 public class TestTrainData {
-
 
     List<double[]> input;
 
@@ -29,7 +28,7 @@ public class TestTrainData {
         double output = 42.0;
         TrainData data = TrainData.empty();
         double[] inArr = {1.0, 2.0, 3.0};
-        data.addIAndOut(inArr, output);
+        data.add(inArr, output);
         Assertions.assertEquals(inArr, data.inputs().get(0));
         Assertions.assertEquals(output, data.outputs().get(0));
     }

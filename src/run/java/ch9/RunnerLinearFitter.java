@@ -4,6 +4,7 @@ import chapters.ch9.gradient_descent.LinearFitter;
 import chapters.ch9.gradient_descent.PhiExtractor;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.plotting_core.base.shared.PlotSettings;
@@ -62,14 +63,14 @@ public class RunnerLinearFitter {
 
     @SneakyThrows
     private static XYChart getScatterWithLineChartCreator(
-            TrainDataOld data, List<Double> inList,
+            TrainData data, List<Double> inList,
             List<Double> outList) {
         var weight = ProjectPropertiesReader.create().xyChartWidth2Col();
         var height = ProjectPropertiesReader.create().xyChartHeight();
         var chartCreator = ScatterWithLineChartCreator.of(PlotSettings.ofDefaults()
                 .withWidth(weight).withHeight(height));
         chartCreator.addLine(inList, outList);
-        chartCreator.addScatter(data.inputs().stream()
+        chartCreator.addScatter(data.inputsAsListList().stream()
                 .map(x -> x.get(0)).toList(), data.outputs().stream().toList());
         return chartCreator.create();
     }
@@ -87,8 +88,8 @@ public class RunnerLinearFitter {
         return phiExtractor;
     }
 
-    private static TrainDataOld getTrainData() {
-        var data = TrainDataOld.emptyFromOutputs();
+    private static TrainData getTrainData() {
+        var data = TrainData.empty();
         var outList = List.of(
                 4.5 + 1.0,
                 4.2 + 1.0,
@@ -114,7 +115,7 @@ public class RunnerLinearFitter {
 
         var inList = ListCreatorUtil.createFromStartToEndWithNofItems(MIN_X, MAX_X, outList.size());
         inList.stream().forEach(in ->
-                data.addIAndOut(List.of(in), outList.get(inList.indexOf(in))));
+                data.addListIn(List.of(in), outList.get(inList.indexOf(in))));
         return data;
     }
 
