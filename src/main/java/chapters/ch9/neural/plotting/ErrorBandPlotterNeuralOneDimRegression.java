@@ -39,15 +39,17 @@ public class ErrorBandPlotterNeuralOneDimRegression {
         }
     }
 
-    private void showAndSavePlot(MeasuresOneDimRegressionNeuralEnum measure, ErrorBandData errorBandData) {
+    private void showAndSavePlot(MeasuresOneDimRegressionNeuralEnum measure,
+                                 ErrorBandData errorBandData) {
         var settings= ErrorBandSaverAndPlotter.getSettings(measure.description, X_LABEL, false, false);
         var creator = ErrorBandCreator.newOfSettings(settings);
         addErrorBandFilter(measure, creator, errorBandData);
         ErrorBandSaverAndPlotter.showAndSave(creator, PathAndFile.ofPng(filePath, measure+fileNameAddOn));
     }
 
-    private static void addErrorBandFilter(MeasuresOneDimRegressionNeuralEnum measure, ErrorBandCreator creator, ErrorBandData errorBandData) {
-        //double[] errData = errorBandData.errDataFilteredAsArray();
+    private static void addErrorBandFilter(MeasuresOneDimRegressionNeuralEnum measure,
+                                           ErrorBandCreator creator,
+                                           ErrorBandData errorBandData) {
         double[] errData= ArrayCreatorUtil.createArrayWithSameDoubleNumber(errorBandData.xDataAsArray().length, 0.0);
         creator.addErrorBand(measure.description,
                 errorBandData.xDataAsArray(),

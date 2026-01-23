@@ -1,7 +1,6 @@
 package chapters.ch9.neural.plotting;
 
 import lombok.AllArgsConstructor;
-
 import java.util.function.Function;
 
 @AllArgsConstructor

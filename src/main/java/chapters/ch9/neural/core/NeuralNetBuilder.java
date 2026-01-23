@@ -10,6 +10,11 @@ import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.learning.config.Adam;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 
+
+/**
+ * Utility class for building neural networks.
+ */
+
 @UtilityClass
 public class NeuralNetBuilder {
 

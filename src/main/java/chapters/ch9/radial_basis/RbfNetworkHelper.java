@@ -4,9 +4,11 @@ import com.google.common.base.Preconditions;
 import core.foundation.gadget.training.Weights;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.UtilityClass;
+
 import java.util.List;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 public class RbfNetworkHelper {
 
     public static double calcOutput(List<Double> activation, Weights weights) {

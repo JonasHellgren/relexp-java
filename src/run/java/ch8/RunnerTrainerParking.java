@@ -16,6 +16,7 @@ import static chapters.ch8.factory.TrainerDepFactory.getTrainerDependenciesParki
 public class RunnerTrainerParking {
 
     public static final double FEE_CHARGING = 2;  //2 or 3
+    public static final String FILE_NAME_VALUES = "park_values_curve_fee";
 
     public static void main(String[] args) {
         var dependencies = getDependenciesParking();
@@ -33,7 +34,7 @@ public class RunnerTrainerParking {
         double feeNoCharging = dependencies.environment().getParameters().feeNoCharging();
         agentPlotter.plotMemory(Pair.create(feeNoCharging, FEE_CHARGING));
         var agentCurvePlotter = AgentParkingMemoryCurvePlotter.of(dependencies);
-        agentCurvePlotter.saveAndShow(path,"park_values_curve_fee"+FEE_CHARGING,plotCfg);
+        agentCurvePlotter.saveAndShow(path, FILE_NAME_VALUES +FEE_CHARGING,plotCfg);
     }
 
     private static TrainerDependenciesParking getDependenciesParking() {

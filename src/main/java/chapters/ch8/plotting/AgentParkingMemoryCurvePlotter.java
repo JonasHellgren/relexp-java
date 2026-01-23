@@ -22,7 +22,6 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AgentParkingMemoryCurvePlotter {
 
-    public static final Font VALUE_TEXT_FONT = new Font("Arial", Font.PLAIN, 12);
     public static final int NOF_DIGITS = 2;
 
     TrainerDependenciesParking dependencies;
