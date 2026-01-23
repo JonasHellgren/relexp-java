@@ -12,9 +12,7 @@ import java.util.function.ToDoubleFunction;
  */
 @AllArgsConstructor
 public class PhiExtractor {
-
-    public List<ToDoubleFunction<List<Double>>> functionList;
-
+    private List<ToDoubleFunction<List<Double>>> functionList;
 
     public static PhiExtractor empty() {
         return new PhiExtractor(new ArrayList<>());
@@ -22,6 +20,10 @@ public class PhiExtractor {
 
     public static PhiExtractor of(List<ToDoubleFunction<List<Double>>> functionList) {
         return new PhiExtractor(functionList);
+    }
+
+    public void addFunction(ToDoubleFunction<List<Double>> fcn) {
+        functionList.add(fcn);
     }
 
     public int nPhis() {
@@ -34,4 +36,5 @@ public class PhiExtractor {
         var function = functionList.get(idxDimension);
         return function.applyAsDouble(input);
     }
+
 }

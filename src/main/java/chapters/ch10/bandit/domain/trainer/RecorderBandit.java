@@ -1,7 +1,7 @@
 package chapters.ch10.bandit.domain.trainer;
 
-import chapters.ch10.bandit._shared.MeasuresBandit;
-import chapters.ch10.bandit._shared.MeasuresBanditEnum;
+import chapters.ch10.plotting.MeasuresBandit;
+import chapters.ch10.plotting.MeasuresBanditEnum;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.ArrayList;

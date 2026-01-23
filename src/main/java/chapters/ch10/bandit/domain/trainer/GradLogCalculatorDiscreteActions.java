@@ -1,4 +1,4 @@
-package chapters.ch10.bandit._shared;
+package chapters.ch10.bandit.domain.trainer;
 
 import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.foundation.util.collections.ListCreatorUtil;

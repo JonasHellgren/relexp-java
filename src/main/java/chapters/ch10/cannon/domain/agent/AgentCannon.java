@@ -13,9 +13,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AgentCannon {
 
-    MemoryCannon memory;
-    NormDistributionSampler sampler;
-    AgentParametersCannon parameters;
+    private MemoryCannon memory;
+    private NormDistributionSampler sampler;
+    private AgentParametersCannon parameters;
 
     public static AgentCannon of(AgentParametersCannon parameters) {
         return new AgentCannon(

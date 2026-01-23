@@ -19,8 +19,8 @@ public class TestLinearFitter {
     @BeforeEach
     void init() {
         var phiExtractor = PhiExtractor.empty();
-        phiExtractor.functionList.add(x -> 1);
-        phiExtractor.functionList.add(x -> x.get(0));
+        phiExtractor.addFunction(x -> 1);
+        phiExtractor.addFunction(x -> x.get(0));
         var data = TrainData.empty();
         data.addListIn(List.of(0.1), 5.0 + 1.0);
         data.addListIn(List.of(0.3), 5.0 + 3.0);

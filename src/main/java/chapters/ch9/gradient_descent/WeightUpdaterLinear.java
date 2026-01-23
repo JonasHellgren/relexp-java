@@ -2,7 +2,6 @@ package chapters.ch9.gradient_descent;
 
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.training.TrainData;
-import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.gadget.training.Weights;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

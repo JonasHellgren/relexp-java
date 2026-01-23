@@ -34,4 +34,21 @@ public record TrainerDependenciesBandit(
     public StepReturnBandit step(ActionBandit action) {
         return environment.step(action);
     }
+
+
+    public double[] calculateGradLog(ExperienceBandit experience, double[] probs) {
+        return GradLogCalculatorDiscreteActions.calc(experience.action().getIndex(), probs);
+    }
+
+    public void updateAgentMemory(double learningRate, double returnAtT, double[] gradLog) {
+        agent.updateMemory(learningRate, returnAtT, gradLog);
+    }
+
+    public double learningRate() {
+        return trainerParameters.learningRate();
+    }
+
+    public double[] actionProbabilities() {
+        return agent.actionProbabilities();
+    }
 }

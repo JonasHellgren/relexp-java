@@ -1,4 +1,4 @@
-package chapters.ch10.cannon.factory;
+package chapters.ch10.factory;
 
 import chapters.ch10.cannon.domain.trainer.TrainerParametersCannon;
 import lombok.experimental.UtilityClass;

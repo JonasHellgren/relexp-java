@@ -1,4 +1,4 @@
-package chapters.ch10.bandit._shared;
+package chapters.ch10.plotting;
 
 import lombok.AllArgsConstructor;
 

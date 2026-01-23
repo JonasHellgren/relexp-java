@@ -19,7 +19,6 @@ public record AgentParametersCannon(
         double gradzStdMax
 ) {
 
-
     public double minZStd() {
         return log(meanAndStdMin.std());
     }
@@ -31,7 +30,6 @@ public record AgentParametersCannon(
     public MeanAndStdMemoryParameters zInit() {
         return MeanAndStdMemoryParameters.of(meanAndStdInit.mean(), log(meanAndStdInit.std()));
     }
-
 
     private double log(double std) {
         return Math.log(std);

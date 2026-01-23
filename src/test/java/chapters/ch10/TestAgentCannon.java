@@ -1,7 +1,7 @@
 package chapters.ch10;
 
 import chapters.ch10.cannon.domain.agent.AgentCannon;
-import chapters.ch10.cannon.factory.FactoryAgentParametersCannon;
+import chapters.ch10.factory.FactoryAgentParametersCannon;
 import core.foundation.util.math.MathUtil;
 import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import org.junit.jupiter.api.Assertions;

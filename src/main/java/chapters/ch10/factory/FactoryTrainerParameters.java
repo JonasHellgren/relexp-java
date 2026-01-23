@@ -1,4 +1,4 @@
-package chapters.ch10.bandit.factory;
+package chapters.ch10.factory;
 
 import chapters.ch10.bandit.domain.trainer.TrainerParametersBandit;
 import lombok.experimental.UtilityClass;

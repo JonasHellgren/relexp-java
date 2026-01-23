@@ -19,8 +19,8 @@ public class TestWeightUpdaterLinear {
      @BeforeEach
       void init() {
          var phiExtractor = PhiExtractor.empty();
-         phiExtractor.functionList.add(x -> 1);
-         phiExtractor.functionList.add(x -> x.get(0));
+         phiExtractor.addFunction(x -> 1);
+         phiExtractor.addFunction(x -> x.get(0));
          updater= WeightUpdaterLinear.of(LEARNING_RATE, phiExtractor);
          data= TrainData.empty();
          data.addListIn(List.of(0.1), 5.0+1.0);

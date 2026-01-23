@@ -1,7 +1,7 @@
 package chapters.ch10.cannon.domain.trainer;
 
-import chapters.ch10.cannon.plotting.MeasuresCannon;
-import chapters.ch10.cannon.plotting.MeasuresCannonEnum;
+import chapters.ch10.plotting.MeasuresCannon;
+import chapters.ch10.plotting.MeasuresCannonEnum;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.ArrayList;

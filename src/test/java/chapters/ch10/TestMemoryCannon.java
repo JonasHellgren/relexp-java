@@ -2,7 +2,7 @@ package chapters.ch10;
 
 import chapters.ch10.cannon.domain.agent.AgentParametersCannon;
 import chapters.ch10.cannon.domain.agent.MemoryCannon;
-import chapters.ch10.cannon.factory.FactoryAgentParametersCannon;
+import chapters.ch10.factory.FactoryAgentParametersCannon;
 import core.foundation.gadget.math.MeanAndStd;
 import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import org.junit.jupiter.api.BeforeEach;

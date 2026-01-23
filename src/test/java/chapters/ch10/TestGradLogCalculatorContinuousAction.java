@@ -1,7 +1,7 @@
 package chapters.ch10;
 
-import chapters.ch10.cannon.factory.FactoryTrainerParametersCannon;
-import chapters.ch10.cannon.gradient_calculator.GradLogCalculatorContinuousAction;
+import chapters.ch10.factory.FactoryTrainerParametersCannon;
+import chapters.ch10.cannon.domain.trainer.GradLogCalculatorContinuousAction;
 import core.foundation.gadget.math.MeanAndStd;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

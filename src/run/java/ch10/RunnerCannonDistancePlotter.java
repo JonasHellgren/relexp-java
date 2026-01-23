@@ -1,7 +1,7 @@
 package ch10;
 
 import chapters.ch10.cannon.domain.envrionment.EnvironmentCannon;
-import chapters.ch10.cannon.factory.FactoryEnvironmentParametersCannon;
+import chapters.ch10.factory.FactoryEnvironmentParametersCannon;
 import core.foundation.util.unit_converter.UnitConverterUtil;
 import core.plotting_rl.chart.ChartCreatorFactory;
 import core.plotting_core.chart_plotting.ChartSaverAndPlotter;

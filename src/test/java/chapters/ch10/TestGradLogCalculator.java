@@ -1,6 +1,6 @@
 package chapters.ch10;
 
-import chapters.ch10.bandit._shared.GradLogCalculatorDiscreteActions;
+import chapters.ch10.bandit.domain.trainer.GradLogCalculatorDiscreteActions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 

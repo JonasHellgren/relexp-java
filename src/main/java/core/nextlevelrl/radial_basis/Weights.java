@@ -10,12 +10,11 @@ import java.util.function.DoubleSupplier;
 @AllArgsConstructor
 public class Weights {
 
-    double[] weights;
+    private double[] weights;
 
     public static Weights allZero(int size) {
        return new Weights(createWeightsAllZero(size));
     }
-
 
     public double[] getWeights() {
         double[] weightsCop= new double[size()];

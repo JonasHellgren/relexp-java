@@ -1,7 +1,7 @@
 package chapters.ch10;
 
-import chapters.ch10.bandit._shared.MeasuresBandit;
-import chapters.ch10.bandit._shared.MeasuresBanditEnum;
+import chapters.ch10.plotting.MeasuresBandit;
+import chapters.ch10.plotting.MeasuresBanditEnum;
 import chapters.ch10.bandit.domain.trainer.RecorderBandit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

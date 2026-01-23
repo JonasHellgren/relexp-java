@@ -1,6 +1,6 @@
 package ch12;
 
-import chapters.ch10.bandit.factory.FactoryEnvironmentParametersBandit;
+import chapters.ch10.factory.FactoryEnvironmentParametersBandit;
 import chapters.ch12.bandit.core.BanditActionValueTrainer;
 import chapters.ch12.bandit.plotting.ErrorBandPlotterNeuralBandit;
 import chapters.ch12.bandit.plotting.MeasuresBanditNeuralEnum;

@@ -2,7 +2,7 @@ package chapters.ch10;
 
 import chapters.ch10.bandit.domain.agent.AgentBandit;
 import chapters.ch10.bandit.domain.environment.ActionBandit;
-import chapters.ch10.bandit.factory.FactoryAgentParametersBandit;
+import chapters.ch10.factory.FactoryAgentParametersBandit;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

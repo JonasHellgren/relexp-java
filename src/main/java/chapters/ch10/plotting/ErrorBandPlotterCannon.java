@@ -1,6 +1,6 @@
-package chapters.ch10.bandit._shared;
+package chapters.ch10.plotting;
 
-import chapters.ch10.bandit.domain.trainer.RecorderBandit;
+import chapters.ch10.cannon.domain.trainer.RecorderCannon;
 import com.google.common.base.Preconditions;
 import core.foundation.config.PathAndFile;
 import core.foundation.util.cond.ConditionalsUtil;
@@ -12,30 +12,34 @@ import lombok.AllArgsConstructor;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * A utility class for plotting cannon training process.
+ */
+
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ErrorBandPlotterBandit {
+public class ErrorBandPlotterCannon {
 
     public static final String X_LABEL = "Episode";
-    private final RecorderBandit recorder;
+    private final RecorderCannon recorder;
     private final String filePath;
     private final String fileNameAddOn;
     private final int nWindows;
     private final boolean isFiltering;
 
-    public static ErrorBandPlotterBandit ofNoFiltering(RecorderBandit recorder,
+    public static ErrorBandPlotterCannon ofNoFiltering(RecorderCannon recorder,
                                                        String filePath,
                                                        String fileNameAddOn) {
-        return new ErrorBandPlotterBandit(recorder, filePath, fileNameAddOn,1,false);
+        return new ErrorBandPlotterCannon(recorder, filePath, fileNameAddOn,1,false);
     }
 
-    public static ErrorBandPlotterBandit ofFiltering(RecorderBandit recorder,
+    public static ErrorBandPlotterCannon ofFiltering(RecorderCannon recorder,
                                                      String filePath,
                                                      String fileNameAddOn,
                                                      int nWindows) {
-        return new ErrorBandPlotterBandit(recorder, filePath, fileNameAddOn,nWindows,true);
+        return new ErrorBandPlotterCannon(recorder, filePath, fileNameAddOn,nWindows,true);
     }
 
-    public void plotAndSave(List<MeasuresBanditEnum> measures) {
+    public void plotAndSave(List<MeasuresCannonEnum> measures) {
         Preconditions.checkArgument(!recorder.isEmpty(), "No training progress data to plot");
         for (var measure : measures) {
             var errorBandData = ErrorBandData.of(recorder.trajectory(measure), nWindows);
@@ -43,7 +47,7 @@ public class ErrorBandPlotterBandit {
         }
     }
 
-    private void showAndSavePlot(MeasuresBanditEnum measure, ErrorBandData errorBandData) {
+    private void showAndSavePlot(MeasuresCannonEnum measure, ErrorBandData errorBandData) {
         var settings= ErrorBandSaverAndPlotter.getSettings(measure.description, X_LABEL, false, false);
         var creator = ErrorBandCreator.newOfSettings(settings);
         ConditionalsUtil.executeOneOfTwo(isFiltering,
@@ -52,7 +56,7 @@ public class ErrorBandPlotterBandit {
         ErrorBandSaverAndPlotter.showAndSave(creator, PathAndFile.ofPng(filePath, measure+fileNameAddOn));
     }
 
-    private static void addErrorBandFilter(MeasuresBanditEnum measure, ErrorBandCreator creator, ErrorBandData errorBandData) {
+    private static void addErrorBandFilter(MeasuresCannonEnum measure, ErrorBandCreator creator, ErrorBandData errorBandData) {
         creator.addErrorBand(measure.description,
                 errorBandData.xDataAsArray(),
                 errorBandData.yDataFilteredAsArray(),
@@ -60,7 +64,7 @@ public class ErrorBandPlotterBandit {
                 Color.BLACK);
     }
 
-    private static void addErrorBandNoFilter(MeasuresBanditEnum measure, ErrorBandCreator creator, ErrorBandData errorBandData) {
+    private static void addErrorBandNoFilter(MeasuresCannonEnum measure, ErrorBandCreator creator, ErrorBandData errorBandData) {
         creator.addErrorBand(measure.description,
                 errorBandData.xDataAsArray(),
                 errorBandData.yDataNotFilteredAsArray(),

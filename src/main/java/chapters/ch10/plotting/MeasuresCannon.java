@@ -1,4 +1,4 @@
-package chapters.ch10.cannon.plotting;
+package chapters.ch10.plotting;
 
 import lombok.Builder;
 

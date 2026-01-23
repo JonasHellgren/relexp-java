@@ -10,9 +10,9 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class TdErrorClipper {
 
-    double errorBound;
-    Counter counter;
-    int errorListSize;
+    private double errorBound;
+    private Counter counter;
+    private int errorListSize;
 
     public static TdErrorClipper of(double errorBound) {
         return new TdErrorClipper(errorBound,Counter.empty(),0);

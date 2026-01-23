@@ -1,7 +1,6 @@
-package chapters.ch10.cannon.gradient_calculator;
+package chapters.ch10.cannon.domain.trainer;
 
 
-import chapters.ch10.cannon.domain.trainer.TrainerParametersCannon;
 import core.foundation.gadget.math.MeanAndStd;
 import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import core.nextlevelrl.gradient.NormalDistributionGradientCalculator;

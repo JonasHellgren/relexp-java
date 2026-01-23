@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class EpisodeGeneratorCannon {
 
-    TrainerDependenciesCannon dependencies;
+    private TrainerDependenciesCannon dependencies;
 
     public static EpisodeGeneratorCannon of(TrainerDependenciesCannon dependencies) {
         return new EpisodeGeneratorCannon(dependencies);

@@ -1,14 +1,14 @@
 package chapters.ch10;
 
 
-import chapters.ch10.bandit._shared.MeasuresBanditEnum;
+import chapters.ch10.plotting.MeasuresBanditEnum;
 import chapters.ch10.bandit.domain.agent.AgentBandit;
 import chapters.ch10.bandit.domain.environment.EnvironmentBandit;
 import chapters.ch10.bandit.domain.trainer.TrainerBandit;
 import chapters.ch10.bandit.domain.trainer.TrainerDependenciesBandit;
-import chapters.ch10.bandit.factory.FactoryAgentParametersBandit;
-import chapters.ch10.bandit.factory.FactoryEnvironmentParametersBandit;
-import chapters.ch10.bandit.factory.FactoryTrainerParameters;
+import chapters.ch10.factory.FactoryAgentParametersBandit;
+import chapters.ch10.factory.FactoryEnvironmentParametersBandit;
+import chapters.ch10.factory.FactoryTrainerParameters;
 import core.foundation.util.collections.ListUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

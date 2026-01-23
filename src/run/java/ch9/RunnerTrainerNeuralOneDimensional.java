@@ -6,7 +6,7 @@ import chapters.ch9.plotting.ErrorBandPlotterNeuralOneDimRegression;
 import chapters.ch9.plotting.MeasuresOneDimRegressionNeural;
 import chapters.ch9.plotting.MeasuresOneDimRegressionNeuralEnum;
 import chapters.ch9.plotting.NeuralOneDimRegressionRecorder;
-import core.foundation.configOld.ProjectPropertiesReader;
+import core.foundation.config.ConfigFactory;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.util.collections.Array2ListConverterUtil;
@@ -64,7 +64,7 @@ public class RunnerTrainerNeuralOneDimensional {
     }
 
     static void lossPlotting(NeuralOneDimRegressionRecorder recorder) throws IOException {
-        var path = ProjectPropertiesReader.create().pathAdvConcepts();
+        var path = ConfigFactory.pathPicsConfig().ch9();
         var plotter = ErrorBandPlotterNeuralOneDimRegression.ofFiltering(
                 recorder,
                 path,
@@ -109,11 +109,11 @@ public class RunnerTrainerNeuralOneDimensional {
 
     @SneakyThrows
     private static XYChart getChartCorrelation(List<Double> inPlotting, String titleRbf) {
-        var weight = ProjectPropertiesReader.create().xyChartWidth2Col();
-        var height = ProjectPropertiesReader.create().xyChartHeight();
+        var plotCfg = ConfigFactory.plotConfig();
         var chartCreator = ManyLinesChartCreator.of(
                 PlotSettings.ofDefaults()
-                        .withWidth(weight).withHeight(height)
+                        .withWidth(plotCfg.xyChartWidth2Col())
+                        .withHeight(plotCfg.xyChartHeight())
                         .withLegendPosition(Styler.LegendPosition.InsideSE)
                         .withColorRangeSeries(new Color[]{Color.BLACK, Color.GRAY}),
                 inPlotting);

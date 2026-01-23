@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class EnvironmentCannon {
 
-    EnvironmentParametersCannon parameters;
+    private EnvironmentParametersCannon parameters;
 
     public static EnvironmentCannon of(EnvironmentParametersCannon parameters) {
         return new EnvironmentCannon(parameters);
@@ -32,7 +32,6 @@ public class EnvironmentCannon {
         double v0Sqr = Math.pow(p.v0(), 2);
         double d = (1 - p.kp() * v0Sqr) * v0Sqr * Math.sin(2 * psi) / p.g();
         double reward = -Math.abs(d - p.D());
-
         return StepReturnCannon.builder()
                 .reward(reward)
                 .distance(d)

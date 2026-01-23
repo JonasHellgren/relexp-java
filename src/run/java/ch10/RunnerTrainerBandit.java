@@ -1,14 +1,14 @@
 package ch10;
 
-import chapters.ch10.bandit._shared.ErrorBandPlotterBandit;
-import chapters.ch10.bandit._shared.MeasuresBanditEnum;
+import chapters.ch10.plotting.ErrorBandPlotterBandit;
+import chapters.ch10.plotting.MeasuresBanditEnum;
 import chapters.ch10.bandit.domain.agent.AgentBandit;
 import chapters.ch10.bandit.domain.environment.EnvironmentBandit;
 import chapters.ch10.bandit.domain.trainer.TrainerBandit;
 import chapters.ch10.bandit.domain.trainer.TrainerDependenciesBandit;
-import chapters.ch10.bandit.factory.FactoryAgentParametersBandit;
-import chapters.ch10.bandit.factory.FactoryEnvironmentParametersBandit;
-import chapters.ch10.bandit.factory.FactoryTrainerParameters;
+import chapters.ch10.factory.FactoryAgentParametersBandit;
+import chapters.ch10.factory.FactoryEnvironmentParametersBandit;
+import chapters.ch10.factory.FactoryTrainerParameters;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import lombok.SneakyThrows;
@@ -32,6 +32,7 @@ public class RunnerTrainerBandit {
         var dependencies = TrainerDependenciesBandit.of(agent, environmentLeftBetter, trainerPar);
         var trainer = TrainerBandit.of(dependencies);
         trainer.train();
+        System.out.println("trainer.getRecorder().size() = " + trainer.getRecorder().size());
         timer.printInMs();
 
         var recorder = trainer.getRecorder();

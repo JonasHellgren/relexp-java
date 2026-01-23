@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 import java.util.List;
 
 @UtilityClass
-public class TrainDataFactoryLinearFitter {
+public class TrainDataLinearFitterFactory {
 
     public static TrainData getTrainData(double minX, double maxX)  {
         var data = TrainData.empty();

@@ -1,20 +1,16 @@
 package ch9;
 
-import chapters.ch9.factory.TrainDataFactoryLinearFitter;
+import chapters.ch9.factory.TrainDataLinearFitterFactory;
 import chapters.ch9.gradient_descent.LinearFitter;
 import chapters.ch9.gradient_descent.PhiExtractor;
 import core.foundation.config.ConfigFactory;
-import core.foundation.configOld.ProjectPropertiesReader;
-import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.gadget.training.TrainData;
-import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
 import core.plotting_core.plotting_2d.ChartUtility;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import core.plotting_core.plotting_2d.ScatterWithLineChartCreator;
-import lombok.SneakyThrows;
 import org.knowm.xchart.XYChart;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +24,8 @@ public class RunnerLinearFitter {
     public static final double MAX_X = 5.0;
     public static final int BATCH_SIZE = 1;  //1 or 5
 
-    @SneakyThrows
     public static void main(String[] args) {
-        var data = TrainDataFactoryLinearFitter.getTrainData(MIN_X,MAX_X);
+        var data = TrainDataLinearFitterFactory.getTrainData(MIN_X,MAX_X);
         var fitter = LinearFitter.of(data, getPhiExtractor(), LEARNING_RATE);
         var errors = fitter.fitAndReturnErrorPerEpoch(N_EPOCHS, BATCH_SIZE);
         fitter.logTimer();
@@ -45,8 +40,8 @@ public class RunnerLinearFitter {
 
     private static PhiExtractor getPhiExtractor() {
         var phiExtractor = PhiExtractor.empty();
-        phiExtractor.functionList.add(x -> 1);
-        phiExtractor.functionList.add(x -> x.get(0));
+        phiExtractor.addFunction(x -> 1);
+        phiExtractor.addFunction(x -> x.get(0));
         return phiExtractor;
     }
 
@@ -63,7 +58,6 @@ public class RunnerLinearFitter {
     }
 
 
-    @SneakyThrows
     private static XYChart getLineChartCreator(List<Double> errors) {
         var plotCfg = ConfigFactory.plotConfig();
         System.out.println("errors.size() = " + errors.size());
@@ -78,14 +72,13 @@ public class RunnerLinearFitter {
         return errorChartCreator.create();
     }
 
-    @SneakyThrows
     private static XYChart getScatterWithLineChartCreator(
             TrainData data, List<Double> inList,
             List<Double> outList) {
-        var weight = ProjectPropertiesReader.create().xyChartWidth2Col();
-        var height = ProjectPropertiesReader.create().xyChartHeight();
+        var plotCfg = ConfigFactory.plotConfig();
         var chartCreator = ScatterWithLineChartCreator.of(PlotSettings.ofDefaults()
-                .withWidth(weight).withHeight(height));
+                .withWidth(plotCfg.xyChartWidth2Col())
+                .withHeight(plotCfg.xyChartHeight()));
         chartCreator.addLine(inList, outList);
         chartCreator.addScatter(data.inputsAsListList().stream()
                 .map(x -> x.get(0)).toList(), data.outputs().stream().toList());

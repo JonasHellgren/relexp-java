@@ -26,8 +26,8 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemoryCannon {
 
-    MeanAndStdMemoryParameters memoryParameters;
-    AgentParametersCannon parameters;
+    private MeanAndStdMemoryParameters memoryParameters;
+    private AgentParametersCannon parameters;
 
     public static MemoryCannon of(AgentParametersCannon parameters) {
         return new MemoryCannon(parameters.zInit(), parameters);

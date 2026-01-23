@@ -1,4 +1,4 @@
-package chapters.ch10.cannon.plotting;
+package chapters.ch10.plotting;
 
 
 import core.foundation.util.unit_converter.UnitConverterUtil;
@@ -13,8 +13,8 @@ public enum MeasuresCannonEnum {
     DISTANCE("Distance (m)", pm -> pm.distance()),
     GRADLOGZMEAN("Grad log zm", pm -> pm.gradLogZMean()),
     GRADLOGZSTD("Grad log zs", pm ->  pm.gradLogZStd()),
-    MEAN("Mean nOccupied (Degrees)", pm -> getDegrees(pm.mean())),
-    STD("Std. nOccupied (Degrees)", pm -> getDegrees(pm.std()));
+    MEAN("Mean angle (Degrees)", pm -> getDegrees(pm.mean())),
+    STD("Std. angle (Degrees)", pm -> getDegrees(pm.std()));
 
     private static double getDegrees(double mean) {
         return UnitConverterUtil.convertRadiansToDegrees(mean);

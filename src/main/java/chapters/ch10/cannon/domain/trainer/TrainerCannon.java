@@ -1,7 +1,6 @@
 package chapters.ch10.cannon.domain.trainer;
 
-import chapters.ch10.cannon.gradient_calculator.GradLogCalculatorContinuousAction;
-import chapters.ch10.cannon.plotting.MeasuresCannon;
+import chapters.ch10.plotting.MeasuresCannon;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.MeanAndStd;
 import core.foundation.gadget.math.LogarithmicDecay;

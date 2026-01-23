@@ -3,7 +3,7 @@ package chapters.ch10;
 import chapters.ch10.bandit.domain.environment.ActionBandit;
 import chapters.ch10.bandit.domain.environment.EnvironmentBandit;
 import chapters.ch10.bandit.domain.environment.StepReturnBandit;
-import chapters.ch10.bandit.factory.FactoryEnvironmentParametersBandit;
+import chapters.ch10.factory.FactoryEnvironmentParametersBandit;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

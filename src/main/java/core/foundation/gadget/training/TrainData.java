@@ -14,7 +14,6 @@ import java.util.List;
  * Error and output can't both be present at the same time.
  */
 public record TrainData(
-        //List<List<Double>> inputs,
         List<double[]> inputs,
         List<Double> outputs
 ) {
@@ -35,7 +34,6 @@ public record TrainData(
     public static TrainData of(List<double[]> inputs, List<Double> outputs) {
         return new TrainData(inputs, outputs);
     }
-
 
     public List<List<Double>> inputsAsListList() {
         List<List<Double>> inputsListList = new ArrayList<>();

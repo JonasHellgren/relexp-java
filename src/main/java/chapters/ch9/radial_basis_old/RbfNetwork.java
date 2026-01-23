@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import java.util.List;
 import java.util.stream.IntStream;
-
 import static chapters.ch9.radial_basis_old.RbfNetworkHelper.*;
 
 
