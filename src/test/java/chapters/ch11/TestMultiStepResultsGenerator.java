@@ -13,6 +13,9 @@ import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.domain.trainer.multisteps.MultiStepResults;
 import chapters.ch11.domain.trainer.multisteps.MultiStepResultsGenerator;
 import chapters.ch11.domain.trainer.param.TrainerParameters;
+import chapters.ch11.factory.LunarAgentParamsFactory;
+import chapters.ch11.factory.LunarEnvParamsFactory;
+import chapters.ch11.factory.TrainerParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
@@ -49,10 +52,11 @@ class TestMultiStepResultsGenerator {
     }
 
     private MultiStepResultsGenerator createGenerator(int stepHorizon, double gamma) {
-        var ep = LunarParameters.defaultProps();
-        var p = AgentParameters.newDefault(ep).withLearningRateCritic(0.5)
+        var ep = LunarEnvParamsFactory.produceDefault();
+        var p = LunarAgentParamsFactory.newDefault(ep)
+                .withLearningRateCritic(0.5)
                 .withBatchSize(1).withNEpochs(N_EPOCHS);
-        var trainerParameters = TrainerParameters.newDefault().withNStepsHorizon(stepHorizon).withGamma(gamma);
+        var trainerParameters = TrainerParamsFactory.of(stepHorizon, N_FITS).withGamma(gamma);
         dependencies = TrainerDependencies.builder()
                 .agent(AgentLunar.zeroWeights(p, ep))
                 .environment(EnvironmentLunar.createDefault())

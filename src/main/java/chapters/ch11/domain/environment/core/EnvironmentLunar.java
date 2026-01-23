@@ -1,6 +1,7 @@
 package chapters.ch11.domain.environment.core;
 
 import chapters.ch11.domain.environment.param.LunarParameters;
+import chapters.ch11.factory.LunarEnvParamsFactory;
 import core.foundation.util.unit_converter.UnitConverterUtil;
 import core.foundation.util.unit_converter.NonSIUnitsUtil;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class EnvironmentLunar implements EnvironmentI {
     LunarParameters parameters;
 
     public static EnvironmentLunar createDefault() {
-        return new EnvironmentLunar(LunarParameters.defaultProps());
+        return new EnvironmentLunar(LunarEnvParamsFactory.produceDefault());
     }
 
     public static EnvironmentI of(LunarParameters ep) {

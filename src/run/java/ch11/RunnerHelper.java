@@ -8,7 +8,8 @@ import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierI
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierRandomAndClipped;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.domain.trainer.core.TrainerLunarMultiStep;
-import chapters.ch11.domain.trainer.param.TrainerParameters;
+import chapters.ch11.factory.LunarAgentParamsFactory;
+import chapters.ch11.factory.TrainerParamsFactory;
 import chapters.ch11.helper.AgentEvaluator;
 import chapters.ch11.plotting.PlotterHeatMapsAgent;
 import core.foundation.configOld.ProjectPropertiesReader;
@@ -92,8 +93,8 @@ public class RunnerHelper {
     }
 
     static TrainerDependencies getDependencies(LunarParameters ep, int stepHorizon, int nEpisodes) {
-        var p = AgentParameters.newDefault(ep);
-        var tp = TrainerParameters.newDefault().withNStepsHorizon(stepHorizon).withNEpisodes(nEpisodes);
+        var p = LunarAgentParamsFactory.newDefault(ep);
+        var tp = TrainerParamsFactory.of(stepHorizon,nEpisodes);
         return TrainerDependencies.builder()
                 .agent(AgentLunar.zeroWeights(p, ep))
                 .environment(EnvironmentLunar.of(ep))

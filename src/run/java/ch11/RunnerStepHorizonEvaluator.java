@@ -2,6 +2,7 @@ package ch11;
 
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.domain.trainer.core.TrainerLunarMultiStep;
+import chapters.ch11.factory.LunarEnvParamsFactory;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
 import lombok.extern.java.Log;
@@ -18,7 +19,7 @@ public class RunnerStepHorizonEvaluator {
     static final List<Integer> N_STEPS_LIST = ListCreatorUtil.createFromStartWithStepWithNofItems(1,1,N_MAX);
 
     public static void main(String[] args) {
-        var ep = LunarParameters.defaultProps();
+        var ep = LunarEnvParamsFactory.produceDefault();
         var results = evaluateNSteps(ep, N_STEPS_LIST);
         plotNStepResults(results, N_STEPS_LIST);
     }

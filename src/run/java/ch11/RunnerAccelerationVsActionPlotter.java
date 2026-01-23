@@ -2,6 +2,7 @@ package ch11;
 
 import chapters.ch11.domain.environment.core.EnvironmentLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
+import chapters.ch11.factory.LunarEnvParamsFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.foundation.util.unit_converter.UnitConverterUtil;
@@ -23,7 +24,7 @@ public class RunnerAccelerationVsActionPlotter {
     static String FILE_NAME = "acc_vs_action";
 
     public static void main(String[] args) {
-        var ep = LunarParameters.defaultProps();
+        var ep = LunarEnvParamsFactory.produceDefault();
         var environment = (EnvironmentLunar) EnvironmentLunar.of(ep);
         var forces = ListCreatorUtil.createFromStartToEndWithStep(START, END, STEP);
         var accList = getAccList(forces, environment);

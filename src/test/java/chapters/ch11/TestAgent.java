@@ -4,6 +4,8 @@ import chapters.ch11.domain.agent.core.AgentLunar;
 import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
+import chapters.ch11.factory.LunarAgentParamsFactory;
+import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
@@ -21,9 +23,9 @@ class TestAgent {
 
     @BeforeEach
     void init() {
-        lunarParameters = LunarParameters.defaultProps();
-        var agentParameters = AgentParameters.newDefault(lunarParameters);
-        agent = AgentLunar.zeroWeights(agentParameters, lunarParameters);
+        lunarParameters = LunarEnvParamsFactory.produceDefault();
+        var ap = LunarAgentParamsFactory.newDefault(lunarParameters);
+        agent = AgentLunar.zeroWeights(ap, lunarParameters);
         stateRandomPosAndSpeed = StateLunar.randomPosAndSpeed(lunarParameters);
         state0and0 = StateLunar.of(0, 0);
     }

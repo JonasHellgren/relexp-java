@@ -3,6 +3,7 @@ package chapters.ch11.domain.environment.param;
 import core.foundation.util.math.MathUtil;
 import lombok.Builder;
 import lombok.With;
+
 import java.util.List;
 
 import static core.foundation.util.collections.ListCreatorUtil.createFromStartToEndWithNofItems;
@@ -11,7 +12,7 @@ import static core.foundation.util.collections.ListCreatorUtil.createFromStartTo
 /**
  * Represents the parameters for the Lunar Lander environment.
  * These parameters define, for example, the physical properties of the lander and the environment.
- *
+ * <p>
  * yMax and spdMax are used to create kernels in agent memory, defines memory boundary
  */
 
@@ -33,23 +34,6 @@ public record LunarParameters(
 
     public static final double TOL = 1e-3;
 
-    public static LunarParameters defaultProps() {
-        return LunarParameters.builder()
-                .massLander(500.0)
-                .dt(0.2)
-                .g(1.62)
-                .forceMin(0)
-                .forceMax(2)
-                .ySurface(0d)
-                .yMax(5)
-                .spdMax(5)
-                .spdLimitCrash(1d)
-                .rewardFail(-100)
-                .rewardSuccess(100)
-                .rewardStep(-1)
-                .build();
-    }
-
     /**
      * Returns a list of evenly spaced values representing the height of the lander.
      *
@@ -57,7 +41,7 @@ public record LunarParameters(
      * @return a list of double values representing the height of the lander.
      */
     public List<Double> ySpace(int nItems) {
-        return createFromStartToEndWithNofItems(ySurface(), yMax()+TOL, nItems);
+        return createFromStartToEndWithNofItems(ySurface(), yMax() + TOL, nItems);
     }
 
     /**
@@ -67,7 +51,7 @@ public record LunarParameters(
      * @return a list of double values representing the speed of the lander.
      */
     public List<Double> spdSpace(int nItems) {
-        return createFromStartToEndWithNofItems(-spdMax(), spdMax()+ TOL, nItems);
+        return createFromStartToEndWithNofItems(-spdMax(), spdMax() + TOL, nItems);
     }
 
     /**

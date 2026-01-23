@@ -2,6 +2,8 @@ package chapters.ch11;
 
 import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.param.LunarParameters;
+import chapters.ch11.factory.LunarAgentParamsFactory;
+import chapters.ch11.factory.LunarEnvParamsFactory;
 import core.foundation.gadget.math.MeanAndStd;
 import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,12 +18,12 @@ class TestMeanStd {
     LunarParameters lunarParameters;
     AgentParameters agentParameters;
 
-     @BeforeEach
-      void init() {
-        lunarParameters = LunarParameters.defaultProps();
-        agentParameters = AgentParameters.newDefault(lunarParameters)
+    @BeforeEach
+    void init() {
+        lunarParameters = LunarEnvParamsFactory.produceDefault();
+        agentParameters = LunarAgentParamsFactory.newDefault(lunarParameters)
                 .withGradMeanMax(GRAD_MEAN_MAX).withGradStdMax(GRAD_STD_MAX);
-      }
+    }
 
     @Test
     void testOfMethod() {

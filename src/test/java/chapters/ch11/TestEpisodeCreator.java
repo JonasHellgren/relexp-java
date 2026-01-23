@@ -8,6 +8,9 @@ import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierRandomHeightZeroSpeed;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.domain.trainer.param.TrainerParameters;
+import chapters.ch11.factory.LunarAgentParamsFactory;
+import chapters.ch11.factory.LunarEnvParamsFactory;
+import chapters.ch11.factory.TrainerParamsFactory;
 import chapters.ch11.helper.EpisodeCreator;
 import chapters.ch11.helper.EpisodeInfo;
 import org.junit.jupiter.api.Assertions;
@@ -20,13 +23,12 @@ class TestEpisodeCreator {
 
     @BeforeEach
     void init() {
-
-        var ep = LunarParameters.defaultProps();
-        var p = AgentParameters.newDefault(ep);
+        var ep = LunarEnvParamsFactory.produceDefault();
+        var p = LunarAgentParamsFactory.newDefault(ep);
         var trainerDependencies = TrainerDependencies.builder()
                 .agent(AgentLunar.zeroWeights(p, ep))
                 .environment(EnvironmentLunar.createDefault())
-                .trainerParameters(TrainerParameters.newDefault())
+                .trainerParameters(TrainerParamsFactory.newDefault())
                 .startStateSupplier(StartStateSupplierRandomHeightZeroSpeed.create(ep))
                 .build();
         creator = new EpisodeCreator(trainerDependencies);

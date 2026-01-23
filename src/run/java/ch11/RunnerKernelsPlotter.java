@@ -2,6 +2,7 @@ package ch11;
 
 import chapters.ch11.domain.agent.core.AgentLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
+import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import chapters.ch9.radial_basis_old.RbfNetwork;
 import com.google.common.collect.Lists;
@@ -34,7 +35,6 @@ public class RunnerKernelsPlotter {
         ChartSaverAndPlotter.showChartSaveInFolderActorCritic(getChart(xyPositions), FILE_NAME);
     }
 
-
     @SneakyThrows
     private static XYChart getChart(XYPositions xyPositions) {
         var properties= ProjectPropertiesReader.create();
@@ -60,9 +60,9 @@ public class RunnerKernelsPlotter {
 
     private static RbfNetwork getRbfNetwork() {
         int dummyValue=0;
-        var ep = LunarParameters.defaultProps();
-        var trainerDependencies = getDependencies(ep, dummyValue, dummyValue);
-        var agent= (AgentLunar) trainerDependencies.agent();
+        var ep = LunarEnvParamsFactory.produceDefault();
+        var tp = getDependencies(ep, dummyValue, dummyValue);
+        var agent= tp.agent();
         var memory=agent.getCriticMemory();
         return memory.getMemory();
     }
