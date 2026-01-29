@@ -46,7 +46,12 @@ public class CriticMemoryLunar {
      */
     public void fit(TrainData data) {
         int batchSize = Math.min(data.nSamples(), agentParameters.batchSize());
-        memory.fit(data, agentParameters.nEpochs()*batchSize);
+        memory.fitFromErrors(data, agentParameters.nEpochs());
     }
 
+    public void fitFromError(TrainData data) {
+        int batchSize = Math.min(data.nSamples(), agentParameters.batchSize());
+        memory.fitFromErrors(data, agentParameters.nEpochs());
+
+    }
 }

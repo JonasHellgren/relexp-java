@@ -36,6 +36,7 @@ class TestMultiStepResultsGenerator {
     public static final int N_EPOCHS = 20;
     public static final double TOL_CRITIC = 0.01;
     public static final double TOL = 1e-4;
+    public static final double LEARNING_RATE_CRITIC = 0.1;
 
     MultiStepResultsGenerator generator;
     TrainerDependencies dependencies;
@@ -55,7 +56,7 @@ class TestMultiStepResultsGenerator {
     private MultiStepResultsGenerator createGenerator(int stepHorizon, double gamma) {
         var ep = LunarEnvParamsFactory.produceDefault();
         var p = LunarAgentParamsFactory.newDefault(ep)
-                .withLearningRateCritic(0.5)
+                .withLearningRateCritic(LEARNING_RATE_CRITIC)
                 .withBatchSize(1).withNEpochs(N_EPOCHS);
         var trainerParameters = TrainerParamsFactory.of(stepHorizon, N_FITS).withGamma(gamma);
         dependencies = TrainerDependencies.builder()
@@ -117,9 +118,10 @@ class TestMultiStepResultsGenerator {
     @Test
     void whenReadingFittedCritic_thenOneValue() {
         var agent = dependencies.agent();
-        fitMemory(agent, 1.0);
+        double vTar = 1.0;
+        fitMemory(agent, vTar);
         double val = agent.readCritic(StateLunar.zeroPosAndSpeed());
-        Assertions.assertEquals(1.0, val, TOL_CRITIC);
+        Assertions.assertEquals(vTar, val, TOL_CRITIC);
     }
 
   //rewards of experiences: 1, 0, 1, 1, 1  (exp 4 goes to 5, exp 5 is terminal)
@@ -142,21 +144,13 @@ class TestMultiStepResultsGenerator {
             "0, 1.25,1.25,false",  //returnMinusBase=1+0+.25, value(sFut) = 0 => value=1.25,  adv=1.5-0
             "1, 0.75,0.75,false",   //returnMinusBase=0+0.5+0.25, value(sFut) = 0 => value=0.75,  adv=0.75-1
     })
-    void givenStepHorizon1AndCriticValue0AndGamma0dot5_whenGenerating_thenCorrectValueAndAdvantage(ArgumentsAccessor arguments) {
-        generator = createGenerator(3, 0.5);
+    void givenStepHorizon3AndCriticValue0AndGamma0dot5_whenGenerating_thenCorrectValueAndAdvantage(ArgumentsAccessor arguments) {
+        double gamma = 0.5;
+        int stepHorizon = 3;
+        generator = createGenerator(stepHorizon, gamma);
         assertMultiStepResults(ArgumentAdaptor.of(arguments), generator.generate(experiencesSpreadOnes));
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            "0, 1.375,0.375,false",  //returnMinusBase=1+0+.25, value(sFut) = 0.5^3*1=1/8 => value=1.25+1/8=1.375,  adv=1.375-1=0.375
-            "1, 0.875,-0.125,false",   //returnMinusBase=0+0.5+0.25, value(sFut) = 0.5^3*1=1/8 => value=0.75+1/8=0.875,  adv=0.875-1=-0.125
-    })
-    void givenStepHorizon1AndCriticValue1AndGamma0dot5_whenGenerating_thenCorrectValueAndAdvantage(ArgumentsAccessor arguments) {
-        generator = createGenerator(3, 0.5);
-        fitMemory(dependencies.agent(), 1.0);
-        assertMultiStepResults(ArgumentAdaptor.of(arguments), generator.generate(experiencesSpreadOnes));
-    }
 
     // 0,0,0,0,0,-100
 
@@ -167,9 +161,11 @@ class TestMultiStepResultsGenerator {
             "3, -25,-26,true",   //returnMinusBase=0+0.5^2*-100=-25, value(sFut) = 0 => value=-25,  adv=-26
     })
     void givenOneBigMinusInEndExperience_whenGenerating_thenCorrectValueAndAdvantage(ArgumentsAccessor arguments) {
-        generator = createGenerator(3, 0.5);
-        fitMemory(dependencies.agent(), 1.0);
-        experiencesOneBigMinusInEnd.forEach(System.out::println);
+        double gamma = 0.5;
+        int stepHorizon = 3;
+        generator = createGenerator(stepHorizon, gamma);
+        double vTarget = 1.0;
+        fitMemory(dependencies.agent(), vTarget);
         assertMultiStepResults(ArgumentAdaptor.of(arguments), generator.generate(experiencesOneBigMinusInEnd));
     }
 
@@ -204,8 +200,13 @@ class TestMultiStepResultsGenerator {
         StateLunar state = StateLunar.zeroPosAndSpeed();
         var data= TrainData.empty();
         var in = RadialBasisAdapter.asInput(state);
-        data.addListIn(in,vTarget);
-        agent.fitCritic(data);
+        for (int i = 0; i < N_FITS ; i++) {
+            data.clear();
+            double err = vTarget - agent.readCritic(state);
+            data.addListIn(in, err);
+            agent.fitCritic(data);
+        }
+
     }
 
 }

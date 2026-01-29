@@ -48,7 +48,8 @@ public class TrainerLunarMultiStep {
         for (int step = 0; step < msr.nResults(); step++) {
             var data=dataCreator.create(msr, step);
             agent.fitCritic(data.dataCritic());
-            agent.fitActorUseCriticActivations(data.dataMean(), data.dataStd());
+            agent.fitActor(data.dataMean(), data.dataStd());
+           // agent.fitActorUseCriticActivations(data.dataMean(), data.dataStd());
         }
     }
 

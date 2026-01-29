@@ -46,8 +46,8 @@ public class ActorMemoryLunar {
     @Deprecated(since = "slow and not recommended")
     public void fit(TrainData dataMean, TrainData dataStd) {
         int batchSize = Math.min(dataMean.nSamples(), agentParameters.batchSize());
-        memoryMean.fit(dataMean, agentParameters.nEpochs()*batchSize);
-        memoryLogStd.fit(dataStd, agentParameters.nEpochs()*batchSize);
+        memoryMean.fitFromErrors(dataMean, agentParameters.nEpochs());
+        memoryLogStd.fitFromErrors(dataStd, agentParameters.nEpochs());
     }
 
     /**

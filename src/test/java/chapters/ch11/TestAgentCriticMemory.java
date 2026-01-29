@@ -19,7 +19,7 @@ class TestAgentCriticMemory {
 
     public static final double TOL = 0.9;
     public static final int N_FITS = 100;
-    public static final double LEARNING_RATE = 0.5;
+    public static final double LEARNING_RATE = 0.9;
     LunarParameters lunarParameters;
     CriticMemoryLunar memory;
     AgentParameters agentParameters;
@@ -104,12 +104,14 @@ class TestAgentCriticMemory {
 
 
     private static void fitMemory(CriticMemoryLunar criticMemoryLunar, StateLunar state, double vTarget) {
+        var data = TrainData.empty();
         for (int i = 0; i < N_FITS; i++) {
+            data.clear();
             double error = vTarget - criticMemoryLunar.read(state);
-            var data = TrainData.empty();
             var in = RadialBasisAdapter.asInput(state);
             data.addListIn(in, error);
-            criticMemoryLunar.fit(data);
+            //criticMemoryLunar.fit(data);
+            criticMemoryLunar.fitFromError(data);
         }
     }
 

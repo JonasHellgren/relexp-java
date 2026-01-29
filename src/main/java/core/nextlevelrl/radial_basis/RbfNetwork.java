@@ -68,6 +68,11 @@ public class RbfNetwork {
         IntStream.range(0, nFits).forEach(i -> fit(data));
     }
 
+    public void fitFromErrors(TrainData data, int nFits) {
+        lossCalculator.reset();
+        IntStream.range(0, nFits).forEach(i -> fitFromErrors(data, true));
+    }
+
     public int nClips() {
         return clipper.nClips();
     }
@@ -149,8 +154,6 @@ public class RbfNetwork {
         int nInputs = data.inputs().size();
         Preconditions.checkArgument(!data.isEmpty(), "data must not be empty");
         ConditionalsUtil.executeIfTrue(nInputs != activations.nSamples(), () -> activations.reset(nInputs));
-        //activations.calculateActivations(data, kernels);
-
         ConditionalsUtil.executeIfTrue(updateActivation, () -> {
             activations = RbfNetworkHelper.createIfNotEqualNofSamples(data.nSamples(), activations);
             activations.calculateActivations(data, kernels);

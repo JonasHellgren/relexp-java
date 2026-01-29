@@ -59,6 +59,11 @@ public class AgentLunar{
         criticMemory.fit(data);
     }
 
+    public void fitActor(TrainData dataMean, TrainData dataStd) {
+        validate();
+        actorMemory.fit(dataMean,dataStd);
+    }
+
     public void fitActorUseCriticActivations(TrainData dataMean, TrainData dataStd) {
         validate();
         actorMemory.fitUsingActivationsOtherRbfMean(dataMean,dataStd,criticMemory.getMemory());
