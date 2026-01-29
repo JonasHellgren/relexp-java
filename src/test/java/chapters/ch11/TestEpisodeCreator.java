@@ -25,8 +25,10 @@ class TestEpisodeCreator {
     void init() {
         var ep = LunarEnvParamsFactory.produceDefault();
         var p = LunarAgentParamsFactory.newDefault(ep);
+        var tp = TrainerParamsFactory.newDefault();
+
         var trainerDependencies = TrainerDependencies.builder()
-                .agent(AgentLunar.zeroWeights(p, ep))
+                .agent(AgentLunar.zeroWeights(p,tp, ep))
                 .environment(EnvironmentLunar.createDefault())
                 .trainerParameters(TrainerParamsFactory.newDefault())
                 .startStateSupplier(StartStateSupplierRandomHeightZeroSpeed.create(ep))

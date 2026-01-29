@@ -4,8 +4,10 @@ import chapters.ch11.domain.agent.memory.CriticMemoryLunar;
 import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
+import chapters.ch11.domain.trainer.param.TrainerParameters;
 import chapters.ch11.factory.LunarAgentParamsFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
+import chapters.ch11.factory.TrainerParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.TrainDataOld;
@@ -18,24 +20,24 @@ class TestAgentCriticMemory {
 
 
     public static final double TOL = 0.9;
-    public static final int N_FITS = 100;
-    public static final double LEARNING_RATE = 0.9;
+    public static final int N_FITS = 10;
+    public static final double LEARNING_RATE = 0.5;
     LunarParameters lunarParameters;
     CriticMemoryLunar memory;
     AgentParameters agentParameters;
+    TrainerParameters trainerParameters;
 
     @BeforeEach
     void init() {
+        trainerParameters= TrainerParamsFactory.newDefault().withLearningRateCritic(LEARNING_RATE).withNFits(N_FITS);
         lunarParameters = LunarEnvParamsFactory.produceDefault();
-        agentParameters = LunarAgentParamsFactory.newDefault(lunarParameters)
-                .withLearningRateCritic(LEARNING_RATE)
-                .withNFits(1);
-        memory = CriticMemoryLunar.zeroWeights(agentParameters, lunarParameters);
+        agentParameters = LunarAgentParamsFactory.newDefault(lunarParameters);
+        memory = CriticMemoryLunar.zeroWeights(agentParameters, trainerParameters, lunarParameters);
     }
 
     @Test
     void testCreateMemory() {
-        var criticMemoryLunar = CriticMemoryLunar.zeroWeights(agentParameters, lunarParameters);
+        var criticMemoryLunar = CriticMemoryLunar.zeroWeights(agentParameters, trainerParameters,lunarParameters);
         var rb = criticMemoryLunar.getMemory();
         assertEquals(agentParameters.nKernelsY() * agentParameters.nKernelsSpeed(), rb.getWeights().size());
     }
@@ -110,7 +112,6 @@ class TestAgentCriticMemory {
             double error = vTarget - criticMemoryLunar.read(state);
             var in = RadialBasisAdapter.asInput(state);
             data.addListIn(in, error);
-            //criticMemoryLunar.fit(data);
             criticMemoryLunar.fitFromError(data);
         }
     }

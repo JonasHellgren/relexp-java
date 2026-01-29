@@ -17,9 +17,6 @@ public record AgentParameters(
         int nKernelsSpeed, // Number of radial basis functions for the actor in the speed direction
         double[] gammas, // Gammas for the critic
         double initWeightLogStd, // Initial weight for the log standard deviation of the actor
-        double learningRateCritic, // Learning rate for the critic
-        double learningRateActor, // Learning rate for the actor
-        int nFits, // Number of fits for training
         double gradMeanMax, // Maximum gradient for the mean of the actor
         double gradStdMax, // Maximum gradient for the standard deviation of the actor
         double tdMax, // Maximum TD error for training

@@ -55,12 +55,12 @@ class TestMultiStepResultsGenerator {
 
     private MultiStepResultsGenerator createGenerator(int stepHorizon, double gamma) {
         var ep = LunarEnvParamsFactory.produceDefault();
-        var p = LunarAgentParamsFactory.newDefault(ep)
-                .withLearningRateCritic(LEARNING_RATE_CRITIC)
-                .withNFits(N_EPOCHS);
+        var p = LunarAgentParamsFactory.newDefault(ep);
+        var tp = TrainerParamsFactory.newDefault()
+                .withLearningRateCritic(LEARNING_RATE_CRITIC).withNFits(N_EPOCHS);
         var trainerParameters = TrainerParamsFactory.of(stepHorizon, N_EPISODES).withGamma(gamma);
         dependencies = TrainerDependencies.builder()
-                .agent(AgentLunar.zeroWeights(p, ep))
+                .agent(AgentLunar.zeroWeights(p, tp, ep))
                 .environment(EnvironmentLunar.createDefault())
                 .trainerParameters(trainerParameters)
                 .startStateSupplier(StartStateSupplierRandomHeightZeroSpeed.create(ep))

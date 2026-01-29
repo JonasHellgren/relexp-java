@@ -23,7 +23,6 @@ public class MemoryUpdaterSingleStepTrainer {
 
     public void fit(List<ExperienceLunar> experiences) {
         var agent = dependencies.agent();
-        var tp = dependencies.trainerParameters();
         var ap = agent.getAgentParameters();
         var dataMean = TrainData.empty();
         var dataStd = TrainData.empty();
@@ -40,7 +39,7 @@ public class MemoryUpdaterSingleStepTrainer {
             dataMean.addListIn(in, grad.mean() * tdError);
             dataStd.addListIn(in, grad.std() * tdError);
             data.addListIn(in, tdError);
-            agent.fitActorUseCriticActivations(dataMean, dataStd);
+            agent.fitActor(dataMean, dataStd);
             agent.fitCritic(data);
         }
     }

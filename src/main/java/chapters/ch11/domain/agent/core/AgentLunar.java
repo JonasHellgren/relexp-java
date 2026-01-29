@@ -5,6 +5,7 @@ import chapters.ch11.domain.agent.memory.CriticMemoryLunar;
 import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
+import chapters.ch11.domain.trainer.param.TrainerParameters;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.MeanAndStd;
 import core.foundation.gadget.normal_distribution.NormDistributionSampler;
@@ -30,12 +31,12 @@ public class AgentLunar{
     NormDistributionSampler sampler;
     NormalDistributionGradientCalculator gradCalc;
 
-    public static AgentLunar zeroWeights(AgentParameters p, LunarParameters ep) {
-        var actMemory = ActorMemoryLunar.create(p, ep);
-        var criticMemory = CriticMemoryLunar.zeroWeights(p, ep);
+    public static AgentLunar zeroWeights(AgentParameters ap,TrainerParameters tp, LunarParameters ep) {
+        var actMemory = ActorMemoryLunar.create(ap,tp, ep);
+        var criticMemory = CriticMemoryLunar.zeroWeights(ap, tp, ep);
         var sampler = new NormDistributionSampler();
         var gc=new NormalDistributionGradientCalculator();
-        return new AgentLunar(p,actMemory, criticMemory,sampler,gc);
+        return new AgentLunar(ap,actMemory, criticMemory,sampler,gc);
     }
 
     /**
@@ -63,11 +64,13 @@ public class AgentLunar{
         validate();
         actorMemory.fit(dataMean,dataStd);
     }
+/*
 
     public void fitActorUseCriticActivations(TrainData dataMean, TrainData dataStd) {
         validate();
         actorMemory.fitUsingActivationsOtherRbfMean(dataMean,dataStd,criticMemory.getMemory());
     }
+*/
 
     public double readCritic(StateLunar state) {
         return criticMemory.read(state);

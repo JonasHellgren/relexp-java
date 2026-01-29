@@ -14,7 +14,10 @@ public record TrainerParameters(
         int nStepsMax, // Maximum number of steps per step
         int nEpisodes, // Total number of episodes to train for
         double gamma, // Discount factor for future rewards
-        int nStepsHorizon // Number of steps to look ahead when calculating returns
+        int nStepsHorizon, // Number of steps to look ahead when calculating returns
+        double learningRateCritic, // Learning rate for the critic
+        double learningRateActor, // Learning rate for the actor
+        int nFits // Number of fits for training
 ) {
 
     public double gammaPowN() {

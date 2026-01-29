@@ -1,4 +1,4 @@
-package core.radial_basis;
+package core.training;
 
 import core.foundation.gadget.training.TrainData;
 import org.junit.jupiter.api.Assertions;

@@ -4,6 +4,7 @@ package chapters.ch11.domain.agent.memory;
 import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
+import chapters.ch11.domain.trainer.param.TrainerParameters;
 import chapters.ch11.factory.RbfMemoryFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.math.MeanAndLogStd;
@@ -26,13 +27,13 @@ import lombok.Getter;
 public class ActorMemoryLunar {
     RbfNetwork memoryMean;
     RbfNetwork memoryLogStd;
-    AgentParameters agentParameters;
+    TrainerParameters trainerParameters;
 
-    public static ActorMemoryLunar create(AgentParameters p, LunarParameters ep) {
-        var memExp = RbfMemoryFactory.createMemoryManyCenters(p, ep, p.learningRateActor());
-        var memStd = RbfMemoryFactory.createMemoryManyCenters(p, ep, p.learningRateActor());
-        memStd.setWeights(ArrayCreatorUtil.createArrayWithSameDoubleNumber(memExp.nKernels(), p.initWeightLogStd()));
-        return new ActorMemoryLunar(memExp, memStd, p);
+    public static ActorMemoryLunar create(AgentParameters ap, TrainerParameters tp, LunarParameters ep) {
+        var memExp = RbfMemoryFactory.createMemoryManyCenters(ap, ep, tp.learningRateActor());
+        var memStd = RbfMemoryFactory.createMemoryManyCenters(ap, ep, tp.learningRateActor());
+        memStd.setWeights(ArrayCreatorUtil.createArrayWithSameDoubleNumber(memExp.nKernels(), ap.initWeightLogStd()));
+        return new ActorMemoryLunar(memExp, memStd, tp);
     }
     /**
      * Fits the actor's memory using the provided training data.
@@ -44,18 +45,18 @@ public class ActorMemoryLunar {
      */
     @Deprecated(since = "slow and not recommended")
     public void fit(TrainData dataMean, TrainData dataStd) {
-        memoryMean.fitFromErrors(dataMean, agentParameters.nFits());
-        memoryLogStd.fitFromErrors(dataStd, agentParameters.nFits());
+        memoryMean.fitFromErrors(dataMean, trainerParameters.nFits());
+        memoryLogStd.fitFromErrors(dataStd, trainerParameters.nFits());
     }
-
-    /**
+/*
+    *//**
      * Same but saves computation time using activations from other rbf
-     */
+     *//*
 
     public void fitUsingActivationsOtherRbfMean(TrainData dataMean, TrainData dataStd, RbfNetwork other) {
         memoryMean.fitUsingActivationsOtherRbf(dataMean, agentParameters.nFits(),other);
         memoryLogStd.fitUsingActivationsOtherRbf(dataStd, agentParameters.nFits(),other);
-    }
+    }*/
 
     /**
      * Returns the mean and standard deviation of the actor's output for the given state.

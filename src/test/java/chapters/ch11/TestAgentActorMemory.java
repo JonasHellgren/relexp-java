@@ -6,6 +6,7 @@ import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.factory.LunarAgentParamsFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
+import chapters.ch11.factory.TrainerParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.TrainDataOld;
@@ -27,8 +28,10 @@ class TestAgentActorMemory {
     void setup() {
         lunarParameters = LunarEnvParamsFactory.produceDefault();
         agentParameters = LunarAgentParamsFactory.newDefault(lunarParameters);
-        actorMemoryLunar = ActorMemoryLunar.create(agentParameters.withInitWeightLogStd(0), lunarParameters);
-        actorMemoryLunarNonZeroForStd = ActorMemoryLunar.create(agentParameters.withInitWeightLogStd(INIT_WEIGHT_LOG_STD), lunarParameters);
+        var tp = TrainerParamsFactory.newDefault();
+        actorMemoryLunar = ActorMemoryLunar.create(agentParameters.withInitWeightLogStd(0), tp, lunarParameters);
+        actorMemoryLunarNonZeroForStd = ActorMemoryLunar.create(
+                agentParameters.withInitWeightLogStd(INIT_WEIGHT_LOG_STD), tp,lunarParameters);
     }
 
     @Test

@@ -3,6 +3,7 @@ package chapters.ch11.domain.agent.memory;
 import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
+import chapters.ch11.domain.trainer.param.TrainerParameters;
 import chapters.ch11.factory.RbfMemoryFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainData;
@@ -21,11 +22,11 @@ import lombok.Getter;
 public class CriticMemoryLunar {
 
     RbfNetwork memory;
-    AgentParameters agentParameters;
+    TrainerParameters trainerParameters;
 
-    public static CriticMemoryLunar zeroWeights(AgentParameters p, LunarParameters ep) {
-        var mem = RbfMemoryFactory.createMemoryManyCenters(p,ep, p.learningRateCritic());
-        return new CriticMemoryLunar(mem,p);
+    public static CriticMemoryLunar zeroWeights(AgentParameters ap, TrainerParameters tp, LunarParameters ep) {
+        var mem = RbfMemoryFactory.createMemoryManyCenters(ap,ep, tp.learningRateCritic());
+        return new CriticMemoryLunar(mem,tp);
     }
 
     /**
@@ -45,10 +46,10 @@ public class CriticMemoryLunar {
      * @param data the training data to fit the memory to
      */
     public void fit(TrainData data) {
-        memory.fitFromErrors(data, agentParameters.nFits());
+        memory.fitFromErrors(data, trainerParameters.nFits());
     }
 
     public void fitFromError(TrainData data) {
-        memory.fitFromErrors(data, agentParameters.nFits());
+        memory.fitFromErrors(data, trainerParameters.nFits());
     }
 }

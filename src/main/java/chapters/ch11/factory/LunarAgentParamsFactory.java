@@ -10,10 +10,7 @@ public class LunarAgentParamsFactory {
      static final double REL_SIGMA = 0.75;
      static final int N_KERNELS_Y = 6;
      static final int N_KERNELS_SPD = 6;
-     static final double LEARNING_RATE_CRITIC = 1e-2;
-     static final double LEARNING_RATE_ACTOR = 1e-2;
      static final double INIT_WEIGHT_LOG_STD = 0.25d;  //set so std starts at approx 5
-     static final int N_FITS = 1;
      static final double GRAD_MEAN_MAX = 0.1;
      static final double GRAD_STD_MAX = 0.01;  //small => std decreases slowly
      static final double TD_MAX = 10d;
@@ -27,9 +24,6 @@ public class LunarAgentParamsFactory {
                 nKernelsSpeed(N_KERNELS_SPD).
                 gammas(new double[]{gamma(sigmaY),gamma(sigmaSpd)}).
                 initWeightLogStd(INIT_WEIGHT_LOG_STD).
-                learningRateCritic(LEARNING_RATE_CRITIC).
-                learningRateActor(LEARNING_RATE_ACTOR).
-                nFits(N_FITS).
                 gradMeanMax(GRAD_MEAN_MAX).gradStdMax(GRAD_STD_MAX).
                 tdMax(TD_MAX).advMax(ADV_MAX).
                 build();

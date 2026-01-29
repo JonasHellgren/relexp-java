@@ -6,6 +6,7 @@ import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.factory.LunarAgentParamsFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
+import chapters.ch11.factory.TrainerParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.TrainDataOld;
@@ -24,9 +25,11 @@ class TestAgent {
 
     @BeforeEach
     void init() {
+        var tp = TrainerParamsFactory.newDefault();
+
         lunarParameters = LunarEnvParamsFactory.produceDefault();
         var ap = LunarAgentParamsFactory.newDefault(lunarParameters);
-        agent = AgentLunar.zeroWeights(ap, lunarParameters);
+        agent = AgentLunar.zeroWeights(ap,tp, lunarParameters);
         stateRandomPosAndSpeed = StateLunar.randomPosAndSpeed(lunarParameters);
         state0and0 = StateLunar.of(0, 0);
     }
@@ -80,7 +83,7 @@ class TestAgent {
         int valTarget = 10;
         fitCritic(valTarget);
         var dummyData=dataMean;
-        agent.fitActorUseCriticActivations(dataMean,dummyData);
+        agent.fitActor(dataMean,dummyData);
         double action = agent.readActor(state0and0).mean();
         Assertions.assertTrue(action < action0);
     }
@@ -96,7 +99,7 @@ class TestAgent {
         int valTarget = 10;
         fitCritic(valTarget);
         var dummyData=dataMean;
-        agent.fitActorUseCriticActivations(dataMean,dummyData);
+        agent.fitActor(dataMean,dummyData);
         double action = agent.readActor(state0and0).mean();
         Assertions.assertTrue(action > action0);
     }

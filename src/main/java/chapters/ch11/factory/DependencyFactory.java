@@ -14,12 +14,11 @@ public class DependencyFactory {
 
     public static final double MAX_START_SPD = -2d;
 
-
     public static TrainerDependencies produce(LunarParameters ep, int stepHorizon, int nEpisodes) {
-        var p = LunarAgentParamsFactory.newDefault(ep);
+        var ap = LunarAgentParamsFactory.newDefault(ep);
         var tp = TrainerParamsFactory.of(stepHorizon,nEpisodes);
         return TrainerDependencies.builder()
-                .agent(AgentLunar.zeroWeights(p, ep))
+                .agent(AgentLunar.zeroWeights(ap,tp, ep))
                 .environment(EnvironmentLunar.of(ep))
                 .trainerParameters(tp)
                 .startStateSupplier(StartStateSupplierRandomAndClipped.create(
