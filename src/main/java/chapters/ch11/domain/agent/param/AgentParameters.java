@@ -20,7 +20,6 @@ public record AgentParameters(
         double initWeightLogStd, // Initial weight for the log standard deviation of the actor
         double learningRateCritic, // Learning rate for the critic
         double learningRateActor, // Learning rate for the actor
-        int batchSize, // Batch size for training
         int nEpochs, // Number of epochs for training
         double gradMeanMax, // Maximum gradient for the mean of the actor
         double gradStdMax, // Maximum gradient for the standard deviation of the actor

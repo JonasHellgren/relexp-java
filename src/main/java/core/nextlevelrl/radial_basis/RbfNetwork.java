@@ -117,9 +117,9 @@ public class RbfNetwork {
      *
      * @param other, the other rbf to copy from
      */
-    public void fitUsingActivationsOtherRbf(TrainData data, int nEpochs, int batchSize, RbfNetwork other) {
+    public void fitUsingActivationsOtherRbf(TrainData data, int nEpochs,  RbfNetwork other) {
         copyActivations(other);
-        fitWithUpdateActivationFlag(data, nEpochs, batchSize, false);
+        fitWithUpdateActivationFlag(data, nEpochs, false);
     }
 
     public void copyActivations(RbfNetwork other) {
@@ -129,7 +129,7 @@ public class RbfNetwork {
         RbfNetworkHelper.copyActivations(activationsOther, activations);
     }
 
-    private void fitWithUpdateActivationFlag(TrainData data0, int nEpochs, int batchSize, boolean updateActivations) {
+    private void fitWithUpdateActivationFlag(TrainData data0, int nEpochs,  boolean updateActivations) {
       //  validate(data, nEpochs, batchSize);
         var errors = getErrors(data0.inputs(), data0.outputs());
         var data=TrainData.of(data0.inputs(), errors);

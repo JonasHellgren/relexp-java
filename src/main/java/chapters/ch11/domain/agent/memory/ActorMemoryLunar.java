@@ -45,7 +45,6 @@ public class ActorMemoryLunar {
      */
     @Deprecated(since = "slow and not recommended")
     public void fit(TrainData dataMean, TrainData dataStd) {
-        int batchSize = Math.min(dataMean.nSamples(), agentParameters.batchSize());
         memoryMean.fitFromErrors(dataMean, agentParameters.nEpochs());
         memoryLogStd.fitFromErrors(dataStd, agentParameters.nEpochs());
     }
@@ -55,9 +54,8 @@ public class ActorMemoryLunar {
      */
 
     public void fitUsingActivationsOtherRbfMean(TrainData dataMean, TrainData dataStd, RbfNetwork other) {
-        int batchSize = Math.min(dataMean.nSamples(), agentParameters.batchSize());
-        memoryMean.fitUsingActivationsOtherRbf(dataMean, agentParameters.nEpochs(),batchSize,other);
-        memoryLogStd.fitUsingActivationsOtherRbf(dataStd, agentParameters.nEpochs(),batchSize,other);
+        memoryMean.fitUsingActivationsOtherRbf(dataMean, agentParameters.nEpochs(),other);
+        memoryLogStd.fitUsingActivationsOtherRbf(dataStd, agentParameters.nEpochs(),other);
     }
 
     /**

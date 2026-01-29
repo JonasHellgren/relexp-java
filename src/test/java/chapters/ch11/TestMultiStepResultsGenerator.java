@@ -57,7 +57,7 @@ class TestMultiStepResultsGenerator {
         var ep = LunarEnvParamsFactory.produceDefault();
         var p = LunarAgentParamsFactory.newDefault(ep)
                 .withLearningRateCritic(LEARNING_RATE_CRITIC)
-                .withBatchSize(1).withNEpochs(N_EPOCHS);
+                .withNEpochs(N_EPOCHS);
         var trainerParameters = TrainerParamsFactory.of(stepHorizon, N_FITS).withGamma(gamma);
         dependencies = TrainerDependencies.builder()
                 .agent(AgentLunar.zeroWeights(p, ep))

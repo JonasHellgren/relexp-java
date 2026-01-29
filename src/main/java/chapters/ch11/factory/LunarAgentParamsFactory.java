@@ -13,7 +13,6 @@ public class LunarAgentParamsFactory {
     public static final double LEARNING_RATE_CRITIC = 1e-3;
     public static final double LEARNING_RATE_ACTOR = 1e-3;
     public static final double INIT_WEIGHT_LOG_STD = 0.25d;  //set so std starts at approx 5
-    public static final int BATCH_SIZE = 20;
     public static final int N_EPOCHS = 20;  //5
     public static final double GRAD_MEAN_MAX = 0.1;
     public static final double GRAD_STD_MAX = 0.01;  //small => std decreases slowly
@@ -30,7 +29,6 @@ public class LunarAgentParamsFactory {
                 initWeightLogStd(INIT_WEIGHT_LOG_STD).
                 learningRateCritic(LEARNING_RATE_CRITIC).
                 learningRateActor(LEARNING_RATE_ACTOR).
-                batchSize(BATCH_SIZE).
                 nEpochs(N_EPOCHS).
                 gradMeanMax(GRAD_MEAN_MAX).gradStdMax(GRAD_STD_MAX).
                 tdMax(TD_MAX).advMax(ADV_MAX).
