@@ -48,7 +48,7 @@ public class EpisodeCreator {
             state=sr.stateNew();
             counter.increase();
         }
-        ConditionalsUtil.executeIfTrue(counter.isExceeded(), () -> log.info("Nof steps exceeded"));
+        ConditionalsUtil.executeIfTrue(counter.isExceeded(), () -> log.fine("Nof steps exceeded"));
         return experienceList;
     }
 

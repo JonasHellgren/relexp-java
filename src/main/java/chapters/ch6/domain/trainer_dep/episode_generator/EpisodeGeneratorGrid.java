@@ -38,7 +38,7 @@ public class EpisodeGeneratorGrid {
             isTerminal = sr.isTerminal();
             counter.increase();
         } while (!isTerminal && counter.isNotExceeded());
-        ConditionalsUtil.executeIfTrue(counter.isExceeded(),() -> log.info("nof steps exceeded"));
+        ConditionalsUtil.executeIfTrue(counter.isExceeded(),() -> log.fine("Nof steps exceeded"));
         return experiences;
     }
 

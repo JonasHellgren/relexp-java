@@ -32,8 +32,8 @@ import java.util.List;
  */
 
 class TestMultiStepResultsGenerator {
-    public static final int N_FITS = 100;
     public static final int N_EPOCHS = 20;
+    public static final int N_EPISODES = 100;
     public static final double TOL_CRITIC = 0.01;
     public static final double TOL = 1e-4;
     public static final double LEARNING_RATE_CRITIC = 0.1;
@@ -57,8 +57,8 @@ class TestMultiStepResultsGenerator {
         var ep = LunarEnvParamsFactory.produceDefault();
         var p = LunarAgentParamsFactory.newDefault(ep)
                 .withLearningRateCritic(LEARNING_RATE_CRITIC)
-                .withNEpochs(N_EPOCHS);
-        var trainerParameters = TrainerParamsFactory.of(stepHorizon, N_FITS).withGamma(gamma);
+                .withNFits(N_EPOCHS);
+        var trainerParameters = TrainerParamsFactory.of(stepHorizon, N_EPISODES).withGamma(gamma);
         dependencies = TrainerDependencies.builder()
                 .agent(AgentLunar.zeroWeights(p, ep))
                 .environment(EnvironmentLunar.createDefault())
@@ -164,8 +164,7 @@ class TestMultiStepResultsGenerator {
         double gamma = 0.5;
         int stepHorizon = 3;
         generator = createGenerator(stepHorizon, gamma);
-        double vTarget = 1.0;
-        fitMemory(dependencies.agent(), vTarget);
+        fitMemory(dependencies.agent(), 1.0);
         assertMultiStepResults(ArgumentAdaptor.of(arguments), generator.generate(experiencesOneBigMinusInEnd));
     }
 
@@ -200,7 +199,7 @@ class TestMultiStepResultsGenerator {
         StateLunar state = StateLunar.zeroPosAndSpeed();
         var data= TrainData.empty();
         var in = RadialBasisAdapter.asInput(state);
-        for (int i = 0; i < N_FITS ; i++) {
+        for (int i = 0; i < N_EPOCHS ; i++) {
             data.clear();
             double err = vTarget - agent.readCritic(state);
             data.addListIn(in, err);

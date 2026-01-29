@@ -130,7 +130,7 @@ public class RbfNetwork {
     }
 
     private void fitWithUpdateActivationFlag(TrainData data0, int nEpochs,  boolean updateActivations) {
-      //  validate(data, nEpochs, batchSize);
+      //  validate(data, nFits, batchSize);
         var errors = getErrors(data0.inputs(), data0.outputs());
         var data=TrainData.of(data0.inputs(), errors);
         IntStream.range(0, nEpochs).forEach(i -> fitFromErrors(data, updateActivations));

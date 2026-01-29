@@ -1,6 +1,5 @@
 package chapters.ch11.domain.agent.param;
 
-import chapters.ch11.domain.environment.param.LunarParameters;
 import core.foundation.util.math.MathUtil;
 import lombok.Builder;
 import lombok.With;
@@ -20,14 +19,12 @@ public record AgentParameters(
         double initWeightLogStd, // Initial weight for the log standard deviation of the actor
         double learningRateCritic, // Learning rate for the critic
         double learningRateActor, // Learning rate for the actor
-        int nEpochs, // Number of epochs for training
+        int nFits, // Number of fits for training
         double gradMeanMax, // Maximum gradient for the mean of the actor
         double gradStdMax, // Maximum gradient for the standard deviation of the actor
         double tdMax, // Maximum TD error for training
         double advMax // Maximum advantage for training
 ) {
-
-
 
     public double clipAdvantage(double adv0) {
         return MathUtil.clip(adv0, -advMax, advMax);

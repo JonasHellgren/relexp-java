@@ -29,7 +29,7 @@ class TestAgentCriticMemory {
         lunarParameters = LunarEnvParamsFactory.produceDefault();
         agentParameters = LunarAgentParamsFactory.newDefault(lunarParameters)
                 .withLearningRateCritic(LEARNING_RATE)
-                .withNEpochs(1);
+                .withNFits(1);
         memory = CriticMemoryLunar.zeroWeights(agentParameters, lunarParameters);
     }
 

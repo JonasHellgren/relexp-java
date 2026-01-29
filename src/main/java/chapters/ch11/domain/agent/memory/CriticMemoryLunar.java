@@ -45,10 +45,10 @@ public class CriticMemoryLunar {
      * @param data the training data to fit the memory to
      */
     public void fit(TrainData data) {
-        memory.fitFromErrors(data, agentParameters.nEpochs());
+        memory.fitFromErrors(data, agentParameters.nFits());
     }
 
     public void fitFromError(TrainData data) {
-        memory.fitFromErrors(data, agentParameters.nEpochs());
+        memory.fitFromErrors(data, agentParameters.nFits());
     }
 }

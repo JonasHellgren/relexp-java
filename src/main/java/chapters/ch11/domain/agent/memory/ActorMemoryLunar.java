@@ -9,7 +9,6 @@ import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.math.MeanAndLogStd;
 import core.foundation.gadget.math.MeanAndStd;
 import core.foundation.gadget.training.TrainData;
-import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.collections.ArrayCreatorUtil;
 import core.nextlevelrl.radial_basis.RbfNetwork;
 import lombok.AllArgsConstructor;
@@ -45,8 +44,8 @@ public class ActorMemoryLunar {
      */
     @Deprecated(since = "slow and not recommended")
     public void fit(TrainData dataMean, TrainData dataStd) {
-        memoryMean.fitFromErrors(dataMean, agentParameters.nEpochs());
-        memoryLogStd.fitFromErrors(dataStd, agentParameters.nEpochs());
+        memoryMean.fitFromErrors(dataMean, agentParameters.nFits());
+        memoryLogStd.fitFromErrors(dataStd, agentParameters.nFits());
     }
 
     /**
@@ -54,8 +53,8 @@ public class ActorMemoryLunar {
      */
 
     public void fitUsingActivationsOtherRbfMean(TrainData dataMean, TrainData dataStd, RbfNetwork other) {
-        memoryMean.fitUsingActivationsOtherRbf(dataMean, agentParameters.nEpochs(),other);
-        memoryLogStd.fitUsingActivationsOtherRbf(dataStd, agentParameters.nEpochs(),other);
+        memoryMean.fitUsingActivationsOtherRbf(dataMean, agentParameters.nFits(),other);
+        memoryLogStd.fitUsingActivationsOtherRbf(dataStd, agentParameters.nFits(),other);
     }
 
     /**

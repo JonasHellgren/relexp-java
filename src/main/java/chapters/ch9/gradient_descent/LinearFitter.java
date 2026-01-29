@@ -95,7 +95,7 @@ public class LinearFitter {
     }
 
     private static void validateFit(TrainData data, int nEpochs, int batchSize) {
-        Preconditions.checkArgument(nEpochs > 0, "nEpochs should be > 0");
+        Preconditions.checkArgument(nEpochs > 0, "nFits should be > 0");
         Preconditions.checkArgument(data.nSamples() >= batchSize, "nSamples should be >= batchSize");
     }
 
