@@ -1,10 +1,10 @@
 package chapters.ch12;
 
-import chapters.ch12.inv_pendulum.domain.environment.core.ActionPendulum;
-import chapters.ch12.inv_pendulum.domain.environment.core.EnvironmentPendulum;
-import chapters.ch12.inv_pendulum.domain.environment.core.StatePendulum;
-import chapters.ch12.inv_pendulum.domain.environment.startstate_supplier.StartStateSupplierEnum;
-import chapters.ch12.inv_pendulum.factory.PendulumParametersFactory;
+import chapters.ch12.domain.inv_pendulum.environment.core.ActionPendulum;
+import chapters.ch12.domain.inv_pendulum.environment.core.EnvironmentPendulum;
+import chapters.ch12.domain.inv_pendulum.environment.core.StatePendulum;
+import chapters.ch12.domain.inv_pendulum.environment.startstate_supplier.StartStateSupplierEnum;
+import chapters.ch12.factory.PendulumParametersFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

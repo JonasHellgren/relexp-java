@@ -1,6 +1,6 @@
 package chapters.ch12;
 
-import chapters.ch12.inv_pendulum.domain.environment.core.StatePendulum;
+import chapters.ch12.domain.inv_pendulum.environment.core.StatePendulum;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,17 +1,17 @@
 package chapters.ch12;
 
-import chapters.ch12.inv_pendulum.domain.agent.core.AgentPendulum;
-import chapters.ch12.inv_pendulum.domain.environment.core.ActionPendulum;
-import chapters.ch12.inv_pendulum.domain.environment.core.StatePendulum;
-import chapters.ch12.inv_pendulum.factory.AgentParametersFactory;
-import chapters.ch12.inv_pendulum.factory.MockedTrainDataFactory;
-import chapters.ch12.inv_pendulum.factory.TrainerParametersFactory;
+import chapters.ch12.domain.inv_pendulum.agent.core.AgentPendulum;
+import chapters.ch12.domain.inv_pendulum.environment.core.ActionPendulum;
+import chapters.ch12.domain.inv_pendulum.environment.core.StatePendulum;
+import chapters.ch12.factory.AgentParametersFactory;
+import chapters.ch12.factory.MockedTrainDataFactory;
+import chapters.ch12.factory.TrainerParametersFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
-import static chapters.ch12.inv_pendulum.domain.agent.memory.ActionAndItsValue.findActionValue;
+import static chapters.ch12.domain.inv_pendulum.agent.memory.ActionAndItsValue.findActionValue;
 
 
 public class TestAgentPendulum {

@@ -1,9 +1,9 @@
 package chapters.ch12;
 
-import chapters.ch12.inv_pendulum.domain.trainer.core.TrainerDependencies;
-import chapters.ch12.inv_pendulum.domain.trainer.core.TrainerPendulum;
-import chapters.ch12.inv_pendulum.factory.TrainerDependenciesFactory;
-import chapters.ch12.inv_pendulum.plotting.MeasuresPendulumTrainingEnum;
+import chapters.ch12.domain.inv_pendulum.trainer.core.TrainerDependencies;
+import chapters.ch12.domain.inv_pendulum.trainer.core.TrainerPendulum;
+import chapters.ch12.factory.TrainerDependenciesFactory;
+import chapters.ch12.plotting_invpend.MeasuresPendulumTrainingEnum;
 import core.foundation.util.collections.ListUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

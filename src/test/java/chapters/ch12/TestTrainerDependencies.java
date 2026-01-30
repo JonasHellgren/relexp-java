@@ -1,6 +1,6 @@
 package chapters.ch12;
 
-import chapters.ch12.inv_pendulum.factory.TrainerDependenciesFactory;
+import chapters.ch12.factory.TrainerDependenciesFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;

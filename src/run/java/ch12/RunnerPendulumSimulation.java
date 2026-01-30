@@ -1,15 +1,15 @@
 package ch12;
 
 
-import chapters.ch12.inv_pendulum.domain.environment.core.ActionPendulum;
-import chapters.ch12.inv_pendulum.domain.environment.core.EnvironmentPendulum;
-import chapters.ch12.inv_pendulum.domain.environment.core.StatePendulum;
-import chapters.ch12.inv_pendulum.domain.environment.startstate_supplier.StartStateSupplierEnum;
-import chapters.ch12.inv_pendulum.factory.ManyLinesChartCreatorFactory;
-import chapters.ch12.inv_pendulum.factory.PendulumParametersFactory;
-import chapters.ch12.inv_pendulum.plotting.MeasuresPendulumSimulation;
-import chapters.ch12.inv_pendulum.plotting.MeasuresPendulumSimulationEnum;
-import chapters.ch12.inv_pendulum.plotting.PendulumRecorder;
+import chapters.ch12.domain.inv_pendulum.environment.core.ActionPendulum;
+import chapters.ch12.domain.inv_pendulum.environment.core.EnvironmentPendulum;
+import chapters.ch12.domain.inv_pendulum.environment.core.StatePendulum;
+import chapters.ch12.domain.inv_pendulum.environment.startstate_supplier.StartStateSupplierEnum;
+import chapters.ch12.factory.ManyLinesChartCreatorFactory;
+import chapters.ch12.factory.PendulumParametersFactory;
+import chapters.ch12.plotting_invpend.MeasuresPendulumSimulation;
+import chapters.ch12.plotting_invpend.MeasuresPendulumSimulationEnum;
+import chapters.ch12.plotting_invpend.PendulumRecorder;
 import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.foundation.util.unit_converter.UnitConverterUtil;

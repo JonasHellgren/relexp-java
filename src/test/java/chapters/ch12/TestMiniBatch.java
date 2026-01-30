@@ -1,10 +1,10 @@
 package chapters.ch12;
 
-import chapters.ch12.inv_pendulum.domain.environment.core.ActionPendulum;
-import chapters.ch12.inv_pendulum.domain.environment.core.StatePendulum;
-import chapters.ch12.inv_pendulum.domain.environment.core.StepReturnPendulum;
-import chapters.ch12.inv_pendulum.domain.trainer.core.ExperiencePendulum;
-import chapters.ch12.inv_pendulum.domain.trainer.core.MiniBatch;
+import chapters.ch12.domain.inv_pendulum.environment.core.ActionPendulum;
+import chapters.ch12.domain.inv_pendulum.environment.core.StatePendulum;
+import chapters.ch12.domain.inv_pendulum.environment.core.StepReturnPendulum;
+import chapters.ch12.domain.inv_pendulum.trainer.core.ExperiencePendulum;
+import chapters.ch12.domain.inv_pendulum.trainer.core.MiniBatch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;

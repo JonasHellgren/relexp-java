@@ -1,16 +1,16 @@
 package ch12;
 
 
-import chapters.ch12.inv_pendulum.domain.agent.evaluator.PendulumAgentEvaluator;
-import chapters.ch12.inv_pendulum.domain.environment.startstate_supplier.StartStateSupplierEnum;
-import chapters.ch12.inv_pendulum.domain.trainer.core.TrainerDependencies;
-import chapters.ch12.inv_pendulum.domain.trainer.core.TrainerPendulum;
-import chapters.ch12.inv_pendulum.factory.HyperParametersPendulum;
-import chapters.ch12.inv_pendulum.factory.TrainerDependenciesFactory;
-import chapters.ch12.inv_pendulum.plotting.PendulumAgentMemoryPlotter;
+import chapters.ch12.domain.inv_pendulum.agent.evaluator.PendulumAgentEvaluator;
+import chapters.ch12.domain.inv_pendulum.environment.startstate_supplier.StartStateSupplierEnum;
+import chapters.ch12.domain.inv_pendulum.trainer.core.TrainerDependencies;
+import chapters.ch12.domain.inv_pendulum.trainer.core.TrainerPendulum;
+import chapters.ch12.factory.HyperParametersPendulum;
+import chapters.ch12.factory.TrainerDependenciesFactory;
+import chapters.ch12.plotting_invpend.PendulumAgentMemoryPlotter;
 import core.foundation.gadget.timer.CpuTimer;
 
-import static chapters.ch12.inv_pendulum.plotting.TrainerPlotter.*;
+import static chapters.ch12.plotting_invpend.TrainerPlotter.*;
 
 public class RunnerPendulumTrainer {
     static final HyperParametersPendulum HYPER_PAR =

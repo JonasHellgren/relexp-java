@@ -1,8 +1,8 @@
 package chapters.ch12;
 
-import chapters.ch12.inv_pendulum.domain.environment.startstate_supplier.StartStateSupplierEnum;
-import chapters.ch12.inv_pendulum.domain.environment.startstate_supplier.StartStateSupplierI;
-import chapters.ch12.inv_pendulum.factory.PendulumParametersFactory;
+import chapters.ch12.domain.inv_pendulum.environment.startstate_supplier.StartStateSupplierEnum;
+import chapters.ch12.domain.inv_pendulum.environment.startstate_supplier.StartStateSupplierI;
+import chapters.ch12.factory.PendulumParametersFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

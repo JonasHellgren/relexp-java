@@ -1,11 +1,11 @@
 package chapters.ch12;
 
-import chapters.ch12.inv_pendulum.domain.agent.memory.ActionAndItsValue;
-import chapters.ch12.inv_pendulum.domain.agent.memory.AgentMemory;
-import chapters.ch12.inv_pendulum.domain.agent.param.AgentParameters;
-import chapters.ch12.inv_pendulum.factory.AgentParametersFactory;
-import chapters.ch12.inv_pendulum.factory.MockedTrainDataFactory;
-import chapters.ch12.inv_pendulum.factory.TrainerParametersFactory;
+import chapters.ch12.domain.inv_pendulum.agent.memory.ActionAndItsValue;
+import chapters.ch12.domain.inv_pendulum.agent.memory.AgentMemory;
+import chapters.ch12.domain.inv_pendulum.agent.param.AgentParameters;
+import chapters.ch12.factory.AgentParametersFactory;
+import chapters.ch12.factory.MockedTrainDataFactory;
+import chapters.ch12.factory.TrainerParametersFactory;
 import core.nextlevelrl.neural.Dl4JUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
