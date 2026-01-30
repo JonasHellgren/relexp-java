@@ -1,16 +1,13 @@
 package chapters.ch11;
 
 import chapters.ch11.domain.agent.core.AgentLunar;
-import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.factory.LunarAgentParamsFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.factory.TrainerParamsFactory;
-import chapters.ch11.helper.RadialBasisAdapter;
-import core.foundation.gadget.training.TrainData;
+import chapters.ch11.domain.environment.core.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainDataErr;
-import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

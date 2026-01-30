@@ -6,7 +6,7 @@ import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.domain.trainer.param.TrainerParameters;
 import chapters.ch11.factory.RbfMemoryFactory;
-import chapters.ch11.helper.RadialBasisAdapter;
+import chapters.ch11.domain.environment.core.RadialBasisAdapter;
 import core.foundation.gadget.math.MeanAndLogStd;
 import core.foundation.gadget.math.MeanAndStd;
 import core.foundation.gadget.training.TrainDataErr;

@@ -8,7 +8,8 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class EnvironmentPendulum {
-    PendulumParameters parameters;
+
+    private PendulumParameters parameters;
 
     public static EnvironmentPendulum of(PendulumParameters parameters) {
         return new EnvironmentPendulum(parameters);

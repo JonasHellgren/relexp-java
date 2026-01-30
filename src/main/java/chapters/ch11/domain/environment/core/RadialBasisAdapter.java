@@ -1,6 +1,5 @@
-package chapters.ch11.helper;
+package chapters.ch11.domain.environment.core;
 
-import chapters.ch11.domain.environment.core.StateLunar;
 import core.nextlevelrl.radial_basis.Kernel;
 import lombok.experimental.UtilityClass;
 import java.util.List;

@@ -14,8 +14,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PendulumScaler {
 
-    ScalerLinear scalerAngle;
-    ScalerLinear scalerAngularSpeed;
+    private ScalerLinear scalerAngle;
+    private ScalerLinear scalerAngularSpeed;
 
     public static PendulumScaler of(AgentParameters p) {
         return new PendulumScaler(

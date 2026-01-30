@@ -7,7 +7,7 @@ import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.domain.trainer.core.TrainerLunarMultiStep;
 import chapters.ch11.factory.DependencyFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
-import chapters.ch11.helper.AgentEvaluator;
+import chapters.ch11.plotting.AgentEvaluator;
 import chapters.ch11.plotting.LunarTrainerPlotter;
 import core.foundation.config.ConfigFactory;
 import core.foundation.config.PathAndFile;

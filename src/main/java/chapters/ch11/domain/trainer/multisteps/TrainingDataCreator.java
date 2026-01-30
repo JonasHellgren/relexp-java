@@ -1,10 +1,8 @@
 package chapters.ch11.domain.trainer.multisteps;
 
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
-import chapters.ch11.helper.RadialBasisAdapter;
-import core.foundation.gadget.training.TrainData;
+import chapters.ch11.domain.environment.core.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainDataErr;
-import core.foundation.gadget.training.TrainDataOld;
 import lombok.AllArgsConstructor;
 
 /***

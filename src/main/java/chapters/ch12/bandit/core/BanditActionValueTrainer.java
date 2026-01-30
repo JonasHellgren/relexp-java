@@ -21,10 +21,10 @@ public class BanditActionValueTrainer {
     public static final int BATCH_SIZE = 1;
     public static final int N_EPOCHS_BETWEEN_LOGGING = 500;
 
-    BanditActionValueMemory memory;
-    EnvironmentBanditWrapper environment;
+    private BanditActionValueMemory memory;
+    private EnvironmentBanditWrapper environment;
     @Getter
-    BanditNeuralRecorder recorder;
+    private BanditNeuralRecorder recorder;
 
     public static BanditActionValueTrainer create(EnvironmentParametersBandit params) {
         var environment = EnvironmentBanditWrapper.of(params);

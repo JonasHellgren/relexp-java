@@ -15,8 +15,8 @@ import java.util.stream.IntStream;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReplayBuffer {
 
-    TrainerParameters trainerParameters;
-    List<ExperiencePendulum> buffer;
+    private TrainerParameters trainerParameters;
+    private List<ExperiencePendulum> buffer;
 
     public static ReplayBuffer of(TrainerDependencies dependencies) {
         return new ReplayBuffer(dependencies.trainerParameters(), new ArrayList<>());

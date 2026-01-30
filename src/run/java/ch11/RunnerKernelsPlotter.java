@@ -2,7 +2,7 @@ package ch11;
 
 import chapters.ch11.factory.DependencyFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
-import chapters.ch11.helper.RadialBasisAdapter;
+import chapters.ch11.domain.environment.core.RadialBasisAdapter;
 import com.google.common.collect.Lists;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.nextlevelrl.radial_basis.RbfNetwork;

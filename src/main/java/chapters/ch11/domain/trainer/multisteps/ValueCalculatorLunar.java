@@ -1,4 +1,4 @@
-package chapters.ch11.helper;
+package chapters.ch11.domain.trainer.multisteps;
 
 import chapters.ch11.domain.agent.core.AgentLunar;
 import chapters.ch11.domain.environment.core.StateLunar;

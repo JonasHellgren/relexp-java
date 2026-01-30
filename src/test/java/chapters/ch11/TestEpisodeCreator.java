@@ -2,17 +2,14 @@ package chapters.ch11;
 
 
 import chapters.ch11.domain.agent.core.AgentLunar;
-import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.core.EnvironmentLunar;
-import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierRandomHeightZeroSpeed;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
-import chapters.ch11.domain.trainer.param.TrainerParameters;
 import chapters.ch11.factory.LunarAgentParamsFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.factory.TrainerParamsFactory;
-import chapters.ch11.helper.EpisodeCreator;
-import chapters.ch11.helper.EpisodeInfo;
+import chapters.ch11.domain.trainer.core.EpisodeCreator;
+import chapters.ch11.domain.trainer.core.EpisodeInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

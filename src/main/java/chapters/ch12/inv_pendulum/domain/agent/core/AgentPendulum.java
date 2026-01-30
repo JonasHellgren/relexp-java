@@ -28,10 +28,10 @@ import java.util.stream.IntStream;
 @Getter
 public class AgentPendulum {
 
-    AgentParameters agentParameters;
-    TrainerParameters trainerParameters;
-    AgentMemory memory, memoryTar;
-    PendulumScaler scaler;
+    private AgentParameters agentParameters;
+    private TrainerParameters trainerParameters;
+    private AgentMemory memory, memoryTar;
+    private PendulumScaler scaler;
 
     public static AgentPendulum of(AgentParameters agentParameters,
                                    TrainerParameters trainerParameters) {

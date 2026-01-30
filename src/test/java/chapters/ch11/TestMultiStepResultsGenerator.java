@@ -13,7 +13,7 @@ import chapters.ch11.domain.trainer.multisteps.MultiStepResultsGenerator;
 import chapters.ch11.factory.LunarAgentParamsFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.factory.TrainerParamsFactory;
-import chapters.ch11.helper.RadialBasisAdapter;
+import chapters.ch11.domain.environment.core.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainDataErr;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

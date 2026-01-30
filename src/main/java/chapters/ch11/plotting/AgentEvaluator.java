@@ -1,10 +1,12 @@
-package chapters.ch11.helper;
+package chapters.ch11.plotting;
 
 import chapters.ch11.domain.environment.core.EnvironmentLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierI;
 import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
+import chapters.ch11.domain.trainer.core.EpisodeCreator;
+import chapters.ch11.domain.trainer.core.EpisodeInfo;
 import core.foundation.config.PathAndFile;
 import core.foundation.config.PlotConfig;
 import core.foundation.gadget.cond.Counter;

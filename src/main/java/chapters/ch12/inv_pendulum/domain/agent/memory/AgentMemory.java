@@ -26,10 +26,10 @@ import org.nd4j.linalg.lossfunctions.LossFunctions;
 @Getter
 public class AgentMemory {
 
-    public static final int SEED = 42;
-    MultiLayerNetwork model;
-    AgentParameters agentParameters;
-    TrainerParameters trainerParameters;
+    private static final int SEED = 42;
+    private MultiLayerNetwork model;
+    private AgentParameters agentParameters;
+    private TrainerParameters trainerParameters;
 
     public static AgentMemory of(AgentParameters ap, TrainerParameters tp) {
         return new AgentMemory(

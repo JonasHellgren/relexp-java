@@ -23,8 +23,8 @@ public class PendulumAgentEvaluator {
 
     public static final int N_STEPS_BETWEEN_RECORDING = 1;
 
-    TrainerDependencies dependencies;
-    PendulumRecorder recorder;
+    private TrainerDependencies dependencies;
+    private PendulumRecorder recorder;
 
     public static PendulumAgentEvaluator of(TrainerDependencies dependencies) {
         return new PendulumAgentEvaluator(dependencies, PendulumRecorder.empty());

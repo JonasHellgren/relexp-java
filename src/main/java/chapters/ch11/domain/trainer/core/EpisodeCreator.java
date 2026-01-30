@@ -1,8 +1,6 @@
-package chapters.ch11.helper;
+package chapters.ch11.domain.trainer.core;
 
 import chapters.ch11.domain.environment.core.StepReturnLunar;
-import chapters.ch11.domain.trainer.core.ExperienceLunar;
-import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import com.beust.jcommander.internal.Lists;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.ConditionalsUtil;

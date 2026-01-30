@@ -2,11 +2,9 @@ package chapters.ch11.domain.trainer.deprecated;
 
 import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
-import chapters.ch11.helper.RadialBasisAdapter;
-import chapters.ch11.helper.ValueCalculatorLunar;
-import core.foundation.gadget.training.TrainData;
+import chapters.ch11.domain.environment.core.RadialBasisAdapter;
+import chapters.ch11.domain.trainer.multisteps.ValueCalculatorLunar;
 import core.foundation.gadget.training.TrainDataErr;
-import core.foundation.gadget.training.TrainDataOld;
 import lombok.AllArgsConstructor;
 
 import java.util.List;

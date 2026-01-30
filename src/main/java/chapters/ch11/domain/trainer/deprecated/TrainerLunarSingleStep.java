@@ -2,7 +2,7 @@ package chapters.ch11.domain.trainer.deprecated;
 
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.factory.ProgressMeasuresFactory;
-import chapters.ch11.helper.EpisodeCreator;
+import chapters.ch11.domain.trainer.core.EpisodeCreator;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

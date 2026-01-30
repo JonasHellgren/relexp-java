@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ErrorBandPlotterNeuralBandit {
 
-    public static final String X_LABEL = "Episode";
+    private static final String X_LABEL = "Episode";
     private final BanditNeuralRecorder recorder;
     private final String filePath;
     private final String fileNameAddOn;

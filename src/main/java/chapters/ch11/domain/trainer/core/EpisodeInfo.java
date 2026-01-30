@@ -1,9 +1,8 @@
-package chapters.ch11.helper;
+package chapters.ch11.domain.trainer.core;
 
 import chapters.ch11.domain.environment.core.EnvironmentLunar;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
-import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import com.google.common.base.Preconditions;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.foundation.util.collections.ListUtil;
