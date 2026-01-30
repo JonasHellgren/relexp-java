@@ -9,6 +9,7 @@ import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.factory.TrainerParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataErr;
 import core.foundation.gadget.training.TrainDataOld;
 import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import org.junit.jupiter.api.Assertions;
@@ -74,8 +75,8 @@ class TestAgentActorMemory {
         double adv = 1.0;
         var grad = GradientMeanAndLogStd.of(1.0, 2.0);
         var expStd0 = actorMemoryLunar.actorMeanAndStd(state);
-        var dataMean = TrainData.empty();
-        var dataStd = TrainData.empty();
+        var dataMean = TrainDataErr.empty();
+        var dataStd = TrainDataErr.empty();
         var in = RadialBasisAdapter.asInput(state);
         dataMean.addListIn(in, grad.mean() * adv);
         dataStd.addListIn(in, grad.std() * adv);

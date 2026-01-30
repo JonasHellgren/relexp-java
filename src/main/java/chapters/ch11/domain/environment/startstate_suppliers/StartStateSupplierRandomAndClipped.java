@@ -9,9 +9,9 @@ import org.apache.commons.math3.util.Pair;
 @AllArgsConstructor
 public class StartStateSupplierRandomAndClipped implements StartStateSupplierI   {
 
-    LunarParameters ep;
-    Pair<Double,Double> yMinMax;
-    Pair<Double,Double> spdMinMax;
+    private LunarParameters ep;
+    private Pair<Double,Double> yMinMax;
+    private Pair<Double,Double> spdMinMax;
 
     public static StartStateSupplierI create(
             LunarParameters ep, Pair<Double,Double> yMinMax, Pair<Double,Double> spdMinMax) {

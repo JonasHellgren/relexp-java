@@ -5,6 +5,7 @@ import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.helper.RadialBasisAdapter;
 import chapters.ch11.helper.ValueCalculatorLunar;
 import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataErr;
 import core.foundation.gadget.training.TrainDataOld;
 import lombok.AllArgsConstructor;
 
@@ -24,9 +25,9 @@ public class MemoryUpdaterSingleStepTrainer {
     public void fit(List<ExperienceLunar> experiences) {
         var agent = dependencies.agent();
         var ap = agent.getAgentParameters();
-        var dataMean = TrainData.empty();
-        var dataStd = TrainData.empty();
-        var data = TrainData.empty();
+        var dataMean = TrainDataErr.empty();
+        var dataStd = TrainDataErr.empty();
+        var data = TrainDataErr.empty();
         for (ExperienceLunar experience : experiences) {
             double tdError = ap.clipTdError(calculator.calcTemporalDifferenceError(experience));
             var state = experience.state();

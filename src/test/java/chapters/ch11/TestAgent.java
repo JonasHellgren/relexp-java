@@ -9,6 +9,7 @@ import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.factory.TrainerParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataErr;
 import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -77,7 +78,7 @@ class TestAgent {
     void testFitActorWithNegativeAction() {
         double action0 = agent.readActor(state0and0).mean();
         int actionApplied = -1;
-        var dataMean = TrainData.empty();
+        var dataMean = TrainDataErr.empty();
         var in = RadialBasisAdapter.asInput(state0and0);
         dataMean.addListIn(in, actionApplied*ADV);
         int valTarget = 10;
@@ -93,7 +94,7 @@ class TestAgent {
     void testFitActorWithPositiveAction() {
         double action0 = agent.readActor(state0and0).mean();
         int actionApplied = 1;
-        var dataMean = TrainData.empty();
+        var dataMean = TrainDataErr.empty();
         var in = RadialBasisAdapter.asInput(state0and0);
         dataMean.addListIn(in, actionApplied*ADV);
         int valTarget = 10;
@@ -127,7 +128,7 @@ class TestAgent {
 
 
     private void fitCritic(int valTarget) {
-        var data= TrainData.empty();
+        var data= TrainDataErr.empty();
         var in = RadialBasisAdapter.asInput(state0and0);
         data.addListIn(in, valTarget);
         agent.fitCritic(data);

@@ -17,11 +17,11 @@ import java.util.Map;
 
 public class RunnerPlotSingleRbf {
 
-    public static final double MIN_X = -3d;
-    public static final double MAX_X = 3d;  //trick to get correct x-axis ticks, 5.5
-    public static final double MAX_Y = 1d;
-    public static final List<Double> SIGMAS = List.of(0.5, 1d, 2d);
-    public static final int N_POINTS = 50;
+    static final double MIN_X = -3d;
+    static final double MAX_X = 3d;  //trick to get correct x-axis ticks, 5.5
+    static final double MAX_Y = 1d;
+    static final List<Double> SIGMAS = List.of(0.5, 1d, 2d);
+    static final int N_POINTS = 50;
 
     public static void main(String[] args) {
         var inList = ListCreatorUtil.createFromStartToEndWithNofItems(MIN_X, MAX_X, N_POINTS);

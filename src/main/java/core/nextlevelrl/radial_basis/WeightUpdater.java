@@ -1,7 +1,7 @@
 package core.nextlevelrl.radial_basis;
 
 import com.google.common.base.Preconditions;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataErr;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Setter
 public class WeightUpdater {
-    double learningRate;
+    private double learningRate;
 
     public static WeightUpdater of(double learningRate) {
         return new WeightUpdater(learningRate);
@@ -28,7 +28,7 @@ public class WeightUpdater {
      * @param weights     The current weights.
      * @param activations The activations of the network.
      */
-    public void updateWeights(TrainData data, Activations activations, Weights weights) {
+    public void updateWeights(TrainDataErr data, Activations activations, Weights weights) {
         validate(data, weights, activations);
         double[] gradient = weightGradientFromErrors(data, activations);
         for (int i = 0; i < weights.size(); i++) {
@@ -43,7 +43,7 @@ public class WeightUpdater {
      *
      * gradient[idxKernel] = (1/nExamples) * ∑yErr[i] * φ(x[i], idxKernel)
      */
-    private double[] weightGradientFromErrors(TrainData data, Activations activations) {
+    private double[] weightGradientFromErrors(TrainDataErr data, Activations activations) {
         int nKernels = activations.nKernels();
         return IntStream.range(0, nKernels)
                 .mapToDouble(idxKernel -> getElementInGradient(data, activations, idxKernel))
@@ -51,13 +51,13 @@ public class WeightUpdater {
 
     }
 
-    private static double getElementInGradient(TrainData data,
+    private static double getElementInGradient(TrainDataErr data,
                                                Activations activations,
                                                int idxKernel) {
         int nExamples = data.nSamples();
         double elementInGradient = 0;
         for (int idxExample = 0; idxExample < nExamples; idxExample++) {
-            double error = data.output(idxExample);
+            double error = data.error(idxExample);
             double activation = activations.get(idxExample, idxKernel);
             elementInGradient += error * activation;
         }
@@ -66,7 +66,7 @@ public class WeightUpdater {
     }
 
 
-    private static void validate(TrainData data, Weights weights, Activations activations) {
+    private static void validate(TrainDataErr data, Weights weights, Activations activations) {
         Preconditions.checkArgument(weights.size() == activations.nKernels(),
                 "weights and nKernels should have same length, nWeights = " + weights.size()
                         + ", nKernels = " + activations.nKernels());

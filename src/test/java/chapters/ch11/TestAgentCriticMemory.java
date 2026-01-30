@@ -10,6 +10,7 @@ import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.factory.TrainerParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataErr;
 import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -106,13 +107,13 @@ class TestAgentCriticMemory {
 
 
     private static void fitMemory(CriticMemoryLunar criticMemoryLunar, StateLunar state, double vTarget) {
-        var data = TrainData.empty();
+        var data = TrainDataErr.empty();
         for (int i = 0; i < N_FITS; i++) {
             data.clear();
             double error = vTarget - criticMemoryLunar.read(state);
             var in = RadialBasisAdapter.asInput(state);
             data.addListIn(in, error);
-            criticMemoryLunar.fitFromError(data);
+            criticMemoryLunar.fit(data);
         }
     }
 

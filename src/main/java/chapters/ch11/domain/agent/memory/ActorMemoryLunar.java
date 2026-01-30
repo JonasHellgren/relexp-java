@@ -9,7 +9,7 @@ import chapters.ch11.factory.RbfMemoryFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.math.MeanAndLogStd;
 import core.foundation.gadget.math.MeanAndStd;
-import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataErr;
 import core.foundation.util.collections.ArrayCreatorUtil;
 import core.nextlevelrl.radial_basis.RbfNetwork;
 import lombok.AllArgsConstructor;
@@ -25,9 +25,10 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class ActorMemoryLunar {
-    RbfNetwork memoryMean;
-    RbfNetwork memoryLogStd;
-    TrainerParameters trainerParameters;
+
+    private RbfNetwork memoryMean;
+    private RbfNetwork memoryLogStd;
+    private TrainerParameters trainerParameters;
 
     public static ActorMemoryLunar create(AgentParameters ap, TrainerParameters tp, LunarParameters ep) {
         var memExp = RbfMemoryFactory.createMemoryManyCenters(ap, ep, tp.learningRateActor());
@@ -44,19 +45,10 @@ public class ActorMemoryLunar {
      * @param dataStd the training data for the standard deviation
      */
     @Deprecated(since = "slow and not recommended")
-    public void fit(TrainData dataMean, TrainData dataStd) {
+    public void fit(TrainDataErr dataMean, TrainDataErr dataStd) {
         memoryMean.fitFromErrors(dataMean, trainerParameters.nFits());
         memoryLogStd.fitFromErrors(dataStd, trainerParameters.nFits());
     }
-/*
-    *//**
-     * Same but saves computation time using activations from other rbf
-     *//*
-
-    public void fitUsingActivationsOtherRbfMean(TrainData dataMean, TrainData dataStd, RbfNetwork other) {
-        memoryMean.fitUsingActivationsOtherRbf(dataMean, agentParameters.nFits(),other);
-        memoryLogStd.fitUsingActivationsOtherRbf(dataStd, agentParameters.nFits(),other);
-    }*/
 
     /**
      * Returns the mean and standard deviation of the actor's output for the given state.

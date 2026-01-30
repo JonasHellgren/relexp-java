@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Kernels {
 
-    List<Kernel> kernels;
+    private List<Kernel> kernels;
 
     public static Kernels empty() {
         return new Kernels(new ArrayList<>());

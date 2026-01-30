@@ -14,8 +14,8 @@ import java.util.List;
 @Builder
 public class MultiStepResults {
 
-    int nResults;  //equal to length of below lists
-    List<MultiStepResult> results;
+    private int nResults;  //equal to length of below lists
+    private List<MultiStepResult> results;
 
     public static MultiStepResults create(int nExp) {
         return MultiStepResults.builder()

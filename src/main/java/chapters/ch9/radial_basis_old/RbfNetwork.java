@@ -14,10 +14,10 @@ import static chapters.ch9.radial_basis_old.RbfNetworkHelper.*;
 @AllArgsConstructor
 @Getter
 public class RbfNetwork {
-    Kernels kernels;
-    Activations activations;
-    Weights weights;
-    WeightUpdaterRbf updater;
+    private Kernels kernels;
+    private Activations activations;
+    private Weights weights;
+    private WeightUpdaterRbf updater;
 
     public static RbfNetwork of(Kernels kernels, double learningRate) {
         return new RbfNetwork(kernels,

@@ -10,6 +10,7 @@ import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.MeanAndStd;
 import core.foundation.gadget.normal_distribution.NormDistributionSampler;
 import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataErr;
 import core.foundation.gadget.training.TrainDataOld;
 import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import core.nextlevelrl.gradient.NormalDistributionGradientCalculator;
@@ -25,11 +26,11 @@ import lombok.Getter;
 @Getter
 public class AgentLunar{
 
-    AgentParameters agentParameters;
-    ActorMemoryLunar actorMemory;
-    CriticMemoryLunar criticMemory;
-    NormDistributionSampler sampler;
-    NormalDistributionGradientCalculator gradCalc;
+    private AgentParameters agentParameters;
+    private ActorMemoryLunar actorMemory;
+    private CriticMemoryLunar criticMemory;
+    private NormDistributionSampler sampler;
+    private NormalDistributionGradientCalculator gradCalc;
 
     public static AgentLunar zeroWeights(AgentParameters ap,TrainerParameters tp, LunarParameters ep) {
         var actMemory = ActorMemoryLunar.create(ap,tp, ep);
@@ -56,21 +57,15 @@ public class AgentLunar{
         return sampler.sampleFromNormDistribution(meanAndStd.mean(), std);
     }
 
-    public void fitCritic(TrainData data) {
+    public void fitCritic(TrainDataErr data) {
         criticMemory.fit(data);
     }
 
-    public void fitActor(TrainData dataMean, TrainData dataStd) {
+    public void fitActor(TrainDataErr dataMean, TrainDataErr dataStd) {
         validate();
         actorMemory.fit(dataMean,dataStd);
     }
-/*
 
-    public void fitActorUseCriticActivations(TrainData dataMean, TrainData dataStd) {
-        validate();
-        actorMemory.fitUsingActivationsOtherRbfMean(dataMean,dataStd,criticMemory.getMemory());
-    }
-*/
 
     public double readCritic(StateLunar state) {
         return criticMemory.read(state);

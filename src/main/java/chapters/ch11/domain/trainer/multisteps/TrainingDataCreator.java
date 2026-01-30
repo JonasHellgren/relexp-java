@@ -3,6 +3,7 @@ package chapters.ch11.domain.trainer.multisteps;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.helper.RadialBasisAdapter;
 import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataErr;
 import core.foundation.gadget.training.TrainDataOld;
 import lombok.AllArgsConstructor;
 
@@ -24,12 +25,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TrainingDataCreator {
 
-    public record DataContainer (TrainData dataCritic, TrainData dataMean, TrainData dataStd) {
+    public record DataContainer (TrainDataErr dataCritic, TrainDataErr dataMean, TrainDataErr dataStd) {
         public static DataContainer empty() {
             return new DataContainer(
-                    TrainData.empty(),
-                    TrainData.empty(),
-                    TrainData.empty());
+                    TrainDataErr.empty(),
+                    TrainDataErr.empty(),
+                    TrainDataErr.empty());
         }
     }
 

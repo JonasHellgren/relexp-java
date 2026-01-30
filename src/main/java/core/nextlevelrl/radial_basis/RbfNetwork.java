@@ -3,6 +3,7 @@ package core.nextlevelrl.radial_basis;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.Accumulator;
 import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataErr;
 import core.foundation.gadget.training.TrainDataOld;
 import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.foundation.util.cond.ConditionalsUtil;
@@ -68,7 +69,7 @@ public class RbfNetwork {
         IntStream.range(0, nFits).forEach(i -> fit(data));
     }
 
-    public void fitFromErrors(TrainData data, int nFits) {
+    public void fitFromErrors(TrainDataErr data, int nFits) {
         lossCalculator.reset();
         IntStream.range(0, nFits).forEach(i -> fitFromErrors(data, true));
     }
@@ -109,7 +110,7 @@ public class RbfNetwork {
         var errors = getErrors(data.inputs(), data.outputs());
         var errorsClipped=clipper.clip(errors);
         lossCalculator.add(errorsClipped.stream().mapToDouble(Math::abs).sum());
-        fitFromErrors(TrainData.of(data.inputs(), errorsClipped), true);
+        fitFromErrors(TrainDataErr.of(data.inputs(), errorsClipped), true);
     }
 
     /**
@@ -132,32 +133,24 @@ public class RbfNetwork {
     private void fitWithUpdateActivationFlag(TrainData data0, int nEpochs,  boolean updateActivations) {
       //  validate(data, nFits, batchSize);
         var errors = getErrors(data0.inputs(), data0.outputs());
-        var data=TrainData.of(data0.inputs(), errors);
+        var data=TrainDataErr.of(data0.inputs(), errors);
         IntStream.range(0, nEpochs).forEach(i -> fitFromErrors(data, updateActivations));
     }
 
-    /**
-     * Updates the weights of the RBF network based on the input data and error values.
-     */
-    private void fitFromErrorsOld(TrainData data) {
-        int nInputs = data.inputs().size();
-        Preconditions.checkArgument(!data.isEmpty(), "data must not be empty");
-        ConditionalsUtil.executeIfTrue(nInputs != activations.nSamples(), () -> activations.reset(nInputs));
-        activations.calculateActivations(data, kernels);
-        updater.updateWeights(data, activations, weights);
-    }
 
     /**
      * Updates the weights of the RBF network based on the input data and error values.
      */
-    private void fitFromErrors(TrainData data, boolean updateActivation) {
-        int nInputs = data.inputs().size();
+    private void fitFromErrors(TrainDataErr data, boolean updateActivation) {
+        int nInputs = data.nSamples();
         Preconditions.checkArgument(!data.isEmpty(), "data must not be empty");
         ConditionalsUtil.executeIfTrue(nInputs != activations.nSamples(), () -> activations.reset(nInputs));
+
         ConditionalsUtil.executeIfTrue(updateActivation, () -> {
             activations = RbfNetworkHelper.createIfNotEqualNofSamples(data.nSamples(), activations);
             activations.calculateActivations(data, kernels);
         });
+
 
         updater.updateWeights(data, activations, weights);
     }

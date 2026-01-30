@@ -18,7 +18,7 @@ import tec.units.ri.unit.Units;
 @AllArgsConstructor
 public class EnvironmentLunar implements EnvironmentI {
 
-    LunarParameters parameters;
+    private LunarParameters parameters;
 
     public static EnvironmentLunar createDefault() {
         return new EnvironmentLunar(LunarEnvParamsFactory.produceDefault());

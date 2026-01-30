@@ -1,5 +1,6 @@
 package core.foundation.gadget.training;
 
+import core.nextlevelrl.radial_basis.Kernels;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.List;
@@ -21,6 +22,15 @@ public class TrainDataErr {
 
     public static TrainDataErr of(List<double[]> inputs, List<Double> errors) {
         return new TrainDataErr(TrainData.of(inputs, errors));
+    }
+
+
+    public List<double[]> inputs() {
+        return trainData.inputs();
+    }
+
+    public List<Double> errors() {
+        return trainData.outputs();
     }
 
     public List<List<Double>> inputsAsListList() {
@@ -68,6 +78,5 @@ public class TrainDataErr {
     public String toString() {
         return trainData.toString();
     }
-
 
 }

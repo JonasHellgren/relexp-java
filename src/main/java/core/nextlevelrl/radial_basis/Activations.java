@@ -2,6 +2,7 @@ package core.nextlevelrl.radial_basis;
 
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.training.TrainData;
+import core.foundation.gadget.training.TrainDataErr;
 import lombok.AllArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class Activations {
         return list;
     }
 
-    public void calculateActivations(TrainData data, Kernels kernels) {
+    public void calculateActivations(TrainDataErr data, Kernels kernels) {
         Preconditions.checkArgument(!isEmpty(), "activations should not be empty");
         for (int i = 0; i < data.inputs().size(); i++) {
             var input = data.inputs().get(i);

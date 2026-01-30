@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class StartStateSupplierRandomHeightZeroSpeed implements StartStateSupplierI   {
 
-    LunarParameters ep;
+    private LunarParameters ep;
 
     public static StartStateSupplierI create(LunarParameters ep) {
         return new StartStateSupplierRandomHeightZeroSpeed(ep);

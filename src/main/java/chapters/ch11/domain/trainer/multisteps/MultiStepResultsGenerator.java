@@ -30,8 +30,8 @@ import java.util.stream.IntStream;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MultiStepResultsGenerator {
 
-    TrainerDependencies dependencies;
-    ValueCalculatorLunar calculator;
+    private TrainerDependencies dependencies;
+    private ValueCalculatorLunar calculator;
 
     public static MultiStepResultsGenerator of(TrainerDependencies dependencies) {
         return new MultiStepResultsGenerator(dependencies, ValueCalculatorLunar.of(dependencies));

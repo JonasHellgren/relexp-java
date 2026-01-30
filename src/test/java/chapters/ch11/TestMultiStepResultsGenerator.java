@@ -2,29 +2,26 @@ package chapters.ch11;
 
 
 import chapters.ch11.domain.agent.core.AgentLunar;
-import chapters.ch11.domain.agent.param.AgentParameters;
 import chapters.ch11.domain.environment.core.EnvironmentLunar;
 import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.environment.core.StepReturnLunar;
-import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierRandomHeightZeroSpeed;
 import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
 import chapters.ch11.domain.trainer.multisteps.MultiStepResults;
 import chapters.ch11.domain.trainer.multisteps.MultiStepResultsGenerator;
-import chapters.ch11.domain.trainer.param.TrainerParameters;
 import chapters.ch11.factory.LunarAgentParamsFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.factory.TrainerParamsFactory;
 import chapters.ch11.helper.RadialBasisAdapter;
-import core.foundation.gadget.training.TrainData;
-import core.foundation.gadget.training.TrainDataOld;
+import core.foundation.gadget.training.TrainDataErr;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
+
 import java.util.List;
 
 /****
@@ -197,7 +194,7 @@ class TestMultiStepResultsGenerator {
 
     private void fitMemory(AgentLunar agent, double vTarget) {
         StateLunar state = StateLunar.zeroPosAndSpeed();
-        var data= TrainData.empty();
+        var data= TrainDataErr.empty();
         var in = RadialBasisAdapter.asInput(state);
         for (int i = 0; i < N_EPOCHS ; i++) {
             data.clear();
