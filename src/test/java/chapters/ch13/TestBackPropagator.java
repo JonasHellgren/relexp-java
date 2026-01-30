@@ -2,8 +2,8 @@ package chapters.ch13;
 
 import chapters.ch13.domain.searcher.backpropagator.BackPropagator;
 import chapters.ch13.domain.searcher.path.Path;
-import chapters.ch13.environments.jumper.ActionJumper;
-import chapters.ch13.environments.jumper.StateJumper;
+import chapters.ch13.implem.jumper.ActionJumper;
+import chapters.ch13.implem.jumper.StateJumper;
 import chapters.ch13.factory.FactoryExperienceList;
 import chapters.ch13.factory.FactorySearcherSettings;
 import chapters.ch13.factory.FactoryTreeForTest;

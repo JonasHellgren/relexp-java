@@ -1,8 +1,8 @@
 package ch13;
 
 import chapters.ch13.domain.searcher.node.Node;
-import chapters.ch13.environments.jumper.ActionJumper;
-import chapters.ch13.environments.jumper.StateJumper;
+import chapters.ch13.implem.jumper.ActionJumper;
+import chapters.ch13.implem.jumper.StateJumper;
 import chapters.ch13.factory.FactoryTreeForTest;
 import chapters.ch13.plotting.DotFileGenerator;
 import core.foundation.configOld.ProjectPropertiesReader;

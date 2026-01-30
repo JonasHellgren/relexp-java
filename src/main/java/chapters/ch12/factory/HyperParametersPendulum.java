@@ -15,7 +15,7 @@ public record HyperParametersPendulum(
         Pair<Double, Double> learningRateStartEnd,
         int sizeMiniBatch
 ) {
-    public static final int N_EPISODES = 300;
+    public static final int N_EPISODES = 250;
     public static final double LEARNING_RATE0 = 0.01,LEARNING_RATE1 = 0.001;
     public static final int SIZE_MINI_BATCH = 32;  //16
     public static final int N_HIDDEN_UNITS = 32;  //16

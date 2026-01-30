@@ -10,6 +10,7 @@ import chapters.ch12.factory.PendulumParametersFactory;
 import chapters.ch12.plotting_invpend.MeasuresPendulumSimulation;
 import chapters.ch12.plotting_invpend.MeasuresPendulumSimulationEnum;
 import chapters.ch12.plotting_invpend.PendulumRecorder;
+import core.foundation.config.ConfigFactory;
 import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.foundation.util.unit_converter.UnitConverterUtil;
@@ -20,7 +21,6 @@ public class RunnerPendulumSimulation {
     public static final int NOF_DIGITS_TITLETEXT = 2;
     public static final int N_STEPS = 150;
     public static final int N_STEPS_BETWEEN_RECORDING = 10;  //trick to get a nicer plot
-    public static final boolean SHOW_LEGEND = true;
 
     public static void main(String[] args) {
         var parameters = PendulumParametersFactory.createForTest();
@@ -52,8 +52,9 @@ public class RunnerPendulumSimulation {
     private static void plotting(double angleTorqueActivation, PendulumRecorder recorder) {
         String title = "Theta limit (deg) = " + NumberFormatterUtil.getRoundedNumberAsString(
                 UnitConverterUtil.convertRadiansToDegrees(angleTorqueActivation), NOF_DIGITS_TITLETEXT);
+        var plotConfig= ConfigFactory.plotConfig();
         var cc = ManyLinesChartCreatorFactory.createChartCreatorForSimulation(
-                title, recorder.trajectory(MeasuresPendulumSimulationEnum.TIME), SHOW_LEGEND);
+                title, recorder.trajectory(MeasuresPendulumSimulationEnum.TIME),plotConfig);
         cc.addLine("Theta (deg)", recorder.trajectory(MeasuresPendulumSimulationEnum.ANGLE_DEG));
         cc.addLine("Theta. spd. (deg/s)", recorder.trajectory(MeasuresPendulumSimulationEnum.ANGULAR_SPEED_DEG));
         cc.addLine("Theta. max (deg)", recorder.trajectory(MeasuresPendulumSimulationEnum.ANGLE_MAX_DEG));

@@ -1,5 +1,6 @@
 package chapters.ch12.factory;
 
+import core.foundation.config.PlotConfig;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
@@ -14,6 +15,8 @@ public class ManyLinesChartCreatorFactory {
 
     public static final int FONT_SIZE_AXIS = 15;
     public static final int FONT_SIZE_LEGEND = 12;
+    public static final String X_AXIS_LABEL_EVAL = "Time (ms)";
+    public static final boolean SHOW_LEGEND = true;
 
     static Font TICKS_FONT = new Font("Arial", Font.PLAIN, FONT_SIZE_AXIS);
     static Font AXIST_TITLE_FONT = new Font("Arial", Font.BOLD, FONT_SIZE_AXIS);
@@ -22,18 +25,18 @@ public class ManyLinesChartCreatorFactory {
 
     @SneakyThrows
     public static ManyLinesChartCreator createChartCreatorForSimulation(
-            String title, List<Double> timeTraj, boolean showLegend) {
-        var width = ProjectPropertiesReader.create().xyChartWidth1Col();
-        var height = ProjectPropertiesReader.create().xyChartHeight() * 1.5;
-
+            String title,
+            List<Double> timeTraj,
+            PlotConfig plotConfig) {
         PlotSettings settings = PlotSettings.ofDefaults()
                 .withTitle(title).withXAxisLabel("Time (s)").withYAxisLabel("")
                 .withDefinedSpaceBetweenXTicks(false)
-                .withWidth(width).withHeight((int) height)
+                .withWidth(plotConfig.xyChartWidth2Col())
+                .withHeight(plotConfig.xyChartHeight())
                 .withLegendTextFont(TICKS_FONT)
                 .withAxisTitleFont(AXIST_TITLE_FONT)
                 .withAxisTicksFont(TICKS_FONT)
-                .withShowLegend(showLegend)
+                .withShowLegend(SHOW_LEGEND)
                 .withLegendTextFont(LEGEND_FONT)
                 .withAxisTicksDecimalFormat("#.##")
                 .withLegendPosition(Styler.LegendPosition.OutsideE)
@@ -47,15 +50,15 @@ public class ManyLinesChartCreatorFactory {
 
     @SneakyThrows
     public static ManyLinesChartCreator createChartCreatorForEvaluator(
-            String title, List<Double> timeTraj, String xAxisLabel) {
-        var width = ProjectPropertiesReader.create().xyChartWidth2Col();
-        var height = ProjectPropertiesReader.create().xyChartHeight() * 1.5;
-
+            String title,
+            List<Double> timeTraj,
+            PlotConfig plotConfig) {
         PlotSettings settings = PlotSettings.ofDefaults()
-                .withTitle(title).withXAxisLabel(xAxisLabel).withYAxisLabel("")
+                .withTitle(title).withXAxisLabel(X_AXIS_LABEL_EVAL).withYAxisLabel("")
                 .withDefinedSpaceBetweenXTicks(true)
                 .withSpaceBetweenXTicks(2500d)
-                .withWidth(width).withHeight((int) height)
+                .withWidth(plotConfig.xyChartWidth2Col())
+                .withHeight(plotConfig.xyChartHeight())
                 .withLegendTextFont(TICKS_FONT)
                 .withAxisTitleFont(AXIST_TITLE_FONT)
                 .withAxisTicksFont(TICKS_FONT)
@@ -71,18 +74,19 @@ public class ManyLinesChartCreatorFactory {
 
     @SneakyThrows
     public static ManyLinesChartCreator createChartCreatorForActionValues(
-            String title, List<Double> timeTraj, boolean showLegend) {
-        var width = ProjectPropertiesReader.create().xyChartWidth1Col();
-        var height = ProjectPropertiesReader.create().xyChartHeight() * 1.5;
+            String title,
+            List<Double> timeTraj,
+            PlotConfig plotConfig) {
 
         PlotSettings settings = PlotSettings.ofDefaults()
                 .withTitle(title).withXAxisLabel("Episode").withYAxisLabel("Value")
                 .withDefinedSpaceBetweenXTicks(true).withSpaceBetweenXTicks(10d)
-                .withWidth(width).withHeight((int) height)
+                .withWidth(plotConfig.xyChartWidth2Col())
+                .withHeight(plotConfig.xyChartHeight())
                 .withLegendTextFont(TICKS_FONT)
                 .withAxisTitleFont(AXIST_TITLE_FONT)
                 .withAxisTicksFont(TICKS_FONT)
-                .withShowLegend(showLegend)
+                .withShowLegend(SHOW_LEGEND)
                 .withLegendTextFont(LEGEND_FONT)
                 .withAxisTicksDecimalFormat("#.##")
                 .withLegendPosition(Styler.LegendPosition.OutsideE)

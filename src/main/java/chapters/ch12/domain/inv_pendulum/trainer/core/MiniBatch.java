@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MiniBatch  implements Iterable<ExperiencePendulum> {
 
-    List<ExperiencePendulum> buffer;
+    private List<ExperiencePendulum> buffer;
 
     public static MiniBatch of(List<ExperiencePendulum> buffer) {
         return new MiniBatch(buffer);

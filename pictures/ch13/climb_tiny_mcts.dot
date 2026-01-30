@@ -1,0 +1,11 @@
+digraph MCTS {
+node [shape=ellipse];
+Nroot [label="(root)
+<0|0,0>"];
+Nroot -> N1_0[penwidth=3];
+N1_0 [label="(1_0|up)
+<0|0,0>"];
+Nroot -> N1_1[penwidth=1];
+N1_1 [label="(1_1|n)
+<0|0,0>"];
+}

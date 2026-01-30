@@ -4,7 +4,6 @@ import chapters.ch12.domain.inv_pendulum.agent.memory.ActionAndItsValue;
 import chapters.ch12.domain.inv_pendulum.environment.core.StatePendulum;
 import chapters.ch12.domain.inv_pendulum.trainer.core.TrainerDependencies;
 import core.foundation.config.PathAndFile;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.plotting_3d.HeatMapChartCreator;
@@ -35,8 +34,7 @@ public class PendulumAgentMemoryPlotter {
     }
 
     @SneakyThrows
-    public void plotAndSaveAll() {
-        var pathPics = ProjectPropertiesReader.create().pathDeepRl();
+    public void plotAndSaveAll(String pathPics) {
         plotAndSaveTorque(pathPics);
         plotAndSavValue(pathPics);
     }

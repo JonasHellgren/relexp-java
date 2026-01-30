@@ -2,9 +2,9 @@ package chapters.ch13;
 
 import chapters.ch13.domain.environment.Experience;
 import chapters.ch13.domain.searcher.node.Node;
-import chapters.ch13.environments.jumper.ActionJumper;
-import chapters.ch13.environments.jumper.EnvironmentJumper;
-import chapters.ch13.environments.jumper.StateJumper;
+import chapters.ch13.implem.jumper.ActionJumper;
+import chapters.ch13.implem.jumper.EnvironmentJumper;
+import chapters.ch13.implem.jumper.StateJumper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

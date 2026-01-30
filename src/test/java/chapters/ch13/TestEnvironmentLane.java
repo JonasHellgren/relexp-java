@@ -1,9 +1,9 @@
 package chapters.ch13;
 
 import chapters.ch13.domain.environment.StepReturnI;
-import chapters.ch13.environments.lane_change.ActionLane;
-import chapters.ch13.environments.lane_change.EnvironmentLane;
-import chapters.ch13.environments.lane_change.StateLane;
+import chapters.ch13.implem.lane_change.ActionLane;
+import chapters.ch13.implem.lane_change.EnvironmentLane;
+import chapters.ch13.implem.lane_change.StateLane;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

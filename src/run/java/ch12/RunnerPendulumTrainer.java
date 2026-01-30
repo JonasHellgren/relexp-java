@@ -8,7 +8,7 @@ import chapters.ch12.domain.inv_pendulum.trainer.core.TrainerPendulum;
 import chapters.ch12.factory.HyperParametersPendulum;
 import chapters.ch12.factory.TrainerDependenciesFactory;
 import chapters.ch12.plotting_invpend.PendulumAgentMemoryPlotter;
-import core.foundation.gadget.timer.CpuTimer;
+import core.foundation.config.ConfigFactory;
 
 import static chapters.ch12.plotting_invpend.TrainerPlotter.*;
 
@@ -19,12 +19,11 @@ public class RunnerPendulumTrainer {
     public static final double ANGLE_START_EVAL = 0.4;
 
     public static void main(String[] args) {
-        var timer = CpuTimer.empty();
         var dependencies = TrainerDependenciesFactory.createForTrainerRunning(HYPER_PAR);
         var trainer = TrainerPendulum.of(dependencies);
         var evaluator= PendulumAgentEvaluator.of(dependencies);
         trainer.train();
-        timer.printInMs();
+        trainer.logTime();
         plotting(trainer, dependencies, evaluator);
     }
 
@@ -33,10 +32,14 @@ public class RunnerPendulumTrainer {
                                  PendulumAgentEvaluator evaluator) {
         boolean isFail= evaluator.evaluate(TIME_MAX_EVAL,
                 StartStateSupplierEnum.GIVEN_ANGLE_ZERO_SPEED.ofStartAngle(ANGLE_START_EVAL));
-        System.out.println("isPark = " + isFail);
-        plotTrainEvolution(trainer);
+        if (isFail) {
+            System.out.println("Pendulum failed!");
+            return;
+        }
+        var path= ConfigFactory.pathPicsConfig().ch12();
+        plotTrainEvolution(trainer,path);
         var memoryPlotter= PendulumAgentMemoryPlotter.of(dependencies);
-        memoryPlotter.plotAndSaveAll();
+        memoryPlotter.plotAndSaveAll(path);
         plotTheta(evaluator);
         plotTorque(evaluator);
         plotSpd(evaluator);

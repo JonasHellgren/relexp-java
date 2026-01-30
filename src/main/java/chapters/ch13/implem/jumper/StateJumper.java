@@ -1,4 +1,4 @@
-package chapters.ch13.environments.jumper;
+package chapters.ch13.implem.jumper;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
