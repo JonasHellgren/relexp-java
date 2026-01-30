@@ -32,20 +32,18 @@ public class PlotterHeatMapsAgent {
     public static final String Y_AXIS_LABEL = "Position (m)";
     public static final int FONT_SIZE_AXIS = 20;
 
-    TrainerDependencies dependencies;
+    private final TrainerDependencies dependencies;
 
     public static PlotterHeatMapsAgent of(TrainerDependencies trainerDependencies) {
         return new PlotterHeatMapsAgent(trainerDependencies);
     }
 
     @SneakyThrows
-    public void plotAndSaveAll() {
-        var pathPics = core.foundation.configOld.ProjectPropertiesReader.create().pathActorCriticPics();
+    public void plotAndSaveAll(String pathPics) {
         plotAndSaveExpectedForce(pathPics);
         plotAndSavExpectedAcceleration(pathPics);
         plotAndSavValue(pathPics);
     }
-
 
     private void plotAndSaveExpectedForce(String path) {
         Function<StateLunar,Double> func = s -> dependencies.agent().readActor(s).mean();
@@ -84,8 +82,6 @@ public class PlotterHeatMapsAgent {
         return data;
     }
 
-
-    @SneakyThrows
     private HeatMapChart createChart(String title, double[][] data) {
         Font ticksFont = new Font("Arial", Font.PLAIN, FONT_SIZE_AXIS);
         Font axisTitleFont = new Font("Arial", Font.BOLD, FONT_SIZE_AXIS);

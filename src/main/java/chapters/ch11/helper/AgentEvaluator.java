@@ -5,18 +5,17 @@ import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierI;
 import chapters.ch11.domain.trainer.core.ExperienceLunar;
 import chapters.ch11.domain.trainer.core.TrainerDependencies;
-import core.foundation.configOld.ProjectPropertiesReader;
+import core.foundation.config.PathAndFile;
+import core.foundation.config.PlotConfig;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.ConditionalsUtil;
-import core.plotting_core.base.shared.FormattedAsString;
 import core.plotting_core.base.shared.PlotSettings;
-import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_plotting.ChartSaver;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 import java.awt.*;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -28,19 +27,15 @@ import java.util.List;
 @AllArgsConstructor
 @Log
 public class AgentEvaluator {
-    public static final int FONT_SIZE_AXIS = 15;
-
     private final TrainerDependencies dependencies;
-
     public static AgentEvaluator of(TrainerDependencies dependencies) {
         return new AgentEvaluator(dependencies);
     }
 
-
     public static AgentEvaluator of(TrainerDependencies trainerDependencies,
-                                  StartStateSupplierI startStateSupplier) {
+                                    StartStateSupplierI startStateSupplier) {
         trainerDependencies = trainerDependencies.withStartStateSupplier(startStateSupplier);
-        return  AgentEvaluator.of(trainerDependencies);
+        return AgentEvaluator.of(trainerDependencies);
     }
 
     /**
@@ -56,39 +51,35 @@ public class AgentEvaluator {
         while (evalCounter.isNotExceeded()) {
             var experiencesNotExploring = creator.createNotExploring();
             var info = EpisodeInfo.of(experiencesNotExploring);
-            var startExperience= info.startExperience();
+            var startExperience = info.startExperience();
             var endExperience = info.endExperience();
             increaseFailCounterAndLogIfFailedEnd(endExperience, failCounter, startExperience);
             evalCounter.increase();
         }
         return (double) failCounter.getCount() / nEvals;
     }
+
     /**
      * Plots and saves a chart of a single simulation.
-     *
+     * <p>
      * This method creates a chart with four lines: force, acceleration, speed, and position.
      * The chart is then saved as a PNG file at the specified path and displayed using a Swing wrapper.
-     *
-     * @param fileName the name of the file to save the chart as
      */
     @SneakyThrows
-    public void plotAndSavePicFromSimulation(String fileName) {
+    public void plotAndSavePicFromSimulation(PathAndFile pathAndFile, PlotConfig plotConfig) {
         var creator = EpisodeCreator.of(dependencies);
         var experiences = creator.createNotExploring();
         var ep = dependencies.environment().getParameters();
         var speeds = EpisodeInfo.of(experiences).speeds();
-        var forces = EpisodeInfo.of(experiences).forces(ep);
         var accelerations = EpisodeInfo.of(experiences)
                 .accelerations((EnvironmentLunar) dependencies.environment());
         var positions = EpisodeInfo.of(experiences).positions();
-        String title = ""; //""Time end = " + getTimeEndAsString(experiences, ep) + " (s)";
-        var cc = getChartCreator(experiences, ep, title);
-    //    cc.addLine("Force (kN)", forces);
+        var cc = getChartCreator(experiences, ep, plotConfig);
         cc.addLine("Acc.(m/s2)", accelerations);
         cc.addLine("Speed (m/s)", speeds);
         cc.addLine("Pos (m)", positions);
         var chart = cc.create();
-        ChartSaverAndPlotter.showChartSaveInFolderActorCritic(chart, fileName);
+        ChartSaver.saveAndShowXYChart(chart, pathAndFile);
     }
 
 
@@ -97,35 +88,30 @@ public class AgentEvaluator {
                                                              ExperienceLunar startExperience) {
         ConditionalsUtil.executeIfTrue(endExperience.isTransitionToFail(), () -> {
             failCounter.increase();
-            log.info("FAIL: (start,end)=("+ startExperience.toStringShort()+
-                    "," + endExperience.toStringShort()+")");
+            log.info("FAIL: (start,end)=("
+                    + startExperience.toStringShort()
+                    + "," + endExperience.toStringShort() + ")");
         });
     }
 
-    private static String getTimeEndAsString(List<ExperienceLunar> experiencesNotExploring, LunarParameters ep) {
-        var info= EpisodeInfo.of(experiencesNotExploring);
-        double timeEnd=info.nSteps() * ep.dt();
-        return FormattedAsString.getFormattedAsString(timeEnd, "#.#");
-    }
 
     private static ManyLinesChartCreator getChartCreator(
-            List<ExperienceLunar> experiencesNotExploring, LunarParameters ep, String title) throws IOException {
+            List<ExperienceLunar> experiencesNotExploring, LunarParameters ep, PlotConfig plotConfig) {
+        var width = plotConfig.xyChartWidth2Col();
+        var height = plotConfig.xyChartHeight();
+        Font ticksFont = plotConfig.fontBold();
+        Font axisTitleFont = plotConfig.fontBold();
         var time = EpisodeInfo.of(experiencesNotExploring).times(ep.dt());
-        var width = ProjectPropertiesReader.create().xyChartWidth1Col();
-        var height = ProjectPropertiesReader.create().xyChartHeight()*1.5;
-        Font ticksFont = new Font("Arial", Font.PLAIN, FONT_SIZE_AXIS);
-        Font axisTitleFont = new Font("Arial", Font.BOLD, FONT_SIZE_AXIS);
-
         return ManyLinesChartCreator.of(
                 PlotSettings.ofDefaults()
-                        .withTitle(title).withXAxisLabel("Time (s)").withYAxisLabel("")
+                        .withTitle("").withXAxisLabel("Time (s)").withYAxisLabel("")
                         .withDefinedSpaceBetweenXTicks(false)
-                        .withWidth(width).withHeight((int) height)
+                        .withWidth(width)
+                        .withHeight(height)
                         .withLegendTextFont(ticksFont)
                         .withAxisTitleFont(axisTitleFont)
                         .withAxisTicksFont(ticksFont)
-                        .withColorRangeSeries(
-                                new Color[]{Color.BLACK, Color.GRAY, Color.LIGHT_GRAY}),
+                        .withColorRangeSeries(new Color[]{Color.BLACK, Color.GRAY, Color.LIGHT_GRAY}),
                 time);
     }
 

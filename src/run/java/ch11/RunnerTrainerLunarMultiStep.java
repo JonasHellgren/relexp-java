@@ -9,6 +9,8 @@ import chapters.ch11.factory.DependencyFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.helper.AgentEvaluator;
 import chapters.ch11.plotting.LunarTrainerPlotter;
+import core.foundation.config.ConfigFactory;
+import core.foundation.config.PathAndFile;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 import org.apache.commons.math3.util.Pair;
@@ -20,6 +22,7 @@ public class RunnerTrainerLunarMultiStep {
     public static final int STEP_HORIZON = 5;
     public static final int N_EPISODES = 10_000;
     public static final int N_EVALS = 100;
+    static final String PATH = ConfigFactory.pathPicsConfig().ch11();
 
     @SneakyThrows
     public static void main(String[] args) {
@@ -28,7 +31,13 @@ public class RunnerTrainerLunarMultiStep {
         var trainer = TrainerLunarMultiStep.of(trainerDependencies);
         trainer.train();
         trainer.logTimer();
-        LunarTrainerPlotter.plot(trainer, trainerDependencies);
+        plotting(trainer, trainerDependencies, ep);
+    }
+
+    private static void plotting(TrainerLunarMultiStep trainer,
+                                 TrainerDependencies trainerDependencies,
+                                 LunarParameters ep) {
+        LunarTrainerPlotter.plot(trainer, trainerDependencies,PATH);
         var evaluator=AgentEvaluator.of(trainerDependencies, getStartStateEvaluation(ep));
         double fractFails=evaluator.fractionFails(N_EVALS);
         log.info("frac fails: " + fractFails);
@@ -55,7 +64,9 @@ public class RunnerTrainerLunarMultiStep {
         trainerDependencies = trainerDependencies.withStartStateSupplier(new StartStateSupplierRandomAndClipped(
                 ep, Pair.create(startHeight, startHeight), Pair.create(startSpd, startSpd)));
         var evaluatorSim = AgentEvaluator.of(trainerDependencies);
-        evaluatorSim.plotAndSavePicFromSimulation(fileName);
+        var pathAndFile= PathAndFile.of(PATH, fileName);
+        var plotConfig=ConfigFactory.plotConfig();
+        evaluatorSim.plotAndSavePicFromSimulation(pathAndFile, plotConfig);
     }
 
 }

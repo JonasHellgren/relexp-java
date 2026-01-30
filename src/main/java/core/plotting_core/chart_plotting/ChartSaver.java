@@ -12,7 +12,6 @@ public class ChartSaver {
 
     public static final int DPI = 300;
 
-
     @SneakyThrows
     public static void saveAndShowXYChart(CategoryChart chart, PathAndFile pathAndFile) {
         saveBitmapWithDPI(chart, pathAndFile.fullName(), BitmapEncoder.BitmapFormat.PNG, DPI);

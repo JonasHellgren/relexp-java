@@ -33,7 +33,8 @@ public class ActorMemoryLunar {
     public static ActorMemoryLunar create(AgentParameters ap, TrainerParameters tp, LunarParameters ep) {
         var memExp = RbfMemoryFactory.createMemoryManyCenters(ap, ep, tp.learningRateActor());
         var memStd = RbfMemoryFactory.createMemoryManyCenters(ap, ep, tp.learningRateActor());
-        memStd.setWeights(ArrayCreatorUtil.createArrayWithSameDoubleNumber(memExp.nKernels(), ap.initWeightLogStd()));
+        memStd.setWeights(ArrayCreatorUtil.createArrayWithSameDoubleNumber(
+                memExp.nKernels(), ap.initWeightLogStd()));
         return new ActorMemoryLunar(memExp, memStd, tp);
     }
     /**
