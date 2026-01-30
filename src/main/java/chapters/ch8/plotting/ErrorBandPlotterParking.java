@@ -1,6 +1,7 @@
 package chapters.ch8.plotting;
 
 import com.google.common.base.Preconditions;
+import core.foundation.config.ConfigFactory;
 import core.foundation.config.PathAndFile;
 import core.plotting_core.plotting_2d.ErrorBandCreator;
 import core.plotting_rl.progress_plotting.ErrorBandData;
@@ -37,7 +38,8 @@ public class ErrorBandPlotterParking {
     }
 
     private void showAndSavePlot(MeasuresParkingTrainingEnum measure, ErrorBandData errorBandData) {
-        var settings= ErrorBandSaverAndPlotter.getSettings(measure.description, X_LABEL, false, false);
+        var plotConfig= ConfigFactory.plotConfig();
+        var settings= ErrorBandSaverAndPlotter.getSettings(measure.description, X_LABEL, false, false,plotConfig);
         var creator = ErrorBandCreator.newOfSettings(settings);
         addErrorBandFilter(measure, creator, errorBandData);
         ErrorBandSaverAndPlotter.showAndSave(creator, PathAndFile.ofPng(filePath, measure+fileNameAddOn));

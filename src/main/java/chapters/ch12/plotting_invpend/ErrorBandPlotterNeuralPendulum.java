@@ -2,6 +2,7 @@ package chapters.ch12.plotting_invpend;
 
 import com.google.common.base.Preconditions;
 import core.foundation.config.PathAndFile;
+import core.foundation.config.PlotConfig;
 import core.plotting_core.plotting_2d.ErrorBandCreator;
 import core.plotting_rl.progress_plotting.ErrorBandData;
 import core.plotting_rl.progress_plotting.ErrorBandSaverAndPlotter;
@@ -22,12 +23,14 @@ public class ErrorBandPlotterNeuralPendulum {
     private final String filePath;
     private final String fileNameAddOn;
     private final int nWindows;
+    private final PlotConfig plotConfig;
 
     public static ErrorBandPlotterNeuralPendulum ofFiltering(RecorderTrainerPendulum recorder,
                                                              String filePath,
                                                              String fileNameAddOn,
-                                                             int nWindows) {
-        return new ErrorBandPlotterNeuralPendulum(recorder, filePath, fileNameAddOn,nWindows);
+                                                             int nWindows,
+                                                             PlotConfig plotConfig) {
+        return new ErrorBandPlotterNeuralPendulum(recorder, filePath, fileNameAddOn,nWindows,plotConfig);
     }
 
     public void plotAndSave(List<MeasuresPendulumTrainingEnum> measures) {
@@ -37,7 +40,7 @@ public class ErrorBandPlotterNeuralPendulum {
     }
 
     private void showAndSavePlot(MeasuresPendulumTrainingEnum measure, ErrorBandData errorBandData) {
-        var settings= ErrorBandSaverAndPlotter.getSettings(measure.description, X_LABEL, false, false);
+        var settings= ErrorBandSaverAndPlotter.getSettings(measure.description, X_LABEL, false, false,plotConfig);
         var creator = ErrorBandCreator.newOfSettings(settings);
         addErrorBandFilter(measure, creator, errorBandData);
         ErrorBandSaverAndPlotter.showAndSave(creator, PathAndFile.ofPng(filePath, measure+fileNameAddOn));

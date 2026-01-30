@@ -37,12 +37,14 @@ public class RunnerPendulumTrainer {
             return;
         }
         var path= ConfigFactory.pathPicsConfig().ch12();
-        plotTrainEvolution(trainer,path);
+        var plotConfig = ConfigFactory.plotConfig();
+
+        plotTrainEvolution(trainer,plotConfig,path);
         var memoryPlotter= PendulumAgentMemoryPlotter.of(dependencies);
         memoryPlotter.plotAndSaveAll(path);
-        plotTheta(evaluator);
-        plotTorque(evaluator);
-        plotSpd(evaluator);
+        plotTheta(evaluator,plotConfig);
+        plotTorque(evaluator,plotConfig);
+        plotSpd(evaluator,plotConfig);
     }
 
 }

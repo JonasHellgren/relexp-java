@@ -3,6 +3,7 @@ package ch7;
 import chapters.ch7.domain.trainer.TrainerOneStepTdQLearningWithSafety;
 import chapters.ch7.factory.SafetyLayerFactoryTreasure;
 import chapters.ch7.factory.TrainerDependencySafeFactory;
+import core.foundation.config.ConfigFactory;
 import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverterUtil;
@@ -32,7 +33,9 @@ public class RunnerHardCodedFailAvgReturnVsLearningRateAndProbRandom {
 
     @SneakyThrows
     public static void main(String[] args) {
-        var plotSettings = ErrorBandSaverAndPlotter.getSettings(Y_LABEL, X_LABEL, SHOW_LEGEND, SHOW_MARKER);
+        var plotConfig= ConfigFactory.plotConfig();
+        var plotSettings = ErrorBandSaverAndPlotter.getSettings(
+                Y_LABEL, X_LABEL, SHOW_LEGEND, SHOW_MARKER,plotConfig);
         var creator = ErrorBandCreator.newOfSettings(plotSettings);
         LEARNING_RATES.forEach(learningRate -> createCurveForLearningRate(learningRate, creator));
         String path = ProjectPropertiesReader.create().pathSafe();

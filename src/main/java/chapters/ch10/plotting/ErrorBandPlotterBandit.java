@@ -2,6 +2,7 @@ package chapters.ch10.plotting;
 
 import chapters.ch10.bandit.domain.trainer.RecorderBandit;
 import com.google.common.base.Preconditions;
+import core.foundation.config.ConfigFactory;
 import core.foundation.config.PathAndFile;
 import core.foundation.util.cond.ConditionalsUtil;
 import core.plotting_core.plotting_2d.ErrorBandCreator;
@@ -44,7 +45,8 @@ public class ErrorBandPlotterBandit {
     }
 
     private void showAndSavePlot(MeasuresBanditEnum measure, ErrorBandData errorBandData) {
-        var settings= ErrorBandSaverAndPlotter.getSettings(measure.description, X_LABEL, false, false);
+        var plotConfig= ConfigFactory.plotConfig();
+        var settings= ErrorBandSaverAndPlotter.getSettings(measure.description, X_LABEL, false, false,plotConfig);
         var creator = ErrorBandCreator.newOfSettings(settings);
         ConditionalsUtil.executeOneOfTwo(isFiltering,
                 () -> addErrorBandFilter(measure, creator, errorBandData),

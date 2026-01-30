@@ -1,6 +1,7 @@
 package chapters.ch9.plotting;
 
 import com.google.common.base.Preconditions;
+import core.foundation.config.ConfigFactory;
 import core.foundation.config.PathAndFile;
 import core.foundation.util.collections.ArrayCreatorUtil;
 import core.plotting_core.plotting_2d.ErrorBandCreator;
@@ -41,7 +42,9 @@ public class ErrorBandPlotterNeuralOneDimRegression {
 
     private void showAndSavePlot(MeasuresOneDimRegressionNeuralEnum measure,
                                  ErrorBandData errorBandData) {
-        var settings= ErrorBandSaverAndPlotter.getSettings(measure.description, X_LABEL, false, false);
+        var plotConfig= ConfigFactory.plotConfig();
+        var settings= ErrorBandSaverAndPlotter.getSettings(
+                measure.description, X_LABEL, false, false,plotConfig);
         var creator = ErrorBandCreator.newOfSettings(settings);
         addErrorBandFilter(measure, creator, errorBandData);
         ErrorBandSaverAndPlotter.showAndSave(creator, PathAndFile.ofPng(filePath, measure+fileNameAddOn));

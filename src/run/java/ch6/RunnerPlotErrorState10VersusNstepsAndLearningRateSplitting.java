@@ -2,6 +2,7 @@ package ch6;
 
 import chapters.ch6.domain.trainers.during_episode.TrainerStateActionControlDuringEpisode;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
+import core.foundation.config.ConfigFactory;
 import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverterUtil;
@@ -28,7 +29,9 @@ public class RunnerPlotErrorState10VersusNstepsAndLearningRateSplitting {
 
     @SneakyThrows
     public static void main(String[] args) {
-        var plotSettings = ErrorBandSaverAndPlotter.getSettings("Average return", "n", SHOW_LEGEND, SHOW_MARKER);
+        var plotConfig= ConfigFactory.plotConfig();
+        var plotSettings = ErrorBandSaverAndPlotter.getSettings(
+                "Average return", "n", SHOW_LEGEND, SHOW_MARKER,plotConfig);
         var creator = ErrorBandCreator.newOfSettings(plotSettings);
         for (double lr : LEARNING_RATES) {
             List<Double> meanList = new ArrayList<>();

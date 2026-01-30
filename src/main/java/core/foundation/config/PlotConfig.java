@@ -17,8 +17,12 @@ public record PlotConfig(
         int xyChartWidth3Col,
         int xyChartHeight,
         Font font,
-        Font fontBold
+        Font fontBold,
+        Font fontLarge,
+        Font fontLargeBold
 ) {
+
+    public static final Font FONT = new Font("Arial", Font.PLAIN, 12);
 
     public static PlotConfig extract(Properties props) {
         ConditionalsUtil.executeIfTrue(props == null,
@@ -39,14 +43,15 @@ public record PlotConfig(
                 r.requireInt("xyChart.width3Col"),
                 r.requireInt("xyChart.height"),
                 new Font(r.requireStr("fontName"),  Font.PLAIN, r.requireInt("fontSize")),
-                new Font(r.requireStr("fontName"),  Font.BOLD, r.requireInt("fontSize"))
+                new Font(r.requireStr("fontName"),  Font.BOLD, r.requireInt("fontSize")),
+        new Font(r.requireStr("fontName"),  Font.PLAIN, r.requireInt("fontSizeLarge")),
+                new Font(r.requireStr("fontName"),  Font.BOLD, r.requireInt("fontSizeLarge"))
+
         );
     }
 
     public static PlotConfig defaults() {
         return new PlotConfig(800, 500, 0, 800, 800, 800, 500,
-                new Font("Arial",  Font.PLAIN, 12),
-                new Font("Arial",  Font.BOLD, 12));
+                FONT, FONT,FONT, FONT);
     }
-
 }

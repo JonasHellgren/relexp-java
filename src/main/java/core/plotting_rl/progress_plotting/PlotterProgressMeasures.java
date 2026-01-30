@@ -1,7 +1,9 @@
 package core.plotting_rl.progress_plotting;
 
 import com.google.common.base.Preconditions;
+import core.foundation.config.ConfigFactory;
 import core.foundation.config.PathAndFile;
+import core.foundation.config.PlotConfig;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.plotting_2d.ErrorBandCreator;
 import lombok.AccessLevel;
@@ -53,7 +55,9 @@ public class PlotterProgressMeasures {
     }
 
     private void showAndSavePlot(ProgressMeasureEnum measure, ErrorBandData errorBandData) {
-        var creator = ErrorBandCreator.newOfSettings(getSettingsNoLegendNoMarker(measure.getDescription(), EPISODE));
+        PlotConfig plotConfig = ConfigFactory.plotConfig();
+        var creator = ErrorBandCreator.newOfSettings(
+                getSettingsNoLegendNoMarker(measure.getDescription(), EPISODE, plotConfig));
         addErrorBand(measure, creator, errorBandData);
         showAndSave(creator, filePath, measure, fileNameAddOn);
     }
@@ -69,8 +73,8 @@ public class PlotterProgressMeasures {
         ErrorBandSaverAndPlotter.showAndSave(creator, PathAndFile.ofPng(pathPics, measure+fileNameAddOn));
     }
 
-    private static PlotSettings getSettingsNoLegendNoMarker(String yLabel, String xLabel) {
-        var plotSettings = ErrorBandSaverAndPlotter.getSettings(yLabel, xLabel, false, false);
+    private static PlotSettings getSettingsNoLegendNoMarker(String yLabel, String xLabel, PlotConfig plotConfig) {
+        var plotSettings = ErrorBandSaverAndPlotter.getSettings(yLabel, xLabel, false, false,plotConfig);
         plotSettings=plotSettings
                 .withAxisTicksFont(new Font("Arial", Font.PLAIN, SIZE_TICKS))
                 .withAxisTitleFont(new Font("Arial", Font.BOLD, SIZE))

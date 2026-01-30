@@ -2,6 +2,7 @@ package core.plotting_rl.progress_plotting;
 
 import com.google.common.base.Preconditions;
 import core.foundation.config.PathAndFile;
+import core.foundation.config.PlotConfig;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.plotting_2d.ErrorBandCreator;
@@ -25,15 +26,17 @@ public class ErrorBandSaverAndPlotter {
     }
 
     @SneakyThrows
-    public static PlotSettings getSettings(String yLabel, String xLabel, boolean showLegend, boolean showMarker) {
-        var weight = ProjectPropertiesReader.create().frameWidth2Col();
-        var height = ProjectPropertiesReader.create().frameHeight();
-        return PlotSettings.ofDefaults()
-                .withAxisTicksFont(new Font("Arial", Font.PLAIN, 24))
-                .withAxisTitleFont(new Font("Arial", Font.BOLD, 24))
-                .withLegendTextFont(new Font("Arial", Font.BOLD, 24))
+    public static PlotSettings getSettings(String yLabel,
+                                           String xLabel,
+                                           boolean showLegend,
+                                           boolean showMarker,
+                                           PlotConfig plotConfig) {
+                return PlotSettings.ofDefaults()
+                .withAxisTicksFont(plotConfig.fontLarge())
+                .withAxisTitleFont(plotConfig.fontLargeBold())
+                .withLegendTextFont(plotConfig.fontLargeBold())
                 .withMarkeSize(10)
-                .withWidth(weight).withHeight(height)
+                .withWidth(plotConfig.width()).withHeight(plotConfig.height())
                 .withTitle("").withYAxisLabel(yLabel).withXAxisLabel(xLabel)
                 .withShowLegend(showLegend).withShowMarker(showMarker);
     }
