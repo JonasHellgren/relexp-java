@@ -14,24 +14,10 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class EnvironmentJumper implements EnvironmentI<StateJumper, ActionJumper> {
 
-    public static final int MAX_HEIGHT = 3;
-    static final int MAX_POS = 3;
-    public static final double REWARD_COIN = 1;
-    static final double REWARD_NOT_COIN = 0.0;
+    private final JumperParameters parameters;
 
-    /**
-     * List of positions with coins.
-     */
-    static final List<StateJumper> POS_WITH_COINS = List.of(
-            StateJumper.of(1, 1),
-            StateJumper.of(2, 2),
-            StateJumper.of(3, 3));
-
-    public static final double REWARD_NOT_UP = 0.0;
-    public static final double REWARD_FAIL = -10;
-
-    public static EnvironmentJumper create() {
-        return new EnvironmentJumper();
+    public static EnvironmentJumper of(JumperParameters parameters) {
+        return new EnvironmentJumper(parameters);
     }
 
     /**
@@ -62,14 +48,14 @@ public class EnvironmentJumper implements EnvironmentI<StateJumper, ActionJumper
     }
 
     boolean isTerminalState(StateJumper newState, boolean isFail) {
-        return newState.xPos == MAX_POS || isFail;
+        return newState.xPos == parameters.maxPos() || isFail;
     }
 
     double calcReward(boolean isFail, StateJumper newState) {
-        double rewardCoin = POS_WITH_COINS.contains(newState)
-                ? REWARD_COIN
-                : REWARD_NOT_COIN;
-        double rewardFail = isFail ? REWARD_FAIL : 0;
+        double rewardCoin = parameters.posWithCoins().contains(newState)
+                ? parameters.rewardCoin()
+                : parameters.rewardNotCoin();
+        double rewardFail = isFail ? parameters.rewardFail() : 0;
         return rewardCoin + rewardFail;
     }
 }

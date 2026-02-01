@@ -2,6 +2,7 @@ package chapters.ch13;
 
 import chapters.ch13.domain.environment.Experience;
 import chapters.ch13.domain.tree.Node;
+import chapters.ch13.factory.jumper.JumperParametersFactory;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.StateJumper;
@@ -21,7 +22,7 @@ public class TestNode {
     @BeforeEach
     public void setup() {
         root = Node.of("root", null, Experience.noTerm(null,null,0, StateJumper.zeroHeight()), ActionJumper.actions());
-        var environment = EnvironmentJumper.create();
+        var environment = EnvironmentJumper.of(JumperParametersFactory.produce());
         var state = root.info().state();
         var actionUp = ActionJumper.up;
         var actionDown = ActionJumper.n;

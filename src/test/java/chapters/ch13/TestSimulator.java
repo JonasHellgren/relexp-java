@@ -4,6 +4,7 @@ import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.path.Path;
 import chapters.ch13.domain.searcher.workers.Simulator;
 import chapters.ch13.domain.tree.Tree;
+import chapters.ch13.factory.jumper.JumperParametersFactory;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.StateJumper;
@@ -24,7 +25,7 @@ public class TestSimulator {
     @BeforeEach
     void init() {
         tree = FactoryTreeForTest.createClimbingTree();
-        var environment = EnvironmentJumper.create();
+        var environment = EnvironmentJumper.of(JumperParametersFactory.produce());
         var policy = FactoryRolloutPolicy.rolloutPolicyClimb;
         var settings = FactorySearcherSettings.forTestClimber();
         simulator = Simulator.of(environment, policy, settings);

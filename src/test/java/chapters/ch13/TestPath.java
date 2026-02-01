@@ -2,6 +2,7 @@ package chapters.ch13;
 
 import chapters.ch13.domain.environment.Experience;
 import chapters.ch13.domain.searcher.path.Path;
+import chapters.ch13.factory.jumper.JumperParametersFactory;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.StateJumper;
@@ -29,7 +30,7 @@ public class TestPath {
         var treeNodes = List.of(tree.getRoot(), newNode);
 
         List<Experience<StateJumper, ActionJumper>> simulation = new ArrayList<>();
-        var environment = EnvironmentJumper.create();
+        var environment = EnvironmentJumper.of(JumperParametersFactory.produce());
         var stepReturn0 = environment.step(newNode.info().state(), ACTION);
         simulation.add(Experience.of(newNode.info().state(), ACTION, stepReturn0));
         var stepReturn1 = environment.step(stepReturn0.stateNew(), ACTION);

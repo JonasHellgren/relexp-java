@@ -25,7 +25,7 @@ import java.util.Map;
  */
 
 
-public class RunnerSearcherClimb {
+public class RunnerSearcherJumper {
 
     enum SETTING {HIGHEXP_NOTDEFBACKUP, HIGHEXP_DEFBACKUP, LOWEXP_NOTDEFBACKUP, LOWEXP_DEFBACKUP}
     enum NOFITERATIONS {ONE, TWO, FIVE, HUNDRED}

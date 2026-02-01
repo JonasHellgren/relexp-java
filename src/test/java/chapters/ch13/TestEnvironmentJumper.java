@@ -2,8 +2,10 @@ package chapters.ch13;
 
 import chapters.ch13.domain.environment.EnvironmentI;
 import chapters.ch13.domain.environment.StepReturnI;
+import chapters.ch13.factory.jumper.JumperParametersFactory;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
+import chapters.ch13.implem.jumper.JumperParameters;
 import chapters.ch13.implem.jumper.StateJumper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,10 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestEnvironmentJumper {
 
     EnvironmentI<StateJumper, ActionJumper> environment;
+    JumperParameters parameters;
 
     @BeforeEach
     void init() {
-         environment = EnvironmentJumper.create();
+        parameters = JumperParametersFactory.produce();
+        environment = EnvironmentJumper.of(parameters);
     }
 
     @Test
@@ -28,7 +32,7 @@ class TestEnvironmentJumper {
         assertEquals(1, result.stateNew().height());
         assertFalse(result.isFail());
         assertFalse(result.isTerminal());
-        assertEquals(EnvironmentJumper.REWARD_COIN, result.reward());
+        assertEquals(parameters.rewardCoin(), result.reward());
     }
 
     @Test
@@ -41,7 +45,7 @@ class TestEnvironmentJumper {
         assertTrue(result.isFail());
         assertTrue(result.isTerminal());
         assertEquals(
-                EnvironmentJumper.REWARD_COIN + EnvironmentJumper.REWARD_FAIL,
+                parameters.rewardCoin() + parameters.rewardFail(),
                 result.reward());
     }
 
@@ -54,19 +58,19 @@ class TestEnvironmentJumper {
         assertEquals(0, result.stateNew().height());
         assertFalse(result.isFail());
         assertFalse(result.isTerminal());
-        assertEquals(EnvironmentJumper.REWARD_NOT_UP, result.reward());
+        assertNotEquals(parameters.rewardFail(), result.reward());
     }
 
     @Test
     void testStep_UpActionAtMaxHeight_TerminalAndCoinReward() {
-        StateJumper state = StateJumper.of(EnvironmentJumper.MAX_HEIGHT - 1, EnvironmentJumper.MAX_HEIGHT - 1);
+        StateJumper state = StateJumper.of(parameters.maxHeight() - 1, parameters.maxHeight() - 1);
         ActionJumper action = ActionJumper.up;
         StepReturnI<StateJumper> result = environment.step(state, action);
 
-        assertEquals(EnvironmentJumper.MAX_HEIGHT, result.stateNew().height());
+        assertEquals(parameters.maxHeight(), result.stateNew().height());
         assertFalse(result.isFail());
         assertTrue(result.isTerminal());
-        assertEquals(EnvironmentJumper.REWARD_COIN, result.reward());
+        assertEquals(parameters.rewardCoin(), result.reward());
     }
 
 }

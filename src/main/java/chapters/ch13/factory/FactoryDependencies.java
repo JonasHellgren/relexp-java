@@ -1,8 +1,10 @@
 package chapters.ch13.factory;
 
 import chapters.ch13.domain.searcher.core.Dependencies;
+import chapters.ch13.factory.jumper.JumperParametersFactory;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
+import chapters.ch13.implem.jumper.JumperParameters;
 import chapters.ch13.implem.jumper.StateJumper;
 import chapters.ch13.implem.lane_change.ActionLane;
 import chapters.ch13.implem.lane_change.EnvironmentLane;
@@ -15,7 +17,7 @@ public class FactoryDependencies {
 
     public static Dependencies<StateJumper, ActionJumper> climberTest() {
         var searcherSettings = FactorySearcherSettings.forTestClimber();
-        var environment = EnvironmentJumper.create();
+        var environment = EnvironmentJumper.of(JumperParametersFactory.produce());
         var nameFunction = FactoryNameFunction.rand3DigitClimber;
         var rolloutPolicy = FactoryRolloutPolicy.rolloutPolicyClimb;
         return Dependencies.<StateJumper, ActionJumper>builder()
@@ -30,7 +32,7 @@ public class FactoryDependencies {
             int maxIterations,
             FactorySearcherSettings.RunnerSettings runnerSettings) {
         var searcherSettings = FactorySearcherSettings.forRunnerClimber(maxIterations, runnerSettings);
-        var environment = EnvironmentJumper.create();
+        var environment = EnvironmentJumper.of(JumperParametersFactory.produce());
         var nameFunction = FactoryNameFunction.rand3DigitClimber;
         var rolloutPolicy = FactoryRolloutPolicy.rolloutPolicyClimb;
         return Dependencies.<StateJumper, ActionJumper>builder()

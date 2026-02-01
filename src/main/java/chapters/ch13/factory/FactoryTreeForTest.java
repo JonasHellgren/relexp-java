@@ -3,6 +3,7 @@ package chapters.ch13.factory;
 import chapters.ch13.domain.environment.Experience;
 import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.tree.Tree;
+import chapters.ch13.factory.jumper.JumperParametersFactory;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.StateJumper;
@@ -15,7 +16,7 @@ public class FactoryTreeForTest {
 
     public static Tree<StateJumper, ActionJumper> createClimbingTree() {
         var root = getRootJumper();
-        var environment = EnvironmentJumper.create();
+        var environment = EnvironmentJumper.of(JumperParametersFactory.produce());
         var state = root.info().state();
         var actionUp = ActionJumper.up;
         var actionDown = ActionJumper.n;
