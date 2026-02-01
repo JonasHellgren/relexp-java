@@ -1,6 +1,7 @@
 package chapters.ch13;
 
 import chapters.ch13.domain.environment.StepReturnI;
+import chapters.ch13.factory.lane_change.LaneChangeParametersFactory;
 import chapters.ch13.implem.lane_change.ActionLane;
 import chapters.ch13.implem.lane_change.EnvironmentLane;
 import chapters.ch13.implem.lane_change.StateLane;
@@ -18,7 +19,7 @@ class TestEnvironmentLane {
 
     @BeforeEach
     void setup() {
-        environment = EnvironmentLane.create();
+        environment = EnvironmentLane.create(LaneChangeParametersFactory.produce());
         state0 = StateLane.of(0, 0, 0, 0);
 
     }
@@ -50,7 +51,7 @@ class TestEnvironmentLane {
     void testCalculateReward() {
         var action = ActionLane.NEG;
         double reward = environment.step(state0, action).reward();
-        assertEquals(environment.getSettings().rChangeSteering(), reward);
+        assertEquals(environment.getParameters().rChangeSteering(), reward);
     }
 
     @Test
@@ -62,7 +63,7 @@ class TestEnvironmentLane {
 
         var s = state0.copy();
         var sr = manySteps(actions, s);
-        var settings = environment.getSettings();
+        var settings = environment.getParameters();
         Assertions.assertTrue(sr.stateNew().y() < 0);
         assertEquals(settings.rCorrectYPos()+settings.rChangeSteering()
                 , sr.reward(), 0.01);
@@ -76,7 +77,7 @@ class TestEnvironmentLane {
 
         var s = state0.copy();
         var sr = manySteps(actions, s);
-        var settings = environment.getSettings();
+        var settings = environment.getParameters();
         Assertions.assertTrue(sr.stateNew().y() < settings.yPosDitch());
         assertEquals(settings.rFail(), sr.reward(), 0.01);
     }

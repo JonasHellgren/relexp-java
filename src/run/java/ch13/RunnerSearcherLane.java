@@ -63,7 +63,7 @@ public class RunnerSearcherLane {
                 .map(n -> convertRadiansToDegrees(n.info().state().headingAngle()))
                 .toList();
         var yPos = nodes.stream().map(n -> n.info().state().y()).toList();
-        double timeStepInSec=((EnvironmentLane) dependencies.environment()).getSettings().timeStep();
+        double timeStepInSec=((EnvironmentLane) dependencies.environment()).getParameters().timeStep();
         var xList = ListCreatorUtil.createFromStartWithStepWithNofItems(0d, timeStepInSec*1000, angleHead.size());
         var chartAngles = getAnglesChart(projectPropertiesReader, xList, angleSteer,angleHead);
         var chartPos = getYPosChart(projectPropertiesReader, xList, yPos);

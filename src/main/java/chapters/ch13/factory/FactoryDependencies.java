@@ -2,6 +2,7 @@ package chapters.ch13.factory;
 
 import chapters.ch13.domain.searcher.core.Dependencies;
 import chapters.ch13.factory.jumper.JumperParametersFactory;
+import chapters.ch13.factory.lane_change.LaneChangeParametersFactory;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.JumperParameters;
@@ -46,7 +47,7 @@ public class FactoryDependencies {
 
     public static Dependencies<StateLane, ActionLane> laneTest() {
         var searcherSettings = FactorySearcherSettings.forTestLane();
-        var environment = EnvironmentLane.create();
+        var environment = EnvironmentLane.create(LaneChangeParametersFactory.produce());
         var nameFunction = FactoryNameFunction.rand5DigitLane;
         var rolloutPolicy = FactoryRolloutPolicy.rolloutPolicyLaneZeroOrRandom;
         return Dependencies.<StateLane, ActionLane>builder()

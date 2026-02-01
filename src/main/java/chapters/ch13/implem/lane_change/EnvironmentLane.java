@@ -4,8 +4,8 @@ import chapters.ch13.domain.environment.EnvironmentI;
 import chapters.ch13.domain.environment.StepReturnI;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+
 import static core.foundation.util.math.MathUtil.isEqualDoubles;
 
 
@@ -20,39 +20,11 @@ import static core.foundation.util.math.MathUtil.isEqualDoubles;
 @Getter
 public class EnvironmentLane implements EnvironmentI<StateLane, ActionLane> {
 
-    public static final double TINY = 0.01;
+    private final double TINY = 0.01;
+    LaneChangeParameters parameters;
 
-    @Builder
-    public record Settings(double wheelBase,
-                           double speed,  //m/s
-                           double timeMax,  //s
-                           double yPosDesired, //m
-                           double yPosDesiredMargin, //m
-                           double yPosDitch, //m
-                           double rFail,
-                           double rChangeSteering,
-                           double rCorrectYPos,
-                           double timeStep) {
-    }
-
-    Settings settings;
-
-    public static EnvironmentLane create() {
-        return create(defaultSettings());
-    }
-
-    public static EnvironmentLane create(Settings settings) {
+    public static EnvironmentLane create(LaneChangeParameters settings) {
         return new EnvironmentLane(settings);
-    }
-
-    private static Settings defaultSettings() {
-        return Settings.builder()
-                .wheelBase(2.5).speed(20)
-                .timeMax(3)
-                .yPosDesired(-3).yPosDesiredMargin(0.5).yPosDitch(-5)
-                .rFail(-10).rChangeSteering(-1.0).rCorrectYPos(1)
-                .timeStep(0.25)
-                .build();
     }
 
     /**
@@ -74,25 +46,26 @@ public class EnvironmentLane implements EnvironmentI<StateLane, ActionLane> {
 
 
     StateLane nextState(StateLane state, ActionLane action) {
-        var s = settings;
-        double headingAngleDot = s.speed / s.wheelBase * Math.tan(action.steeringAngle);
-        double headingAngle = state.headingAngle() + headingAngleDot * s.timeStep;
-        double xDot = s.speed * Math.cos(headingAngle);
-        double yDot = s.speed * Math.sin(headingAngle);
-        double x = state.x() + xDot * s.timeStep;
-        double y = state.y() + yDot * s.timeStep;
-        double time = state.time() + s.timeStep;
-        return StateLane.ofWithTime(x, y,headingAngleDot, headingAngle, time);
+        var p = parameters;
+        double dt = p.timeStep();
+        double headingAngleDot = p.speed() / p.wheelBase() * Math.tan(action.steeringAngle);
+        double headingAngle = state.headingAngle() + headingAngleDot * dt;
+        double xDot = p.speed() * Math.cos(headingAngle);
+        double yDot = p.speed() * Math.sin(headingAngle);
+        double x = state.x() + xDot * dt;
+        double y = state.y() + yDot * dt;
+        double time = state.time() + dt;
+        return StateLane.ofWithTime(x, y, headingAngleDot, headingAngle, time);
     }
 
 
     // Check if the agent is above or below road limit
     boolean isFail(StateLane state) {
-        return state.y() > 0 || state.y() < settings.yPosDitch;
+        return state.y() > 0 || state.y() < parameters.yPosDitch();
     }
 
     boolean isTerminalState(StateLane state, boolean isFail) {
-        return state.time() >= settings.timeMax || isFail;
+        return state.time() >= parameters.timeMax() || isFail;
     }
 
     /**
@@ -101,24 +74,20 @@ public class EnvironmentLane implements EnvironmentI<StateLane, ActionLane> {
      * Heading angle time derivative is in proportion to the steering angle.
      */
     double calculateReward(boolean isFail, StateLane oldS, StateLane newS) {
-        var s = settings;
+        var p = parameters;
         double rewardHeadingDotChange = isSameHeadingTimeDerivate(oldS, newS)
                 ? 0
-                : s.rChangeSteering;
-        double rewardCorrectYPos = isDesiredYPositionReached(newS, s)
-                ? s.rCorrectYPos
+                : p.rChangeSteering();
+        double rewardCorrectYPos = p.isDesiredYPositionReached(newS)
+                ? p.rCorrectYPos()
                 : 0;
         double rewardFail = isFail
-                ? s.rFail
+                ? p.rFail()
                 : 0;
         return rewardHeadingDotChange + rewardCorrectYPos + rewardFail;
     }
 
-    private static boolean isDesiredYPositionReached(StateLane newS, Settings s) {
-        return isEqualDoubles(newS.y(), s.yPosDesired, s.yPosDesiredMargin);
-    }
-
-    private static boolean isSameHeadingTimeDerivate(StateLane oldS, StateLane newS) {
+    private  boolean isSameHeadingTimeDerivate(StateLane oldS, StateLane newS) {
         return isEqualDoubles(oldS.headingAngleDot(), newS.headingAngleDot(), TINY);
     }
 
