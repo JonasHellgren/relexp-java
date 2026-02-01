@@ -5,6 +5,7 @@ import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.StateJumper;
 import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import chapters.ch13.plotting.DotFileGenerator;
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.SneakyThrows;
 
@@ -20,13 +21,12 @@ public class RunnerDotFileGenerator {
 
     @SneakyThrows
     public static void main(String[] args) {
-        var tree= FactoryTreeJumper.tinyTree();
+        var tree = FactoryTreeJumper.tinyTree();
         var generator = DotFileGenerator.init();
-        List<Node<StateJumper, ActionJumper>> bestPath=List.of(tree.getRoot().info().children().get(0));
-        var text=generator.generateDot(tree, bestPath);
-
-        var path = ProjectPropertiesReader.create().pathMcts();
-        generator.writeToFile(path+ FILE_NAME, text);
+        List<Node<StateJumper, ActionJumper>> bestPath = List.of(tree.getRoot().info().children().get(0));
+        var text = generator.generateDot(tree, bestPath);
+        var path = ConfigFactory.pathPicsConfig().ch13();
+        generator.writeToFile(path + FILE_NAME, text);
 
     }
 }

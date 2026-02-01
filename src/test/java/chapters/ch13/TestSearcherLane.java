@@ -18,7 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /***
- *  dot -Tpng pictures/k_mcts/lane_test_mcts.dot -o pictures/k_mcts/lane_test_mcts.png
+ *  dot -Tpng pictures/ch13/lane_test_mcts.dot -o pictures/ch13/lane_test_mcts.png
  */
 
 

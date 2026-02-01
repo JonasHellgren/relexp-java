@@ -11,6 +11,7 @@ import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.StateJumper;
 import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import chapters.ch13.plotting.DotFileGenerator;
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import org.apache.commons.math3.util.Pair;
@@ -53,15 +54,14 @@ public class RunnerSearcherJumper {
     );
 
     public static void main(String[] args) throws IOException {
-        var timer = CpuTimer.empty();
         var dependencies = FactoryDependenciesJumper.runner(
                 nofIterations.get(TEST_SETUP.getFirst()),
                 settings.get(TEST_SETUP.getSecond()));
         var searcher = Searcher.of(dependencies);
         var root = FactoryTreeJumper.onlyRoot();
         var tree = searcher.search(root);
-        timer.printInMs();
-        String filePath = createDotFile(dependencies, root, tree);
+        searcher.logTime();
+        var filePath = createDotFile(dependencies, root, tree);
         printInConsole(tree, filePath);
     }
 
@@ -71,12 +71,14 @@ public class RunnerSearcherJumper {
     }
 
     @NotNull
-    private static String createDotFile(Dependencies<StateJumper, ActionJumper> dependencies, Node<StateJumper, ActionJumper> root, Tree<StateJumper, ActionJumper> tree) throws IOException {
+    private static String createDotFile(Dependencies<StateJumper, ActionJumper> dependencies,
+                                        Node<StateJumper, ActionJumper> root,
+                                        Tree<StateJumper, ActionJumper> tree) throws IOException {
         var pathExtractor = OptimalPathExtractor.of(dependencies);
         var generator = DotFileGenerator.init();
         var nodes = pathExtractor.extract(root).getNodes();
         String text = generator.generateDot(tree, nodes);
-        var path = ProjectPropertiesReader.create().pathMcts();
+        var path = ConfigFactory.pathPicsConfig().ch13();
         String filePath = path + FILE_NAME0 + TEST_SETUP.getFirst()+"iter"+ TEST_SETUP.getSecond();
         generator.writeToFile(filePath+ FILE_END, text);
         return filePath;

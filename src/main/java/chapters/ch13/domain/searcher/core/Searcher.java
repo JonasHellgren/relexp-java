@@ -99,4 +99,6 @@ public class Searcher<S, A> {
         backpropagator.update(vars.path);
     }
 
+    public void logTime() {
+    }
 }
