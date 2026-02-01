@@ -1,15 +1,16 @@
 package chapters.ch13;
 
-import chapters.ch13.domain.searcher.workers.BackPropagator;
 import chapters.ch13.domain.searcher.path.Path;
+import chapters.ch13.domain.searcher.workers.BackPropagator;
+import chapters.ch13.factory.jumper.FactoryTreeJumper;
+import chapters.ch13.factory.jumper.FactoryExperienceList;
+import chapters.ch13.factory.jumper.FactorySearcherParametersJumper;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.StateJumper;
-import chapters.ch13.factory.FactoryExperienceList;
-import chapters.ch13.factory.FactorySearcherSettings;
-import chapters.ch13.factory.FactoryTreeForTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
 /**
@@ -25,14 +26,14 @@ class TestBackPropagator {
 
     @BeforeEach
     void init() {
-        var settings = FactorySearcherSettings.forTestClimber();
+        var settings = FactorySearcherParametersJumper.test();
         backPropagator = BackPropagator.of(settings);
-        var tree = FactoryTreeForTest.createClimbingTree();
+        var tree = FactoryTreeJumper.tinyTree();
         var newNode = tree.getRoot().info().children().get(0);
         var treeNodes = List.of(tree.getRoot(), newNode);
-        var expListNonFail = FactoryExperienceList.experienceListClimbNonFailEnd(newNode);
+        var expListNonFail = FactoryExperienceList.experienceListJumperNonFailEnd(newNode);
         pathNonFail = Path.of(treeNodes, expListNonFail);
-        var expListFail = FactoryExperienceList.experienceListClimbFailEnd(newNode);
+        var expListFail = FactoryExperienceList.experienceListJumperFailEnd(newNode);
         pathFail = Path.of(treeNodes, expListFail);
     }
 

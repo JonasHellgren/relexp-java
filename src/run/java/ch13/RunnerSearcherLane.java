@@ -4,11 +4,11 @@ import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.path.OptimalPathExtractor;
 import chapters.ch13.domain.searcher.core.Dependencies;
 import chapters.ch13.domain.searcher.core.Searcher;
+import chapters.ch13.factory.lane_change.FactoryTreeLaneChange;
 import chapters.ch13.implem.lane_change.ActionLane;
 import chapters.ch13.implem.lane_change.EnvironmentLane;
 import chapters.ch13.implem.lane_change.StateLane;
-import chapters.ch13.factory.FactoryDependencies;
-import chapters.ch13.factory.FactoryTreeForTest;
+import chapters.ch13.factory.lane_change.FactoryDependenciesLaneChange;
 import chapters.ch13.plotting.DotFileGenerator;
 import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
@@ -37,9 +37,9 @@ public class RunnerSearcherLane {
     @SneakyThrows
     public static void main(String[] args) {
         var timer = CpuTimer.empty();
-        dependencies = FactoryDependencies.laneTest();
+        dependencies = FactoryDependenciesLaneChange.runner();
         var searcher = Searcher.of(dependencies);
-        var root = FactoryTreeForTest.getRootLane();
+        var root = FactoryTreeLaneChange.onlyRoot();
         var tree = searcher.search(root);
         int sizeTree = tree.info().numberOfNodes();
         timer.printInMs();

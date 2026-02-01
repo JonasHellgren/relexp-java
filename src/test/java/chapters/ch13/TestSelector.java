@@ -3,10 +3,10 @@ package chapters.ch13;
 import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.workers.Selector;
 import chapters.ch13.domain.tree.Tree;
+import chapters.ch13.factory.jumper.FactorySearcherParametersJumper;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.StateJumper;
-import chapters.ch13.factory.FactorySearcherSettings;
-import chapters.ch13.factory.FactoryTreeForTest;
+import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,9 +19,9 @@ public class TestSelector {
 
     @BeforeEach
     void init() {
-        tree = FactoryTreeForTest.createClimbingTree();
+        tree = FactoryTreeJumper.tinyTree();
         tree.getRoot().update(LEARNING_RATE,0);  //parent count must be > 0 for uct calculation
-        selector = Selector.of(FactorySearcherSettings.forTestClimber());
+        selector = Selector.of(FactorySearcherParametersJumper.test());
     }
 
     @Test

@@ -4,10 +4,10 @@ import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.path.OptimalPathExtractor;
 import chapters.ch13.domain.searcher.core.Dependencies;
 import chapters.ch13.domain.searcher.core.Searcher;
+import chapters.ch13.factory.jumper.FactoryDependenciesJumper;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.StateJumper;
-import chapters.ch13.factory.FactoryDependencies;
-import chapters.ch13.factory.FactoryTreeForTest;
+import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import chapters.ch13.plotting.DotFileGenerator;
 import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.SneakyThrows;
@@ -30,9 +30,9 @@ public class TestSearcherJumper {
 
     @BeforeEach
     void init() {
-        dependencies = FactoryDependencies.climberTest();
+        dependencies = FactoryDependenciesJumper.test();
         searcher = Searcher.of(dependencies);
-        root = FactoryTreeForTest.getRootJumper();
+        root = FactoryTreeJumper.onlyRoot();
     }
 
     @SneakyThrows

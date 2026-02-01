@@ -3,7 +3,7 @@ package chapters.ch13;
 import chapters.ch13.domain.tree.Tree;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.StateJumper;
-import chapters.ch13.factory.FactoryTreeForTest;
+import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ public class TestTree {
 
     @BeforeEach
     void init() {
-        tree = FactoryTreeForTest.createClimbingTree();
+        tree = FactoryTreeJumper.tinyTree();
     }
 
     @Test

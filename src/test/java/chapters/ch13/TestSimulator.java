@@ -4,13 +4,13 @@ import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.path.Path;
 import chapters.ch13.domain.searcher.workers.Simulator;
 import chapters.ch13.domain.tree.Tree;
+import chapters.ch13.factory.jumper.FactoryRolloutPolicyJumper;
+import chapters.ch13.factory.jumper.FactorySearcherParametersJumper;
 import chapters.ch13.factory.jumper.JumperParametersFactory;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.StateJumper;
-import chapters.ch13.factory.FactoryRolloutPolicy;
-import chapters.ch13.factory.FactorySearcherSettings;
-import chapters.ch13.factory.FactoryTreeForTest;
+import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,10 +24,10 @@ public class TestSimulator {
 
     @BeforeEach
     void init() {
-        tree = FactoryTreeForTest.createClimbingTree();
+        tree = FactoryTreeJumper.tinyTree();
         var environment = EnvironmentJumper.of(JumperParametersFactory.produce());
-        var policy = FactoryRolloutPolicy.rolloutPolicyClimb;
-        var settings = FactorySearcherSettings.forTestClimber();
+        var policy = FactoryRolloutPolicyJumper.rolloutPolicy;
+        var settings = FactorySearcherParametersJumper.test();
         simulator = Simulator.of(environment, policy, settings);
     }
 

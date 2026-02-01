@@ -3,7 +3,7 @@ package ch13;
 import chapters.ch13.domain.tree.Node;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.StateJumper;
-import chapters.ch13.factory.FactoryTreeForTest;
+import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import chapters.ch13.plotting.DotFileGenerator;
 import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.SneakyThrows;
@@ -20,7 +20,7 @@ public class RunnerDotFileGenerator {
 
     @SneakyThrows
     public static void main(String[] args) {
-        var tree= FactoryTreeForTest.createClimbingTree();
+        var tree= FactoryTreeJumper.tinyTree();
         var generator = DotFileGenerator.init();
         List<Node<StateJumper, ActionJumper>> bestPath=List.of(tree.getRoot().info().children().get(0));
         var text=generator.generateDot(tree, bestPath);

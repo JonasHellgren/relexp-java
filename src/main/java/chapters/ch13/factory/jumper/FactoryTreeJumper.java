@@ -1,21 +1,18 @@
-package chapters.ch13.factory;
+package chapters.ch13.factory.jumper;
 
 import chapters.ch13.domain.environment.Experience;
 import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.tree.Tree;
-import chapters.ch13.factory.jumper.JumperParametersFactory;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.StateJumper;
-import chapters.ch13.implem.lane_change.ActionLane;
-import chapters.ch13.implem.lane_change.StateLane;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class FactoryTreeForTest {
+public class FactoryTreeJumper {
 
-    public static Tree<StateJumper, ActionJumper> createClimbingTree() {
-        var root = getRootJumper();
+    public static Tree<StateJumper, ActionJumper> tinyTree() {
+        var root = onlyRoot();
         var environment = EnvironmentJumper.of(JumperParametersFactory.produce());
         var state = root.info().state();
         var actionUp = ActionJumper.up;
@@ -29,18 +26,12 @@ public class FactoryTreeForTest {
         return Tree.of(root);
     }
 
-    public static Node<StateJumper, ActionJumper> getRootJumper() {
+    public static Node<StateJumper, ActionJumper> onlyRoot() {
         return Node.of("root",
                 null,
                 Experience.noTerm(null,null,0, StateJumper.zeroHeight()),
                 ActionJumper.actions());
     }
 
-    public static Node<StateLane, ActionLane> getRootLane() {
-        return Node.of("root",
-                null,
-                Experience.noTerm(null,null,0, StateLane.of(0, 0, 0, 0)),
-                ActionLane.actions());
-    }
 
 }

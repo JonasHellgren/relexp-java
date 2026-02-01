@@ -6,7 +6,7 @@ import chapters.ch13.factory.jumper.JumperParametersFactory;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.StateJumper;
-import chapters.ch13.factory.FactoryTreeForTest;
+import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class TestPath {
 
     @BeforeEach
     void init() {
-        var tree = FactoryTreeForTest.createClimbingTree();
+        var tree = FactoryTreeJumper.tinyTree();
         var newNode = tree.getRoot().info().children().get(0);
         var treeNodes = List.of(tree.getRoot(), newNode);
 

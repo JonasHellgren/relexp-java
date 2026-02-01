@@ -6,8 +6,8 @@ import chapters.ch13.factory.jumper.JumperParametersFactory;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.StateJumper;
-import chapters.ch13.factory.FactoryNameFunction;
-import chapters.ch13.factory.FactoryTreeForTest;
+import chapters.ch13.factory.jumper.FactoryNameFunctionJumper;
+import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,8 +21,8 @@ public class TestExpander {
     @BeforeEach
     void init() {
         var environment = EnvironmentJumper.of(JumperParametersFactory.produce());
-        tree = FactoryTreeForTest.createClimbingTree();
-        var nameFunction = FactoryNameFunction.rand3DigitClimber;
+        tree = FactoryTreeJumper.tinyTree();
+        var nameFunction = FactoryNameFunctionJumper.rand3DigitClimber;
         expander = Expander.of(environment, nameFunction);
     }
 

@@ -5,11 +5,11 @@ import chapters.ch13.domain.searcher.path.OptimalPathExtractor;
 import chapters.ch13.domain.searcher.core.Dependencies;
 import chapters.ch13.domain.searcher.core.Searcher;
 import chapters.ch13.domain.tree.Tree;
+import chapters.ch13.factory.jumper.FactoryDependenciesJumper;
+import chapters.ch13.factory.jumper.RunnerSettings;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.StateJumper;
-import chapters.ch13.factory.FactoryDependencies;
-import chapters.ch13.factory.FactorySearcherSettings;
-import chapters.ch13.factory.FactoryTreeForTest;
+import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import chapters.ch13.plotting.DotFileGenerator;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
@@ -26,6 +26,7 @@ import java.util.Map;
 
 
 public class RunnerSearcherJumper {
+
 
     enum SETTING {HIGHEXP_NOTDEFBACKUP, HIGHEXP_DEFBACKUP, LOWEXP_NOTDEFBACKUP, LOWEXP_DEFBACKUP}
     enum NOFITERATIONS {ONE, TWO, FIVE, HUNDRED}
@@ -44,20 +45,20 @@ public class RunnerSearcherJumper {
             NOFITERATIONS.HUNDRED, 100
     );
 
-    static Map<SETTING, FactorySearcherSettings.RunnerSettings> settings = Map.of(
-            SETTING.LOWEXP_NOTDEFBACKUP, FactorySearcherSettings.RunnerSettings.of(2, 1.0, 1.0),
-            SETTING.LOWEXP_DEFBACKUP, FactorySearcherSettings.RunnerSettings.of(2, 0.5, 0.1),
-            SETTING.HIGHEXP_DEFBACKUP, FactorySearcherSettings.RunnerSettings.of(2, 0.5, 0.1),
-            SETTING.HIGHEXP_NOTDEFBACKUP, FactorySearcherSettings.RunnerSettings.of(10, 1.0, 1.0)
+    static Map<SETTING, RunnerSettings> settings = Map.of(
+            SETTING.LOWEXP_NOTDEFBACKUP, RunnerSettings.of(2, 1.0, 1.0),
+            SETTING.LOWEXP_DEFBACKUP, RunnerSettings.of(2, 0.5, 0.1),
+            SETTING.HIGHEXP_DEFBACKUP, RunnerSettings.of(2, 0.5, 0.1),
+            SETTING.HIGHEXP_NOTDEFBACKUP, RunnerSettings.of(10, 1.0, 1.0)
     );
 
     public static void main(String[] args) throws IOException {
         var timer = CpuTimer.empty();
-        var dependencies = FactoryDependencies.climberRunner(
+        var dependencies = FactoryDependenciesJumper.runner(
                 nofIterations.get(TEST_SETUP.getFirst()),
                 settings.get(TEST_SETUP.getSecond()));
         var searcher = Searcher.of(dependencies);
-        var root = FactoryTreeForTest.getRootJumper();
+        var root = FactoryTreeJumper.onlyRoot();
         var tree = searcher.search(root);
         timer.printInMs();
         String filePath = createDotFile(dependencies, root, tree);

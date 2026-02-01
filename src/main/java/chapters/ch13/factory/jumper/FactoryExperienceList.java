@@ -1,8 +1,7 @@
-package chapters.ch13.factory;
+package chapters.ch13.factory.jumper;
 
 import chapters.ch13.domain.environment.Experience;
 import chapters.ch13.domain.tree.Node;
-import chapters.ch13.factory.jumper.JumperParametersFactory;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.StateJumper;
@@ -17,7 +16,7 @@ public class FactoryExperienceList {
     public static final ActionJumper DOWN = ActionJumper.n;
 
 
-    public static List<Experience<StateJumper, ActionJumper>> experienceListClimbNonFailEnd(
+    public static List<Experience<StateJumper, ActionJumper>> experienceListJumperNonFailEnd(
             Node<StateJumper, ActionJumper> newNode) {
         List<Experience<StateJumper, ActionJumper>> expList = new ArrayList<>();
         var environment = EnvironmentJumper.of(JumperParametersFactory.produce());
@@ -28,7 +27,7 @@ public class FactoryExperienceList {
         return expList;
     }
 
-    public static List<Experience<StateJumper, ActionJumper>> experienceListClimbFailEnd(
+    public static List<Experience<StateJumper, ActionJumper>> experienceListJumperFailEnd(
             Node<StateJumper, ActionJumper> newNode) {
         List<Experience<StateJumper, ActionJumper>> expList = new ArrayList<>();
         var environment = EnvironmentJumper.of(JumperParametersFactory.produce());

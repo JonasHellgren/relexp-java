@@ -5,10 +5,11 @@ import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.path.OptimalPathExtractor;
 import chapters.ch13.domain.searcher.core.Dependencies;
 import chapters.ch13.domain.searcher.core.Searcher;
+import chapters.ch13.factory.lane_change.FactoryTreeLaneChange;
 import chapters.ch13.implem.lane_change.ActionLane;
 import chapters.ch13.implem.lane_change.StateLane;
-import chapters.ch13.factory.FactoryDependencies;
-import chapters.ch13.factory.FactoryTreeForTest;
+import chapters.ch13.factory.lane_change.FactoryDependenciesLaneChange;
+import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import chapters.ch13.plotting.DotFileGenerator;
 import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.SneakyThrows;
@@ -31,9 +32,9 @@ public class TestSearcherLane {
 
     @BeforeEach
     void init() {
-        dependencies = FactoryDependencies.laneTest();
+        dependencies = FactoryDependenciesLaneChange.laneTest();
         searcher = Searcher.of(dependencies);
-        root = FactoryTreeForTest.getRootLane();
+        root = FactoryTreeLaneChange.onlyRoot();
     }
 
     @SneakyThrows
