@@ -1,8 +1,8 @@
-package chapters.ch13.domain.searcher.expander;
+package chapters.ch13.domain.searcher.workers;
 
 import chapters.ch13.domain.environment.EnvironmentI;
 import chapters.ch13.domain.environment.Experience;
-import chapters.ch13.domain.searcher.node.Node;
+import chapters.ch13.domain.tree.Node;
 import com.google.common.base.Preconditions;
 import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;

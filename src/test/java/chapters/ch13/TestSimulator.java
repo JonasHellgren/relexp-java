@@ -1,9 +1,9 @@
 package chapters.ch13;
 
-import chapters.ch13.domain.searcher.node.Node;
+import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.path.Path;
-import chapters.ch13.domain.searcher.simulator.Simulator;
-import chapters.ch13.domain.searcher.tree.Tree;
+import chapters.ch13.domain.searcher.workers.Simulator;
+import chapters.ch13.domain.tree.Tree;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.StateJumper;

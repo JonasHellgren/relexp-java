@@ -1,6 +1,6 @@
 package chapters.ch13;
 
-import chapters.ch13.domain.searcher.tree.Tree;
+import chapters.ch13.domain.tree.Tree;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.StateJumper;
 import chapters.ch13.factory.FactoryTreeForTest;

@@ -1,7 +1,7 @@
-package chapters.ch13.domain.searcher.backpropagator;
+package chapters.ch13.domain.searcher.workers;
 
 import chapters.ch13.domain.searcher.path.Path;
-import chapters.ch13.domain.searcher.settings.SearcherSettings;
+import chapters.ch13.domain.searcher.core.SearcherParameters;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -16,9 +16,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BackPropagator<S, A> {
 
-    SearcherSettings searcherSettings;
+    SearcherParameters searcherSettings;
 
-    public static <S, A> BackPropagator<S, A> of(SearcherSettings searcherSettings) {
+    public static <S, A> BackPropagator<S, A> of(SearcherParameters searcherSettings) {
         return new BackPropagator<>(searcherSettings);
     }
 

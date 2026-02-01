@@ -1,4 +1,4 @@
-package chapters.ch13.domain.searcher.node;
+package chapters.ch13.domain.tree;
 
 import chapters.ch13.domain.environment.Experience;
 import lombok.AccessLevel;

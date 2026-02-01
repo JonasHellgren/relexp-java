@@ -1,4 +1,4 @@
-package chapters.ch13.domain.searcher.settings;
+package chapters.ch13.domain.searcher.core;
 
 import lombok.Builder;
 import lombok.With;
@@ -9,7 +9,7 @@ import lombok.With;
  */
 @Builder
 @With
-public record SearcherSettings(
+public record SearcherParameters(
         double uctExploration,
         int maxTreeDepth,
         int maxDepth,

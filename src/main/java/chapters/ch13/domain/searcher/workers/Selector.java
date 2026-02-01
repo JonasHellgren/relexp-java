@@ -1,7 +1,7 @@
-package chapters.ch13.domain.searcher.selector;
+package chapters.ch13.domain.searcher.workers;
 
-import chapters.ch13.domain.searcher.node.Node;
-import chapters.ch13.domain.searcher.settings.SearcherSettings;
+import chapters.ch13.domain.tree.Node;
+import chapters.ch13.domain.searcher.core.SearcherParameters;
 import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,9 +18,9 @@ import java.util.Map;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Selector<S, A> {
 
-    private SearcherSettings searchSettings;
+    private SearcherParameters searchSettings;
 
-    public static <S, A> Selector<S, A> of(SearcherSettings searchSettings) {
+    public static <S, A> Selector<S, A> of(SearcherParameters searchSettings) {
         return new Selector<>(searchSettings);
     }
 

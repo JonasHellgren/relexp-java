@@ -1,7 +1,7 @@
-package chapters.ch13.domain.searcher.searcher;
+package chapters.ch13.domain.searcher.core;
 
-import chapters.ch13.domain.searcher.node.Node;
-import chapters.ch13.domain.searcher.tree.Tree;
+import chapters.ch13.domain.tree.Node;
+import chapters.ch13.domain.tree.Tree;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;

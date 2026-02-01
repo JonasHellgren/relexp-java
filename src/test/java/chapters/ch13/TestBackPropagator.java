@@ -1,6 +1,6 @@
 package chapters.ch13;
 
-import chapters.ch13.domain.searcher.backpropagator.BackPropagator;
+import chapters.ch13.domain.searcher.workers.BackPropagator;
 import chapters.ch13.domain.searcher.path.Path;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.StateJumper;

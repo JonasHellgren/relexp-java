@@ -1,10 +1,10 @@
 package chapters.ch13;
 
 
-import chapters.ch13.domain.searcher.node.Node;
+import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.path.OptimalPathExtractor;
-import chapters.ch13.domain.searcher.searcher.Dependencies;
-import chapters.ch13.domain.searcher.searcher.Searcher;
+import chapters.ch13.domain.searcher.core.Dependencies;
+import chapters.ch13.domain.searcher.core.Searcher;
 import chapters.ch13.implem.lane_change.ActionLane;
 import chapters.ch13.implem.lane_change.StateLane;
 import chapters.ch13.factory.FactoryDependencies;

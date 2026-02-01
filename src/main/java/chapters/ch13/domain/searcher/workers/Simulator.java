@@ -1,10 +1,10 @@
-package chapters.ch13.domain.searcher.simulator;
+package chapters.ch13.domain.searcher.workers;
 
 import chapters.ch13.domain.environment.EnvironmentI;
 import chapters.ch13.domain.environment.Experience;
-import chapters.ch13.domain.searcher.node.Node;
+import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.path.Path;
-import chapters.ch13.domain.searcher.settings.SearcherSettings;
+import chapters.ch13.domain.searcher.core.SearcherParameters;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -23,11 +23,11 @@ public class Simulator<S, A> {
     public static final String NAME_START = "d";
     EnvironmentI<S, A> environment;
     Function<S, A> rolloutPolicy;
-    SearcherSettings searcherSettings;
+    SearcherParameters searcherSettings;
 
     public static <S, A> Simulator<S, A> of(EnvironmentI<S, A> environment,
                                             Function<S, A> rolloutPolicy,
-                                            SearcherSettings searcherSettings) {
+                                            SearcherParameters searcherSettings) {
         return new Simulator<>(environment, rolloutPolicy, searcherSettings);
     }
 

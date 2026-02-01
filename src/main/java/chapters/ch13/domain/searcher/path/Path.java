@@ -1,7 +1,7 @@
 package chapters.ch13.domain.searcher.path;
 
 import chapters.ch13.domain.environment.Experience;
-import chapters.ch13.domain.searcher.node.Node;
+import chapters.ch13.domain.tree.Node;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

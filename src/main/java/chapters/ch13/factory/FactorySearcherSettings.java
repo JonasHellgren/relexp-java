@@ -1,6 +1,6 @@
 package chapters.ch13.factory;
 
-import chapters.ch13.domain.searcher.settings.SearcherSettings;
+import chapters.ch13.domain.searcher.core.SearcherParameters;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -8,8 +8,8 @@ public class FactorySearcherSettings {
 
 
 
-    public static SearcherSettings forTestClimber() {
-        return SearcherSettings.builder()
+    public static SearcherParameters forTestClimber() {
+        return SearcherParameters.builder()
                 .uctExploration(1.0)
                 .maxTreeDepth(5)
                 .maxDepth(500).maxIterations(100)
@@ -18,8 +18,8 @@ public class FactorySearcherSettings {
                 .build();
     }
 
-    public static SearcherSettings forTestLane() {
-        return SearcherSettings.builder()
+    public static SearcherParameters forTestLane() {
+        return SearcherParameters.builder()
                 .uctExploration(10.0)  //2  or 10
                 .maxTreeDepth(3*4+4)  //4 steps per sec, max 3 sec
                 .maxDepth(500).maxIterations(50_000)
@@ -45,8 +45,8 @@ public class FactorySearcherSettings {
 
     }
 
-    public static SearcherSettings forRunnerClimber(int maxIterations,
-                                                    RunnerSettings runnerSettings) {
+    public static SearcherParameters forRunnerClimber(int maxIterations,
+                                                      RunnerSettings runnerSettings) {
         return forTestClimber()
                 .withMaxIterations(maxIterations)
                 .withUctExploration(runnerSettings.uctExploration())

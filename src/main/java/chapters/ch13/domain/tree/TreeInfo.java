@@ -1,6 +1,5 @@
-package chapters.ch13.domain.searcher.tree;
+package chapters.ch13.domain.tree;
 
-import chapters.ch13.domain.searcher.node.Node;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 

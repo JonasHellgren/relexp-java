@@ -1,6 +1,6 @@
-package chapters.ch13.domain.searcher.searcher;
+package chapters.ch13.domain.searcher.core;
 
-import chapters.ch13.domain.searcher.node.Node;
+import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.path.Path;
 import lombok.AllArgsConstructor;
 import lombok.Setter;

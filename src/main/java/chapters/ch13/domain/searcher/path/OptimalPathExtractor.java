@@ -1,8 +1,8 @@
 package chapters.ch13.domain.searcher.path;
 
-import chapters.ch13.domain.searcher.node.Node;
-import chapters.ch13.domain.searcher.searcher.Dependencies;
-import chapters.ch13.domain.searcher.selector.Selector;
+import chapters.ch13.domain.tree.Node;
+import chapters.ch13.domain.searcher.core.Dependencies;
+import chapters.ch13.domain.searcher.workers.Selector;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 

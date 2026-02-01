@@ -1,7 +1,7 @@
 package chapters.ch13;
 
-import chapters.ch13.domain.searcher.expander.Expander;
-import chapters.ch13.domain.searcher.tree.Tree;
+import chapters.ch13.domain.searcher.workers.Expander;
+import chapters.ch13.domain.tree.Tree;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.StateJumper;

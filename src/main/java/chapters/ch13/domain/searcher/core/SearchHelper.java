@@ -1,10 +1,10 @@
-package chapters.ch13.domain.searcher.searcher;
+package chapters.ch13.domain.searcher.core;
 
 
-import chapters.ch13.domain.searcher.backpropagator.BackPropagator;
-import chapters.ch13.domain.searcher.expander.Expander;
-import chapters.ch13.domain.searcher.selector.Selector;
-import chapters.ch13.domain.searcher.simulator.Simulator;
+import chapters.ch13.domain.searcher.workers.BackPropagator;
+import chapters.ch13.domain.searcher.workers.Expander;
+import chapters.ch13.domain.searcher.workers.Selector;
+import chapters.ch13.domain.searcher.workers.Simulator;
 
 /**
  * Represents a helper class for the MCTS algorithm, encapsulating the key components:

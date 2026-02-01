@@ -1,6 +1,6 @@
 package chapters.ch13.factory;
 
-import chapters.ch13.domain.searcher.searcher.Dependencies;
+import chapters.ch13.domain.searcher.core.Dependencies;
 import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.EnvironmentJumper;
 import chapters.ch13.implem.jumper.StateJumper;
