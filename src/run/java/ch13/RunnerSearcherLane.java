@@ -2,7 +2,7 @@ package ch13;
 
 import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.path.OptimalPathExtractor;
-import chapters.ch13.domain.searcher.core.Dependencies;
+import chapters.ch13.domain.searcher.core.OuterDependencies;
 import chapters.ch13.domain.searcher.core.Searcher;
 import chapters.ch13.factory.lane_change.FactoryTreeLaneChange;
 import chapters.ch13.implem.lane_change.ActionLane;
@@ -33,7 +33,7 @@ public class RunnerSearcherLane {
     static String PATH = ConfigFactory.pathPicsConfig().ch13();
     public static final String FILE_NAME = "lane_runner_mcts.dot";
 
-    static Dependencies<StateLane, ActionLane> dependencies;
+    static OuterDependencies<StateLane, ActionLane> dependencies;
 
     @SneakyThrows
     public static void main(String[] args) {

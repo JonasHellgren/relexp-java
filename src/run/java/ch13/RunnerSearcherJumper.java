@@ -2,7 +2,7 @@ package ch13;
 
 import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.path.OptimalPathExtractor;
-import chapters.ch13.domain.searcher.core.Dependencies;
+import chapters.ch13.domain.searcher.core.OuterDependencies;
 import chapters.ch13.domain.searcher.core.Searcher;
 import chapters.ch13.domain.tree.Tree;
 import chapters.ch13.factory.jumper.FactoryDependenciesJumper;
@@ -12,8 +12,6 @@ import chapters.ch13.implem.jumper.StateJumper;
 import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import chapters.ch13.plotting.DotFileGenerator;
 import core.foundation.config.ConfigFactory;
-import core.foundation.configOld.ProjectPropertiesReader;
-import core.foundation.gadget.timer.CpuTimer;
 import org.apache.commons.math3.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
@@ -71,7 +69,7 @@ public class RunnerSearcherJumper {
     }
 
     @NotNull
-    private static String createDotFile(Dependencies<StateJumper, ActionJumper> dependencies,
+    private static String createDotFile(OuterDependencies<StateJumper, ActionJumper> dependencies,
                                         Node<StateJumper, ActionJumper> root,
                                         Tree<StateJumper, ActionJumper> tree) throws IOException {
         var pathExtractor = OptimalPathExtractor.of(dependencies);

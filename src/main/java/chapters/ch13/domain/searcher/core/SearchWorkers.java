@@ -11,15 +11,15 @@ import core.foundation.gadget.timer.CpuTimer;
  * Represents a helper class for the MCTS algorithm, encapsulating the key components:
  * selector, simulator, backpropagator, and expander.
  */
-public record SearchHelper<S, A>(
+public record SearchWorkers<S, A>(
         Selector<S, A> selector,
         Simulator<S, A> simulator,
         BackPropagator<S, A> backpropagator,
         Expander<S, A> expander,
         CpuTimer timer
 ) {
-    public static <S, A> SearchHelper<S, A> of(Dependencies<S, A> dependencies) {
-        return new SearchHelper<>(
+    public static <S, A> SearchWorkers<S, A> of(OuterDependencies<S, A> dependencies) {
+        return new SearchWorkers<>(
                 Selector.of(dependencies.searcherSettings()),
                 Simulator.of(dependencies.environment(),
                         dependencies.rolloutPolicy(),

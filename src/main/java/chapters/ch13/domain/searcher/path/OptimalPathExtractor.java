@@ -1,7 +1,7 @@
 package chapters.ch13.domain.searcher.path;
 
 import chapters.ch13.domain.tree.Node;
-import chapters.ch13.domain.searcher.core.Dependencies;
+import chapters.ch13.domain.searcher.core.OuterDependencies;
 import chapters.ch13.domain.searcher.workers.Selector;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,9 +13,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class OptimalPathExtractor<S, A> {
 
-    Dependencies<S,A> dependencies;
+    OuterDependencies<S,A> dependencies;
 
-    public static <S, A> OptimalPathExtractor<S, A> of(Dependencies<S, A> dependencies) {
+    public static <S, A> OptimalPathExtractor<S, A> of(OuterDependencies<S, A> dependencies) {
         return new OptimalPathExtractor<>(dependencies);
     }
 

@@ -2,7 +2,7 @@ package chapters.ch13;
 
 import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.searcher.path.OptimalPathExtractor;
-import chapters.ch13.domain.searcher.core.Dependencies;
+import chapters.ch13.domain.searcher.core.OuterDependencies;
 import chapters.ch13.domain.searcher.core.Searcher;
 import chapters.ch13.factory.jumper.FactoryDependenciesJumper;
 import chapters.ch13.implem.jumper.ActionJumper;
@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 
 public class TestSearcherJumper {
 
-    Dependencies<StateJumper, ActionJumper> dependencies;
+    OuterDependencies<StateJumper, ActionJumper> dependencies;
     Searcher<StateJumper, ActionJumper> searcher;
     Node<StateJumper, ActionJumper> root;
     public static final String FILE_NAME = "jumper_test_mcts.dot";

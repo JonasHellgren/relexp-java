@@ -20,10 +20,9 @@ import static core.foundation.util.cond.ConditionalsUtil.executeIfTrue;
 public class Searcher<S, A> {
 
     Dependencies<S, A> dependencies;
-    SearchHelper<S, A> helper;
 
-    public static <S, A> Searcher<S, A> of(Dependencies<S, A> dependencies) {
-        return new Searcher<>(dependencies, SearchHelper.of(dependencies));
+    public static <S, A> Searcher<S, A> of(OuterDependencies<S, A> outer) {
+        return new Searcher<>(Dependencies.of(outer, SearchWorkers.of(outer)));
     }
 
     /**
@@ -34,16 +33,20 @@ public class Searcher<S, A> {
      */
     public Tree<S, A> search(Node<S, A> root) {
         var vars = Variables.of(root);
-        for (int i = 0; i < dependencies.searcherSettings().maxIterations(); i++) {
+        for (int i = 0; i < dependencies.maxIterations(); i++) {
             initPath(root, vars);
             traverse(vars);
-            var info = vars.current.info();
-            executeIfTrue(info.isExpandable() && vars.isTreeBelowMaxDepth(maxTreeDepth()),
+            var nodeInfo = vars.current.info();
+            executeIfTrue(nodeInfo.isExpandable() && isBelowMaxDepth(vars),
                     () -> expand(vars));
-            executeIfTrue(info.isSimulate(), () -> simulate(vars));
+            executeIfTrue(nodeInfo.isSimulate(), () -> simulate(vars));
             backPropagate(vars);
         }
         return Tree.of(root);
+    }
+
+    public void logTime() {
+        log.info("Time (s): " + dependencies.workers().timer().timeInSecondsAsString());
     }
 
     /**
@@ -62,23 +65,18 @@ public class Searcher<S, A> {
      * Traversal. Starting from the root, follow the tree by choosing child nodes
      */
     private void traverse(Variables<S, A> vars) {
-        var selector = helper.selector();
-        while (vars.isNotExpandable() && vars.isTreeBelowMaxDepth(maxTreeDepth())) {
+        var selector = dependencies.getSelector();
+        while (vars.isNotExpandable() && isBelowMaxDepth(vars)) {
             vars.setCurrent(selector.selectFromTriedActions(vars.current));
             vars.addNodeToPath(vars.current);
         }
-    }
-
-    private int maxTreeDepth() {
-        return dependencies.searcherSettings().maxTreeDepth();
     }
 
     /**
      * Expansion. Add one or more new child nodes (representing new actions).
      */
     private void expand(Variables<S, A> vars) {
-        var expander = helper.expander();
-        var newChild = expander.expand(vars.current);
+        var newChild = dependencies.getExpander().expand(vars.current);
         vars.setCurrent(newChild);
         vars.addNodeToPath(newChild);
     }
@@ -87,18 +85,19 @@ public class Searcher<S, A> {
      * Simulation. From the new node, simulate  until terminal state
      */
     private void simulate(Variables<S, A> vars) {
-        var simulator = helper.simulator();
-        simulator.simulate(vars.current, vars.path);
+        dependencies.getSimulator().simulate(vars.current, vars.path);
     }
 
     /**
      * Backpropagation. Use the path to update the stats of all traversed nodes
      */
     private void backPropagate(Variables<S, A> vars) {
-        var backpropagator = helper.backpropagator();
-        backpropagator.update(vars.path);
+        dependencies.getBackpropagator().update(vars.path);
     }
 
-    public void logTime() {
+    private boolean isBelowMaxDepth(Variables<S, A> vars) {
+        return vars.isTreeBelowMaxDepth(dependencies.maxTreeDepth());
     }
+
+
 }
