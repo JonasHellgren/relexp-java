@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RecorderTrainerPendulum {
 
-    List<MeasuresPendulumTraining> measuresList;
+    private List<MeasuresPendulumTraining> measuresList;
 
     public static RecorderTrainerPendulum empty() {
         return new RecorderTrainerPendulum(new ArrayList<>());
@@ -20,15 +20,13 @@ public class RecorderTrainerPendulum {
         measuresList.add(measures);
     }
 
-
     public boolean isEmpty() {
         return measuresList.isEmpty();
     }
 
-    public List<Double> trajectory(MeasuresPendulumTrainingEnum measure) {
+    public List<Double> trajectory(MeasurePendulum measure) {
         return measuresList.stream().map(measure.mapFunction).toList();
     }
-
 
     public void addRecord(double ei, double sumRewards, StatePendulum s, TrainerDependencies dependencies) {
         var agent = dependencies.agent();

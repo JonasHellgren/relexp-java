@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class PendulumRecorder {
+public class RecorderPendulumMeasure {
 
-    List<MeasuresPendulumSimulation> measuresList;
+    private List<MeasuresPendulumSimulation> measuresList;
 
-    public static PendulumRecorder empty() {
-        return new PendulumRecorder(new ArrayList<>());
+    public static RecorderPendulumMeasure empty() {
+        return new RecorderPendulumMeasure(new ArrayList<>());
     }
 
     public void add(MeasuresPendulumSimulation measures) {

@@ -21,7 +21,7 @@ public class ErrorBandPlotterNeuralPendulum {
     public static final String X_LABEL = "Episode";
     private final RecorderTrainerPendulum recorder;
     private final String filePath;
-    private final String fileNameAddOn;
+    private final String fileName;
     private final int nWindows;
     private final PlotConfig plotConfig;
 
@@ -33,21 +33,23 @@ public class ErrorBandPlotterNeuralPendulum {
         return new ErrorBandPlotterNeuralPendulum(recorder, filePath, fileNameAddOn,nWindows,plotConfig);
     }
 
-    public void plotAndSave(List<MeasuresPendulumTrainingEnum> measures) {
+    public void plotAndSave(List<MeasurePendulum> measures) {
         Preconditions.checkArgument(!recorder.isEmpty(), "No training progress data to plot");
         measures.forEach(measure ->
                 showAndSavePlot(measure, ErrorBandData.of(recorder.trajectory(measure), nWindows)));
     }
 
-    private void showAndSavePlot(MeasuresPendulumTrainingEnum measure, ErrorBandData errorBandData) {
-        var settings= ErrorBandSaverAndPlotter.getSettings(measure.description, X_LABEL, false, false,plotConfig);
+    private void showAndSavePlot(MeasurePendulum measure, ErrorBandData errorBandData) {
+        var settings= ErrorBandSaverAndPlotter.getSettings(measure.name, X_LABEL, false, false,plotConfig);
         var creator = ErrorBandCreator.newOfSettings(settings);
         addErrorBandFilter(measure, creator, errorBandData);
-        ErrorBandSaverAndPlotter.showAndSave(creator, PathAndFile.ofPng(filePath, measure+fileNameAddOn));
+        ErrorBandSaverAndPlotter.showAndSave(creator, PathAndFile.ofPng(filePath, fileName));
     }
 
-    private static void addErrorBandFilter(MeasuresPendulumTrainingEnum measure, ErrorBandCreator creator, ErrorBandData errorBandData) {
-        creator.addErrorBand(measure.description,
+    private static void addErrorBandFilter(MeasurePendulum measure,
+                                           ErrorBandCreator creator,
+                                           ErrorBandData errorBandData) {
+        creator.addErrorBand(measure.name,
                 errorBandData.xDataAsArray(),
                 errorBandData.yDataFilteredAsArray(),
                 errorBandData.errDataFilteredAsArray(),

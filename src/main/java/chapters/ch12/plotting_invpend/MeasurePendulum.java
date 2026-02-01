@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 
 @AllArgsConstructor
-public enum MeasuresPendulumTrainingEnum {
+public enum MeasurePendulum {
     EPISODE("Episode", pm -> pm.episode()),
     RETURN("Return", pm -> pm.sumRewards()),
     LOSS("Loss", pm -> pm.loss()),
@@ -15,7 +15,8 @@ public enum MeasuresPendulumTrainingEnum {
     TIME("Time", pm -> pm.time()),
     N_STEPS("Nof. steps", pm -> pm.nSteps());
 
-    public final String description;
+    public final String name;
     public final Function<MeasuresPendulumTraining, Double> mapFunction;
 
-    }
+
+}

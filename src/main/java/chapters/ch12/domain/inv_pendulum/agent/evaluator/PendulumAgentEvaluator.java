@@ -3,7 +3,7 @@ package chapters.ch12.domain.inv_pendulum.agent.evaluator;
 import chapters.ch12.domain.inv_pendulum.environment.startstate_supplier.StartStateSupplierI;
 import chapters.ch12.domain.inv_pendulum.trainer.core.TrainerDependencies;
 import chapters.ch12.plotting_invpend.MeasuresPendulumSimulation;
-import chapters.ch12.plotting_invpend.PendulumRecorder;
+import chapters.ch12.plotting_invpend.RecorderPendulumMeasure;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AccessLevel;
@@ -24,10 +24,10 @@ public class PendulumAgentEvaluator {
     public static final int N_STEPS_BETWEEN_RECORDING = 1;
 
     private TrainerDependencies dependencies;
-    private PendulumRecorder recorder;
+    private RecorderPendulumMeasure recorder;
 
     public static PendulumAgentEvaluator of(TrainerDependencies dependencies) {
-        return new PendulumAgentEvaluator(dependencies, PendulumRecorder.empty());
+        return new PendulumAgentEvaluator(dependencies, RecorderPendulumMeasure.empty());
     }
 
     /**

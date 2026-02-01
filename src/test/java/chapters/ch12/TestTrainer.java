@@ -3,7 +3,7 @@ package chapters.ch12;
 import chapters.ch12.domain.inv_pendulum.trainer.core.TrainerDependencies;
 import chapters.ch12.domain.inv_pendulum.trainer.core.TrainerPendulum;
 import chapters.ch12.factory.TrainerDependenciesFactory;
-import chapters.ch12.plotting_invpend.MeasuresPendulumTrainingEnum;
+import chapters.ch12.plotting_invpend.MeasurePendulum;
 import core.foundation.util.collections.ListUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,7 @@ public class TestTrainer {
     void whenTrained_thenCanGoMultipleSteps() {
         trainer.train();
         System.out.println("trainer.getRecorder() = " + trainer.getRecorder());
-        var nStepsTrajectory = trainer.getRecorder().trajectory(MeasuresPendulumTrainingEnum.N_STEPS);
+        var nStepsTrajectory = trainer.getRecorder().trajectory(MeasurePendulum.N_STEPS);
 
         System.out.println("nStepsTrajectory.size() = " + nStepsTrajectory.size());
         double nStepsMax=dependencies.environment().getParameters().maxSteps();

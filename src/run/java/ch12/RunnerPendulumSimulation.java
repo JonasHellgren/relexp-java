@@ -9,7 +9,7 @@ import chapters.ch12.factory.ManyLinesChartCreatorFactory;
 import chapters.ch12.factory.PendulumParametersFactory;
 import chapters.ch12.plotting_invpend.MeasuresPendulumSimulation;
 import chapters.ch12.plotting_invpend.MeasuresPendulumSimulationEnum;
-import chapters.ch12.plotting_invpend.PendulumRecorder;
+import chapters.ch12.plotting_invpend.RecorderPendulumMeasure;
 import core.foundation.config.ConfigFactory;
 import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.util.formatting.NumberFormatterUtil;
@@ -26,7 +26,7 @@ public class RunnerPendulumSimulation {
         var parameters = PendulumParametersFactory.createForTest();
         var environment = EnvironmentPendulum.of(parameters);
         var startState = StartStateSupplierEnum.SMALL_ANGLE_ZERO_SPEED.create().getStartState();
-        var recorder = PendulumRecorder.empty();
+        var recorder = RecorderPendulumMeasure.empty();
         simulate(startState, environment, recorder);
         double angleTorqueActivation = parameters.angleMax() * MAX_ANGLE_FRACTION;
         plotting(angleTorqueActivation, recorder);
@@ -34,7 +34,7 @@ public class RunnerPendulumSimulation {
 
     private static void simulate(StatePendulum startState,
                                  EnvironmentPendulum environment,
-                                 PendulumRecorder recorder) {
+                                 RecorderPendulumMeasure recorder) {
         var parameters= environment.getParameters();
         double angleTorqueActivation = parameters.angleMax() * MAX_ANGLE_FRACTION;
         var state = startState;
@@ -49,7 +49,7 @@ public class RunnerPendulumSimulation {
         }
     }
 
-    private static void plotting(double angleTorqueActivation, PendulumRecorder recorder) {
+    private static void plotting(double angleTorqueActivation, RecorderPendulumMeasure recorder) {
         String title = "Theta limit (deg) = " + NumberFormatterUtil.getRoundedNumberAsString(
                 UnitConverterUtil.convertRadiansToDegrees(angleTorqueActivation), NOF_DIGITS_TITLETEXT);
         var plotConfig= ConfigFactory.plotConfig();

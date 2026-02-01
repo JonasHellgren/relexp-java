@@ -39,7 +39,6 @@ public class PendulumAgentMemoryPlotter {
         plotAndSavValue(pathPics);
     }
 
-
     private void plotAndSaveTorque(String path) {
         Function<StatePendulum,Double> func = s ->
                 dependencies.agent().chooseActionNoExploration(s).torque();

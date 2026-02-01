@@ -8,9 +8,8 @@ import chapters.ch12.domain.inv_pendulum.trainer.core.TrainerPendulum;
 import chapters.ch12.factory.HyperParametersPendulum;
 import chapters.ch12.factory.TrainerDependenciesFactory;
 import chapters.ch12.plotting_invpend.PendulumAgentMemoryPlotter;
+import chapters.ch12.plotting_invpend.TrainerPlotter;
 import core.foundation.config.ConfigFactory;
-
-import static chapters.ch12.plotting_invpend.TrainerPlotter.*;
 
 public class RunnerPendulumTrainer {
     static final HyperParametersPendulum HYPER_PAR =
@@ -39,12 +38,18 @@ public class RunnerPendulumTrainer {
         var path= ConfigFactory.pathPicsConfig().ch12();
         var plotConfig = ConfigFactory.plotConfig();
 
-        plotTrainEvolution(trainer,plotConfig,path);
+        var plotter= TrainerPlotter.builder()
+                .trainer(trainer)
+                .plotConfig(plotConfig)
+                .path(path)
+                .evaluator(evaluator)
+                .build();
+        plotter.plotTrainEvolution();
+        plotter.plotTheta();
+        plotter.plotTorque();
+        plotter.plotSpd();
         var memoryPlotter= PendulumAgentMemoryPlotter.of(dependencies);
         memoryPlotter.plotAndSaveAll(path);
-        plotTheta(evaluator,plotConfig);
-        plotTorque(evaluator,plotConfig);
-        plotSpd(evaluator,plotConfig);
     }
 
 }
