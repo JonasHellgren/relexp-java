@@ -46,7 +46,7 @@ public class Searcher<S, A> {
     }
 
     public void logTime() {
-        log.info("Time (s): " + dependencies.workers().timer().timeInSecondsAsString());
+        log.info("Time (s): " + dependencies.timeInSecondsAsString());
     }
 
     /**
@@ -65,9 +65,8 @@ public class Searcher<S, A> {
      * Traversal. Starting from the root, follow the tree by choosing child nodes
      */
     private void traverse(Variables<S, A> vars) {
-        var selector = dependencies.getSelector();
         while (vars.isNotExpandable() && isBelowMaxDepth(vars)) {
-            vars.setCurrent(selector.selectFromTriedActions(vars.current));
+            vars.setCurrent(dependencies.getSelector().selectFromTriedActions(vars.current));
             vars.addNodeToPath(vars.current);
         }
     }
