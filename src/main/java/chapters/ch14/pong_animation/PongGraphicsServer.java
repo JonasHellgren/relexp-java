@@ -56,6 +56,10 @@ public class PongGraphicsServer {
         });
     }
 
+    public long getSleepTimeMs() {
+        return sleepTimeAnimationMs;
+    }
+
     private static class SenderThreadException extends RuntimeException {
         public SenderThreadException(Throwable cause) {
             super(cause);

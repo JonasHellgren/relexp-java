@@ -1,7 +1,7 @@
 package chapters.ch14.pong_animation;
 
 import chapters.ch14.implem.pong.PongSettings;
-import core.foundation.configOld.ProjectPropertiesReader;
+import core.foundation.config.AnimationConfig;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -24,9 +24,9 @@ public class PongGraphicsViewer {
     private JFrame frame;
 
     @SneakyThrows
-    public static PongGraphicsViewer of(ProjectPropertiesReader reader, PongSettings settings) {
+    public static PongGraphicsViewer of(AnimationConfig animationConfig, PongSettings settings) {
         var viewer = new PongGraphicsViewer(
-                reader.socketPort(),
+                animationConfig.socketPort(),
                 null, null);
         viewer.initFrame(settings);
         viewer.startThread(settings);

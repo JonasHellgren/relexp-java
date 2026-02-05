@@ -21,4 +21,9 @@ public class ConfigFactory {
         var loader = getPropertiesLoader();
         return PlotConfig.extract(loader.loadProperties());
     }
+
+    public static AnimationConfig getAnimationConfig() {
+        var loader = getPropertiesLoader();
+        return AnimationConfig.extract(loader.loadProperties());
+    }
 }

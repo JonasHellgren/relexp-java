@@ -2,7 +2,6 @@ package chapters.ch14.domain.trainer;
 
 import chapters.ch14.plotting.MeasuresCombLP;
 import chapters.ch14.plotting.Recorder;
-import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class Trainer<SI, S, A> {
     Recorder recorder;
 
     public static <SI, S, A> Trainer<SI, S, A> of(TrainerDependencies<SI, S, A> dependencies) {
-        return new Trainer<>(dependencies,Recorder.empty());
+        return new Trainer<>(dependencies, Recorder.empty());
     }
 
     /**
@@ -35,32 +34,41 @@ public class Trainer<SI, S, A> {
      * The training process continues until the maximum number of episodes is reached.
      */
     public void train() {
-        dependencies.validate();
-        var settings = dependencies.trainerSettings();
-        var episCounter = Counter.ofMaxCount(settings.maxEpisodes());
-        while (episCounter.isNotExceeded()) {
-            var stepCounter = Counter.ofMaxCount(settings.maxStepsPerEpisode());
-            var measures= MeasuresCombLP.empty();
-            var s = dependencies.getStartState();
+        var d = dependencies;
+        d.validate();
+        while (d.isEpisCounterNotExceeded()) {
+            var measures = MeasuresCombLP.empty();
+            var s = d.getStartState();
             boolean isTerminal = false;
-            while (stepCounter.isNotExceeded() && !isTerminal) {
-                var planRes = dependencies.plan(s);
-                A a = planRes.firstAction().orElseThrow();
-                var sr = dependencies.step(s, a);
-                for (int i = 0; i < dependencies.trainerSettings().nFits(); i++) {
-                    var mb = dependencies.sampleMiniBatch();
-                    ConditionalsUtil.executeIfTrue(!mb.isEmpty(), () -> dependencies.fitLongMemory(mb));
-                }
-                dependencies.maybeDeleteOldExperience();
-                dependencies.addExperience(s, a, sr);
+            while (d.isStepCounterNotExceeded() && !isTerminal) {
+                var planRes = d.plan(s);
+                var sr = d.step(s, planRes);
+                fitMemoryFromReplayBuffer();
+                d.maybeDeleteOldExperience();
+                d.addExperience(s, planRes, sr);
                 s = sr.stateNew();
                 isTerminal = sr.isTerminal();
-                stepCounter.increase();
+                d.increseStepCounter();
                 measures.addReward(sr.reward());
             }
             recorder.add(measures);
-            episCounter.increase();
+            d.increaseEpisCounter();
         }
     }
 
+    private void fitMemoryFromReplayBuffer() {
+        var d = dependencies;
+        for (int i = 0; i < d.trainerSettings().nFits(); i++) {
+            var mb = d.sampleMiniBatch();
+            ConditionalsUtil.executeIfTrue(!mb.isEmpty(), () -> d.fitLongMemory(mb));
+        }
+    }
+
+    public String timeInSecondsAsString() {
+        return dependencies.timer().timeInSecondsAsString();
+    }
+
+    public void resetTimer() {
+        dependencies.timer().reset();
+    }
 }

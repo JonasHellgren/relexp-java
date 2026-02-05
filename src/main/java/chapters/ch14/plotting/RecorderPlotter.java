@@ -2,7 +2,7 @@ package chapters.ch14.plotting;
 
 import com.google.common.base.Preconditions;
 import core.foundation.config.PathAndFile;
-import core.foundation.configOld.ProjectPropertiesReader;
+import core.foundation.config.PlotConfig;
 import core.foundation.util.collections.ArrayCreatorUtil;
 import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.plotting_core.chart_plotting.ChartSaver;
@@ -18,18 +18,17 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RecorderPlotter {
 
-    public static final String X_LABEL = "Trial";
-
+    static final String X_LABEL = "Trial";
     private final Recorder recorder;
     private final String filePath;
     private final String fileNameAddOn;
-    private final ProjectPropertiesReader reader;
+    private final PlotConfig plotConfig;
 
     public static RecorderPlotter of(Recorder recorder,
                                      String filePath,
                                      String fileNameAddOn,
-                                     ProjectPropertiesReader reader) {
-        return new RecorderPlotter(recorder, filePath, fileNameAddOn, reader);
+                                     PlotConfig plotConfig) {
+        return new RecorderPlotter(recorder, filePath, fileNameAddOn, plotConfig);
     }
 
     public void plotAndSave(List<MeasuresCombLPEnum> measures) {
@@ -42,7 +41,7 @@ public class RecorderPlotter {
         var xData = ArrayCreatorUtil.createArrayInRange(0, 1, yData.length - 1);
         var xyDataStair = StairDataGenerator.generateWithEndStep(Pair.create(xData, yData));
         var chart = new XYChartBuilder()
-                .width(reader.xyChartWidth2Col()).height((int) (reader.xyChartHeight()))
+                .width(plotConfig.xyChartWidth2Col()).height(plotConfig.xyChartHeight())
                 .title(" ").xAxisTitle(X_LABEL).yAxisTitle(measure.description).build();
         chart.getStyler()
                 .setLegendVisible(false)

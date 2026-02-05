@@ -15,7 +15,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
-import java.util.function.Supplier;
 
 /**
  * This class implements an Executor for the Pong environment.
@@ -31,20 +30,18 @@ public class ExecutorPong<SI, S, A> implements ExecutorI<SI, S, A> {
     @Getter
     private Recorder recorder;
     private PongGraphicsServer server;
-    private long sleepTimeAnimationMs;
-    private String name;
+    private String titleInAnimationWindow;
 
     public static <SI, S, A> ExecutorPong<SI, S, A> of(TrainerDependencies<SI, S, A> dependencies,
                                                        Planner<SI, S, A> planner) {
-        return new ExecutorPong<>(dependencies, planner, Recorder.empty(), null, 0,"");
+        return new ExecutorPong<>(dependencies, planner, Recorder.empty(), null,"");
     }
 
     public static <SI, S, A> ExecutorPong<SI, S, A> of(TrainerDependencies<SI, S, A> dependencies,
                                                        Planner<SI, S, A> planner,
                                                        PongGraphicsServer server,
-                                                       long sleepTimeAnimationMs,
                                                        String name) {
-        return new ExecutorPong<>(dependencies, planner, Recorder.empty(), server, sleepTimeAnimationMs,name);
+        return new ExecutorPong<>(dependencies, planner, Recorder.empty(), server, name);
     }
 
     @SneakyThrows
@@ -68,14 +65,14 @@ public class ExecutorPong<SI, S, A> implements ExecutorI<SI, S, A> {
                 measures.addReward(sr.reward());
                 s = sr.stateNew();
                 maybeLog(planRes, sr, s, d.stepCounter());
-                maybeDefineServer(s, sr, planRes, d.stepCounter());
+                maybeSendGfxDto(s, sr, planRes, d.stepCounter());
             }
             recorder.add(measures);
             d.increaseEpisCounter();
         }
     }
 
-    private void maybeDefineServer(S s, StepReturn<S> sr, PlanningStatus<A> planRes, Counter stepCounter)
+    private void maybeSendGfxDto(S s, StepReturn<S> sr, PlanningStatus<A> planRes, Counter stepCounter)
             throws InterruptedException {
         if (server != null) {
             server.setGfxDTO(PongGraphicsDTO.of(
@@ -83,8 +80,8 @@ public class ExecutorPong<SI, S, A> implements ExecutorI<SI, S, A> {
                     sr.isFail(),
                     planRes.isAllRolloutsFailed(),
                     stepCounter.isExceeded(),
-                    name));  //define Gfx to transmit
-            Thread.sleep(sleepTimeAnimationMs);
+                    titleInAnimationWindow));  //define Gfx to transmit
+            Thread.sleep(server.getSleepTimeMs());
         }
     }
 

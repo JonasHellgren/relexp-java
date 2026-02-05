@@ -1,16 +1,17 @@
 package chapters.ch14.factory;
 
+import chapters.ch14.domain.settings.MemorySettings;
+import chapters.ch14.domain.settings.PlanningSettings;
 import chapters.ch14.domain.settings.TrainerSettings;
 import chapters.ch14.domain.trainer.ReplayBuffer;
 import chapters.ch14.domain.trainer.TrainerDependencies;
-import chapters.ch14.implem.pong.ActionPong;
-import chapters.ch14.implem.pong.EnvironmentPong;
-import chapters.ch14.implem.pong.StateLongPong;
-import chapters.ch14.implem.pong.StatePong;
+import chapters.ch14.implem.pong.*;
 import chapters.ch14.implem.pong_memory.BallHitFloorCalculator;
 import chapters.ch14.implem.pong_memory.LongMemoryRbf;
 import chapters.ch14.implem.pong_memory.MiniBatchAdapterPong;
 import core.foundation.gadget.cond.Counter;
+import core.foundation.gadget.timer.CpuTimer;
+import lombok.Builder;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -20,55 +21,57 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class FactoryDependencies {
 
+    @Builder
+    record Settings(TrainerSettings trainerSettings,
+                    PongSettings envSettings,
+                    PlanningSettings planningSettings,
+                    MemorySettings memorySettings
+    ) {
+    }
+
     public static TrainerDependencies<StateLongPong, StatePong, ActionPong> forTest(TrainerSettings trainerSettings) {
-        var envSettings=FactoryPongSettings.create();
-        var stateFactory = FactoryStatePong.of(envSettings);
-        var environment = EnvironmentPong.of(envSettings);
-        var calculator = BallHitFloorCalculator.of(environment, envSettings);
-        var planner = FactoryPlanner.of(FactoryPlanningSettings.forTest(),calculator,trainerSettings);
+        var settings = Settings.builder()
+                .trainerSettings(trainerSettings)
+                .envSettings(FactoryPongSettings.create())
+                .planningSettings(FactoryPlanningSettings.forTest())
+                .memorySettings(FactoryMemorySettings.forTest())
+                .build();
+        return produce(settings);
+    }
+
+    public static TrainerDependencies<StateLongPong, StatePong, ActionPong> forRunning() {
+        var settings = Settings.builder()
+                .trainerSettings(FactoryTrainerSettings.forRunning())
+                .envSettings(FactoryPongSettings.create())
+                .planningSettings(FactoryPlanningSettings.forRunning())
+                .memorySettings(FactoryMemorySettings.forRunning())
+                .build();
+        return produce(settings);
+    }
+
+
+    private static TrainerDependencies<StateLongPong, StatePong, ActionPong> produce(Settings settings) {
+        var stateFactory = FactoryStatePong.of(settings.envSettings);
+        var environment = EnvironmentPong.of(settings.envSettings);
+        var calculator = BallHitFloorCalculator.of(environment, settings.envSettings);
+        var planner = FactoryPlanner.of(settings.planningSettings, calculator, settings.trainerSettings);
         var memorySettings = FactoryMemorySettings.forTest();
-        var memory = LongMemoryRbf.of(memorySettings, envSettings);
-        var adapter= MiniBatchAdapterPong.of(envSettings,environment, memory, trainerSettings);
-        return TrainerDependencies.<StateLongPong,StatePong,ActionPong>builder()
-                .trainerSettings(trainerSettings)
-                .envSettings(envSettings)
+        var memory = LongMemoryRbf.of(memorySettings, settings.envSettings);
+        var adapter = MiniBatchAdapterPong.of(settings.envSettings, environment, memory, settings.trainerSettings);
+        return TrainerDependencies.<StateLongPong, StatePong, ActionPong>builder()
+                .trainerSettings(settings.trainerSettings)
+                .envSettings(settings.envSettings)
                 .environment(environment)
                 .stateSupplier(() -> stateFactory.random())
                 .planner(planner)
                 .longMemory(memory)
-                .replayBuffer(ReplayBuffer.of(trainerSettings))
+                .replayBuffer(ReplayBuffer.of(settings.trainerSettings))
                 .miniBatchAdapter(adapter)
                 .timeToHitCalculator(calculator)
-                .stepCounter(Counter.ofMaxCount(trainerSettings.maxStepsPerEpisode()))
-                .episCounter(Counter.ofMaxCount(trainerSettings.maxEpisodes()))
+                .stepCounter(Counter.ofMaxCount(settings.trainerSettings.maxStepsPerEpisode()))
+                .episCounter(Counter.ofMaxCount(settings.trainerSettings.maxEpisodes()))
+                .timer(CpuTimer.empty())
                 .build();
     }
-
-    public static TrainerDependencies<StateLongPong,StatePong, ActionPong> forRunning() {
-        var envSettings=FactoryPongSettings.create();
-        var stateFactory = FactoryStatePong.of(envSettings);
-        var environment = EnvironmentPong.of(envSettings);
-        var calculator = BallHitFloorCalculator.of(environment, envSettings);
-        var trainerSettings = FactoryTrainerSettings.forRunning();
-        var planningSettings=FactoryPlanningSettings.forRunning();
-        var planner = FactoryPlanner.of(planningSettings,calculator,trainerSettings);
-        var memorySettings = FactoryMemorySettings.forRunning();
-        var memory = LongMemoryRbf.of(memorySettings, envSettings);
-        var adapter= MiniBatchAdapterPong.of(envSettings,environment, memory, trainerSettings);
-        return TrainerDependencies.<StateLongPong,StatePong,ActionPong>builder()
-                .trainerSettings(trainerSettings)
-                .envSettings(envSettings)
-                .environment(environment)
-                .stateSupplier(() -> stateFactory.random())
-                .planner(planner)
-                .longMemory(memory)
-                .replayBuffer(ReplayBuffer.of(trainerSettings))
-                .miniBatchAdapter(adapter)
-                .timeToHitCalculator(calculator)
-                .stepCounter(Counter.ofMaxCount(trainerSettings.maxStepsPerEpisode()))
-                .episCounter(Counter.ofMaxCount(trainerSettings.maxEpisodes()))
-                .build();
-    }
-
 
 }

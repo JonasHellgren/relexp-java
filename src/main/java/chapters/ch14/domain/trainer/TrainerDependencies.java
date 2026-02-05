@@ -11,8 +11,10 @@ import chapters.ch14.implem.pong.PongSettings;
 import chapters.ch14.implem.pong_memory.BallHitFloorCalculator;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.cond.Counter;
+import core.foundation.gadget.timer.CpuTimer;
 import lombok.Builder;
 import lombok.With;
+
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -34,14 +36,15 @@ public record TrainerDependencies<SI, S, A>(
         MiniBatchAdapterI<SI, S, A> miniBatchAdapter,
         BallHitFloorCalculator timeToHitCalculator,
         Counter episCounter,
-        Counter stepCounter
+        Counter stepCounter,
+        CpuTimer timer
 ) {
 
     public void validate() {
         TrainerSettings settings = trainerSettings;
         Preconditions.checkArgument(settings.maxEpisodes() > 0,
                 "maxEpisodes should be > 0");
-        Preconditions.checkArgument(settings.maxSizeReplayBuffer()> settings.maxEpisodes()* settings.maxStepsPerEpisode(),
+        Preconditions.checkArgument(settings.maxSizeReplayBuffer() > settings.maxEpisodes() * settings.maxStepsPerEpisode(),
                 "replayBuffer size should be > maxEpisodes");
     }
 
@@ -72,8 +75,8 @@ public record TrainerDependencies<SI, S, A>(
         longMemory.fit(trainingData);
     }
 
-    public void addExperience(S s, A a, StepReturn<S> sr) {
-        replayBuffer.add(Experience.of(s, a, sr));
+    public void addExperience(S s, PlanningStatus<A> planRes, StepReturn<S> sr) {
+        replayBuffer.add(Experience.of(s, planRes.firstAction().orElseThrow(), sr));
     }
 
     public boolean isShowLog() {
