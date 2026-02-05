@@ -20,7 +20,7 @@ public class RecorderPlotter {
 
     public static final String X_LABEL = "Trial";
 
-    Recorder recorder;
+    private final Recorder recorder;
     private final String filePath;
     private final String fileNameAddOn;
     private final ProjectPropertiesReader reader;

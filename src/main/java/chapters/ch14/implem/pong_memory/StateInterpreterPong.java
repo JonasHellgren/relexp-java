@@ -1,8 +1,8 @@
-package chapters.ch14.environments.pong_memory;
+package chapters.ch14.implem.pong_memory;
 
 import chapters.ch14.domain.state_intepreter.StateInterpreterI;
-import chapters.ch14.environments.pong.StateLongPong;
-import chapters.ch14.environments.pong.StatePong;
+import chapters.ch14.implem.pong.StateLongPong;
+import chapters.ch14.implem.pong.StatePong;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 

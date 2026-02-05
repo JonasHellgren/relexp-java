@@ -18,7 +18,7 @@ import java.util.Map;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Selector<S, A> {
 
-    private SearcherParameters searchSettings;
+    private final SearcherParameters searchSettings;
 
     public static <S, A> Selector<S, A> of(SearcherParameters searchSettings) {
         return new Selector<>(searchSettings);

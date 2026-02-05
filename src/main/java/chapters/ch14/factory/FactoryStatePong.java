@@ -1,8 +1,8 @@
 package chapters.ch14.factory;
 
-import chapters.ch14.environments.pong.PongSettings;
-import chapters.ch14.environments.pong.PosXy;
-import chapters.ch14.environments.pong.StatePong;
+import chapters.ch14.implem.pong.PongSettings;
+import chapters.ch14.implem.pong.PosXy;
+import chapters.ch14.implem.pong.StatePong;
 import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

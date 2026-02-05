@@ -4,9 +4,9 @@ import chapters.ch14.domain.action_roller.ActionSequenceRoller;
 import chapters.ch14.domain.planner.Planner;
 import chapters.ch14.domain.settings.PlanningSettings;
 import chapters.ch14.domain.settings.TrainerSettings;
-import chapters.ch14.environments.pong.*;
-import chapters.ch14.environments.pong_memory.BallHitFloorCalculator;
-import chapters.ch14.environments.pong_memory.StateInterpreterPong;
+import chapters.ch14.implem.pong.*;
+import chapters.ch14.implem.pong_memory.BallHitFloorCalculator;
+import chapters.ch14.implem.pong_memory.StateInterpreterPong;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

@@ -1,4 +1,4 @@
-package chapters.ch14.environments.pong;
+package chapters.ch14.implem.pong;
 
 /**
  * This class represents a 2D velocity vector with double coordinates.

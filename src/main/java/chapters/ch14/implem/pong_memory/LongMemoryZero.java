@@ -1,7 +1,7 @@
-package chapters.ch14.environments.pong_memory;
+package chapters.ch14.implem.pong_memory;
 
 import chapters.ch14.domain.long_memory.LongMemory;
-import chapters.ch14.environments.pong.StateLongPong;
+import chapters.ch14.implem.pong.StateLongPong;
 import core.foundation.gadget.training.TrainDataOld;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

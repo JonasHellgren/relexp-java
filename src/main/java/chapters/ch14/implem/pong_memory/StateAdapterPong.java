@@ -1,7 +1,7 @@
-package chapters.ch14.environments.pong_memory;
+package chapters.ch14.implem.pong_memory;
 
-import chapters.ch14.environments.pong.StateLongPong;
-import chapters.ch14.environments.pong.StatePong;
+import chapters.ch14.implem.pong.StateLongPong;
+import chapters.ch14.implem.pong.StatePong;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.math3.util.Pair;
 import java.util.List;

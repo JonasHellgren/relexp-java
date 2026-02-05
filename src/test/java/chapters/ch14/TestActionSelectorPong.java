@@ -1,7 +1,7 @@
 package chapters.ch14;
 
-import chapters.ch14.environments.pong.ActionPong;
-import chapters.ch14.environments.pong.ActionSelectorPong;
+import chapters.ch14.implem.pong.ActionPong;
+import chapters.ch14.implem.pong.ActionSelectorPong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.HashSet;

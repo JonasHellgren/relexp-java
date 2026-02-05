@@ -1,9 +1,9 @@
 package chapters.ch14;
 
 import chapters.ch14.domain.settings.MemorySettings;
-import chapters.ch14.environments.pong.PongSettings;
-import chapters.ch14.environments.pong_memory.LongMemoryRbf;
-import chapters.ch14.environments.pong_memory.StateAdapterPong;
+import chapters.ch14.implem.pong.PongSettings;
+import chapters.ch14.implem.pong_memory.LongMemoryRbf;
+import chapters.ch14.implem.pong_memory.StateAdapterPong;
 import chapters.ch14.factory.FactoryMemorySettings;
 import chapters.ch14.factory.FactoryPongSettings;
 import core.foundation.gadget.training.TrainDataOld;

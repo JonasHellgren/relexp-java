@@ -3,13 +3,13 @@ package chapters.ch14.factory;
 import chapters.ch14.domain.settings.TrainerSettings;
 import chapters.ch14.domain.trainer.ReplayBuffer;
 import chapters.ch14.domain.trainer.TrainerDependencies;
-import chapters.ch14.environments.pong.ActionPong;
-import chapters.ch14.environments.pong.EnvironmentPong;
-import chapters.ch14.environments.pong.StateLongPong;
-import chapters.ch14.environments.pong.StatePong;
-import chapters.ch14.environments.pong_memory.BallHitFloorCalculator;
-import chapters.ch14.environments.pong_memory.LongMemoryRbf;
-import chapters.ch14.environments.pong_memory.MiniBatchAdapterPong;
+import chapters.ch14.implem.pong.ActionPong;
+import chapters.ch14.implem.pong.EnvironmentPong;
+import chapters.ch14.implem.pong.StateLongPong;
+import chapters.ch14.implem.pong.StatePong;
+import chapters.ch14.implem.pong_memory.BallHitFloorCalculator;
+import chapters.ch14.implem.pong_memory.LongMemoryRbf;
+import chapters.ch14.implem.pong_memory.MiniBatchAdapterPong;
 import lombok.experimental.UtilityClass;
 
 /**

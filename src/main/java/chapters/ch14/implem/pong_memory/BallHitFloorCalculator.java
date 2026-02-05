@@ -1,9 +1,9 @@
-package chapters.ch14.environments.pong_memory;
+package chapters.ch14.implem.pong_memory;
 
 import chapters.ch14.domain.environment.EnvironmentI;
-import chapters.ch14.environments.pong.ActionPong;
-import chapters.ch14.environments.pong.PongSettings;
-import chapters.ch14.environments.pong.StatePong;
+import chapters.ch14.implem.pong.ActionPong;
+import chapters.ch14.implem.pong.PongSettings;
+import chapters.ch14.implem.pong.StatePong;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 

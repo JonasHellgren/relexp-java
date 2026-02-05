@@ -1,6 +1,6 @@
-package chapters.ch14.environments.pong_graphics;
+package chapters.ch14.pong_animation;
 
-import chapters.ch14.environments.pong.StatePong;
+import chapters.ch14.implem.pong.StatePong;
 
 import java.io.Serializable;
 

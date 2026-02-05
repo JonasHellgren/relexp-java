@@ -1,8 +1,8 @@
 package chapters.ch14;
 
-import chapters.ch14.environments.pong.FiniteState;
-import chapters.ch14.environments.pong.PongSettings;
-import chapters.ch14.environments.pong.PosXy;
+import chapters.ch14.implem.pong.FiniteState;
+import chapters.ch14.implem.pong.PongSettings;
+import chapters.ch14.implem.pong.PosXy;
 import chapters.ch14.factory.FactoryPongSettings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

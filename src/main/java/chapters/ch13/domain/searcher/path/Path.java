@@ -17,9 +17,9 @@ import java.util.List;
 @Getter
 public class Path<S,A> {
 
-    List<Node<S, A>> nodes;              // Tree traversal phase only (selection + expansion)
-    List<Experience<S, A>> simulation;      // Simulation phase (beyond the leaf node)
-    PathInfo<S, A> info;
+    protected List<Node<S, A>> nodes;              // Tree traversal phase only (selection + expansion)
+    protected final List<Experience<S, A>> simulation;      // Simulation phase (beyond the leaf node)
+    private PathInfo<S, A> info;
 
     public static <S, A> Path<S, A> init() {
         return Path.of(new ArrayList<>(), new ArrayList<>());

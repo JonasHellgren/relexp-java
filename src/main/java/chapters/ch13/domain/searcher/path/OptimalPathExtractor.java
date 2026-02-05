@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class OptimalPathExtractor<S, A> {
 
-    OuterDependencies<S,A> dependencies;
+    private final OuterDependencies<S,A> dependencies;
 
     public static <S, A> OptimalPathExtractor<S, A> of(OuterDependencies<S, A> dependencies) {
         return new OptimalPathExtractor<>(dependencies);

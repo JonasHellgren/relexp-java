@@ -1,6 +1,6 @@
 package chapters.ch14;
 
-import chapters.ch14.environments.pong.*;
+import chapters.ch14.implem.pong.*;
 import chapters.ch14.factory.FactoryPongSettings;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

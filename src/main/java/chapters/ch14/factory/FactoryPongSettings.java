@@ -1,6 +1,6 @@
 package chapters.ch14.factory;
 
-import chapters.ch14.environments.pong.PongSettings;
+import chapters.ch14.implem.pong.PongSettings;
 import lombok.experimental.UtilityClass;
 
 /***

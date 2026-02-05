@@ -1,4 +1,4 @@
-package chapters.ch14.environments.pong;
+package chapters.ch14.implem.pong;
 
 import java.util.ArrayList;
 import java.util.List;

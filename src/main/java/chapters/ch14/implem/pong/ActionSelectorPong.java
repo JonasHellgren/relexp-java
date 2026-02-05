@@ -1,4 +1,4 @@
-package chapters.ch14.environments.pong;
+package chapters.ch14.implem.pong;
 
 import chapters.ch14.domain.action_selector.ActionSelectorI;
 import chapters.ch14.domain.settings.PlanningSettings;

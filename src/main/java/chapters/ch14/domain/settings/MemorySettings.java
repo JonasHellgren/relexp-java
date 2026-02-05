@@ -1,6 +1,6 @@
 package chapters.ch14.domain.settings;
 
-import chapters.ch14.environments.pong.PongSettings;
+import chapters.ch14.implem.pong.PongSettings;
 import lombok.Builder;
 import lombok.With;
 

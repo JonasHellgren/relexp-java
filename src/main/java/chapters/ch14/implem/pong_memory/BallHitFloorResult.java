@@ -1,4 +1,4 @@
-package chapters.ch14.environments.pong_memory;
+package chapters.ch14.implem.pong_memory;
 
 import lombok.Builder;
 

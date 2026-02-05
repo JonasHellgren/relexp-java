@@ -1,9 +1,9 @@
-package chapters.ch14.environments.pong_memory;
+package chapters.ch14.implem.pong_memory;
 
 import chapters.ch14.domain.long_memory.LongMemory;
 import chapters.ch14.domain.settings.MemorySettings;
-import chapters.ch14.environments.pong.PongSettings;
-import chapters.ch14.environments.pong.StateLongPong;
+import chapters.ch14.implem.pong.PongSettings;
+import chapters.ch14.implem.pong.StateLongPong;
 import chapters.ch9.radial_basis_old.Kernel;
 import chapters.ch9.radial_basis_old.Kernels;
 import chapters.ch9.radial_basis_old.RbfNetwork;

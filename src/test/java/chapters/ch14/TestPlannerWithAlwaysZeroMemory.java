@@ -1,10 +1,10 @@
 package chapters.ch14;
 
 import chapters.ch14.domain.planner.Planner;
-import chapters.ch14.environments.pong.*;
-import chapters.ch14.environments.pong_memory.BallHitFloorCalculator;
-import chapters.ch14.environments.pong_memory.LongMemoryZero;
-import chapters.ch14.environments.pong_memory.StateAdapterPong;
+import chapters.ch14.implem.pong.*;
+import chapters.ch14.implem.pong_memory.BallHitFloorCalculator;
+import chapters.ch14.implem.pong_memory.LongMemoryZero;
+import chapters.ch14.implem.pong_memory.StateAdapterPong;
 import chapters.ch14.factory.FactoryPlanner;
 import chapters.ch14.factory.FactoryPongSettings;
 import chapters.ch14.factory.FactoryStatePong;

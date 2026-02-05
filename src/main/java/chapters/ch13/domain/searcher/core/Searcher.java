@@ -19,7 +19,7 @@ import static core.foundation.util.cond.ConditionalsUtil.executeIfTrue;
 @Log
 public class Searcher<S, A> {
 
-    Dependencies<S, A> dependencies;
+    private final Dependencies<S, A> dependencies;
 
     public static <S, A> Searcher<S, A> of(OuterDependencies<S, A> outer) {
         return new Searcher<>(Dependencies.of(outer, SearchWorkers.of(outer)));

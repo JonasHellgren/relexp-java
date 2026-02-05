@@ -1,8 +1,8 @@
 package chapters.ch14.factory;
 
 import chapters.ch14.domain.long_memory.LongMemory;
-import chapters.ch14.environments.pong.PongSettings;
-import chapters.ch14.environments.pong.StateLongPong;
+import chapters.ch14.implem.pong.PongSettings;
+import chapters.ch14.implem.pong.StateLongPong;
 import core.foundation.util.collections.ArrayCreatorUtil;
 import lombok.experimental.UtilityClass;
 

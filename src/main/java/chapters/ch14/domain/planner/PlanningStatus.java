@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * This class represents the status of a planning process.
+ * This record represents the status of a planning process.
  * It contains information about the planning process such as the time taken, the number of rollouts,
  * the number of failed rollouts, the best return, the actions taken, and whether it's a second rollout try.
  */

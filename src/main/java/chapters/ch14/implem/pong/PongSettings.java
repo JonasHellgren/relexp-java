@@ -1,4 +1,4 @@
-package chapters.ch14.environments.pong;
+package chapters.ch14.implem.pong;
 
 import com.google.common.base.Preconditions;
 import lombok.Builder;

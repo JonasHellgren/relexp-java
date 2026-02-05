@@ -1,13 +1,13 @@
-package chapters.ch14.environments.pong;
+package chapters.ch14.implem.pong;
 
 import chapters.ch14.domain.environment.StepReturn;
 import chapters.ch14.domain.executor.ExecutorI;
 import chapters.ch14.domain.planner.Planner;
 import chapters.ch14.domain.planner.PlanningStatus;
 import chapters.ch14.domain.trainer.TrainerDependencies;
-import chapters.ch14.environments.pong_graphics.PongGraphicsDTO;
-import chapters.ch14.environments.pong_graphics.PongGraphicsServer;
-import chapters.ch14.environments.pong_memory.StateAdapterPong;
+import chapters.ch14.pong_animation.PongGraphicsDTO;
+import chapters.ch14.pong_animation.PongGraphicsServer;
+import chapters.ch14.implem.pong_memory.StateAdapterPong;
 import chapters.ch14.plotting.MeasuresCombLP;
 import chapters.ch14.plotting.Recorder;
 import core.foundation.gadget.cond.Counter;

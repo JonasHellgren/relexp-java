@@ -1,6 +1,6 @@
-package chapters.ch14.environments.pong_graphics;
+package chapters.ch14.pong_animation;
 
-import chapters.ch14.environments.pong.PongSettings;
+import chapters.ch14.implem.pong.PongSettings;
 import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package chapters.ch14.environments.pong_graphics;
+package chapters.ch14.pong_animation;
 
 import lombok.Getter;
 import javax.swing.*;

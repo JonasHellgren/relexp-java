@@ -1,10 +1,10 @@
 package chapters.ch14;
 
-import chapters.ch14.environments.pong.EnvironmentPong;
-import chapters.ch14.environments.pong.PongSettings;
-import chapters.ch14.environments.pong.PosXy;
-import chapters.ch14.environments.pong.StatePong;
-import chapters.ch14.environments.pong_memory.BallHitFloorCalculator;
+import chapters.ch14.implem.pong.EnvironmentPong;
+import chapters.ch14.implem.pong.PongSettings;
+import chapters.ch14.implem.pong.PosXy;
+import chapters.ch14.implem.pong.StatePong;
+import chapters.ch14.implem.pong_memory.BallHitFloorCalculator;
 import chapters.ch14.factory.FactoryPongSettings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
