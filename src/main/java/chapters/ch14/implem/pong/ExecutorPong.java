@@ -1,7 +1,7 @@
 package chapters.ch14.implem.pong;
 
 import chapters.ch14.domain.environment.StepReturn;
-import chapters.ch14.domain.executor.ExecutorI;
+import chapters.ch14.domain.interfaces.ExecutorI;
 import chapters.ch14.domain.planner.Planner;
 import chapters.ch14.domain.planner.PlanningStatus;
 import chapters.ch14.domain.trainer.TrainerDependencies;
@@ -57,9 +57,6 @@ public class ExecutorPong<SI, S, A> implements ExecutorI<SI, S, A> {
             var measures = MeasuresCombLP.empty();
             var s = dependencies.getStartState();
             boolean isTerminal = false;
-            var sss = (StatePong) s;
-            var stateLong = StateAdapterPong.stateLong(dependencies.timeToHitCalculator(), sss);
-            log.fine("start state = " + sss + ", stateLong = " + stateLong);
             while (stepCounter.isNotExceeded() && !isTerminal) {
                 S finalS = s;
                 Supplier<S> ss = () -> finalS;

@@ -1,6 +1,6 @@
 package chapters.ch14.factory;
 
-import chapters.ch14.domain.action_roller.ActionSequenceRoller;
+import chapters.ch14.domain.planner.ActionSequenceRoller;
 import chapters.ch14.domain.planner.Planner;
 import chapters.ch14.domain.settings.PlanningSettings;
 import chapters.ch14.domain.settings.TrainerSettings;

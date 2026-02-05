@@ -1,6 +1,6 @@
 package chapters.ch14.plotting;
 
-import chapters.ch14.domain.recorder.RecorderI;
+import chapters.ch14.domain.interfaces.RecorderI;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.ArrayList;

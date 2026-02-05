@@ -1,9 +1,9 @@
 package chapters.ch14;
 
-import chapters.ch14.domain.action_roller.ActionSequenceRoller;
-import chapters.ch14.domain.action_roller.RollingResult;
+import chapters.ch14.domain.planner.ActionSequenceRoller;
+import chapters.ch14.domain.planner.RollingResult;
 import chapters.ch14.domain.environment.EnvironmentI;
-import chapters.ch14.domain.state_intepreter.StateInterpreterI;
+import chapters.ch14.domain.interfaces.StateInterpreterI;
 import chapters.ch14.implem.pong.*;
 import chapters.ch14.implem.pong_memory.BallHitFloorCalculator;
 import chapters.ch14.implem.pong_memory.LongMemoryZero;

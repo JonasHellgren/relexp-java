@@ -1,4 +1,4 @@
-package chapters.ch14.domain.long_memory;
+package chapters.ch14.domain.interfaces;
 
 
 import core.foundation.gadget.training.TrainDataOld;

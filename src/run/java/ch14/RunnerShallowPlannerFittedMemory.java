@@ -1,6 +1,6 @@
 package ch14;
 
-import chapters.ch14.domain.long_memory.LongMemory;
+import chapters.ch14.domain.interfaces.LongMemory;
 import chapters.ch14.domain.trainer.Trainer;
 import chapters.ch14.domain.trainer.TrainerDependencies;
 import chapters.ch14.implem.pong.ActionPong;

@@ -1,10 +1,10 @@
-package chapters.ch14.domain.action_roller;
+package chapters.ch14.domain.planner;
 
 import chapters.ch14.domain.environment.EnvironmentI;
 import chapters.ch14.domain.environment.StepReturn;
-import chapters.ch14.domain.long_memory.LongMemory;
+import chapters.ch14.domain.interfaces.LongMemory;
 import chapters.ch14.domain.settings.TrainerSettings;
-import chapters.ch14.domain.state_intepreter.StateInterpreterI;
+import chapters.ch14.domain.interfaces.StateInterpreterI;
 import com.google.common.base.Preconditions;
 import core.foundation.util.cond.ConditionalsUtil;
 import core.learningutils.MyRewardListUtils;

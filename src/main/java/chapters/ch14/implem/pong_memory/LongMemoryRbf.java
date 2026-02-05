@@ -1,6 +1,6 @@
 package chapters.ch14.implem.pong_memory;
 
-import chapters.ch14.domain.long_memory.LongMemory;
+import chapters.ch14.domain.interfaces.LongMemory;
 import chapters.ch14.domain.settings.MemorySettings;
 import chapters.ch14.implem.pong.PongSettings;
 import chapters.ch14.implem.pong.StateLongPong;

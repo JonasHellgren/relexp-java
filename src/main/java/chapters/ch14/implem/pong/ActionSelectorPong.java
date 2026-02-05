@@ -1,6 +1,6 @@
 package chapters.ch14.implem.pong;
 
-import chapters.ch14.domain.action_selector.ActionSelectorI;
+import chapters.ch14.domain.planner.ActionSelectorI;
 import chapters.ch14.domain.settings.PlanningSettings;
 import core.foundation.util.rand.RandUtil;
 import lombok.AccessLevel;

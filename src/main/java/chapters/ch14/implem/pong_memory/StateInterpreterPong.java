@@ -1,6 +1,6 @@
 package chapters.ch14.implem.pong_memory;
 
-import chapters.ch14.domain.state_intepreter.StateInterpreterI;
+import chapters.ch14.domain.interfaces.StateInterpreterI;
 import chapters.ch14.implem.pong.StateLongPong;
 import chapters.ch14.implem.pong.StatePong;
 import lombok.AccessLevel;

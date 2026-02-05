@@ -2,7 +2,7 @@ package chapters.ch14.implem.pong_memory;
 
 import chapters.ch14.domain.environment.EnvironmentI;
 import chapters.ch14.domain.environment.Experience;
-import chapters.ch14.domain.long_memory.LongMemory;
+import chapters.ch14.domain.interfaces.LongMemory;
 import chapters.ch14.domain.settings.TrainerSettings;
 import chapters.ch14.domain.trainer.MiniBatchAdapterI;
 import chapters.ch14.implem.pong.ActionPong;

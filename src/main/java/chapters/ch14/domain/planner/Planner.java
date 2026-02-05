@@ -1,8 +1,6 @@
 package chapters.ch14.domain.planner;
 
-import chapters.ch14.domain.action_roller.ActionSequenceRoller;
-import chapters.ch14.domain.action_selector.ActionSelectorI;
-import chapters.ch14.domain.long_memory.LongMemory;
+import chapters.ch14.domain.interfaces.LongMemory;
 import chapters.ch14.domain.settings.PlanningSettings;
 import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AccessLevel;

@@ -1,4 +1,4 @@
-package chapters.ch14.domain.recorder;
+package chapters.ch14.domain.interfaces;
 
 import chapters.ch14.plotting.MeasuresCombLP;
 import chapters.ch14.plotting.MeasuresCombLPEnum;

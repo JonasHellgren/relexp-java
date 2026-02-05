@@ -3,7 +3,7 @@ package chapters.ch14.domain.trainer;
 import chapters.ch14.domain.environment.EnvironmentI;
 import chapters.ch14.domain.environment.Experience;
 import chapters.ch14.domain.environment.StepReturn;
-import chapters.ch14.domain.long_memory.LongMemory;
+import chapters.ch14.domain.interfaces.LongMemory;
 import chapters.ch14.domain.planner.Planner;
 import chapters.ch14.domain.planner.PlanningStatus;
 import chapters.ch14.domain.settings.TrainerSettings;

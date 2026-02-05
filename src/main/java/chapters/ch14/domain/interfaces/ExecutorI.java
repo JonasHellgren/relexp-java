@@ -1,4 +1,4 @@
-package chapters.ch14.domain.executor;
+package chapters.ch14.domain.interfaces;
 
 
 import chapters.ch14.plotting.Recorder;

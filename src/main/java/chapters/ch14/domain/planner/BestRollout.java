@@ -1,6 +1,5 @@
 package chapters.ch14.domain.planner;
 
-import chapters.ch14.domain.action_roller.RollingResult;
 import lombok.extern.java.Log;
 import java.util.List;
 
