@@ -7,7 +7,6 @@ import chapters.ch14.domain.planner.PlanningStatus;
 import chapters.ch14.domain.trainer.TrainerDependencies;
 import chapters.ch14.pong_animation.PongGraphicsDTO;
 import chapters.ch14.pong_animation.PongGraphicsServer;
-import chapters.ch14.implem.pong_memory.StateAdapterPong;
 import chapters.ch14.plotting.MeasuresCombLP;
 import chapters.ch14.plotting.Recorder;
 import core.foundation.gadget.cond.Counter;
@@ -50,30 +49,30 @@ public class ExecutorPong<SI, S, A> implements ExecutorI<SI, S, A> {
 
     @SneakyThrows
     @Override
-    public void validate(int nEpisodes, int maxStepsPerEpisode) {
-        var episCounter = Counter.ofMaxCount(nEpisodes);
-        while (episCounter.isNotExceeded()) {
-            var stepCounter = Counter.ofMaxCount(maxStepsPerEpisode);
+    public void execute(int nEpisodes, int maxStepsPerEpisode) {
+        var d=dependencies;
+        d.setMaxEpisodes(nEpisodes);
+        d.setMaxSteps(maxStepsPerEpisode);
+
+        while (d.isEpisCounterNotExceeded()) {
             var measures = MeasuresCombLP.empty();
-            var s = dependencies.getStartState();
+            S s = dependencies.getStartState();
             boolean isTerminal = false;
-            while (stepCounter.isNotExceeded() && !isTerminal) {
-                S finalS = s;
-                Supplier<S> ss = () -> finalS;
-                var planRes = planner.plan(ss, dependencies.longMemory());
-                A a = planRes.firstAction().orElseThrow();
-                var sr = dependencies.step(s, a);
+            d.resetStepCounter();
+            while (d.isStepCounterNotExceeded() && !isTerminal) {
+                S finalS = s;  //effective final in lambda expression
+                var planRes = planner.plan(() -> finalS, dependencies.longMemory());
+                var sr = dependencies.step(s, planRes);
                 isTerminal = sr.isTerminal();
-                stepCounter.increase();
+                d.increseStepCounter();
                 measures.addReward(sr.reward());
                 s = sr.stateNew();
-                maybeLog(planRes, sr, s, stepCounter);
-                maybeDefineServer(s, sr, planRes, stepCounter);
+                maybeLog(planRes, sr, s, d.stepCounter());
+                maybeDefineServer(s, sr, planRes, d.stepCounter());
             }
             recorder.add(measures);
-            episCounter.increase();
+            d.increaseEpisCounter();
         }
-
     }
 
     private void maybeDefineServer(S s, StepReturn<S> sr, PlanningStatus<A> planRes, Counter stepCounter)

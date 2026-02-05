@@ -74,7 +74,7 @@ public class RunnerShallowPlannerFittedMemory {
         var executor = (server==null)
                 ? ExecutorPong.of(dependencies, shallowPlanner)
                 : ExecutorPong.of(dependencies, shallowPlanner, server, propertiesReader.sleepTimeAnimationMs(),name);
-        executor.validate(N_TRIALS, MAX_STEPS_PER_TRIAL);
+        executor.execute(N_TRIALS, MAX_STEPS_PER_TRIAL);
         plotting(executor.getRecorder(), name);
     }
 

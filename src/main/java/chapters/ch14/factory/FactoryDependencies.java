@@ -10,6 +10,7 @@ import chapters.ch14.implem.pong.StatePong;
 import chapters.ch14.implem.pong_memory.BallHitFloorCalculator;
 import chapters.ch14.implem.pong_memory.LongMemoryRbf;
 import chapters.ch14.implem.pong_memory.MiniBatchAdapterPong;
+import core.foundation.gadget.cond.Counter;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -38,6 +39,8 @@ public class FactoryDependencies {
                 .replayBuffer(ReplayBuffer.of(trainerSettings))
                 .miniBatchAdapter(adapter)
                 .timeToHitCalculator(calculator)
+                .stepCounter(Counter.ofMaxCount(trainerSettings.maxStepsPerEpisode()))
+                .episCounter(Counter.ofMaxCount(trainerSettings.maxEpisodes()))
                 .build();
     }
 
@@ -62,6 +65,8 @@ public class FactoryDependencies {
                 .replayBuffer(ReplayBuffer.of(trainerSettings))
                 .miniBatchAdapter(adapter)
                 .timeToHitCalculator(calculator)
+                .stepCounter(Counter.ofMaxCount(trainerSettings.maxStepsPerEpisode()))
+                .episCounter(Counter.ofMaxCount(trainerSettings.maxEpisodes()))
                 .build();
     }
 

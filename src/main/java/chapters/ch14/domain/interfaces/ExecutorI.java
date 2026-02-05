@@ -10,7 +10,7 @@ import chapters.ch14.plotting.Recorder;
  */
 public interface ExecutorI<SI, S, A>  {
 
-     void validate(int nEpisodes, int maxStepsPerEpisode);
+     void execute(int nEpisodes, int maxStepsPerEpisode);
      Recorder getRecorder();
 
 }

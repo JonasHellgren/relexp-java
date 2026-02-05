@@ -1,13 +1,15 @@
 package core.foundation.gadget.cond;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public final class Counter {
 
     @Getter
     private int count;
     private final int minCount;
-    private final int maxCount;
+    @Setter
+    private int maxCount;
 
     public Counter() {
         this(0,Integer.MAX_VALUE);
@@ -52,6 +54,7 @@ public final class Counter {
     public void reset() {
         count=0;
     }
+
 
     @Override
     public String toString() {

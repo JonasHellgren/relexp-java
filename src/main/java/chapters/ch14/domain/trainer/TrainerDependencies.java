@@ -10,6 +10,7 @@ import chapters.ch14.domain.settings.TrainerSettings;
 import chapters.ch14.implem.pong.PongSettings;
 import chapters.ch14.implem.pong_memory.BallHitFloorCalculator;
 import com.google.common.base.Preconditions;
+import core.foundation.gadget.cond.Counter;
 import lombok.Builder;
 import lombok.With;
 import java.util.List;
@@ -31,7 +32,9 @@ public record TrainerDependencies<SI, S, A>(
         LongMemory<SI> longMemory,
         ReplayBuffer<SI, S, A> replayBuffer,
         MiniBatchAdapterI<SI, S, A> miniBatchAdapter,
-        BallHitFloorCalculator timeToHitCalculator
+        BallHitFloorCalculator timeToHitCalculator,
+        Counter episCounter,
+        Counter stepCounter
 ) {
 
     public void validate() {
@@ -51,6 +54,10 @@ public record TrainerDependencies<SI, S, A>(
         return planner.plan(ss, longMemory);
     }
 
+
+    public StepReturn<S> step(S s, PlanningStatus<A> planRes) {
+        return environment.step(s, planRes.firstAction().orElseThrow());
+    }
 
     public StepReturn<S> step(S s, A a) {
         return environment.step(s, a);
@@ -77,4 +84,31 @@ public record TrainerDependencies<SI, S, A>(
         replayBuffer.maybeDeleteOldExperience();
     }
 
+    public void setMaxSteps(int maxStepsPerEpisode) {
+        stepCounter.setMaxCount(maxStepsPerEpisode);
+    }
+
+    public void resetStepCounter() {
+        stepCounter.reset();
+    }
+
+    public boolean isStepCounterNotExceeded() {
+        return stepCounter.isNotExceeded();
+    }
+
+    public void increseStepCounter() {
+        stepCounter.increase();
+    }
+
+    public void setMaxEpisodes(int nEpisodes) {
+        episCounter.setMaxCount(nEpisodes);
+    }
+
+    public boolean isEpisCounterNotExceeded() {
+        return episCounter.isNotExceeded();
+    }
+
+    public void increaseEpisCounter() {
+        episCounter.increase();
+    }
 }
