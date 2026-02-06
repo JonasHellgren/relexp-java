@@ -23,7 +23,7 @@ public class PlotterProgressMeasures {
     public static final int N_WINDOWS = 10;  //for much filtering
     public static final int MANY_WINDOWS = 100; //for little filtering
     public static final String EPISODE = "Episode";
-    public static final int SIZE = 34, SIZE_TICKS=28;
+    public static final int SIZE = 24, SIZE_TICKS=28;
 
     private final RecorderProgressMeasures recorder;
     private final String filePath;
@@ -76,9 +76,9 @@ public class PlotterProgressMeasures {
     private static PlotSettings getSettingsNoLegendNoMarker(String yLabel, String xLabel, PlotConfig plotConfig) {
         var plotSettings = ErrorBandSaverAndPlotter.getSettings(yLabel, xLabel, false, false,plotConfig);
         plotSettings=plotSettings
-                .withAxisTicksFont(new Font("Arial", Font.PLAIN, SIZE_TICKS))
-                .withAxisTitleFont(new Font("Arial", Font.BOLD, SIZE))
-                .withLegendTextFont(new Font("Arial", Font.BOLD, SIZE));
+                .withAxisTicksFont(plotConfig.fontLargeBold())
+                .withAxisTitleFont(plotConfig.fontLargeBold())
+                .withLegendTextFont(plotConfig.fontLargeBold());
         return plotSettings;
     }
 
