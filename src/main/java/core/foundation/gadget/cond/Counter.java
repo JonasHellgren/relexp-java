@@ -8,7 +8,7 @@ public final class Counter {
     @Getter
     private int count;
     private final int minCount;
-    @Setter
+    @Setter   @Getter
     private int maxCount;
 
     public Counter() {

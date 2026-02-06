@@ -36,10 +36,12 @@ public class Trainer<SI, S, A> {
     public void train() {
         var d = dependencies;
         d.validate();
+        d.episCounter().reset();
         while (d.isEpisCounterNotExceeded()) {
             var measures = MeasuresCombLP.empty();
             var s = d.getStartState();
             boolean isTerminal = false;
+            d.stepCounter().reset();
             while (d.isStepCounterNotExceeded() && !isTerminal) {
                 var planRes = d.plan(s);
                 var sr = d.step(s, planRes);

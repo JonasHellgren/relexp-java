@@ -16,6 +16,7 @@ import java.awt.*;
 public class PongPanelsContentSetter {
 
     public static final int MIN_BALL_RADIUS = 10;
+    static final Color darkGreen = new Color(0, 100, 0);
     PongPanel panel;
     ScalerLinear scalerX, scalerY;
 
@@ -33,7 +34,7 @@ public class PongPanelsContentSetter {
         setBallPos(gfxDTO, settings);
         setPaddlePos(gfxDTO, settings);
         var color=gfxDTO.failState() || gfxDTO.failSearch() ? Color.RED : Color.BLACK;
-        color = gfxDTO.isStepExceed() ? Color.GREEN : color;
+        color = gfxDTO.isStepExceed() ? darkGreen : color;
         panel.setBackground(color);
         panel.repaint();
     }

@@ -55,9 +55,12 @@ public class FactoryDependencies {
         var environment = EnvironmentPong.of(settings.envSettings);
         var calculator = BallHitFloorCalculator.of(environment, settings.envSettings);
         var planner = FactoryPlanner.of(settings.planningSettings, calculator, settings.trainerSettings);
-        var memorySettings = FactoryMemorySettings.forTest();
-        var memory = LongMemoryRbf.of(memorySettings, settings.envSettings);
+       // var memorySettings = FactoryMemorySettings.forTest();
+        var memory = LongMemoryRbf.of(settings.memorySettings, settings.envSettings);
         var adapter = MiniBatchAdapterPong.of(settings.envSettings, environment, memory, settings.trainerSettings);
+
+        System.out.println("settings.trainerSettings.maxEpisodes() = " + settings.trainerSettings.maxEpisodes());
+
         return TrainerDependencies.<StateLongPong, StatePong, ActionPong>builder()
                 .trainerSettings(settings.trainerSettings)
                 .envSettings(settings.envSettings)

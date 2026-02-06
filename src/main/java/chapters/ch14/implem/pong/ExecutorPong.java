@@ -46,29 +46,28 @@ public class ExecutorPong<SI, S, A> implements ExecutorI<SI, S, A> {
 
     @SneakyThrows
     @Override
-    public void execute(int nEpisodes, int maxStepsPerEpisode) {
+    public void execute(int nTrials, int maxStepsPerEpisode) {
         var d=dependencies;
-        d.setMaxEpisodes(nEpisodes);
-        d.setMaxSteps(maxStepsPerEpisode);
-
-        while (d.isEpisCounterNotExceeded()) {
+        var episCounter = Counter.ofMaxCount(nTrials);
+        var stepCounter = Counter.ofMaxCount(maxStepsPerEpisode);
+        while (episCounter.isNotExceeded()) {
             var measures = MeasuresCombLP.empty();
             S s = dependencies.getStartState();
             boolean isTerminal = false;
-            d.resetStepCounter();
-            while (d.isStepCounterNotExceeded() && !isTerminal) {
+            stepCounter.reset();
+            while (stepCounter.isNotExceeded() && !isTerminal) {
                 S finalS = s;  //effective final in lambda expression
                 var planRes = planner.plan(() -> finalS, dependencies.longMemory());
                 var sr = dependencies.step(s, planRes);
                 isTerminal = sr.isTerminal();
-                d.increseStepCounter();
+                stepCounter.increase();
                 measures.addReward(sr.reward());
                 s = sr.stateNew();
                 maybeLog(planRes, sr, s, d.stepCounter());
                 maybeSendGfxDto(s, sr, planRes, d.stepCounter());
             }
             recorder.add(measures);
-            d.increaseEpisCounter();
+            episCounter.increase();
         }
     }
 
