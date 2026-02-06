@@ -1,9 +1,8 @@
 package chapters.ch9;
 
-import chapters.ch9.radial_basis_old.Kernel;
-import chapters.ch9.radial_basis_old.Kernels;
+import core.nextlevelrl.radial_basis.Kernel;
+import core.nextlevelrl.radial_basis.Kernels;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,7 +17,7 @@ class TestKernels {
     @Test
     void testAddKernel() {
         Kernels kernels = Kernels.empty();
-        Kernel kernel = new Kernel(new double[]{1.0}, new double[]{1.0});
+        Kernel kernel = Kernel.ofSigmas(new double[]{1.0}, new double[]{1.0});
         kernels.addKernel(kernel);
         assertEquals(1, kernels.size());
         assertEquals(kernel, kernels.get(0));
@@ -36,8 +35,8 @@ class TestKernels {
     @Test
     void testGet() {
         Kernels kernels = Kernels.empty();
-        Kernel kernel1 = new Kernel(new double[]{1.0}, new double[]{1.0});
-        Kernel kernel2 = new Kernel(new double[]{2.0}, new double[]{2.0});
+        Kernel kernel1 = Kernel.ofSigmas(new double[]{1.0}, new double[]{1.0});
+        Kernel kernel2 = Kernel.ofSigmas(new double[]{2.0}, new double[]{2.0});
         kernels.addKernel(kernel1);
         kernels.addKernel(kernel2);
         assertEquals(kernel1, kernels.get(0));
@@ -47,15 +46,16 @@ class TestKernels {
     @Test
     void testGetActivationOfSingleInput() {
         Kernels kernels = Kernels.empty();
-        Kernel kernel1 = new Kernel(new double[]{1.0}, new double[]{1.0});
-        Kernel kernel2 = new Kernel(new double[]{2.0}, new double[]{2.0});
+        Kernel kernel1 = Kernel.ofSigmas(new double[]{1.0}, new double[]{1.0});
+        Kernel kernel2 = Kernel.ofSigmas(new double[]{2.0}, new double[]{2.0});
         kernels.addKernel(kernel1);
         kernels.addKernel(kernel2);
-        List<Double> input = List.of(1.0);
-        List<Double> activations = kernels.getActivationOfSingleInput(input);
+        //List<Double> input = List.of(1.0);
+        double[] input = new double[]{1.0};
+        var activations = kernels.getActivationOfSingleInputNoNormalize(input);
         System.out.println("activations = " + activations);
-        assertTrue(activations.get(0)>activations.get(1));  //input closer to kernel 0
-        assertEquals(kernel1.activation(new double[]{1.0}), activations.get(0));
+        assertTrue(activations[0]>activations[1]);  //input closer to kernel 0
+        assertEquals(kernel1.activation(new double[]{1.0}), activations[0]);
     }
 
 }

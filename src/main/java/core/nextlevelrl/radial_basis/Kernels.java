@@ -5,6 +5,7 @@ import core.foundation.util.collections.ArrayUtil;
 import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,26 +50,39 @@ public class Kernels {
         return kernels.size();
     }
 
-    public double[]  getActivationOfSingleInput(double[] input) {
-        Preconditions.checkArgument(size()>0
+    public double[] getActivationOfSingleInputNoNormalize(double[] input) {
+        return getActivationOfSingleInput(input, false);
+    }
+
+    public double[] getActivationOfSingleInput(double[] input) {
+        return getActivationOfSingleInput(input, true);
+    }
+
+    private double[] getActivationOfSingleInput(double[] input, boolean isNormalize) {
+        Preconditions.checkArgument(size() > 0
                 , "kernels should not be empty");
         Preconditions.checkArgument(input.length == kernels.get(0).nDimensions()
-                ,"input size should be same as kernels dimensions");
+                , "input size should be same as kernels dimensions");
         double[] activations = new double[nKernels()];
-        int i=0;
+        int i = 0;
         for (Kernel kernel : kernels) {
-            activations[i]=kernel.activation(input);
+            activations[i] = kernel.activation(input);
             i++;
         }
         double sum = ArrayUtil.sum(activations);
         maybeLog(input, sum);
-       // return activations;
-        return normalize(activations,sum);
+
+        if (isNormalize) {
+            return normalize(activations, sum);
+        } else {
+            return activations;
+        }
+
     }
 
     private static void maybeLog(double[] input, double sum) {
-        ConditionalsUtil.executeIfTrue(sum < EPS,() -> log.info("sum of activations are smaller than EPS: " +
-                sum +", input: " + Arrays.toString(input)));
+        ConditionalsUtil.executeIfTrue(sum < EPS, () -> log.info("sum of activations are smaller than EPS: " +
+                sum + ", input: " + Arrays.toString(input)));
     }
 
 
@@ -80,7 +94,7 @@ public class Kernels {
     private static double[] normalize(double[] activations, double sum) {
         double scaler = 1.0 / sum;
         return sum < EPS
-                ? ArrayUtil.multiplyWithValue(activations, 1.0 / (sum+EPS))
+                ? ArrayUtil.multiplyWithValue(activations, 1.0 / (sum + EPS))
                 : ArrayUtil.multiplyWithValue(activations, scaler);
     }
 

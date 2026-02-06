@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Activations {
 
-    List<double[]> activationsAllExamples;  //  nExamples x nKernels
+    public List<double[]> activationsAllExamples;  //  nExamples x nKernels
     int nDim;
 
     public static Activations of(int nExamples, int nDim) {

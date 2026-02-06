@@ -90,6 +90,9 @@ public class RbfNetwork {
         return calcOutput(getActivation(input), weights);
     }
 
+    public double outPutNoNormalizeListIn(List<Double> in) {
+        return calcOutput(getActivationNoNormalize(List2ArrayConverterUtil.convertListToDoubleArr(in)), weights);
+    }
 
     public double outPutListIn(List<Double> in) {
         return calcOutput(getActivation(List2ArrayConverterUtil.convertListToDoubleArr(in)), weights);
@@ -97,6 +100,10 @@ public class RbfNetwork {
 
     public double[] getActivation(double[] input) {
         return kernels.getActivationOfSingleInput(input);
+    }
+
+    public double[] getActivationNoNormalize(double[] input) {
+        return kernels.getActivationOfSingleInputNoNormalize(input);
     }
 
     public void copyWeights(RbfNetwork other) {
@@ -127,6 +134,8 @@ public class RbfNetwork {
                 .mapToDouble(i -> yTargets.get(i) - outPut(inputs.get(i)))
                 .boxed().toList();
     }
+
+
 
     private double calcOutput(double[] activation, Weights weights) {
         double result = 0;

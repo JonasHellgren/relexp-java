@@ -1,10 +1,10 @@
 package ch9;
 
-import chapters.ch9.radial_basis_old.Kernels;
-import chapters.ch9.radial_basis_old.RbfNetwork;
 import core.foundation.config.ConfigFactory;
 import core.foundation.util.collections.ArrayCreatorUtil;
 import core.foundation.util.collections.ListCreatorUtil;
+import core.nextlevelrl.radial_basis.Kernels;
+import core.nextlevelrl.radial_basis.RbfNetwork;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
@@ -38,7 +38,6 @@ public class RunnerPlotSingleRbf {
         return sigmIdx2OutListMap;
     }
 
-
     private static XYChart getChart(List<Double> inList, Map<Integer, List<Double>> sigmIdx2OutListMap) {
         var plotCfg = ConfigFactory.plotConfig();
         var chartCreator = ManyLinesChartCreator.of(
@@ -59,7 +58,7 @@ public class RunnerPlotSingleRbf {
         List<Double> outList = Lists.newArrayList();
         var rbfNetwork = createOneKernelRbf(sigma);
         for (double in : inList) {
-            double out = rbfNetwork.outPut(List.of(in));
+            double out = rbfNetwork.outPutNoNormalizeListIn(List.of(in));
             outList.add(out);
         }
         return outList;
@@ -72,7 +71,7 @@ public class RunnerPlotSingleRbf {
         double[] sigmas = ArrayCreatorUtil.createArrayWithSameDoubleNumber(nKernels, sigma);
         var kernels = Kernels.empty();
         kernels.addKernelsWithCentersAndSigmas(centers, sigmas);
-        var rbf = RbfNetwork.of(kernels, dummyLearningRate);
+        var rbf = RbfNetwork.of(kernels, dummyLearningRate,2);
         rbf.setWeights(ArrayCreatorUtil.createArrayWithSameDoubleNumber(1, MAX_Y));
         return rbf;
     }
