@@ -15,7 +15,7 @@ import org.knowm.xchart.SwingWrapper;
 import java.awt.*;
 import java.util.function.Function;
 
-import static core.plotting_core.chart_plotting.ChartSaver.saveHeatMapChart;
+import static core.plotting_core.chart_saving_and_plotting.ChartSaver.saveHeatMapChart;
 
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

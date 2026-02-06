@@ -2,12 +2,14 @@ package ch9;
 
 import chapters.ch9.factory.Radial3dFactory;
 import core.foundation.config.ConfigFactory;
+import core.foundation.config.PathAndFile;
 import core.foundation.gadget.timer.CpuTimer;
 import core.nextlevelrl.radial_basis.RbfNetwork;
 import core.plotting_core.base.shared.PlotSettings;
-import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.plotting_3d.HeatMapChartCreator;
 import lombok.SneakyThrows;
+
 import java.util.List;
 import java.util.function.DoubleBinaryOperator;
 
@@ -21,7 +23,7 @@ class RunnerRadialBasis3dFunction {
         var timer = CpuTimer.empty();
         DoubleBinaryOperator fcn = (x, y) -> F_MAX * Math.sin((Math.PI / 3) * x * (7 - y));
         var kernels = Radial3dFactory.createKernels();
-        rbfn = RbfNetwork.of(kernels, LEARNING_RATE,2);
+        rbfn = RbfNetwork.of(kernels, LEARNING_RATE, 2);
         var trainData = Radial3dFactory.createTrainData(fcn);
         rbfn.fit(trainData, N_FITS);
         timer.printInMs();
@@ -42,9 +44,10 @@ class RunnerRadialBasis3dFunction {
                 data,
                 Radial3dFactory.getXData(),
                 Radial3dFactory.getYData());
-        ChartSaverAndPlotter.showAndSaveHeatMapRbf(creator.create(), title);
+        ChartSaver.saveHeatMapChart(
+                creator.create(),
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch9(), title));
     }
-
 
 
 }

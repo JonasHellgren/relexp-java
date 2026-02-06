@@ -4,10 +4,11 @@ import chapters.ch9.factory.TrainDataLinearFitterFactory;
 import chapters.ch9.gradient_descent.LinearFitter;
 import chapters.ch9.gradient_descent.PhiExtractor;
 import core.foundation.config.ConfigFactory;
+import core.foundation.config.PathAndFile;
 import core.foundation.gadget.training.TrainData;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.plotting_core.base.shared.PlotSettings;
-import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.plotting_2d.ChartUtility;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import core.plotting_core.plotting_2d.ScatterWithLineChartCreator;
@@ -52,9 +53,12 @@ public class RunnerLinearFitter {
         scatterChart.getStyler().setXAxisTickMarkSpacingHint(10);
         var errorChart = getLineChartCreator(errors);
         ChartUtility.reduceXAxisTicksClutter(errorChart,10, "0");
-        ChartSaverAndPlotter.showChartSaveInFolderGradientLearning(scatterChart, "scatterAndLine" + BATCH_SIZE);
-        ChartSaverAndPlotter.showChartSaveInFolderGradientLearning(errorChart, "errorChart" + BATCH_SIZE);
-        System.out.println("fitter.getWeights() = " + fitter.getWeights());
+        ChartSaver.saveAndShowXYChart(
+                scatterChart,
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch11(), "scatterAndLine" + BATCH_SIZE));
+        ChartSaver.saveAndShowXYChart(
+                errorChart,
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch11(), "errorChart" + BATCH_SIZE));
     }
 
 

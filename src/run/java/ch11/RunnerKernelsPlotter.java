@@ -5,10 +5,10 @@ import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.domain.environment.core.RadialBasisAdapter;
 import com.google.common.collect.Lists;
 import core.foundation.config.ConfigFactory;
-import core.foundation.configOld.ProjectPropertiesReader;
+import core.foundation.config.PathAndFile;
 import core.nextlevelrl.radial_basis.RbfNetwork;
 import core.plotting_core.base.shared.PlotSettings;
-import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.plotting_2d.ScatterWithLineChartCreator;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +30,10 @@ public class RunnerKernelsPlotter {
 
     public static void main(String[] args) {
         var xyPositions = getKernelXyPositions(getRbfNetwork());
-        ChartSaverAndPlotter.showChartSaveInFolderActorCritic(getChart(xyPositions), FILE_NAME);
+        ChartSaver.saveAndShowXYChart(
+                getChart(xyPositions),
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch11(), FILE_NAME));
+
     }
 
     @SneakyThrows

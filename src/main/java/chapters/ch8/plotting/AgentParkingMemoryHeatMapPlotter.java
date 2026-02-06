@@ -8,7 +8,7 @@ import core.foundation.config.PathAndFile;
 import core.foundation.config.PlotConfig;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.plotting_core.base.shared.PlotSettings;
-import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.plotting_3d.HeatMapWithStringTextInCellsCreator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

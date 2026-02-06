@@ -1,16 +1,15 @@
 package ch11;
 
 import chapters.ch11.domain.environment.core.EnvironmentLunar;
-import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.factory.LunarEnvParamsFactory;
 import core.foundation.config.ConfigFactory;
-import core.foundation.configOld.ProjectPropertiesReader;
+import core.foundation.config.PathAndFile;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.foundation.util.unit_converter.UnitConverterUtil;
 import core.foundation.util.unit_converter.NonSIUnitsUtil;
 import core.plotting_core.base.shared.PlotSettings;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_rl.chart.ChartCreatorFactory;
-import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
 import core.plotting_core.plotting_2d.ScatterWithLineChartCreator;
 import lombok.SneakyThrows;
 import tec.units.ri.unit.Units;
@@ -32,7 +31,10 @@ public class RunnerAccelerationVsActionPlotter {
         var factory = getFactory();
         factory.addLine(forces, accList);
         var chart = factory.create();
-        ChartSaverAndPlotter.showChartSaveInFolderActorCritic(chart, FILE_NAME);
+        ChartSaver.saveAndShowXYChart(
+                chart,
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch11(), FILE_NAME));
+
     }
 
     @SneakyThrows

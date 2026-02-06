@@ -1,9 +1,11 @@
 package chapters.ch11.plotting;
 
+import core.foundation.config.ConfigFactory;
+import core.foundation.config.PathAndFile;
 import core.foundation.util.collections.ListConverterUtil;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.foundation.util.collections.ListUtil;
-import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import lombok.SneakyThrows;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
@@ -58,7 +60,9 @@ public class ChangingHorizonPlotter {
         XYSeries series = chart.addSeries("a", xList, yList, errList);
         series.setMarkerColor(Color.GRAY);
         series.setMarker(SeriesMarkers.SQUARE);
-        ChartSaverAndPlotter.showChartSaveInFolderActorCritic(chart,FILE_NAME_N_STEP_EVAL);
+        ChartSaver.saveAndShowXYChart(
+                chart,
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch11(), FILE_NAME_N_STEP_EVAL));
     }
 
 

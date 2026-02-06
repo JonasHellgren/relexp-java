@@ -17,7 +17,7 @@ import chapters.ch14.plotting.RecorderPlotter;
 import core.foundation.config.ConfigFactory;
 import core.foundation.config.PathAndFile;
 import core.plotting_core.base.shared.PlotSettings;
-import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.plotting_3d.HeatMapChartCreator;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;

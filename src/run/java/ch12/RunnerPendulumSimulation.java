@@ -11,10 +11,11 @@ import chapters.ch12.plotting_invpend.MeasuresPendulumSimulation;
 import chapters.ch12.plotting_invpend.MeasuresPendulumSimulationEnum;
 import chapters.ch12.plotting_invpend.RecorderPendulumMeasure;
 import core.foundation.config.ConfigFactory;
+import core.foundation.config.PathAndFile;
 import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.foundation.util.unit_converter.UnitConverterUtil;
-import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 
 public class RunnerPendulumSimulation {
     public static final double MAX_ANGLE_FRACTION = 0.2;  //0.8 or 0.2
@@ -59,7 +60,9 @@ public class RunnerPendulumSimulation {
         cc.addLine("Theta. spd. (deg/s)", recorder.trajectory(MeasuresPendulumSimulationEnum.ANGULAR_SPEED_DEG));
         cc.addLine("Theta. max (deg)", recorder.trajectory(MeasuresPendulumSimulationEnum.ANGLE_MAX_DEG));
         var chart = cc.create();
-        ChartSaverAndPlotter.showChartSaveInFolderDeepRl(chart, "pendulum_simulation_"+title);
+        ChartSaver.saveAndShowXYChart(
+                chart,
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch12(), "pendulum_simulation_"));
     }
 
 

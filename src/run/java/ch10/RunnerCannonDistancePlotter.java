@@ -2,9 +2,11 @@ package ch10;
 
 import chapters.ch10.cannon.domain.envrionment.EnvironmentCannon;
 import chapters.ch10.factory.FactoryEnvironmentParametersCannon;
+import core.foundation.config.ConfigFactory;
+import core.foundation.config.PathAndFile;
 import core.foundation.util.unit_converter.UnitConverterUtil;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_rl.chart.ChartCreatorFactory;
-import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
@@ -24,7 +26,9 @@ public class RunnerCannonDistancePlotter {
         var distances = getDistances(anglesInDegrees, environment);
         var factory= ChartCreatorFactory.produceLine("Angle (Degrees)", "Distance (m)");
         factory.addLine(anglesInDegrees,distances);
-        ChartSaverAndPlotter.showChartSaveInFolderPolGrad(factory.create(), FILE_NAME);
+        ChartSaver.saveAndShowXYChart(
+                factory.create(),
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch11(), FILE_NAME));
     }
 
     @NotNull

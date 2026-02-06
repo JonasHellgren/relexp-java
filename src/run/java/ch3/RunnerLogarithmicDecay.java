@@ -2,11 +2,10 @@ package ch3;
 
 import core.foundation.config.ConfigFactory;
 import core.foundation.config.PathAndFile;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.foundation.gadget.math.LogarithmicDecay;
 import core.plotting_core.base.shared.PlotSettings;
-import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;

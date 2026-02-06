@@ -4,7 +4,7 @@ import core.foundation.config.PlotConfig;
 import core.foundation.config.PathAndFile;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.*;
-import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.knowm.xchart.HeatMapChart;

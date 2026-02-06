@@ -12,7 +12,7 @@ import core.foundation.config.PlotConfig;
 import core.foundation.gadget.cond.Counter;
 import core.foundation.util.cond.ConditionalsUtil;
 import core.plotting_core.base.shared.PlotSettings;
-import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;

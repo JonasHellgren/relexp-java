@@ -1,12 +1,13 @@
 package ch9;
 
 import core.foundation.config.ConfigFactory;
+import core.foundation.config.PathAndFile;
 import core.foundation.util.collections.ArrayCreatorUtil;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.nextlevelrl.radial_basis.Kernels;
 import core.nextlevelrl.radial_basis.RbfNetwork;
 import core.plotting_core.base.shared.PlotSettings;
-import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import org.apache.commons.compress.utils.Lists;
 import org.knowm.xchart.XYChart;
@@ -27,7 +28,10 @@ public class RunnerPlotSingleRbf {
         var inList = ListCreatorUtil.createFromStartToEndWithNofItems(MIN_X, MAX_X, N_POINTS);
         var sigmIdx2OutListMap = getPlotDataMap(inList);
         var chart = getChart(inList, sigmIdx2OutListMap);
-        ChartSaverAndPlotter.showChartSaveInFolderRbf(chart, "single_rbf");
+        ChartSaver.saveAndShowXYChart(
+                chart,
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch9(), "single_rbf"));
+
     }
 
     static Map<Integer, List<Double>> getPlotDataMap(List<Double> inList) {

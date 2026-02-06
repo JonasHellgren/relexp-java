@@ -5,7 +5,7 @@ import chapters.ch2.factory.FittingParametersFactory;
 import core.foundation.config.ConfigFactory;
 import core.foundation.util.math.SigmoidFunctionsUtil;
 import core.plotting_rl.chart.ChartCreatorFactory;
-import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.plotting_2d.ChartUtility;
 
 import java.util.List;

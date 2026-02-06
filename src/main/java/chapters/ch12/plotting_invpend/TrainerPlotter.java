@@ -4,7 +4,7 @@ import chapters.ch12.domain.inv_pendulum.agent.evaluator.PendulumAgentEvaluator;
 import chapters.ch12.domain.inv_pendulum.trainer.core.TrainerPendulum;
 import chapters.ch12.factory.ManyLinesChartCreatorFactory;
 import core.foundation.config.PlotConfig;
-import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import lombok.Builder;
 import lombok.SneakyThrows;

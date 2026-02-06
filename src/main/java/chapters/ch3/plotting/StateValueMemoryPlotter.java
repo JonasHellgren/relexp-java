@@ -7,7 +7,7 @@ import core.gridrl.StateValueMemoryGrid;
 import core.foundation.config.PathAndFile;
 import core.foundation.util.formatting.NumberFormatterUtil;
 import core.gridrl.StateGrid;
-import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_rl.chart.StringTextChartFactory;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

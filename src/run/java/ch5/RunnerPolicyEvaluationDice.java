@@ -8,9 +8,10 @@ import chapters.ch5.implem.dice.ActionDice;
 import chapters.ch5.implem.dice.StateDice;
 import chapters.ch5.implem.dice.StateMemoryDice;
 import core.foundation.config.ConfigFactory;
+import core.foundation.config.PathAndFile;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.gadget.math.MovingAverage;
-import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_rl.chart.ManyLinesFactory;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 
@@ -45,7 +46,9 @@ public class RunnerPolicyEvaluationDice {
         var chart = creator.create();
         var styler=chart.getStyler();
         styler.setLegendVisible(false);
-        ChartSaverAndPlotter.showChartSaveInFolderMonteCarlo(chart, "error-vs-fit-dice");
+        ChartSaver.saveAndShowXYChart(
+                chart,
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch5(), "error-vs-fit-dice"));
     }
 
     private static void saveAndPlotMemory(StateActionPolicyEvaluationMc policyEvaluation) {
@@ -59,8 +62,10 @@ public class RunnerPolicyEvaluationDice {
     private static void saveAndPlot(StateMemoryDice stateMemoryT, String dice) {
         var cfg=ConfigFactory.plotConfig();
         var chart = HeatMapWithTextFactoryDice.produce(stateMemoryT,cfg);
-        ChartSaverAndPlotter.showAndSaveHeatMapFolderMonteCarlo(
-                chart, "values_", dice);
+        ChartSaver.saveHeatMapChart(
+                chart,
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch9(), "values_"+dice));
+
     }
 
     private static StateMemoryDice getStateMemoryDice(StateActionMemoryMcI memoryPolicy, ActionDice actionDice) {

@@ -1,4 +1,4 @@
-package core.plotting_core.chart_plotting;
+package core.plotting_core.chart_saving_and_plotting;
 
 import core.foundation.config.PathAndFile;
 import lombok.SneakyThrows;

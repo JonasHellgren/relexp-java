@@ -9,10 +9,11 @@ import chapters.ch5.domain.policy_evaluator.StatePolicyEvaluationMc;
 import chapters.ch5.factory.SplittingDependenciesFactory;
 import chapters.ch5.implem.splitting.StartStateSupplierRandomSplitting;
 import core.foundation.config.ConfigFactory;
+import core.foundation.config.PathAndFile;
 import core.foundation.gadget.math.LogarithmicDecay;
 import core.foundation.gadget.math.MovingAverage;
 import core.gridrl.StateValueMemoryGrid;
-import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_rl.chart.ManyLinesFactory;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import lombok.SneakyThrows;
@@ -44,7 +45,9 @@ public class RunnerPlotErrorVersusIterationForSplittingPath {
         var chart = creator.create();
         var styler=chart.getStyler();
         styler.setLegendPosition(Styler.LegendPosition.InsideNE);
-        ChartSaverAndPlotter.showChartSaveInFolderMonteCarlo(chart, "error-vs-fit-mc-td");
+        ChartSaver.saveAndShowXYChart(
+                chart,
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch5(), "error-vs-fit-mc-td"));
     }
 
     private static EvaluatorSettings getSettings() {

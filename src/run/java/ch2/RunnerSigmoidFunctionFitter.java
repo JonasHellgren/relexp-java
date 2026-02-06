@@ -2,7 +2,7 @@ package ch2;
 
 import chapters.ch2.impl.function_fitting.FitterFunctionOutput;
 import core.foundation.config.ConfigFactory;
-import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.factory.ChartFactory;
 import chapters.ch2.factory.FitterFunctionFactory;
 import chapters.ch2.factory.FittingParametersFactory;

@@ -5,7 +5,7 @@ import core.foundation.config.PathAndFile;
 import core.foundation.config.PlotConfig;
 import core.foundation.util.collections.ArrayCreatorUtil;
 import core.foundation.util.collections.List2ArrayConverterUtil;
-import core.plotting_core.chart_plotting.ChartSaver;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.plotting_2d.StairDataGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

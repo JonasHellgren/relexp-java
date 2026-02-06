@@ -7,6 +7,7 @@ import chapters.ch9.plotting.MeasuresOneDimRegressionNeural;
 import chapters.ch9.plotting.MeasuresOneDimRegressionNeuralEnum;
 import chapters.ch9.plotting.NeuralOneDimRegressionRecorder;
 import core.foundation.config.ConfigFactory;
+import core.foundation.config.PathAndFile;
 import core.foundation.gadget.timer.CpuTimer;
 import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.util.collections.Array2ListConverterUtil;
@@ -14,7 +15,7 @@ import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.nextlevelrl.neural.MultiLayerPrinter;
 import core.plotting_core.base.shared.PlotSettings;
-import core.plotting_core.chart_plotting.ChartSaverAndPlotter;
+import core.plotting_core.chart_saving_and_plotting.ChartSaver;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import lombok.SneakyThrows;
 import org.deeplearning4j.datasets.iterator.utilty.ListDataSetIterator;
@@ -58,7 +59,10 @@ public class RunnerTrainerNeuralOneDimensional {
         timer.printInMs();
         var inPlotting = ListCreatorUtil.createFromStartToEndWithNofItems(0d, MAX_X, N_ITEMS_PLOTTING);
         var chart = getChartCorrelation(inPlotting, "Neural prediction");
-        ChartSaverAndPlotter.showChartSaveInFolderAdvConceptsNeural(chart, "neural-1d");
+        ChartSaver.saveAndShowXYChart(
+                chart,
+                PathAndFile.of(ConfigFactory.pathPicsConfig().ch9(), "neural-1d"));
+
         lossPlotting(recorder);
         MultiLayerPrinter.printWeights(model);
     }
