@@ -10,6 +10,7 @@ import chapters.ch13.implem.lane_change.ActionLane;
 import chapters.ch13.implem.lane_change.StateLane;
 import chapters.ch13.factory.lane_change.FactoryDependenciesLaneChange;
 import chapters.ch13.plotting.DotFileGenerator;
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
@@ -46,11 +47,9 @@ public class TestSearcherLane {
         var generator = DotFileGenerator.init(MAX_DEPTH_IN_PLOT);
         var nodes = pathExtractor.extract(root).getNodes();
         var text = generator.generateDot(tree, nodes);
-        var filePath = ProjectPropertiesReader.create().pathMcts();
+        var filePath = ConfigFactory.pathPicsConfig().ch13();
         generator.writeToFile(filePath + FILE_NAME, text);
-
         nodes.forEach(System.out::println);
-
         Assertions.assertTrue(sizeTree > 5);
         Assertions.assertEquals(-3.0,nodes.get(nodes.size() - 1).info().state().y(),0.5);
     }

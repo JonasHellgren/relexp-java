@@ -11,6 +11,7 @@ import chapters.ch12.factory.BanditTrainerDependenciesFactory;
 import chapters.ch12.factory.BanditTrainerParametersFactory;
 import chapters.ch12.plotting_bandit.ErrorBandPlotterNeuralBandit;
 import chapters.ch12.plotting_bandit.MeasuresBanditNeuralEnum;
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import lombok.SneakyThrows;
@@ -36,7 +37,7 @@ public class RunnerBanditValueTrainer {
 
     static void plotting(BanditActionValueTrainer trainer) throws IOException {
         var recorder = trainer.getRecorder();
-        var path = ProjectPropertiesReader.create().pathDeepRl();
+        var path= ConfigFactory.pathPicsConfig().ch12();
         var plotter = ErrorBandPlotterNeuralBandit.ofFiltering(
                 recorder,
                 path,

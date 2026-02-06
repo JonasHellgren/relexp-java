@@ -9,6 +9,7 @@ import chapters.ch10.factory.FactoryEnvironmentParametersCannon;
 import chapters.ch10.factory.FactoryTrainerParametersCannon;
 import chapters.ch10.plotting.ErrorBandPlotterCannon;
 import chapters.ch10.plotting.MeasuresCannonEnum;
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import lombok.SneakyThrows;
@@ -44,7 +45,7 @@ public class RunnerTrainerCannon {
 
     static void plotting(TrainerCannon trainer) throws IOException {
         var recorder = trainer.getRecorder();
-        var path = ProjectPropertiesReader.create().pathPolGrad();
+        var path= ConfigFactory.pathPicsConfig().ch10();
         var plotter = ErrorBandPlotterCannon.ofFiltering(
                 recorder,
                 path,

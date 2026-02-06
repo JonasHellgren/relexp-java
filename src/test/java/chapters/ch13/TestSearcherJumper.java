@@ -9,6 +9,7 @@ import chapters.ch13.implem.jumper.ActionJumper;
 import chapters.ch13.implem.jumper.StateJumper;
 import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import chapters.ch13.plotting.DotFileGenerator;
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
@@ -45,7 +46,7 @@ public class TestSearcherJumper {
         var generator = DotFileGenerator.init();
         var nodes = pathExtractor.extract(root).getNodes();
         var text = generator.generateDot(tree, nodes);
-        var path = ProjectPropertiesReader.create().pathMcts();
+        var path = ConfigFactory.pathPicsConfig().ch13();
         generator.writeToFile(path + FILE_NAME, text);
 
         Assertions.assertTrue(sizeTree > 5);

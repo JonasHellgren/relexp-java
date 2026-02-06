@@ -3,6 +3,7 @@ package ch6;
 import chapters.ch6.plotting.PlottingFactoryMultiStep;
 import chapters.ch6.domain.trainers.state_predictor.TrainerStatePredictor;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.gridrl.StateGrid;
@@ -56,7 +57,7 @@ public class RunnerTrainerStatePredictorSplitting {
                 List2ArrayConverterUtil.convertListToDoubleArr(meanList),
                 List2ArrayConverterUtil.convertListToDoubleArr(stdList), Color.BLACK);
 
-        var path = ProjectPropertiesReader.create().pathMultiStep();
+        var path = ConfigFactory.pathPicsConfig().ch6();
         creator.saveAsPicture(path+"TrainerStatePredictor.png");
         SwingUtilities.invokeLater(() -> creator.createFrame().setVisible(true));
     }

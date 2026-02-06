@@ -1,5 +1,6 @@
 package ch3;
 
+import core.foundation.config.ConfigFactory;
 import core.foundation.config.PathAndFile;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ListCreatorUtil;
@@ -20,19 +21,18 @@ public class RunnerLogarithmicDecay {
 
     public static void main(String[] args) throws IOException {
         var xList = getIterationList();
-        var reader = ProjectPropertiesReader.create();
-        var creator = getChartCreator(reader, xList);
+        var creator = getChartCreator(xList);
         fillCreatorWithLineData(xList, creator);
         var chart = creator.create();
-        plotAndSave(chart,reader);
+        plotAndSave(chart);
     }
 
     private static List<Double> getIterationList() {
         return ListCreatorUtil.createFromStartWithStepWithNofItems(0d, 1.0d, ITERATION_END);
     }
 
-    private static void plotAndSave(XYChart chart, ProjectPropertiesReader reader) {
-        var pathPics = reader.pathConceptsPics();
+    private static void plotAndSave(XYChart chart) {
+        var pathPics = ConfigFactory.pathPicsConfig().ch3();
         ChartSaver.saveXYChart(chart, PathAndFile.ofPng(pathPics, "logarithmic_decay"));
         new SwingWrapper<>(chart).displayChart();
     }
@@ -46,8 +46,8 @@ public class RunnerLogarithmicDecay {
         }
     }
 
-    private static ManyLinesChartCreator getChartCreator(ProjectPropertiesReader reader,
-                                                         List<Double> iterationList) {
+    private static ManyLinesChartCreator getChartCreator(List<Double> iterationList) {
+        var reader= ConfigFactory.plotConfig();
         return ManyLinesChartCreator.of(PlotSettings.ofDefaults()
                 .withXAxisLabel("Iteration").withYAxisLabel("Learning rate (%)")
                 .withSpaceBetweenXTicks(5000d)

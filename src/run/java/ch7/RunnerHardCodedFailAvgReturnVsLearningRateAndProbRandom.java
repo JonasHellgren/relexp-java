@@ -38,7 +38,7 @@ public class RunnerHardCodedFailAvgReturnVsLearningRateAndProbRandom {
                 Y_LABEL, X_LABEL, SHOW_LEGEND, SHOW_MARKER,plotConfig);
         var creator = ErrorBandCreator.newOfSettings(plotSettings);
         LEARNING_RATES.forEach(learningRate -> createCurveForLearningRate(learningRate, creator));
-        String path = ProjectPropertiesReader.create().pathSafe();
+        var path =  ConfigFactory.pathPicsConfig().ch7();
         ErrorBandSaverAndPlotter.showAndSave(creator, PathAndFile.ofPng(path, FILE_NAME));
     }
 

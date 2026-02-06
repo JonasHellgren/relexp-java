@@ -3,6 +3,7 @@ package ch11;
 import chapters.ch11.domain.environment.core.EnvironmentLunar;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.factory.LunarEnvParamsFactory;
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.foundation.util.unit_converter.UnitConverterUtil;
@@ -36,7 +37,7 @@ public class RunnerAccelerationVsActionPlotter {
 
     @SneakyThrows
     private static ScatterWithLineChartCreator getFactory() {
-        var props = ProjectPropertiesReader.create();
+        var props= ConfigFactory.plotConfig();
         var settings = PlotSettings.ofDefaults()
                 .withXAxisLabel("Force (N)").withYAxisLabel("Acc. (m/s2)")
                 .withWidth(props.xyChartWidth1Col())

@@ -4,6 +4,7 @@ import chapters.ch11.factory.DependencyFactory;
 import chapters.ch11.factory.LunarEnvParamsFactory;
 import chapters.ch11.domain.environment.core.RadialBasisAdapter;
 import com.google.common.collect.Lists;
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.nextlevelrl.radial_basis.RbfNetwork;
 import core.plotting_core.base.shared.PlotSettings;
@@ -34,9 +35,9 @@ public class RunnerKernelsPlotter {
 
     @SneakyThrows
     private static XYChart getChart(XYPositions xyPositions) {
-        var properties= ProjectPropertiesReader.create();
+        var config = ConfigFactory.plotConfig();
         var settings= PlotSettings.ofDefaults()
-                .withWidth(properties.xyChartWidth1Col()).withHeight(properties.xyChartHeight())
+                .withWidth(config.xyChartWidth1Col()).withHeight(config.xyChartHeight())
                 .withTitle("Kernel center positions")
                 .withXAxisLabel("Speed (m/s)").withYAxisLabel("Position (m)");
         var chartCreator= ScatterWithLineChartCreator.of(settings);

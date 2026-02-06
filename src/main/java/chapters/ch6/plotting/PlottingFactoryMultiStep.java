@@ -1,5 +1,6 @@
 package chapters.ch6.plotting;
 
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting_core.base.shared.PlotSettings;
 import lombok.AccessLevel;
@@ -12,13 +13,12 @@ public class PlottingFactoryMultiStep {
 
     @SneakyThrows
     public static PlotSettings getFrameSettings(String yLabel, String xLabel) {
-        var weight = ProjectPropertiesReader.create().frameWidth2Col();
-        var height = ProjectPropertiesReader.create().frameHeight();
+        var plotConfig= ConfigFactory.plotConfig();
         return PlotSettings.ofDefaults()
                 .withLineWidth(2).withShowMarker(true)
-                .withAxisTicksFont(new Font("Arial", Font.PLAIN, 24))
-                .withAxisTitleFont(new Font("Arial", Font.BOLD, 24))
-                .withWidth(weight).withHeight(height)
+                .withAxisTicksFont(plotConfig.fontLargePlain())
+                .withAxisTitleFont(plotConfig.fontLargeBold())
+                .withWidth(plotConfig.frameWidth()).withHeight(plotConfig.frameHeight())
                 .withTitle("").withYAxisLabel(yLabel).withXAxisLabel(xLabel).withShowLegend(false);
     }
 }

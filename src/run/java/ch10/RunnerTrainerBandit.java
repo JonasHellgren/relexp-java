@@ -9,6 +9,7 @@ import chapters.ch10.bandit.domain.trainer.TrainerDependenciesBandit;
 import chapters.ch10.factory.FactoryAgentParametersBandit;
 import chapters.ch10.factory.FactoryEnvironmentParametersBandit;
 import chapters.ch10.factory.FactoryTrainerParameters;
+import core.foundation.config.ConfigFactory;
 import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import lombok.SneakyThrows;
@@ -36,7 +37,7 @@ public class RunnerTrainerBandit {
         timer.printInMs();
 
         var recorder = trainer.getRecorder();
-        var path = ProjectPropertiesReader.create().pathPolGrad();
+        var path= ConfigFactory.pathPicsConfig().ch10();
         var plotter1 = ErrorBandPlotterBandit.ofFiltering(
                 recorder,
                 path,

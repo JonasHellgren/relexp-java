@@ -42,8 +42,8 @@ public class RunnerPlotErrorState10VersusNstepsAndLearningRateSplitting {
         plotting(creator);
     }
 
-    private static void plotting(ErrorBandCreator creator) throws IOException {
-        String path= ProjectPropertiesReader.create().pathMultiStep();
+    private static void plotting(ErrorBandCreator creator) {
+        var path=ConfigFactory.pathPicsConfig().ch6();
         ErrorBandSaverAndPlotter.showAndSave(creator, PathAndFile.ofPng(path, FILE_NAME));
     }
 
