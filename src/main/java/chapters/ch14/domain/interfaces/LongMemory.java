@@ -1,6 +1,7 @@
 package chapters.ch14.domain.interfaces;
 
 
+import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.TrainDataOld;
 
 /**
@@ -11,5 +12,6 @@ import core.foundation.gadget.training.TrainDataOld;
 public interface LongMemory<SI> {
     double read(SI state);
     void write(SI state, double value);
-    void fit(TrainDataOld data);
+    void fit(TrainData data, int nFits);
+    void fit(TrainData data);
 }

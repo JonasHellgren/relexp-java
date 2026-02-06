@@ -6,7 +6,7 @@ import chapters.ch14.implem.pong_memory.LongMemoryRbf;
 import chapters.ch14.implem.pong_memory.StateAdapterPong;
 import chapters.ch14.factory.FactoryMemorySettings;
 import chapters.ch14.factory.FactoryPongSettings;
-import core.foundation.gadget.training.TrainDataOld;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.util.rand.RandUtil;
 import org.apache.commons.math3.util.Pair;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestLongMemoryRbf {
 
-    public static final int N_FITS = 100;
+    public static final int N_FITS = 1000;
     public static final double TOL_ONE = 0.001;
     public static final int TOL_MANY = 3;
     public static final int N_EVALS = 100;
@@ -77,13 +77,13 @@ public class TestLongMemoryRbf {
         int mbSize = 100;
         int nFits = 1000;
 
-        var buffer = TrainDataOld.emptyFromOutputs();
+        var buffer = TrainData.empty();
         for (int i = 0; i < bufferSize; i++) {
             double timeHit = getTimeHitRandom();
             double deltaX = getDeltaxRandom();
             double vTarget = getMockedValue(timeHit, deltaX);
             var in = StateAdapterPong.asInput(Pair.create(timeHit, deltaX));
-            buffer.addIAndOut(in, vTarget);
+            buffer.addListIn(in, vTarget);
         }
 
         for (int i = 0; i < nFits; i++) {
@@ -121,9 +121,9 @@ public class TestLongMemoryRbf {
 
     private static void fitMemory(LongMemoryRbf lm, Pair<Double, Double> pair, double vTarget, int nFits) {
         for (int i = 0; i < nFits; i++) {
-            var data = TrainDataOld.emptyFromOutputs();
+            var data = TrainData.empty();
             var in = StateAdapterPong.asInput(pair);
-            data.addIAndOut(in, vTarget);
+            data.addListIn(in, vTarget);
             lm.fit(data);
         }
     }

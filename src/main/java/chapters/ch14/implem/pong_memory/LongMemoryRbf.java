@@ -4,14 +4,13 @@ import chapters.ch14.domain.interfaces.LongMemory;
 import chapters.ch14.domain.settings.MemorySettings;
 import chapters.ch14.implem.pong.PongSettings;
 import chapters.ch14.implem.pong.StateLongPong;
-import chapters.ch9.radial_basis_old.Kernel;
-import chapters.ch9.radial_basis_old.Kernels;
-import chapters.ch9.radial_basis_old.RbfNetwork;
-import core.foundation.gadget.training.TrainDataOld;
+import core.foundation.gadget.training.TrainData;
+import core.nextlevelrl.radial_basis.Kernel;
+import core.nextlevelrl.radial_basis.Kernels;
+import core.nextlevelrl.radial_basis.RbfNetwork;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.apache.commons.math3.util.Pair;
 
 /**
  * This class implements the LongMemory interface using a Radial Basis Function (RBF) network.
@@ -20,6 +19,7 @@ import org.apache.commons.math3.util.Pair;
 @Getter
 public class LongMemoryRbf implements LongMemory<StateLongPong> {
 
+    public static final int N_DIM = 2;
     private final RbfNetwork memory;
     private final MemorySettings memorySettings;
     private final PongSettings envSettings;
@@ -31,7 +31,7 @@ public class LongMemoryRbf implements LongMemory<StateLongPong> {
 
     @Override
     public double read(StateLongPong state) {
-        return memory.outPut(StateAdapterPong.asInput(state));
+        return memory.outPut(StateAdapterPong.asInputArr(state));
     }
 
     @Override
@@ -44,11 +44,16 @@ public class LongMemoryRbf implements LongMemory<StateLongPong> {
      * Fits the  memory to the given training data.
      *
      * @param data the training data to fit the memory to
+     * @param nFits
      */
     @Override
-    public void fit(TrainDataOld data) {
-        int batchSize = Math.min(data.nSamples(), memorySettings.batchSize());
-        memory.fit(data, memorySettings.nEpochs(), batchSize);
+    public void fit(TrainData data, int nFits) {
+        memory.fit(data, memorySettings.nEpochs());
+    }
+
+    @Override
+    public void fit(TrainData data) {
+        memory.fit(data,1);
     }
 
     /**
@@ -59,7 +64,7 @@ public class LongMemoryRbf implements LongMemory<StateLongPong> {
      * @return
      */
     public double read(double timeHit, double deltaX) {
-        var in = StateAdapterPong.asInput(Pair.create(timeHit, deltaX));
+        var in = StateAdapterPong.asInputArr(StateLongPong.of(timeHit, deltaX));
         return memory.outPut(in);
     }
 
@@ -76,7 +81,7 @@ public class LongMemoryRbf implements LongMemory<StateLongPong> {
                 kernels.addKernel(kernel);
             }
         }
-        return RbfNetwork.of(kernels, memorySettings.learningRate());
+        return RbfNetwork.of(kernels, memorySettings.learningRate(), N_DIM);
     }
 
     /**

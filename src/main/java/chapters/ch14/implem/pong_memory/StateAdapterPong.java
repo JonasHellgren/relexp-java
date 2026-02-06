@@ -16,6 +16,10 @@ public class StateAdapterPong {
         return List.of(state.getTimeHit(),state.getDeltaX());
     }
 
+    public static double[] asInputArr(StateLongPong state) {
+        return new double[]{state.getTimeHit(),state.getDeltaX()};
+    }
+
     public static List<Double> asInput(Pair<Double, Double> pair) {
         return List.of(pair.getFirst(),pair.getSecond());
     }

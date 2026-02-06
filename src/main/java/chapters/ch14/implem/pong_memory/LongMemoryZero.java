@@ -2,7 +2,7 @@ package chapters.ch14.implem.pong_memory;
 
 import chapters.ch14.domain.interfaces.LongMemory;
 import chapters.ch14.implem.pong.StateLongPong;
-import core.foundation.gadget.training.TrainDataOld;
+import core.foundation.gadget.training.TrainData;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -29,8 +29,13 @@ public class LongMemoryZero implements LongMemory<StateLongPong> {
     }
 
     @Override
-    public void fit(TrainDataOld data) {
+    public void fit(TrainData data, int nFits) {
         throw new UnsupportedOperationException();
+    }
 
+    @Override
+    public void fit(TrainData data) {
+        throw new UnsupportedOperationException();
+        
     }
 }

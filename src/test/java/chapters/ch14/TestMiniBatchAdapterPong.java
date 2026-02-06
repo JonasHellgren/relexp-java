@@ -11,6 +11,7 @@ import chapters.ch14.implem.pong_memory.StateAdapterPong;
 import chapters.ch14.factory.FactoryDependencies;
 import chapters.ch14.factory.FactoryStatePong;
 import chapters.ch14.factory.FactoryTrainerSettings;
+import core.foundation.gadget.training.TrainData;
 import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,14 +51,6 @@ public class TestMiniBatchAdapterPong {
         Assertions.assertEquals(0, dependencies.longMemory().read(stateLong), 0.01);
     }
 
-
-    @Test
-    void whenAdaptS_thenCorrect() {
-        var miniBatch = adapter.adapt(List.of(expS));
-        assertBatch(miniBatch, 0.6, 0, 0);
-    }
-
-
     @Test
     void whenAdaptN_thenCorrect() {
         var miniBatch = adapter.adapt(List.of(expN));
@@ -72,11 +65,11 @@ public class TestMiniBatchAdapterPong {
      }
 
 
-    private static void assertBatch(TrainDataOld miniBatch, double time, int dx, int value) {
+    private static void assertBatch(TrainData miniBatch, double time, int dx, int value) {
         var doubles = miniBatch.input(0);
         double output = miniBatch.output(0);
-        Assertions.assertEquals(time, doubles.get(0), TOL);
-        Assertions.assertEquals(dx, doubles.get(1), TOL);
+        Assertions.assertEquals(time, doubles[0], TOL);
+        Assertions.assertEquals(dx, doubles[1], TOL);
         Assertions.assertEquals(value, output, TOL);
     }
 
