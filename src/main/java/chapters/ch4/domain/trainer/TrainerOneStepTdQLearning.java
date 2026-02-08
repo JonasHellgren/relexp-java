@@ -1,9 +1,9 @@
 package chapters.ch4.domain.trainer;
 
+import chapters.ch4.implem_animation.AnimationRoad;
 import com.google.common.base.Preconditions;
-import core.gridrl.ExperienceGrid;
-import core.gridrl.TrainerGridDependencies;
-import core.gridrl.TrainerGridI;
+import core.animation.AnimationKit;
+import core.gridrl.*;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -31,29 +31,49 @@ public class TrainerOneStepTdQLearning implements TrainerGridI {
                 RecorderProgressMeasures.empty());
     }
 
+
+    public void train() {
+        var animationKit = AnimationRoad.empty();
+        train(animationKit);
+    }
+
+    public void trainAnimation() {
+        var animationKit = AnimationRoad.create();
+        train(animationKit);
+    }
+
     /**
      * Trains the agent using Q-Learning algorithm.
      */
-    public void train() {
+    public void train(AnimationRoad animation) {
         var d = dependencies;
         recorder.clear();
         d.clearTimer();
         log.info("Starting training");
+        animation.start();
         for (int ei = 0; ei < d.getNofEpisodes(); ei++) {
             var s = d.getStartState();
             d.resetBeforeEpisode();
+            StepReturnGrid sr=null;
             while (d.notTerminalStateAndNotToManySteps(s)) {
                 var action = d.chooseAction(s, ei);
-                var sr = d.takeAction(s, action);
+                sr = d.takeAction(s, action);
                 var e= ExperienceGrid.ofSars(s, action, sr);
                 d.updateAgentMemoryFromExperience(e,ei);
+                postStep(animation, s, ei, d, sr);
                 s = sr.sNext();
                 d.increaseStepCounter();
                 d.saveExperienceForRecording(e);
             }
+            postStep(animation, s, ei, d, sr);
+            animation.postEpisode(d.agent(),d.environment());
             recorder.add(d.getProgressMeasures());
         }
         log.info("Training finished in (s): " + d.timer().timeInSecondsAsString());
+    }
+
+    private static void postStep(AnimationRoad animation, StateGrid s, int ei, TrainerGridDependencies d, StepReturnGrid sr) {
+        animation.postStep(s, ei, d.getNofEpisodes(), d.probRandom(ei), sr.reward());
     }
 
 }

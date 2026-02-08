@@ -53,7 +53,6 @@ public class RoadRunnerFactory {
         var envParamsStochasticReward = FactoryEnvironmentParametersRoad.produceRoadRandomReward();
         var environmentStochastic = EnvironmentRoad.of(envParamsStochasticReward);
         var informer= InformerRoadParams.create(envParams);
-
         var agentParamsQL = AgentGridParametersFactoryRoad.produceBase();
         var agentParamsQLDiscD9 = AgentGridParametersFactoryRoad.produceDiscD9();
         var trainerParamsLowLearnHighExp = TrainerParametersFactoryRoad.produceLowLearningHighExploration();
@@ -72,6 +71,22 @@ public class RoadRunnerFactory {
                 .qlHighLearningDiscD9(baseDep.withAgent(AgentQLearningGrid.of(agentParamsQLDiscD9, informer)))
                 .qlStochasticFailReward(baseDep.withEnvironment(environmentStochastic))
                 .build();
+    }
+
+    public static TrainerGridDependencies animation    (int nEpisodes) {
+        var envParams = FactoryEnvironmentParametersRoad.produceRoadFixedFailReward();
+        var agentParamsQL = AgentGridParametersFactoryRoad.produceBase();
+                var environment = EnvironmentRoad.of(envParams);
+        var informer= InformerRoadParams.create(envParams);
+        var trainerParamsHighLearnHighExp = TrainerParametersFactoryRoad
+                .produceHighLearningLowExploration().withNEpisodes(nEpisodes);
+        var startStateSupplier = StartStateSupplierRoadMostLeftAnyLane.create();
+        return TrainerGridDependencies.of(
+                AgentQLearningGrid.of(agentParamsQL, informer),
+                environment,
+                trainerParamsHighLearnHighExp,
+                startStateSupplier,
+                informer);
     }
 
 
