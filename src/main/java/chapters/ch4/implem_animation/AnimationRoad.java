@@ -12,11 +12,10 @@ import oshi.util.FormatUtil;
 import java.util.*;
 
 /**
+ * Defines the animation for the road environment
+ *
  * stepGfx is the left frame, showing car moving
  * episodeGfx, is the right frame, showing the agent memory
- *
- * @param kitStep
- * @param kitEpisode
  */
 
 public record AnimationRoad(AnimationKit kitStep, AnimationKit kitEpisode) {
@@ -117,7 +116,7 @@ public record AnimationRoad(AnimationKit kitStep, AnimationKit kitEpisode) {
         var dto = GraphicsDto.builder()
                 .grids(grids)
                 .tableData(Collections.singletonList(policyGrid))
-                .animationDelay(100)
+                .animationDelay(10000)
                 .build();
         kitEpisode.postAndSleep(dto);
     }
