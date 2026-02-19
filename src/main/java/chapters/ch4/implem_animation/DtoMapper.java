@@ -21,7 +21,8 @@ public class DtoMapper {
                 getLines(sinShift, cosShift),
                 getGrids(sinShift, cosShift),
                 getTables(cosShift, sinShift),
-                false);
+                false,
+                1000);
         return dto;
     }
 

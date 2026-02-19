@@ -64,6 +64,6 @@ public record AnimationKit(
     public void postAndSleep(GraphicsDto dto) {
         if (isEmpty()) return;
         renderer.render(dto);
-        Thread.sleep(settings.animationDelay());
+        Thread.sleep(dto.animationDelay());
     }
 }

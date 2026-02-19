@@ -10,7 +10,8 @@ public record GraphicsDto(
         List<List<LineSegment>> lines,
         List<double[][]> grids,
         List<Object[][]> tableData,
-        boolean isFail
+        boolean isFail,
+        int animationDelay
 ) {
 
     public static GraphicsDto lines(List<List<LineSegment>> lines, boolean isFail) {

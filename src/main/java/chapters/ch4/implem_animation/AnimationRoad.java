@@ -1,6 +1,5 @@
 package chapters.ch4.implem_animation;
 
-import chapters.ch4.implem.blocked_road_lane.core.EnvironmentParametersRoad;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import core.animation.*;
 import core.foundation.gadget.math.ScalerLinear;
@@ -9,10 +8,16 @@ import core.gridrl.ActionGrid;
 import core.gridrl.AgentGridI;
 import core.gridrl.EnvironmentGridI;
 import core.gridrl.StateGrid;
-import org.jetbrains.annotations.NotNull;
 import oshi.util.FormatUtil;
-
 import java.util.*;
+
+/**
+ * stepGfx is the left frame, showing car moving
+ * episodeGfx, is the right frame, showing the agent memory
+ *
+ * @param kitStep
+ * @param kitEpisode
+ */
 
 public record AnimationRoad(AnimationKit kitStep, AnimationKit kitEpisode) {
 
@@ -58,20 +63,23 @@ public record AnimationRoad(AnimationKit kitStep, AnimationKit kitEpisode) {
     }
 
     public void postStep(StateGrid s, int ei, int eiMax, double pRand, double reward) {
-        double yShift = 0.0;
-        var car = LineSegment.blackBold(s.x(), s.y() + yShift, s.x() + 1, s.y() + yShift);
-        var bull = LineSegment.redBold(3 + 0.5, 1 + yShift, 3 + 1 + 0.5, 1 + yShift);
+        double xShift = -0.15;
+        double widthCar = 0.3;
+        double widthbull = 0.1;
+        var car = LineSegment.blackBold(s.x()+xShift, s.y(), s.x() + widthCar +xShift, s.y());
+        var bull = LineSegment.redBold(3, 1, 3 + widthbull, 1);
         var lineData = List.of(List.of(car, bull));
         var tableData = Collections.singletonList(new Object[][]{
                 {"episode", String.valueOf(ei)},
-                {"max episode", String.valueOf(eiMax)},
+                {"number of episodes", String.valueOf(eiMax)},
                 {"reward", round(reward)},
                 {"probability random action", round(pRand)}
         });
         var dto = GraphicsDto.builder()
                 .lines(lineData)
                 .tableData(tableData)
-                .isFail(reward < -100)
+                .isFail(reward < -99)
+                .animationDelay(100)
                 .build();
         kitStep.postAndSleep(dto);
     }
@@ -81,68 +89,35 @@ public record AnimationRoad(AnimationKit kitStep, AnimationKit kitEpisode) {
         var ep = env.getParameters();
         Integer nCol = ep.posXMinMax().getSecond();
         Integer nRows = ep.posYMinMax().getSecond()+1;
-        double vMin = -5; //ep.rewardAtFailPos().mean();
+        double vMin = -5;
         var scaler= ScalerLinear.of(vMin,0.0,0.0,1.0);
-
         Map<ActionGrid, double[][]> aGrids = new HashMap<>();
         ep.validActions().forEach(ay -> {
             aGrids.put(ay, emptyGrid(nRows, nCol));
         });
         double[][] vGrid = emptyGrid(nRows, nCol);
-        Object[][][] policyGrid = new Object[nRows][nCol][1];
-       // Object[][][] policyGrid = new Object[nRows][nCol][1];
-       // Object[][][] policyGrid = new Object[nCol][nCol][1];
-
+        Object[][] policyGrid = new Object[nRows][nCol];
         for (int x = 0; x < nCol; x++) {
             for (int y = 0; y < nRows; y++) {
                 var s = StateGrid.of(x, y);
-
                 double value = agent.readValue(s);
                 vGrid[y][x] = scale(scaler, value, vMin);
-             //   policyGrid[0][x][y] = agent.chooseActionNoExploration(s).toString();
+                policyGrid[nRows-1-y][x] = agent.chooseActionNoExploration(s).toString();
                 for (ActionGrid a : ep.validActions()) {
                     double av = agent.read(s, a);
                     aGrids.get(a)[y][x] = scale(scaler, av, vMin);
                 }
-
-
-
             }
         }
 
-        for (int y = 0; y < nRows; y++) {
-           // policyGrid[0][y] =new Object[]{"a","b","c",String.valueOf(y)};
 
-            String[] txtrow = new String[nCol];
-            for (int x = 0; x < nCol; x++) {
-                var s = StateGrid.of(x, y);
-                txtrow[x] = agent.chooseActionNoExploration(s).toString();
-            }
-
-
-            policyGrid[0][nRows-y-1] =  txtrow; //new Object[]{"a","b","c",String.valueOf(y)};
-
-        }
-
-
-
-      //  policyGrid[0][0] =new Object[]{"a","b","c","d"};
-  //      policyGrid[0][1] =new Object[]{"aa","bb","c","d"};
-
-        System.out.println("policyGrid = " + Arrays.deepToString(policyGrid));
-
-
-
-
-        //   vars gridN=GridFactory.toSeries(getGridN());
         List<double[][]> grids = new ArrayList<>();
         ep.validActions().forEach(a -> grids.add(GridFactory.toSeries(aGrids.get(a))));
         grids.add(GridFactory.toSeries(vGrid));
-     //   var dto = GraphicsDto.grids(grids, false);
-
         var dto = GraphicsDto.builder()
                 .grids(grids)
-                .tableData(List.of(policyGrid))
+                .tableData(Collections.singletonList(policyGrid))
+                .animationDelay(100)
                 .build();
         kitEpisode.postAndSleep(dto);
     }
@@ -164,7 +139,6 @@ public record AnimationRoad(AnimationKit kitStep, AnimationKit kitEpisode) {
                 .tableWidth(WIDTH).tableHeight(HEIGHT/2)
                 .order(List.of(Step.LINE, Step.HEATMAP, Step.TABLE))
                 .margin(0)
-                .animationDelay(100)
                 .build();
     }
 

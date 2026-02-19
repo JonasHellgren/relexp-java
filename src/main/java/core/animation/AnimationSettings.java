@@ -17,7 +17,7 @@ public record AnimationSettings(
         int tableHeight,
         int tableWidth,
         List<Step> order,
-        int margin,
-        int animationDelay
+        int margin
+
 ) {
 }
