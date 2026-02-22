@@ -29,6 +29,7 @@ public class AnimationRoad implements AnimationGridI {
     static final int HEIGHT = 300;
     static final int WIDTH = 300;
     static final int N_COLUMNS = 2;
+    static final int N_DIGITS = 2;
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
             List.of(0.0, 10.0, 995.0),  //cuts
             List.of(2000.0, 1.0, 2000.0)   //animation time delays
@@ -50,7 +51,7 @@ public class AnimationRoad implements AnimationGridI {
                 .withFrameXLocation(WIDTH * 2).withFrameHeight(HEIGHT * 2)
                 .withTableWidth((int) (WIDTH * 0.75)).withTableHeight(HEIGHT / 2);
         return new AnimationRoad(
-                AnimationKit.of(stepGfx(asStep), asStep),
+                AnimationKit.of(environmentGfx(asStep), asStep),
                 AnimationKit.of(episodeGfx(asEpisode), asEpisode),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP));
     }
@@ -60,7 +61,7 @@ public class AnimationRoad implements AnimationGridI {
         return kitEpisode.isEmpty();
     }
 
-    private static GfxComponentFactory stepGfx(AnimationSettings as) {
+    private static GfxComponentFactory environmentGfx(AnimationSettings as) {
         var factory = GfxComponentFactory.of(as);
         factory.addLineChart("", "x", 0, 4, "y", -1, 2);
         factory.addTable(N_COLUMNS, false);
@@ -87,11 +88,8 @@ public class AnimationRoad implements AnimationGridI {
     public void postStep(StateGrid s, int ei, int eiMax, double pRand, double reward) {
         if (isEmpty()) return;
         List<LineSegment> lines = new ArrayList<>();
-        double widthbull = addCarlines(s, lines);
-        var bull = LineSegment.redBold(3, 1, 3 + widthbull, 1);
-        lines.add(bull);
-
-        //var lineData = List.of(List.of(lines, bull));
+        addCarlines(s, lines);
+        addBullLines(lines);
         var lineData = List.of(lines);
         var tableData = Collections.singletonList(new Object[][]{
                 {"episode", String.valueOf(ei)},
@@ -150,10 +148,9 @@ public class AnimationRoad implements AnimationGridI {
     }
 
 
-    private static double addCarlines(StateGrid s, List<LineSegment> lines) {
+    private void addCarlines(StateGrid s, List<LineSegment> lines) {
         double widthCar = 1.0;
         double heightCar = 0.5;
-        double widthbull = 0.1;
         double xShift = -widthCar / 2;
         double x0 = s.x() + xShift;
         double y0 = s.y() - heightCar / 2;
@@ -171,7 +168,13 @@ public class AnimationRoad implements AnimationGridI {
         lines.add(LineSegment.black(xrearWind, y1, xrearWind, y0));
         lines.add(LineSegment.black(xfrontWind1, y1, xfrontWind1, y0));
         lines.add(LineSegment.black(xfrontWind2, y1, xfrontWind2, y0));
-        return widthbull;
+    }
+
+
+    private static void addBullLines(List<LineSegment> lines) {
+        double widthbull = 0.1;
+        var bull = LineSegment.redBold(3, 1, 3 + widthbull, 1);
+        lines.add(bull);
     }
 
     private static double scale(ScalerLinear scaler, double value, double vMin) {
@@ -194,7 +197,7 @@ public class AnimationRoad implements AnimationGridI {
     }
 
     private static float round(double pRand) {
-        return FormatUtil.round((float) pRand, N_COLUMNS);
+        return FormatUtil.round((float) pRand, N_DIGITS);
     }
 
 
