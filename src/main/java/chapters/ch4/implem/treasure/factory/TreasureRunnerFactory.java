@@ -1,6 +1,7 @@
 package chapters.ch4.implem.treasure.factory;
 
 import chapters.ch4.domain.agent.AgentQLearningGrid;
+import chapters.ch4.domain.animation.AnimationDummy;
 import core.gridrl.TrainerGridDependencies;
 import chapters.ch4.domain.trainer.TrainerOneStepTdQLearning;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
@@ -26,8 +27,8 @@ public class TreasureRunnerFactory {
             TrainerOneStepTdQLearning highExploration
     ) {
         public void train() {
-            lowExploration.train();
-            highExploration.train();
+            lowExploration.train(AnimationDummy.empty());
+            highExploration.train(AnimationDummy.empty());
         }
     }
 
@@ -40,7 +41,7 @@ public class TreasureRunnerFactory {
 
     public static Dependencies produceDependencies() {
         var envParams = EnvironmentParametersTreasureFactor.produce();
-        var informer= InformerTreasure.create(envParams);
+        var informer = InformerTreasure.create(envParams);
 
         var environment = EnvironmentTreasure.of(envParams);
         var agentParam = FactoryAgentGridParametersTreasure.produceBase();
@@ -50,14 +51,14 @@ public class TreasureRunnerFactory {
         //var trainerParams = FactoryTrainerParametersTreasure.produceTinyEpisodes();
         var startStateSupplier = StartStateSupplierTreasureMostLeft.create();
 
-        var lowExpDep=TrainerGridDependencies.of(
+        var lowExpDep = TrainerGridDependencies.of(
                 AgentQLearningGrid.of(agentParam, informer),
                 environment,
                 trainerParamsLowExp,
                 startStateSupplier,
                 informer);
 
-        var highExpDep=TrainerGridDependencies.of(
+        var highExpDep = TrainerGridDependencies.of(
                 AgentQLearningGrid.of(agentParam, informer),
                 environment,
                 trainerParamsHighExp,

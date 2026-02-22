@@ -1,6 +1,7 @@
 package chapters.ch4.implem.blocked_road_lane.factory;
 
 import chapters.ch4.domain.agent.AgentQLearningGrid;
+import chapters.ch4.domain.animation.AnimationDummy;
 import core.gridrl.TrainerGridDependencies;
 import chapters.ch4.domain.trainer.TrainerOneStepTdQLearning;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
@@ -30,10 +31,10 @@ public class RoadRunnerFactory {
             TrainerOneStepTdQLearning qlStochasticFailReward
     )  {
         public void train() {
-            qlHighLearning.train();
-            qlLowLearning.train();
-            qlHighLearningDiscD9.train();
-            qlStochasticFailReward.train();
+            qlHighLearning.train(AnimationDummy.empty());
+            qlLowLearning.train(AnimationDummy.empty());
+            qlHighLearningDiscD9.train(AnimationDummy.empty());
+            qlStochasticFailReward.train(AnimationDummy.empty());
         }
 
     }

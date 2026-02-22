@@ -3,6 +3,7 @@ package ch4;
 
 import chapters.ch4.domain.trainer.TrainerOneStepTdQLearning;
 import chapters.ch4.implem.blocked_road_lane.factory.RoadRunnerFactory;
+import chapters.ch4.implem_animation.AnimationRoad;
 import core.foundation.config.ConfigFactory;
 import core.gridrl.TrainerGridDependencies;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
@@ -18,8 +19,9 @@ public class RunnerTrainerRoadAnimation {
     public static void main(String[] args) {
         var dep = RoadRunnerFactory.animation(N_EPISODES);
         var trainer = TrainerOneStepTdQLearning.of(dep);
-        trainer.trainAnimation();
-      //  plot(dep, trainer.getRecorder());
+        trainer.train(AnimationRoad.create());
+      //  trainer.train(AnimationRoad.empty());
+        plot(dep, trainer.getRecorder());
     }
 
     private static void plot(TrainerGridDependencies dep, RecorderProgressMeasures recorder) {

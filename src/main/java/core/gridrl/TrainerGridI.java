@@ -1,5 +1,6 @@
 package core.gridrl;
 
+import chapters.ch4.domain.animation.AnimationGridI;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 
 /**
@@ -13,5 +14,5 @@ public interface TrainerGridI {
     /**
      * Starts the training process.
      */
-    void train();
+    void train(AnimationGridI animation);
 }

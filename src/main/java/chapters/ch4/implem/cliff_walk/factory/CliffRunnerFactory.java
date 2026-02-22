@@ -2,6 +2,7 @@ package chapters.ch4.implem.cliff_walk.factory;
 
 import chapters.ch4.domain.agent.AgentQLearningGrid;
 import chapters.ch4.domain.agent.AgentSarsaGrid;
+import chapters.ch4.domain.animation.AnimationDummy;
 import core.gridrl.TrainerGridDependencies;
 import chapters.ch4.domain.trainer.TrainerOneStepTdQLearning;
 import chapters.ch4.domain.trainer.TrainerOneStepTdSarsa;
@@ -27,8 +28,8 @@ public class CliffRunnerFactory {
             TrainerOneStepTdSarsa sarsa
     ) {
         public void train() {
-            qlearning.train();
-            sarsa.train();
+            qlearning.train(AnimationDummy.empty());
+            sarsa.train(AnimationDummy.empty());
         }
     }
 

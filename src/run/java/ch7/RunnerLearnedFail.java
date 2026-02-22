@@ -1,5 +1,6 @@
 package ch7;
 
+import chapters.ch4.domain.animation.AnimationDummy;
 import chapters.ch7.domain.trainer.TrainerOneStepTdQLearningWithSafety;
 import chapters.ch7.factory.TrainerDependencySafeFactory;
 import chapters.ch7.plotter.ChartPlotterSafe;
@@ -21,7 +22,7 @@ public class RunnerLearnedFail {
                 LEARNING_RATE_START,
                 PROB_RAND_START);
         var trainer = TrainerOneStepTdQLearningWithSafety.activeLearnerOf(dependencies);
-        trainer.train();
+        trainer.train(AnimationDummy.empty());
         trainer.logTrainingTime();
         plotting(trainer);
     }

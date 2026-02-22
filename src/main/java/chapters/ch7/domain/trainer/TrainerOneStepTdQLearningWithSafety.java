@@ -1,5 +1,6 @@
 package chapters.ch7.domain.trainer;
 
+import chapters.ch4.domain.animation.AnimationGridI;
 import core.gridrl.ExperienceGrid;
 import core.gridrl.TrainerGridDependencies;
 import core.gridrl.TrainerGridI;
@@ -54,7 +55,7 @@ public class TrainerOneStepTdQLearningWithSafety implements TrainerGridI {
     }
 
     @Override
-    public void train() {
+    public void train(AnimationGridI animation) {
         var d = dependencies;  //gives more readable and shorter code
         recorder.clear();
         var measureExtractor = ProgressMeasureExtractorSafe.of();

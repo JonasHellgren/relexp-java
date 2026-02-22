@@ -18,7 +18,7 @@ public record IntervalData(double[] cuts, double[] values) {
     }
 
     public IntervalData {
-        if (cuts.length == 0) throw new IllegalArgumentException("cuts empty");
+       // if (cuts.length == 0) throw new IllegalArgumentException("cuts empty");
         if (cuts.length != values.length) throw new IllegalArgumentException("cuts/values size mismatch");
         for (int i = 1; i < cuts.length; i++) if (cuts[i] <= cuts[i - 1])
             throw new IllegalArgumentException("cuts must be strictly increasing");

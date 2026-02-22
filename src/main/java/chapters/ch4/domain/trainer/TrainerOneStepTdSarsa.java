@@ -1,5 +1,6 @@
 package chapters.ch4.domain.trainer;
 
+import chapters.ch4.domain.animation.AnimationGridI;
 import core.gridrl.ExperienceGrid;
 import core.gridrl.TrainerGridDependencies;
 import core.gridrl.TrainerGridI;
@@ -29,7 +30,7 @@ public class TrainerOneStepTdSarsa  implements TrainerGridI {
      * This method iterates over the specified number of episodes, choosing actions,
      * taking steps, and updating agent memory at each step.
      */
-    public void train() {
+    public void train(AnimationGridI animation) {
         var d = dependencies;
         recorder.clear();
         d.clearTimer();

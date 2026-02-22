@@ -1,5 +1,6 @@
 package ch7;
 
+import chapters.ch4.domain.animation.AnimationDummy;
 import chapters.ch7.domain.trainer.TrainerOneStepTdQLearningWithSafety;
 import chapters.ch7.factory.SafetyLayerFactoryTreasure;
 import chapters.ch7.factory.TrainerDependencySafeFactory;
@@ -68,7 +69,7 @@ public class RunnerHardCodedFailAvgReturnVsLearningRateAndProbRandom {
         var dependencies = TrainerDependencySafeFactory.treasure(N_EPISODES, learningRateStart, probRandStart);
         var safetyLayer = SafetyLayerFactoryTreasure.produce(dependencies);
         var trainer = TrainerOneStepTdQLearningWithSafety.givenSafetyLayerOf(dependencies, safetyLayer);
-        trainer.train();
+        trainer.train(AnimationDummy.empty());
         var returnList = trainer.getRecorder().trajectory(ProgressMeasureEnum.RETURN);
         return ListUtil.findAverage(returnList).orElseThrow();
     }

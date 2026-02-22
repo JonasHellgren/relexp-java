@@ -1,5 +1,6 @@
 package chapters.ch4.implem_animation;
 
+import chapters.ch4.domain.animation.AnimationGridI;
 import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import core.animation.*;
 import core.foundation.gadget.math.ScalerLinear;
@@ -11,18 +12,19 @@ import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import oshi.util.FormatUtil;
+
 import java.util.*;
 import java.util.function.DoubleUnaryOperator;
 
 /**
  * Defines the animation for the road environment
- *
+ * <p>
  * stepGfx is the left frame, showing car moving
  * episodeGfx, is the right frame, showing the agent memory
  */
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class AnimationRoad     {
+public class AnimationRoad implements AnimationGridI {
 
     static final int HEIGHT = 300;
     static final int WIDTH = 300;
@@ -32,7 +34,7 @@ public class AnimationRoad     {
             List.of(2000.0, 1.0, 2000.0)   //animation time delays
     );
 
-    AnimationKit kitStep,kitEpisode;
+    AnimationKit kitStep, kitEpisode;
     DoubleUnaryOperator delayFunction;
 
     public static AnimationRoad empty() {
@@ -46,11 +48,16 @@ public class AnimationRoad     {
         var asStep = createSetting();
         var asEpisode = createSetting()
                 .withFrameXLocation(WIDTH * 2).withFrameHeight(HEIGHT * 2)
-                .withTableWidth((int) (WIDTH*0.75)).withTableHeight(HEIGHT/2);
+                .withTableWidth((int) (WIDTH * 0.75)).withTableHeight(HEIGHT / 2);
         return new AnimationRoad(
                 AnimationKit.of(stepGfx(asStep), asStep),
                 AnimationKit.of(episodeGfx(asEpisode), asEpisode),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP));
+    }
+
+
+    public boolean isEmpty() {
+        return kitEpisode.isEmpty();
     }
 
     private static GfxComponentFactory stepGfx(AnimationSettings as) {
@@ -72,12 +79,13 @@ public class AnimationRoad     {
 
 
     public void start() {
+        if (isEmpty()) return;
         kitStep.start();
         kitEpisode.start();
     }
 
     public void postStep(StateGrid s, int ei, int eiMax, double pRand, double reward) {
-
+        if (isEmpty()) return;
         List<LineSegment> lines = new ArrayList<>();
         double widthbull = addCarlines(s, lines);
         var bull = LineSegment.redBold(3, 1, 3 + widthbull, 1);
@@ -102,37 +110,15 @@ public class AnimationRoad     {
         kitStep.postAndSleep(dto);
     }
 
-    private static double addCarlines(StateGrid s, List<LineSegment> lines) {
-        double widthCar = 1.0;
-        double heightCar = 0.5;
-        double widthbull = 0.1;
-        double xShift = -widthCar/2;
-        double x0 = s.x() + xShift;
-        double y0 = s.y()-heightCar/2;
-        double x1 = x0 + widthCar;
-        double y1 = y0 + heightCar;
-        double xrearWind = x0+(x1-x0)*0.1;
-        double xfrontWind1 = x0+(x1-x0)*0.55;
-        double xfrontWind2 = x0+(x1-x0)*0.7;
-        lines.add(LineSegment.black(x0, y0, x0, y1));
-        lines.add(LineSegment.black(x0, y1, x0 + widthCar/2.0, y1));
-        lines.add(LineSegment.black(x0 + widthCar/2.0, y1, x1, y1));
-        lines.add(LineSegment.black(x1, y1, x1, y0));
-        lines.add(LineSegment.black(x1, y0, x0 + widthCar/2.0, y0));
-        lines.add(LineSegment.black(x0 + widthCar/2.0, y0, x0, y0));
-        lines.add(LineSegment.black(xrearWind, y1, xrearWind, y0));
-        lines.add(LineSegment.black(xfrontWind1, y1, xfrontWind1, y0));
-        lines.add(LineSegment.black(xfrontWind2, y1, xfrontWind2, y0));
-        return widthbull;
-    }
-
     public void postEpisode(AgentGridI agent, EnvironmentGridI env0) {
-        var env=(EnvironmentRoad)env0;
+        if (isEmpty()) return;
+
+        var env = (EnvironmentRoad) env0;
         var ep = env.getParameters();
         int nCol = ep.posXMinMax().getSecond();
-        int nRows = ep.posYMinMax().getSecond()+1;
+        int nRows = ep.posYMinMax().getSecond() + 1;
         double vMin = -5;
-        var scaler= ScalerLinear.of(vMin,0.0,0.0,1.0);
+        var scaler = ScalerLinear.of(vMin, 0.0, 0.0, 1.0);
         Map<ActionGrid, double[][]> aGrids = new HashMap<>();
         ep.validActions().forEach(ay -> {
             aGrids.put(ay, emptyGrid(nRows, nCol));
@@ -144,7 +130,7 @@ public class AnimationRoad     {
                 var s = StateGrid.of(x, y);
                 double value = agent.readValue(s);
                 vGrid[y][x] = scale(scaler, value, vMin);
-                policyGrid[nRows-1-y][x] = agent.chooseActionNoExploration(s).toString();
+                policyGrid[nRows - 1 - y][x] = agent.chooseActionNoExploration(s).toString();
                 for (ActionGrid a : ep.validActions()) {
                     double av = agent.read(s, a);
                     aGrids.get(a)[y][x] = scale(scaler, av, vMin);
@@ -163,6 +149,31 @@ public class AnimationRoad     {
         kitEpisode.postAndSleep(dto);
     }
 
+
+    private static double addCarlines(StateGrid s, List<LineSegment> lines) {
+        double widthCar = 1.0;
+        double heightCar = 0.5;
+        double widthbull = 0.1;
+        double xShift = -widthCar / 2;
+        double x0 = s.x() + xShift;
+        double y0 = s.y() - heightCar / 2;
+        double x1 = x0 + widthCar;
+        double y1 = y0 + heightCar;
+        double xrearWind = x0 + (x1 - x0) * 0.1;
+        double xfrontWind1 = x0 + (x1 - x0) * 0.55;
+        double xfrontWind2 = x0 + (x1 - x0) * 0.7;
+        lines.add(LineSegment.black(x0, y0, x0, y1));
+        lines.add(LineSegment.black(x0, y1, x0 + widthCar / 2.0, y1));
+        lines.add(LineSegment.black(x0 + widthCar / 2.0, y1, x1, y1));
+        lines.add(LineSegment.black(x1, y1, x1, y0));
+        lines.add(LineSegment.black(x1, y0, x0 + widthCar / 2.0, y0));
+        lines.add(LineSegment.black(x0 + widthCar / 2.0, y0, x0, y0));
+        lines.add(LineSegment.black(xrearWind, y1, xrearWind, y0));
+        lines.add(LineSegment.black(xfrontWind1, y1, xfrontWind1, y0));
+        lines.add(LineSegment.black(xfrontWind2, y1, xfrontWind2, y0));
+        return widthbull;
+    }
+
     private static double scale(ScalerLinear scaler, double value, double vMin) {
         return scaler.calcOutDouble(MathUtil.clip(value, vMin, 0.0));
     }
@@ -171,13 +182,12 @@ public class AnimationRoad     {
         return new double[nRows][nCol];
     }
 
-
     private static AnimationSettings createSetting() {
         return AnimationSettings.builder()
                 .frameWidth(WIDTH).frameHeight(HEIGHT)
                 .frameXLocation(100).frameYLocation(200)
                 .panelWidth(WIDTH).panelHeight(HEIGHT)
-                .tableWidth(WIDTH).tableHeight(HEIGHT/2)
+                .tableWidth(WIDTH).tableHeight(HEIGHT / 2)
                 .order(List.of(Step.LINE, Step.HEATMAP, Step.TABLE))
                 .margin(0)
                 .build();
