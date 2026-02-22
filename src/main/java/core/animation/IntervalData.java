@@ -4,6 +4,10 @@ import java.util.List;
 
 public record IntervalData(double[] cuts, double[] values) {
 
+    public static IntervalData empty() {
+        return IntervalData.of(List.of(), List.of());
+    }
+
     public static IntervalData of(List<Double> cuts, List<Double> values) {
         return new IntervalData(cuts, values);
     }
@@ -21,4 +25,5 @@ public record IntervalData(double[] cuts, double[] values) {
         cuts = cuts.clone();
         values = values.clone();
     }
+
 }

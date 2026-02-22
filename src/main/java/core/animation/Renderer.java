@@ -41,14 +41,9 @@ public class Renderer {
 
             for (JFreeChart chart : heatCharts) {
                 int i = heatCharts.indexOf(chart);
-                i=Math.min(i, dto.getGrid(i).length-1);
-                System.out.println("i = " + i);
                 var dataset = new DefaultXYZDataset();
                 dataset.removeSeries(SERIES_NAME);
                 dataset.addSeries(SERIES_NAME, dto.getGrid(i));
-
-                System.out.println("dto.getGrid(i) = " + Arrays.deepToString(dto.getGrid(i)));
-
                 chart.getXYPlot().setDataset(dataset);
             }
             for (DefaultTableModel tableModel : tableModels) {

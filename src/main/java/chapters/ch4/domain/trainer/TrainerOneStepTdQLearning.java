@@ -51,10 +51,14 @@ public class TrainerOneStepTdQLearning implements TrainerGridI {
         d.clearTimer();
         log.info("Starting training");
         animation.start();
+
         for (int ei = 0; ei < d.getNofEpisodes(); ei++) {
             var s = d.getStartState();
             d.resetBeforeEpisode();
-            StepReturnGrid sr=null;
+            StepReturnGrid sr=StepReturnGrid.ofNotTerminal(s,0);
+            //postStep(animation, s, ei, d, sr);
+            animation.postEpisode(d.agent(),d.environment());
+
             while (d.notTerminalStateAndNotToManySteps(s)) {
                 var action = d.chooseAction(s, ei);
                 sr = d.takeAction(s, action);

@@ -1,8 +1,12 @@
 package core.animation;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+
 import java.util.Arrays;
 import java.util.function.DoubleUnaryOperator;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DelayIntervalFunction {
 
     /** [cuts[i], cuts[i+1]) -> values[i], last: [cuts[last], +inf) */

@@ -13,13 +13,13 @@ import static chapters.ch4.plotting.GridPlotShowAndSave.showAndSavePlots;
 public class RunnerTrainerRoadAnimation {
 
     public static final int NOF_DIGITS = 2;
-    public static final int N_EPISODES = 100;
+    public static final int N_EPISODES = 1000;
 
     public static void main(String[] args) {
         var dep = RoadRunnerFactory.animation(N_EPISODES);
         var trainer = TrainerOneStepTdQLearning.of(dep);
         trainer.trainAnimation();
-        plot(dep, trainer.getRecorder());
+      //  plot(dep, trainer.getRecorder());
     }
 
     private static void plot(TrainerGridDependencies dep, RecorderProgressMeasures recorder) {
