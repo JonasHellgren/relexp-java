@@ -1,22 +1,20 @@
 package chapters.ch4.implem_animation;
 
 import chapters.ch4.domain.animation.AnimationGridI;
+import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
 import chapters.ch4.implem.treasure.core.InformerTreasure;
 import core.animation.*;
+import core.foundation.gadget.math.ScalerLinear;
 import core.foundation.util.cond.ConditionalsUtil;
-import core.gridrl.AgentGridI;
-import core.gridrl.EnvironmentGridI;
-import core.gridrl.InformerGridParamsI;
-import core.gridrl.StateGrid;
+import core.foundation.util.math.MathUtil;
+import core.gridrl.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
 import oshi.util.FormatUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.DoubleUnaryOperator;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -29,7 +27,7 @@ public class AnimationTreasure implements AnimationGridI {
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
             List.of(0.0, 10.0, 99990.0),  //cuts
-            List.of(1000.0, 1.0, 1000.0)   //animation time delays
+            List.of(100.0, 1.0, 100.0)   //animation time delays
     );
 
     AnimationKit kitStep, kitEpisode;
@@ -45,14 +43,14 @@ public class AnimationTreasure implements AnimationGridI {
     }
 
     public static AnimationTreasure create(EnvironmentGridI env0) {
-        EnvironmentTreasure env = (EnvironmentTreasure) env0;
+        var env = (EnvironmentTreasure) env0;
         var asStep = createSetting();
         var asEpisode = createSetting()
                 .withFrameXLocation(WIDTH * 2).withFrameHeight(HEIGHT * 2)
-                .withTableWidth((int) (WIDTH * 0.75)).withTableHeight(HEIGHT / 2);
+                .withTableWidth((int) (WIDTH * 0.75)).withTableHeight((int) (HEIGHT*0.8));
         return new AnimationTreasure(
                 AnimationKit.of(environmentGfx(asStep, env), asStep),
-                AnimationKit.of(episodeGfx(asEpisode), asEpisode),
+                AnimationKit.of(episodeGfx(asEpisode,env), asEpisode),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP),
                 env.informer());
     }
@@ -132,9 +130,41 @@ public class AnimationTreasure implements AnimationGridI {
 
     @Override
     public void postEpisode(AgentGridI agent, EnvironmentGridI env0) {
+        if (isEmpty()) return;
+        int nCol = informer.getPosXMinMax().getSecond();
+        int nRows = informer.getPosYMinMax().getSecond()+ 1;;
+        double vMin = 0;
+        double vMax = 10;
+        var scaler = ScalerLinear.of(vMin, vMax, 0.0, 1.0);
+        Map<ActionGrid, double[][]> aGrids = new HashMap<>();
+        informer.getValidActions().forEach(ay -> {
+            aGrids.put(ay, emptyGrid(nRows, nCol));
+        });
+        double[][] vGrid = emptyGrid(nRows, nCol);
+        Object[][] policyGrid = new Object[nRows][nCol];
+        for (int x = 0; x < nCol; x++) {
+            for (int y = 0; y < nRows; y++) {
+                var s = StateGrid.of(x, y);
+                double value = agent.readValue(s);
+                vGrid[y][x] = scale(scaler, value);
+                policyGrid[nRows - 1 - y][x] = agent.chooseActionNoExploration(s).toString();
+                for (ActionGrid a : informer.getValidActions()) {
+                    double av = agent.read(s, a);
+                    aGrids.get(a)[y][x] = scale(scaler, av);
+                }
+            }
+        }
 
+        List<double[][]> grids = new ArrayList<>();
+        informer.getValidActions().forEach(a -> grids.add(GridFactory.toSeries(aGrids.get(a))));
+        grids.add(GridFactory.toSeries(vGrid));
+        var dto = GraphicsDto.builder()
+                .grids(grids)
+                .tableData(Collections.singletonList(policyGrid))
+                .animationDelay(0)
+                .build();
+        kitEpisode.postAndSleep(dto);
     }
-
 
     private static void addSeekerLines(StateGrid s, List<LineSegment> lines) {
         double x0 = s.x();
@@ -152,16 +182,25 @@ public class AnimationTreasure implements AnimationGridI {
         return factory;
     }
 
-    private static GfxComponentFactory episodeGfx(AnimationSettings as) {
+    private static   GfxComponentFactory episodeGfx(AnimationSettings as, EnvironmentTreasure env) {
+        var informer = env.informer();
         var factory = GfxComponentFactory.of(as);
         factory.addHeatMap("N");
         factory.addHeatMap("E");
         factory.addHeatMap("S");
+        factory.addHeatMap("W");
         factory.addHeatMap("Value");
-        factory.addTable(3, true);
+        factory.addTable(informer.getPosXMinMax().getSecond(), true);
         return factory;
     }
 
+    private static double scale(ScalerLinear scaler, double value) {
+        return scaler.calcOutDouble(MathUtil.clip(value, scaler.d0, scaler.d1));
+    }
+
+    private static double[][] emptyGrid(Integer nRows, Integer nCol) {
+        return new double[nRows][nCol];
+    }
 
     private static AnimationSettings createSetting() {
         return AnimationSettings.builder()

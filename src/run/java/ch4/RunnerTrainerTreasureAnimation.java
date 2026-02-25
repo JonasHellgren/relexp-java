@@ -15,7 +15,7 @@ public class RunnerTrainerTreasureAnimation {
     public static final int NOF_DIGITS = 0;
 
     public static void main(String[] args) {
-        var dep=TreasureRunnerFactory.produceDependencies().lowExploration();
+        var dep=TreasureRunnerFactory.produceDependencies().highExploration();
         var trainer= TrainerOneStepTdQLearning.of(dep);
         var env=dep.environment();
         trainer.train(AnimationTreasure.create(env));
