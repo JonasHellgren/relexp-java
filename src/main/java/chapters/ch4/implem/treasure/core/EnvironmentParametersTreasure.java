@@ -33,5 +33,11 @@ public record EnvironmentParametersTreasure (
      Function<StateGrid, Double> rewardAtGoalPos,
      Double rewardMove)
 
-{}
+{
+
+
+    public static EnvironmentParametersTreasure empty() {
+        return EnvironmentParametersTreasure.builder().build();
+    }
+}
 

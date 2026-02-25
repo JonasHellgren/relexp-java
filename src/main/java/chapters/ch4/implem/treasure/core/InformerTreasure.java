@@ -7,17 +7,23 @@ import core.gridrl.ActionGrid;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.apache.commons.math3.util.Pair;
 
 import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public class InformerTreasure implements InformerGridParamsI {
 
     EnvironmentParametersTreasure par;
 
     public static InformerTreasure create(EnvironmentParametersTreasure parameters) {
         return new InformerTreasure(parameters);
+    }
+
+    public static InformerTreasure empty() {
+        return new InformerTreasure(EnvironmentParametersTreasure.empty());
     }
 
 

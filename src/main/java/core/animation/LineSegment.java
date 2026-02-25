@@ -29,4 +29,12 @@ public record LineSegment(
     public static LineSegment redBold(double x1, double y1, double x2, double y2) {
         return new LineSegment(x1, y1, x2, y2, 15f, END_ROUNDING, JOINING, Color.RED);
     }
+
+    public static LineSegment goldSmall(double x1, double y1) {
+        return new LineSegment(x1, y1, x1, y1, 5f, END_ROUNDING, JOINING, Color.YELLOW);
+    }
+
+    public static LineSegment goldBig(double x1, double y1) {
+        return new LineSegment(x1, y1, x1, y1, 15f, END_ROUNDING, JOINING, Color.YELLOW);
+    }
 }

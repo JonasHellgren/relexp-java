@@ -1,12 +1,17 @@
 package chapters.ch4.implem_animation;
 
 import chapters.ch4.domain.animation.AnimationGridI;
+import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
+import chapters.ch4.implem.treasure.core.InformerTreasure;
 import core.animation.*;
+import core.foundation.util.cond.ConditionalsUtil;
 import core.gridrl.AgentGridI;
 import core.gridrl.EnvironmentGridI;
+import core.gridrl.InformerGridParamsI;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.apache.commons.math3.util.Pair;
 import oshi.util.FormatUtil;
 
 import java.util.ArrayList;
@@ -29,23 +34,27 @@ public class AnimationTreasure implements AnimationGridI {
 
     AnimationKit kitStep, kitEpisode;
     DoubleUnaryOperator delayFunction;
+    InformerGridParamsI informer;
 
     public static AnimationTreasure empty() {
         return new AnimationTreasure(
                 AnimationKit.empty(),
                 AnimationKit.empty(),
-                DelayIntervalFunction.from(IntervalData.empty()));
+                DelayIntervalFunction.from(IntervalData.empty()),
+                InformerTreasure.empty());
     }
 
-    public static AnimationTreasure create(EnvironmentGridI env) {
+    public static AnimationTreasure create(EnvironmentGridI env0) {
+        EnvironmentTreasure env = (EnvironmentTreasure) env0;
         var asStep = createSetting();
         var asEpisode = createSetting()
                 .withFrameXLocation(WIDTH * 2).withFrameHeight(HEIGHT * 2)
                 .withTableWidth((int) (WIDTH * 0.75)).withTableHeight(HEIGHT / 2);
         return new AnimationTreasure(
-                AnimationKit.of(environmentGfx(asStep,env), asStep),
+                AnimationKit.of(environmentGfx(asStep, env), asStep),
                 AnimationKit.of(episodeGfx(asEpisode), asEpisode),
-                DelayIntervalFunction.from(ANIMATIONS_SLEEP));
+                DelayIntervalFunction.from(ANIMATIONS_SLEEP),
+                env.informer());
     }
 
     @Override
@@ -64,8 +73,8 @@ public class AnimationTreasure implements AnimationGridI {
     public void postStep(StateGrid s, int ei, int eiMax, double pRand, double reward) {
         if (isEmpty()) return;
         List<LineSegment> lines = new ArrayList<>();
-        addSeekerLines(s,lines);
-        //   addFixedObjectsLines(s, lines);
+        addSeekerLines(s, lines);
+        addFixedObjectsLines(lines);
         var lineData = List.of(lines);
         var tableData = Collections.singletonList(new Object[][]{
                 {"episode", String.valueOf(ei)},
@@ -84,6 +93,43 @@ public class AnimationTreasure implements AnimationGridI {
         kitStep.postAndSleep(dto);
     }
 
+    private void addFixedObjectsLines(List<LineSegment> lines) {
+        var xMinMax = informer.getPosXMinMax();
+        var yMinMax = informer.getPosYMinMax();
+        double ox = 0.5;  //x offset
+        double oy = 0.5;  //y offset
+        //cells
+        for (int x = xMinMax.getFirst(); x <= xMinMax.getSecond(); x++) {
+            for (int y = yMinMax.getFirst(); y <= yMinMax.getSecond(); y++) {
+                var s = StateGrid.of(x, y);
+                ConditionalsUtil.executeIfTrue(informer.isFail(s), () ->
+                        lines.add(LineSegment.redBold(s.x(), s.y(), s.x(), s.y())));
+                ConditionalsUtil.executeIfTrue(informer.isWall(s), () -> {
+                    lines.add(LineSegment.black(s.x() - ox, s.y() - oy, s.x() - ox, s.y() + oy));
+                    lines.add(LineSegment.black(s.x() + ox, s.y() - oy, s.x() + ox, s.y() + oy));
+                    lines.add(LineSegment.black(s.x() - ox, s.y() - oy, s.x() + ox, s.y() - oy));
+                    lines.add(LineSegment.black(s.x() - ox, s.y() + oy, s.x() + ox, s.y() + oy));
+                });
+                ConditionalsUtil.executeIfTrue(s.equals(StateGrid.of(4, 0)), () ->
+                        lines.add(LineSegment.goldSmall(s.x(), s.y())));
+                ConditionalsUtil.executeIfTrue(s.equals(StateGrid.of(9, 1)), () ->
+                        lines.add(LineSegment.goldBig(s.x(), s.y())));
+            }
+        }
+
+        //surrounding walls
+        var xmin = xMinMax.getFirst() - ox;
+        var xmax = xMinMax.getSecond() + ox;
+        var ymin = yMinMax.getFirst() - oy;
+        var ymax = yMinMax.getSecond() + oy;
+        lines.add(LineSegment.black(xmin, ymin, xmin, ymax));
+        lines.add(LineSegment.black(xmax, ymin, xmax, ymax));
+        lines.add(LineSegment.black(xmin, ymin, xmax, ymin));
+        lines.add(LineSegment.black(xmin, ymax, xmax, ymax));
+
+
+    }
+
     @Override
     public void postEpisode(AgentGridI agent, EnvironmentGridI env0) {
 
@@ -99,9 +145,9 @@ public class AnimationTreasure implements AnimationGridI {
 
     private static GfxComponentFactory environmentGfx(AnimationSettings as, EnvironmentGridI env) {
         var factory = GfxComponentFactory.of(as);
-        var posxMinMax= env.informer().getPosXMinMax();
-        var posyMinMax= env.informer().getPosYMinMax();
-        factory.addLineChart("", "x", -1, posxMinMax.getSecond()+1, "y", -1, posyMinMax.getSecond()+1);
+        var posxMinMax = env.informer().getPosXMinMax();
+        var posyMinMax = env.informer().getPosYMinMax();
+        factory.addLineChart("", "x", -1, posxMinMax.getSecond() + 1, "y", -1, posyMinMax.getSecond() + 1);
         factory.addTable(N_COLUMNS, false);
         return factory;
     }
