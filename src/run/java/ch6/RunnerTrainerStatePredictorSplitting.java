@@ -64,12 +64,14 @@ public class RunnerTrainerStatePredictorSplitting {
 
 
     private static TrainerStatePredictor defineTrainerOpt(int nStepsHorizon) {
-        var dependencies = TrainerDependenciesFactorySplitting.givenOptimalPolicySplitting(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
+        var dependencies = TrainerDependenciesFactorySplitting.givenOptimalPolicySplitting(
+                nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
         return TrainerStatePredictor.of(dependencies);
     }
 
     private static TrainerStatePredictor defineTrainer(int nStepsHorizon) {
-        var dependencies = TrainerDependenciesFactorySplitting.givenRandomPolicySplitting(nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
+        var dependencies = TrainerDependenciesFactorySplitting.givenRandomPolicySplitting(
+                nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
         return TrainerStatePredictor.of(dependencies);
     }
 

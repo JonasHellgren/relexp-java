@@ -1,10 +1,17 @@
 package chapters.ch6.domain.trainers.state_predictor;
 
+import chapters.ch4.domain.animation.AnimationGridI;
+import chapters.ch4.implem_animation.AnimationRoad;
+import chapters.ch6.domain.animation.AnimationDummy;
+import chapters.ch6.domain.animation.AnimationGridMultiStepI;
 import chapters.ch6.domain.trainer_dep.episode_generator.EpisodeGeneratorGrid;
 import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import chapters.ch6.domain.trainer_dep.core.TrainerI;
 import chapters.ch6.domain.trainer_dep.result_generator.MultiStepResultsGeneratorGrid;
 import core.foundation.gadget.math.LogarithmicDecay;
+import core.gridrl.StateGrid;
+import core.gridrl.StepReturnGrid;
+import core.gridrl.TrainerGridDependencies;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,12 +45,18 @@ public class TrainerStatePredictor implements TrainerI {
         return new TrainerStatePredictor(dependencies);
     }
 
+
     @Override
     public void train() {
+        train(AnimationDummy.empty());
+    }
+
+    public void train(AnimationGridMultiStepI animation) {
         var generator = EpisodeGeneratorGrid.of(dependencies);
         var lr = dependencies.trainerParameters().learningRateStartAndEnd();
         var decLearningRate = LogarithmicDecay.of(lr.getFirst(), lr.getSecond(), dependencies.getNofEpisodes());
         var msGenerator = MultiStepResultsGeneratorGrid.of(dependencies);
+        animation.start();
 
         for (int i = 0; i < dependencies.getNofEpisodes(); i++) {
             var experienceList = generator.generate(PROB_RANDOM);
@@ -53,6 +66,12 @@ public class TrainerStatePredictor implements TrainerI {
             for (int j = 0; j < msResults.size(); j++) {
                 agent.fit(msResults.resultAtStep(j), learningRate);
             }
+            animation.postEpisode(dependencies.agent(), dependencies.environment(),i);
         }
     }
+
+    private static void postStep(AnimationGridI animation, StateGrid s, int ei, TrainerGridDependencies d, StepReturnGrid sr) {
+        animation.postStep(s, ei, d.getNofEpisodes(), d.probRandom(ei), sr.reward());
+    }
+
 }

@@ -2,6 +2,8 @@ package core.foundation.config;
 
 import core.foundation.util.cond.ConditionalsUtil;
 import lombok.extern.java.Log;
+import oshi.util.FormatUtil;
+
 import java.util.Properties;
 
 @Log
@@ -35,5 +37,9 @@ public record AnimationConfig(
     public static AnimationConfig defaults() {
         return new AnimationConfig(50,1234,2,12,12);
     }
-    
+
+    public float round(double value) {
+        return FormatUtil.round((float) value,ndigits);
+
+    }
 }
