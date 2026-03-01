@@ -6,13 +6,10 @@ import lombok.Getter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GfxComponentFactory {
@@ -41,7 +38,7 @@ public class GfxComponentFactory {
 
     public void addLineChart(
             String title, String xlabel, int minx, int maxx, String ylabel, int miny, int maxy) {
-        var chart = ChartFactoryUtil.createEmptyXYChart(title, "X", "Y");
+        var chart = ChartFactory.emptyLineChart(title);
         CharAndPanelSizeSetter.setXaxisRange(chart, xlabel, minx, maxx);
         CharAndPanelSizeSetter.setYaxisRange(chart, ylabel, miny, maxy);
         lineCharts.add(chart);
@@ -50,8 +47,10 @@ public class GfxComponentFactory {
         linePanels.add(panel);
     }
 
+
+
     public void addHeatMap(String title) {
-        var chart = ChartFactory.emptyChart(title);
+        var chart = ChartFactory.emptyHeatMapChart(title);
         var panel = new ChartPanel(chart);
         CharAndPanelSizeSetter.setSize(panel, settings.panelWidth(), settings.panelHeight());
         heatMapPanels.add(panel);
@@ -60,8 +59,8 @@ public class GfxComponentFactory {
 
     public void addTable(int nColumns, boolean showGrid) {
         String[] columnNames = ArrayUtils.EMPTY_STRING_ARRAY;
-        for (int i = 0; i <nColumns ; i++) {
-            columnNames= ArrayUtils.add(columnNames, "");
+        for (int i = 0; i < nColumns; i++) {
+            columnNames = ArrayUtils.add(columnNames, "");
         }
         addTable(columnNames, showGrid);
     }

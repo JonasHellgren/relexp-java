@@ -39,7 +39,7 @@ public record AnimationKit(
 
     private void showFrame() {
         if (isEmpty()) return;
-        JPanel root = gxfFactory.getRootPanel();
+        var root = gxfFactory.getRootPanel();
         FrameUtil.showFrame(root,
                 settings.frameWidth(),
                 settings.frameHeight(),

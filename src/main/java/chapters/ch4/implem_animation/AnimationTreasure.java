@@ -26,8 +26,8 @@ public class AnimationTreasure implements AnimationGridI {
     static final int N_DIGITS = 2;
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
-            List.of(0.0, 10.0, 99990.0),  //cuts
-            List.of(100.0, 1.0, 100.0)   //animation time delays
+            List.of(0.0, 30.0, 99990.0),  //cuts
+            List.of(100.0, 1.0, 500.0)   //animation time delays
     );
 
     AnimationKit kitStep, kitEpisode;
@@ -133,8 +133,8 @@ public class AnimationTreasure implements AnimationGridI {
         if (isEmpty()) return;
         int nCol = informer.getPosXMinMax().getSecond();
         int nRows = informer.getPosYMinMax().getSecond()+ 1;;
-        double vMin = 0;
-        double vMax = 10;
+        double vMin = -1;
+        double vMax = 10*1.5;
         var scaler = ScalerLinear.of(vMin, vMax, 0.0, 1.0);
         Map<ActionGrid, double[][]> aGrids = new HashMap<>();
         informer.getValidActions().forEach(ay -> {

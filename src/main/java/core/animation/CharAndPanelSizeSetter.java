@@ -3,6 +3,7 @@ package core.animation;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +31,7 @@ public class CharAndPanelSizeSetter {
         var axis = new NumberAxis(label);
         chart.getXYPlot().setDomainAxis(axis);
         axis.setRange(minx, maxx);
+        axis.setLabelFont(new Font("Arial", Font.BOLD, 12));
     }
 
 }
