@@ -5,6 +5,7 @@ import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
 import chapters.ch4.implem.treasure.core.InformerTreasure;
 import core.animation.*;
+import core.foundation.config.AnimationConfig;
 import core.foundation.gadget.math.ScalerLinear;
 import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.util.math.MathUtil;
@@ -12,6 +13,7 @@ import core.gridrl.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
+import org.nd4j.shade.guava.collect.Range;
 import oshi.util.FormatUtil;
 
 import java.util.*;
@@ -23,7 +25,7 @@ public class AnimationTreasure implements AnimationGridI {
     static final int HEIGHT = 300;
     static final int WIDTH = 300;
     static final int N_COLUMNS = 2;
-    static final int N_DIGITS = 2;
+  //  static final int N_DIGITS = 2;
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
             List.of(0.0, 30.0, 99990.0),  //cuts
@@ -33,26 +35,29 @@ public class AnimationTreasure implements AnimationGridI {
     AnimationKit kitStep, kitEpisode;
     DoubleUnaryOperator delayFunction;
     InformerGridParamsI informer;
+    AnimationConfig cfg;
 
     public static AnimationTreasure empty() {
         return new AnimationTreasure(
                 AnimationKit.empty(),
                 AnimationKit.empty(),
                 DelayIntervalFunction.from(IntervalData.empty()),
-                InformerTreasure.empty());
+                InformerTreasure.empty(),
+                AnimationConfig.defaults());
     }
 
-    public static AnimationTreasure create(EnvironmentGridI env0) {
+    public static AnimationTreasure create(EnvironmentGridI env0, AnimationConfig cfg) {
         var env = (EnvironmentTreasure) env0;
-        var asStep = createSetting();
-        var asEpisode = createSetting()
+        var asStep = createSetting(cfg);
+        var asEpisode = createSetting(cfg)
                 .withFrameXLocation(WIDTH * 2).withFrameHeight(HEIGHT * 2)
                 .withTableWidth((int) (WIDTH * 0.75)).withTableHeight((int) (HEIGHT*0.8));
         return new AnimationTreasure(
                 AnimationKit.of(environmentGfx(asStep, env), asStep),
                 AnimationKit.of(episodeGfx(asEpisode,env), asEpisode),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP),
-                env.informer());
+                env.informer(),
+                cfg);
     }
 
     @Override
@@ -77,7 +82,8 @@ public class AnimationTreasure implements AnimationGridI {
         var tableData = Collections.singletonList(new Object[][]{
                 {"episode", String.valueOf(ei)},
                 {"number of episodes", String.valueOf(eiMax)},
-                {"reward", round(reward)},
+                {"reward", reward},
+                //{"reward", round(reward)},
                 {"probability random action", round(pRand)},
                 {"x pos", s.x()},
                 {"y pos", s.y()}
@@ -177,7 +183,9 @@ public class AnimationTreasure implements AnimationGridI {
         var factory = GfxComponentFactory.of(as);
         var posxMinMax = env.informer().getPosXMinMax();
         var posyMinMax = env.informer().getPosYMinMax();
-        factory.addLineChart("", "x", -1, posxMinMax.getSecond() + 1, "y", -1, posyMinMax.getSecond() + 1);
+        factory.addLineChart("",
+                "x", Pair.create(-1, posxMinMax.getSecond() + 1),
+                "y", Pair.create(-1, posyMinMax.getSecond() + 1));
         factory.addTable(N_COLUMNS, false);
         return factory;
     }
@@ -202,7 +210,7 @@ public class AnimationTreasure implements AnimationGridI {
         return new double[nRows][nCol];
     }
 
-    private static AnimationSettings createSetting() {
+    private static AnimationSettings createSetting(AnimationConfig cfg) {
         return AnimationSettings.builder()
                 .frameWidth(WIDTH).frameHeight(HEIGHT)
                 .frameXLocation(100).frameYLocation(200)
@@ -210,12 +218,15 @@ public class AnimationTreasure implements AnimationGridI {
                 .tableWidth(WIDTH).tableHeight(HEIGHT / 2)
                 .order(List.of(Step.LINE, Step.HEATMAP, Step.TABLE))
                 .margin(0)
+                .ndigits(cfg.ndigits())
+                .fontsize(cfg.fontsize())
+                .fontsizeAxis(cfg.fontsizeAxis())
                 .build();
     }
 
 
-    private static float round(double pRand) {
-        return FormatUtil.round((float) pRand, N_DIGITS);
+    private  float round(double pRand) {
+        return FormatUtil.round((float) pRand,cfg.ndigits() );
     }
 
 }

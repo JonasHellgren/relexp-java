@@ -7,7 +7,10 @@ import java.util.Properties;
 @Log
 public record AnimationConfig(
         int sleepTimeAnimationMs,
-        int socketPort
+        int socketPort,
+        int ndigits,
+        int fontsizeAxis,
+        int fontsize
 ) {
 
     public static AnimationConfig extract(Properties props) {
@@ -22,12 +25,15 @@ public record AnimationConfig(
     public static AnimationConfig extract(ConfigReader r) {
         return new AnimationConfig(
                 r.requireInt("anim.sleepTimeMs"),
-                r.requireInt("anim.socketPort")
+                r.requireInt("anim.socketPort"),
+                r.requireInt("anim.ndigits"),
+                r.requireInt("anim.fontsizeAxis"),
+                r.requireInt("anim.fontsize")
         );
     }
 
     public static AnimationConfig defaults() {
-        return new AnimationConfig(50,1234);
+        return new AnimationConfig(50,1234,2,12,12);
     }
     
 }

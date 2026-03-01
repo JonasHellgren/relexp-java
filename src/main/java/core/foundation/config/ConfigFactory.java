@@ -26,4 +26,5 @@ public class ConfigFactory {
         var loader = getPropertiesLoader();
         return AnimationConfig.extract(loader.loadProperties());
     }
+
 }

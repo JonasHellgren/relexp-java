@@ -1,6 +1,8 @@
 package core.animation;
 
 import com.google.common.eventbus.Subscribe;
+import core.foundation.config.AnimationConfig;
+import core.foundation.util.formatting.NumberFormatterUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.jfree.chart.JFreeChart;
@@ -22,9 +24,9 @@ public class Renderer {
     private List<DefaultTableModel> tableModels;
 
     public static Renderer of(List<JFreeChart> lineCharts,
-                           List<JFreeChart> heatCharts,
-                           List<DefaultTableModel> tableModels) {
-         return new Renderer(lineCharts, heatCharts, tableModels);
+                              List<JFreeChart> heatCharts,
+                              List<DefaultTableModel> tableModels) {
+        return new Renderer(lineCharts, heatCharts, tableModels);
     }
 
     @Subscribe
@@ -35,7 +37,7 @@ public class Renderer {
                 int i = lineCharts.indexOf(chart);
                 deleteOldLines(chart);
                 addNewLines(chart, dto.getLines(i));
-                var color=dto.isFail()?Color.RED:Color.WHITE;
+                var color = dto.isFail() ? Color.RED : Color.WHITE;
                 chart.setBackgroundPaint(color);
             }
 
@@ -70,19 +72,14 @@ public class Renderer {
             for (int col = 0; col < tableData[row].length; col++) {
                 if (tableData[row][col] instanceof Number) {
                     Number number = (Number) tableData[row][col];
-                    tableData[row][col] = roundNumber(number);
+                    tableData[row][col] = number;
                 }
             }
         }
     }
 
-    private Object roundNumber(Number number) {
-        double value = number.doubleValue();
-        return Math.round(value * 100.0) / 100.0;
-    }
-
-    private void addNewLines(JFreeChart chart,List<LineSegment> lines) {
-        var plot=chart.getXYPlot();
+    private void addNewLines(JFreeChart chart, List<LineSegment> lines) {
+        var plot = chart.getXYPlot();
         for (var l : lines) {
             var ann = getAnnotation(l);
             plot.addAnnotation(ann);
@@ -106,7 +103,6 @@ public class Renderer {
                 stroke, l.color()
         );
     }
-
 
 
 }

@@ -11,6 +11,7 @@ import core.gridrl.EnvironmentGridI;
 import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.apache.commons.math3.util.Pair;
 import oshi.util.FormatUtil;
 
 import java.util.*;
@@ -63,7 +64,9 @@ public class AnimationRoad implements AnimationGridI {
 
     private static GfxComponentFactory environmentGfx(AnimationSettings as) {
         var factory = GfxComponentFactory.of(as);
-        factory.addLineChart("", "x", 0, 4, "y", -1, 2);
+        factory.addLineChart("",
+                "x",  Pair.create(0, 4),
+                "y",  Pair.create(-1, 2));
         factory.addTable(N_COLUMNS, false);
         return factory;
     }

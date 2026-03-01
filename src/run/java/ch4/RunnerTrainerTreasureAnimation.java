@@ -18,7 +18,8 @@ public class RunnerTrainerTreasureAnimation {
         var dep=TreasureRunnerFactory.produceDependencies().lowExploration();
         var trainer= TrainerOneStepTdQLearning.of(dep);
         var env=dep.environment();
-        trainer.train(AnimationTreasure.create(env));
+        var animConfig=ConfigFactory.getAnimationConfig();
+        trainer.train(AnimationTreasure.create(env,animConfig));
     }
 
     private static void plot(TrainerGridDependencies dep, TrainerGridI trainer) {

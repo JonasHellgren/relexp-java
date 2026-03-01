@@ -4,10 +4,13 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.math3.util.Pair;
+import org.jetbrains.annotations.NotNull;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,22 +40,21 @@ public class GfxComponentFactory {
     }
 
     public void addLineChart(
-            String title, String xlabel, int minx, int maxx, String ylabel, int miny, int maxy) {
+            String title, String xlabel, Pair<Integer, Integer> xRange, String ylabel, Pair<Integer, Integer> yRange) {
         var chart = ChartFactory.emptyLineChart(title);
-        CharAndPanelSizeSetter.setXaxisRange(chart, xlabel, minx, maxx);
-        CharAndPanelSizeSetter.setYaxisRange(chart, ylabel, miny, maxy);
+        CharAndPanelSizeSetter.setXaxisRange(chart, xlabel, xRange, getLabelFont(settings.fontsizeAxis()));
+        CharAndPanelSizeSetter.setYaxisRange(chart, ylabel, yRange, getLabelFont(settings.fontsizeAxis()));
         lineCharts.add(chart);
         ChartPanel panel = new ChartPanel(chart);
-        CharAndPanelSizeSetter.setSize(panel, settings.panelWidth(), settings.panelHeight());
+        CharAndPanelSizeSetter.setSizePanel(panel, settings.panelWidth(), settings.panelHeight());
         linePanels.add(panel);
     }
-
 
 
     public void addHeatMap(String title) {
         var chart = ChartFactory.emptyHeatMapChart(title);
         var panel = new ChartPanel(chart);
-        CharAndPanelSizeSetter.setSize(panel, settings.panelWidth(), settings.panelHeight());
+        CharAndPanelSizeSetter.setSizePanel(panel, settings.panelWidth(), settings.panelHeight());
         heatMapPanels.add(panel);
         heatMapCharts.add(chart);
     }
@@ -68,7 +70,7 @@ public class GfxComponentFactory {
     public void addTable(String[] columnNames, boolean showGrid) {
         var tm = TableModelFactory.of(columnNames);
         var panel = getTablePanel(tm, showGrid);
-        CharAndPanelSizeSetter.setSize(panel, settings.tableWidth(), settings.tableHeight());
+        CharAndPanelSizeSetter.setTable(panel, settings.tableWidth(), settings.tableHeight());
         tableModels.add(tm);
         tablePanels.add(panel);
     }
@@ -84,6 +86,13 @@ public class GfxComponentFactory {
         table1.setShowGrid(showGrid);
         return new JScrollPane(table1);
     }
+
+
+    @NotNull
+    private static Font getLabelFont(int size) {
+        return new Font("Arial", Font.BOLD, size);
+    }
+
 
 
 }

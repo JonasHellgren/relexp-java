@@ -17,7 +17,10 @@ public record AnimationSettings(
         int tableHeight,
         int tableWidth,
         List<Step> order,
-        int margin
+        int margin,
 
-) {
+        int ndigits,
+        int fontsizeAxis,
+        int fontsize
+        ) {
 }
