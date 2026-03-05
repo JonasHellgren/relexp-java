@@ -7,6 +7,7 @@ import chapters.ch6.domain.animation.AnimationGridMultiStepI;
 import chapters.ch6.domain.trainer_dep.episode_generator.EpisodeGeneratorGrid;
 import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import chapters.ch6.domain.trainer_dep.core.TrainerI;
+import chapters.ch6.domain.trainer_dep.result_generator.MultiStepResultGrid;
 import chapters.ch6.domain.trainer_dep.result_generator.MultiStepResultsGeneratorGrid;
 import core.foundation.gadget.math.LogarithmicDecay;
 import core.gridrl.StateGrid;
@@ -52,26 +53,34 @@ public class TrainerStatePredictor implements TrainerI {
     }
 
     public void train(AnimationGridMultiStepI animation) {
-        var generator = EpisodeGeneratorGrid.of(dependencies);
-        var lr = dependencies.trainerParameters().learningRateStartAndEnd();
-        var decLearningRate = LogarithmicDecay.of(lr.getFirst(), lr.getSecond(), dependencies.getNofEpisodes());
-        var msGenerator = MultiStepResultsGeneratorGrid.of(dependencies);
+        var d=dependencies;
+        var generator = EpisodeGeneratorGrid.of(d);
+        var lr = d.trainerParameters().learningRateStartAndEnd();
+        var decLearningRate = LogarithmicDecay.of(lr.getFirst(), lr.getSecond(), d.getNofEpisodes());
+        var msGenerator = MultiStepResultsGeneratorGrid.of(d);
         animation.start();
 
-        for (int i = 0; i < dependencies.getNofEpisodes(); i++) {
+        for (int ei = 0; ei < d.getNofEpisodes(); ei++) {
             var experienceList = generator.generate(PROB_RANDOM);
             var msResults = msGenerator.generate(experienceList);
-            var agent = dependencies.agent();
-            double learningRate = decLearningRate.calcOut(i);
-            for (int j = 0; j < msResults.size(); j++) {
-                agent.fit(msResults.resultAtStep(j), learningRate);
+            var agent = d.agent();
+            double learningRate = decLearningRate.calcOut(ei);
+            for (int si = 0; si < msResults.size(); si++) {
+                var ras = msResults.resultAtStep(si);
+                agent.fit(ras, learningRate);
+                postToAnimation(animation, ras, ei, d);
             }
-            animation.postEpisode(dependencies.agent(), dependencies.environment(),i);
+
         }
     }
 
-    private static void postStep(AnimationGridI animation, StateGrid s, int ei, TrainerGridDependencies d, StepReturnGrid sr) {
-        animation.postStep(s, ei, d.getNofEpisodes(), d.probRandom(ei), sr.reward());
+    private static void postToAnimation(AnimationGridMultiStepI animation,
+                                        MultiStepResultGrid ras,
+                                        int ei,
+                                        TrainerDependenciesMultiStep d) {
+        animation.postStep(ras.state(), ei,(int) d.getNofEpisodes(), 0, ras.sumRewards());
+        animation.postEpisode(d.agent(), d.environment(), ei);
     }
+
 
 }

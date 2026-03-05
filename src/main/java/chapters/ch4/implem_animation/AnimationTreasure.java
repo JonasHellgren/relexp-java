@@ -138,14 +138,12 @@ public class AnimationTreasure implements AnimationGridI {
     public void postEpisode(AgentGridI agent, EnvironmentGridI env0) {
         if (isEmpty()) return;
         int nCol = informer.getPosXMinMax().getSecond();
-        int nRows = informer.getPosYMinMax().getSecond()+ 1;;
+        int nRows = informer.getPosYMinMax().getSecond()+ 1;
         double vMin = -1;
         double vMax = 10*1.5;
         var scaler = ScalerLinear.of(vMin, vMax, 0.0, 1.0);
         Map<ActionGrid, double[][]> aGrids = new HashMap<>();
-        informer.getValidActions().forEach(ay -> {
-            aGrids.put(ay, emptyGrid(nRows, nCol));
-        });
+        informer.getValidActions().forEach(ay -> aGrids.put(ay, emptyGrid(nRows, nCol)));
         double[][] vGrid = emptyGrid(nRows, nCol);
         Object[][] policyGrid = new Object[nRows][nCol];
         for (int x = 0; x < nCol; x++) {
@@ -176,7 +174,6 @@ public class AnimationTreasure implements AnimationGridI {
         double x0 = s.x();
         double y0 = s.y();
         lines.add(LineSegment.blackBold(x0, y0, x0, y0));
-
     }
 
     private static GfxComponentFactory environmentGfx(AnimationSettings as, EnvironmentGridI env) {

@@ -15,19 +15,20 @@ import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
-
 import java.util.*;
 import java.util.function.DoubleUnaryOperator;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AnimationSplit implements AnimationGridMultiStepI {
-    static final int HEIGHT = 200;
+    static final int HEIGHT_ENV = 200;
+    static final int HEIGHT_VALUE = 200;
     static final int WIDTH = 300;
-    static final int FRAME_X_LOCATION = 100;
+    static final int FRAME_X_LOCATION_ENV = 100;
+    static final int FRAME_X_LOCATION_VALUES = 500;
     static final int N_COLUMNS = 2;
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
-            List.of(0.0, 30.0, 99990.0),  //cuts
+            List.of(0.0, 10.0, 100.0),  //cuts
             List.of(500.0, 1.0, 500.0)   //animation time delays
     );
 
@@ -47,10 +48,8 @@ public class AnimationSplit implements AnimationGridMultiStepI {
 
     public static AnimationSplit create(EnvironmentGridI env0, AnimationConfig cfg) {
         var env = (EnvironmentSplittingPath) env0;
-        var asStep = createSetting(cfg);
-        var asEpisode = createSetting(cfg)
-                .withFrameXLocation(FRAME_X_LOCATION).withFrameHeight(HEIGHT);
-                //.withTableWidth((int) (WIDTH * 0.75)).withTableHeight((int) (HEIGHT * 0.1));
+        var asStep = createSetting(cfg,HEIGHT_ENV, (int) (HEIGHT_ENV *0.35), FRAME_X_LOCATION_ENV);
+        var asEpisode = createSetting(cfg,HEIGHT_VALUE, HEIGHT_VALUE / 4, FRAME_X_LOCATION_VALUES);
         return new AnimationSplit(
                 AnimationKit.of(environmentGfx(asStep, env), asStep),
                 AnimationKit.of(episodeGfx(asEpisode, env), asEpisode),
@@ -73,8 +72,26 @@ public class AnimationSplit implements AnimationGridMultiStepI {
     }
 
     @Override
-    public void postStep(StateGrid s, int ei, int eiMax, double pRand, double reward) {
+    public void postStep(StateGrid s, int ei, int eiMax, double pRand, double sumReward) {
         if (isEmpty()) return;
+
+        if (isEmpty()) return;
+        List<LineSegment> lines = new ArrayList<>();
+        addSeekerLines(s, lines);
+        //addFixedObjectsLines(lines);
+        var lineData = List.of(lines);
+        var tableData = Collections.singletonList(new Object[][]{
+                {"episode", ei+"("+eiMax+")"},
+                {"sum rewards", sumReward},
+                {"(x,y) pos", "("+s.x()+","+s.y()+")"}
+        });
+        var dto = GraphicsDto.builder()
+                .lines(lineData)
+                .tableData(tableData)
+                .isFail(false)
+                .animationDelay((int) delayFunction.applyAsDouble(ei))
+                .build();
+        kitStep.postAndSleep(dto);
     }
 
     @Override
@@ -110,7 +127,7 @@ public class AnimationSplit implements AnimationGridMultiStepI {
         var dto = GraphicsDto.builder()
                 .grids(grids)
                 .tableData(Collections.singletonList(policyGrid))
-                .animationDelay((int) delayFunction.applyAsDouble(ei))
+                .animationDelay(0)
                 .build();
         kitEpisode.postAndSleep(dto);
     }
@@ -121,8 +138,8 @@ public class AnimationSplit implements AnimationGridMultiStepI {
         var posxMinMax = env.informer().getPosXMinMax();
         var posyMinMax = env.informer().getPosYMinMax();
         factory.addLineChart("",
-                "x", Pair.create(-1, posxMinMax.getSecond() + 1),
-                "y", Pair.create(-1, posyMinMax.getSecond() + 1));
+                "x", Pair.create(0, posxMinMax.getSecond()-1),
+                "y", Pair.create(-1, posyMinMax.getSecond()+1));
         factory.addTable(N_COLUMNS, false);
         return factory;
     }
@@ -135,13 +152,21 @@ public class AnimationSplit implements AnimationGridMultiStepI {
         return factory;
     }
 
+    private static void addSeekerLines(StateGrid s, List<LineSegment> lines) {
+        double x0 = s.x();
+        double y0 = s.y();
+        lines.add(LineSegment.blackBold(x0, y0, x0, y0));
+    }
 
-    private static AnimationSettings createSetting(AnimationConfig cfg) {
+    private static AnimationSettings createSetting(AnimationConfig cfg,
+                                                   int height,
+                                                   int tableHeight,
+                                                   int frameXLocation) {
         return AnimationSettings.builder()
-                .frameWidth(WIDTH).frameHeight(HEIGHT)
-                .frameXLocation(FRAME_X_LOCATION).frameYLocation(200)
-                .panelWidth(WIDTH).panelHeight(HEIGHT)
-                .tableWidth(WIDTH).tableHeight(HEIGHT / 2)
+                .frameWidth(WIDTH).frameHeight(height)
+                .frameXLocation(frameXLocation).frameYLocation(200)
+                .panelWidth(WIDTH).panelHeight(height)
+                .tableWidth(WIDTH).tableHeight(tableHeight)
                 .order(List.of(Step.LINE, Step.HEATMAP, Step.TABLE))
                 .margin(0)
                 .ndigits(cfg.ndigits())
