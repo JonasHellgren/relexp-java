@@ -1,7 +1,6 @@
 package chapters.ch4.implem_animation;
 
 import chapters.ch4.domain.animation.AnimationGridI;
-import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import chapters.ch4.implem.treasure.core.EnvironmentTreasure;
 import chapters.ch4.implem.treasure.core.InformerTreasure;
 import core.animation.*;
@@ -13,7 +12,6 @@ import core.gridrl.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
-import org.nd4j.shade.guava.collect.Range;
 import oshi.util.FormatUtil;
 
 import java.util.*;
@@ -25,7 +23,6 @@ public class AnimationTreasure implements AnimationGridI {
     static final int HEIGHT = 300;
     static final int WIDTH = 300;
     static final int N_COLUMNS = 2;
-  //  static final int N_DIGITS = 2;
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
             List.of(0.0, 30.0, 99990.0),  //cuts
@@ -48,10 +45,10 @@ public class AnimationTreasure implements AnimationGridI {
 
     public static AnimationTreasure create(EnvironmentGridI env0, AnimationConfig cfg) {
         var env = (EnvironmentTreasure) env0;
-        var asStep = createSetting(cfg);
-        var asEpisode = createSetting(cfg)
-                .withFrameXLocation(WIDTH * 2).withFrameHeight(HEIGHT * 2)
-                .withTableWidth((int) (WIDTH * 0.75)).withTableHeight((int) (HEIGHT*0.8));
+        var asStep=AnimationSettings.of(cfg, WIDTH, HEIGHT, HEIGHT/2,200);
+        var asEpisode=AnimationSettings.of(cfg, WIDTH, HEIGHT*2, HEIGHT,WIDTH*2)
+                .withTableWidth((int) (WIDTH * 0.75));
+
         return new AnimationTreasure(
                 AnimationKit.of(environmentGfx(asStep, env), asStep),
                 AnimationKit.of(episodeGfx(asEpisode,env), asEpisode),
@@ -83,17 +80,12 @@ public class AnimationTreasure implements AnimationGridI {
                 {"episode", String.valueOf(ei)},
                 {"number of episodes", String.valueOf(eiMax)},
                 {"reward", reward},
-                //{"reward", round(reward)},
                 {"probability random action", round(pRand)},
                 {"x pos", s.x()},
                 {"y pos", s.y()}
         });
-        var dto = GraphicsDto.builder()
-                .lines(lineData)
-                .tableData(tableData)
-                .isFail(reward < -99)
-                .animationDelay((int) delayFunction.applyAsDouble(ei))
-                .build();
+        var dto = GraphicsDto.dtoStep(
+                lineData, tableData, (int) delayFunction.applyAsDouble(ei), reward < -99);
         kitStep.postAndSleep(dto);
     }
 
@@ -162,11 +154,7 @@ public class AnimationTreasure implements AnimationGridI {
         List<double[][]> grids = new ArrayList<>();
         informer.getValidActions().forEach(a -> grids.add(GridFactory.toSeries(aGrids.get(a))));
         grids.add(GridFactory.toSeries(vGrid));
-        var dto = GraphicsDto.builder()
-                .grids(grids)
-                .tableData(Collections.singletonList(policyGrid))
-                .animationDelay(0)
-                .build();
+        var dto = GraphicsDto.dtoEpisode(grids, policyGrid);
         kitEpisode.postAndSleep(dto);
     }
 
@@ -206,21 +194,6 @@ public class AnimationTreasure implements AnimationGridI {
     private static double[][] emptyGrid(Integer nRows, Integer nCol) {
         return new double[nRows][nCol];
     }
-
-    private static AnimationSettings createSetting(AnimationConfig cfg) {
-        return AnimationSettings.builder()
-                .frameWidth(WIDTH).frameHeight(HEIGHT)
-                .frameXLocation(100).frameYLocation(200)
-                .panelWidth(WIDTH).panelHeight(HEIGHT)
-                .tableWidth(WIDTH).tableHeight(HEIGHT / 2)
-                .order(List.of(Step.LINE, Step.HEATMAP, Step.TABLE))
-                .margin(0)
-                .ndigits(cfg.ndigits())
-                .fontsize(cfg.fontsize())
-                .fontsizeAxis(cfg.fontsizeAxis())
-                .build();
-    }
-
 
     private  float round(double pRand) {
         return FormatUtil.round((float) pRand,cfg.ndigits() );

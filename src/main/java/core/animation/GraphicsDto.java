@@ -2,7 +2,7 @@ package core.animation;
 
 import lombok.Builder;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Builder
@@ -14,32 +14,28 @@ public record GraphicsDto(
         int animationDelay
 ) {
 
-    public static GraphicsDto lines(List<List<LineSegment>> lines, boolean isFail) {
-        return builder()
-                .lines(lines)
-                .grids(new ArrayList<>())
-                .tableData(new ArrayList<>())
+
+
+    public static GraphicsDto dtoStep(List<List<LineSegment>> lineData,
+                                       List<Object[][]> tableData,
+                                       int animationDelay,
+                                       boolean isFail) {
+        return GraphicsDto.builder()
+                .lines(lineData)
+                .tableData(tableData)
                 .isFail(isFail)
+                .animationDelay(animationDelay)
                 .build();
     }
 
-    public static GraphicsDto grids(List<double[][]> grids, boolean isFail) {
-        return builder()
-                .lines(new ArrayList<>())
+    public static GraphicsDto dtoEpisode(List<double[][]> grids, Object[][] policyGrid) {
+        return GraphicsDto.builder()
                 .grids(grids)
-                .tableData(new ArrayList<>())
-                .isFail(isFail)
+                .tableData(Collections.singletonList(policyGrid))
+                .animationDelay(0)
                 .build();
     }
 
-    public static GraphicsDto table(List<Object[][]> tables, boolean isFail) {
-        return builder()
-                .lines(new ArrayList<>())
-                .grids(new ArrayList<>())
-                .tableData(tables)
-                .isFail(isFail)
-                .build();
-    }
 
     public List<LineSegment> getLines(int i) {
         return lines.get(i);

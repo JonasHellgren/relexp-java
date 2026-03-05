@@ -21,10 +21,10 @@ import java.util.function.DoubleUnaryOperator;
 public class AnimationSplit implements AnimationGridMultiStepI {
     static final int HEIGHT_ENV = 200;
     public static final int TABLE_HEIGHT_ENV = (int) (HEIGHT_ENV * 0.35);
-    static final int HEIGHT_VALUE = 200;
+    static final int HEIGHT_VAL = 200;
     static final int WIDTH = 300;
-    static final int FRAME_X_LOCATION_ENV = 100;
-    static final int FRAME_X_LOCATION_VALUES = 500;
+    static final int X_LOCATION_ENV = 100;
+    static final int X_LOCATION_VAL = 500;
     static final int N_COLUMNS = 2;
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
@@ -48,8 +48,8 @@ public class AnimationSplit implements AnimationGridMultiStepI {
 
     public static AnimationSplit create(EnvironmentGridI env0, AnimationConfig cfg) {
         var env = (EnvironmentSplittingPath) env0;
-        var asStep = createSetting(cfg,HEIGHT_ENV, TABLE_HEIGHT_ENV, FRAME_X_LOCATION_ENV);
-        var asEpisode = createSetting(cfg,HEIGHT_VALUE, 0, FRAME_X_LOCATION_VALUES);
+        var asStep = AnimationSettings.of(cfg,WIDTH,HEIGHT_ENV, TABLE_HEIGHT_ENV, X_LOCATION_ENV);
+        var asEpisode = AnimationSettings.of(cfg,WIDTH, HEIGHT_VAL, 0, X_LOCATION_VAL);
         return new AnimationSplit(
                 AnimationKit.of(environmentGfx(asStep, env), asStep),
                 AnimationKit.of(episodeGfx(asEpisode), asEpisode),
@@ -82,14 +82,11 @@ public class AnimationSplit implements AnimationGridMultiStepI {
                 {"sum rewards", sumReward},
                 {"(x,y) pos", "("+s.x()+","+s.y()+")"}
         });
-        var dto = GraphicsDto.builder()
-                .lines(lineData)
-                .tableData(tableData)
-                .isFail(false)
-                .animationDelay((int) delayFunction.applyAsDouble(ei))
-                .build();
+        var dto = GraphicsDto.dtoStep(
+                lineData, tableData, (int) delayFunction.applyAsDouble(ei), false);
         kitStep.postAndSleep(dto);
     }
+
 
     @Override
     public void postEpisode(AgentGridMultiStepI agent, EnvironmentGridI env0,int ei) {
@@ -110,12 +107,10 @@ public class AnimationSplit implements AnimationGridMultiStepI {
 
         List<double[][]> grids = new ArrayList<>();
         grids.add(GridFactory.toSeries(vGrid));
-        var dto = GraphicsDto.builder()
-                .grids(grids)
-                .animationDelay(0)
-                .build();
-        kitEpisode.postAndSleep(dto);
+        kitEpisode.postAndSleep(GraphicsDto.dtoEpisode(grids,null));
     }
+
+
 
     private static GfxComponentFactory environmentGfx(AnimationSettings as, EnvironmentGridI env) {
         var factory = GfxComponentFactory.of(as);
@@ -138,23 +133,6 @@ public class AnimationSplit implements AnimationGridMultiStepI {
         double x0 = s.x();
         double y0 = s.y();
         lines.add(LineSegment.blackBold(x0, y0, x0, y0));
-    }
-
-    private static AnimationSettings createSetting(AnimationConfig cfg,
-                                                   int height,
-                                                   int tableHeight,
-                                                   int frameXLocation) {
-        return AnimationSettings.builder()
-                .frameWidth(WIDTH).frameHeight(height)
-                .frameXLocation(frameXLocation).frameYLocation(200)
-                .panelWidth(WIDTH).panelHeight(height)
-                .tableWidth(WIDTH).tableHeight(tableHeight)
-                .order(List.of(Step.LINE, Step.HEATMAP, Step.TABLE))
-                .margin(0)
-                .ndigits(cfg.ndigits())
-                .fontsize(cfg.fontsize())
-                .fontsizeAxis(cfg.fontsizeAxis())
-                .build();
     }
 
     private static double scale(ScalerLinear scaler, double value) {
