@@ -8,7 +8,6 @@ import core.animation.*;
 import core.foundation.config.AnimationConfig;
 import core.foundation.gadget.math.ScalerLinear;
 import core.foundation.util.math.MathUtil;
-import core.gridrl.ActionGrid;
 import core.gridrl.EnvironmentGridI;
 import core.gridrl.InformerGridParamsI;
 import core.gridrl.StateGrid;
@@ -21,6 +20,7 @@ import java.util.function.DoubleUnaryOperator;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AnimationSplit implements AnimationGridMultiStepI {
     static final int HEIGHT_ENV = 200;
+    public static final int TABLE_HEIGHT_ENV = (int) (HEIGHT_ENV * 0.35);
     static final int HEIGHT_VALUE = 200;
     static final int WIDTH = 300;
     static final int FRAME_X_LOCATION_ENV = 100;
@@ -48,11 +48,11 @@ public class AnimationSplit implements AnimationGridMultiStepI {
 
     public static AnimationSplit create(EnvironmentGridI env0, AnimationConfig cfg) {
         var env = (EnvironmentSplittingPath) env0;
-        var asStep = createSetting(cfg,HEIGHT_ENV, (int) (HEIGHT_ENV *0.35), FRAME_X_LOCATION_ENV);
-        var asEpisode = createSetting(cfg,HEIGHT_VALUE, HEIGHT_VALUE / 4, FRAME_X_LOCATION_VALUES);
+        var asStep = createSetting(cfg,HEIGHT_ENV, TABLE_HEIGHT_ENV, FRAME_X_LOCATION_ENV);
+        var asEpisode = createSetting(cfg,HEIGHT_VALUE, 0, FRAME_X_LOCATION_VALUES);
         return new AnimationSplit(
                 AnimationKit.of(environmentGfx(asStep, env), asStep),
-                AnimationKit.of(episodeGfx(asEpisode, env), asEpisode),
+                AnimationKit.of(episodeGfx(asEpisode), asEpisode),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP),
                 env.informer(),
                 cfg);
@@ -74,11 +74,8 @@ public class AnimationSplit implements AnimationGridMultiStepI {
     @Override
     public void postStep(StateGrid s, int ei, int eiMax, double pRand, double sumReward) {
         if (isEmpty()) return;
-
-        if (isEmpty()) return;
         List<LineSegment> lines = new ArrayList<>();
         addSeekerLines(s, lines);
-        //addFixedObjectsLines(lines);
         var lineData = List.of(lines);
         var tableData = Collections.singletonList(new Object[][]{
                 {"episode", ei+"("+eiMax+")"},
@@ -102,36 +99,23 @@ public class AnimationSplit implements AnimationGridMultiStepI {
         double vMin = 0;
         double vMax = 1;
         var scaler = ScalerLinear.of(vMin, vMax, 0.0, 1.0);
-        Map<ActionGrid, double[][]> aGrids = new HashMap<>();
-        informer.getValidActions().forEach(ay -> {
-            aGrids.put(ay, emptyGrid(nRows, nCol));
-        });
         double[][] vGrid = emptyGrid(nRows, nCol);
-        Object[][] policyGrid = new Object[nRows][nCol];
         for (int x = 0; x < nCol; x++) {
             for (int y = 0; y < nRows; y++) {
                 var s = StateGrid.of(x, y);
                 double value = agent.read(s);
                 vGrid[y][x] = scale(scaler, value);
-                policyGrid[nRows - 1 - y][x] = agent.chooseActionNoExploration(s).toString();
-                for (ActionGrid a : informer.getValidActions()) {
-                    double av = agent.read(s, a);
-                    aGrids.get(a)[y][x] = scale(scaler, av);
-                }
             }
         }
 
         List<double[][]> grids = new ArrayList<>();
-//        informer.getValidActions().forEach(a -> grids.add(GridFactory.toSeries(aGrids.get(a))));
         grids.add(GridFactory.toSeries(vGrid));
         var dto = GraphicsDto.builder()
                 .grids(grids)
-                .tableData(Collections.singletonList(policyGrid))
                 .animationDelay(0)
                 .build();
         kitEpisode.postAndSleep(dto);
     }
-
 
     private static GfxComponentFactory environmentGfx(AnimationSettings as, EnvironmentGridI env) {
         var factory = GfxComponentFactory.of(as);
@@ -144,11 +128,9 @@ public class AnimationSplit implements AnimationGridMultiStepI {
         return factory;
     }
 
-    private static GfxComponentFactory episodeGfx(AnimationSettings as, EnvironmentSplittingPath env) {
-        var informer = env.informer();
+    private static GfxComponentFactory episodeGfx(AnimationSettings as) {
         var factory = GfxComponentFactory.of(as);
         factory.addHeatMap("Value");
-//        factory.addTable(informer.getPosXMinMax().getSecond(), true);
         return factory;
     }
 
@@ -178,7 +160,6 @@ public class AnimationSplit implements AnimationGridMultiStepI {
     private static double scale(ScalerLinear scaler, double value) {
         return scaler.calcOutDouble(MathUtil.clip(value, scaler.d0, scaler.d1));
     }
-
 
     private static double[][] emptyGrid(Integer nRows, Integer nCol) {
         return new double[nRows][nCol];
