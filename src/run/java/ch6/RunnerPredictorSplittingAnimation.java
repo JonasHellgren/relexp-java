@@ -4,26 +4,18 @@ import chapters.ch6.domain.trainers.state_predictor.TrainerStatePredictor;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import chapters.ch6.implem_animation.AnimationSplit;
 import core.foundation.config.ConfigFactory;
-import core.gridrl.StateGrid;
 
 public class RunnerPredictorSplittingAnimation {
 
-    public static final int N_STEPS_HORIZON = 3;
-
-    public static final int N_EPISODES = 50;
-    public static final double LEARNING_RATE_START = 0.1;
-
+    static final int N_STEPS_HORIZON = 3;
+    static final int N_EPISODES = 50;
+    static final double LEARNING_RATE_START = 0.1;
 
     public static void main(String[] args) {
         var trainer = defineTrainer(N_STEPS_HORIZON);
         var cfg= ConfigFactory.getAnimationConfig();
         var animation = AnimationSplit.create(trainer.getDependencies().environment(), cfg);
         trainer.train(animation);
-
-        var agent= trainer.getDependencies().agent();
-        double value01= agent.read(StateGrid.of(0,1));
-
-        System.out.println("value01 = " + value01);
     }
 
 
