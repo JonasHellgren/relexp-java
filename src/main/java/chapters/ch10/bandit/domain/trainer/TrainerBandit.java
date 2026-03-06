@@ -1,6 +1,8 @@
 package chapters.ch10.bandit.domain.trainer;
 
 import chapters.ch10.plotting.MeasuresBandit;
+import chapters.ch9.animation.AnimationPolicyEmpty;
+import chapters.ch9.animation.AnimationPolicyI;
 import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -33,9 +35,14 @@ public class TrainerBandit {
     }
 
     public void train() {
+        train(AnimationPolicyEmpty.create());
+    }
+
+    public void train(AnimationPolicyI animation) {
         var d = dependencies;
         var generator = EpisodeGeneratorBandit.of(dependencies);
         recorder.clear();
+        animation.start();
         for (int i = 0; i < d.nEpisodes(); i++) {
             var experiences = generator.generate();
             for (var experience : experiences) {  //looping through single experience
@@ -46,7 +53,11 @@ public class TrainerBandit {
                 var gradLog = d.calculateGradLog(experience, probs);
                 d.updateAgentMemory(lr, returnAtT, gradLog);
                 addRecording(experiences, gradLog, probs);
+                animation.postStep(i, d.nEpisodes(), experiences);
+                animation.postEpisode(dependencies.getMemory(),i,returnAtT, gradLog, probs);
+                System.out.println("i = " + i);
             }
+
         }
     }
 

@@ -1,6 +1,7 @@
 package chapters.ch10.bandit.domain.trainer;
 
 import chapters.ch10.bandit.domain.agent.AgentBandit;
+import chapters.ch10.bandit.domain.agent.MemoryBandit;
 import chapters.ch10.bandit.domain.environment.ActionBandit;
 import chapters.ch10.bandit.domain.environment.EnvironmentBandit;
 import chapters.ch10.bandit.domain.environment.StepReturnBandit;
@@ -50,5 +51,9 @@ public record TrainerDependenciesBandit(
 
     public double[] actionProbabilities() {
         return agent.actionProbabilities();
+    }
+
+    public MemoryBandit getMemory() {
+        return agent.getMemory();
     }
 }

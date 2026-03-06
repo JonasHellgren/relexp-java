@@ -107,10 +107,9 @@ public class AnimationSplit implements AnimationGridMultiStepI {
 
         List<double[][]> grids = new ArrayList<>();
         grids.add(GridFactory.toSeries(vGrid));
-        kitEpisode.postAndSleep(GraphicsDto.dtoEpisode(grids,null));
+        var emptyTable = Collections.singletonList(new Object[][]{});
+        kitEpisode.postAndSleep(GraphicsDto.dtoEpisode(grids,emptyTable, 0));
     }
-
-
 
     private static GfxComponentFactory environmentGfx(AnimationSettings as, EnvironmentGridI env) {
         var factory = GfxComponentFactory.of(as);

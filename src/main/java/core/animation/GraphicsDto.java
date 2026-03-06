@@ -15,11 +15,10 @@ public record GraphicsDto(
 ) {
 
 
-
     public static GraphicsDto dtoStep(List<List<LineSegment>> lineData,
-                                       List<Object[][]> tableData,
-                                       int animationDelay,
-                                       boolean isFail) {
+                                      List<Object[][]> tableData,
+                                      int animationDelay,
+                                      boolean isFail) {
         return GraphicsDto.builder()
                 .lines(lineData)
                 .tableData(tableData)
@@ -33,6 +32,15 @@ public record GraphicsDto(
                 .grids(grids)
                 .tableData(Collections.singletonList(policyGrid))
                 .animationDelay(0)
+                .build();
+    }
+
+    public static GraphicsDto dtoEpisode(List<double[][]> grids,
+                                         List<Object[][]> tableData, int animationDelay) {
+        return GraphicsDto.builder()
+                .grids(grids)
+                .tableData(tableData)
+                .animationDelay(animationDelay)
                 .build();
     }
 

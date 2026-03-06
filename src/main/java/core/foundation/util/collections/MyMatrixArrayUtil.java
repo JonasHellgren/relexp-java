@@ -74,4 +74,24 @@ public class MyMatrixArrayUtil {
                 .orElseThrow(() -> new IllegalArgumentException("The array must not be null or empty"));
     }
 
+
+    /**
+     * This method creates and returns a new 2D array of doubles with the specified number of rows and columns.
+     *
+     * @param nRows The number of rows in the array.
+     * @param nCol The number of columns in the array.
+     * @return A new 2D array of doubles with the specified number of rows and columns.
+     * @throws IllegalArgumentException If either nRows or nCol is null or negative.
+     */
+    public static double[][] emptyMatrix(Integer nRows, Integer nCol) {
+        // Check if the input parameters are valid
+        if (nRows == null || nCol == null || nRows < 0 || nCol < 0) {
+            throw new IllegalArgumentException("The number of rows and columns must be non-negative integers.");
+        }
+
+        // Create and return a new 2D array of doubles with the specified number of rows and columns
+        return new double[nRows][nCol];
+    }
+
+
 }

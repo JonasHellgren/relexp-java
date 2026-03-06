@@ -1,15 +1,14 @@
 package chapters.ch6.domain.animation;
 
 import chapters.ch6.domain.agent.AgentGridMultiStepI;
-import core.gridrl.AgentGridI;
 import core.gridrl.EnvironmentGridI;
 import core.gridrl.StateGrid;
 
-public class AnimationDummy implements AnimationGridMultiStepI {
+public class AnimationGridMsEmpty implements AnimationGridMultiStepI {
 
 
-    public static AnimationDummy empty() {
-        return new AnimationDummy();
+    public static AnimationGridMsEmpty create() {
+        return new AnimationGridMsEmpty();
     }
 
     @Override

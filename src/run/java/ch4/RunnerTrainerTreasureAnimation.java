@@ -22,15 +22,4 @@ public class RunnerTrainerTreasureAnimation {
         trainer.train(AnimationTreasure.create(env,animConfig));
     }
 
-    private static void plot(TrainerGridDependencies dep, TrainerGridI trainer) {
-        var picPath = ConfigFactory.pathPicsConfig().ch4();
-        var plotCfg= ConfigFactory.plotConfig();
-
-        showAndSavePlots(
-                dep,
-                trainer.getRecorder(),
-                "_treasureLowExpl",
-                NOF_DIGITS, picPath,plotCfg);
-    }
-
 }

@@ -1,8 +1,6 @@
 package chapters.ch6.domain.trainers.state_predictor;
 
-import chapters.ch4.domain.animation.AnimationGridI;
-import chapters.ch4.implem_animation.AnimationRoad;
-import chapters.ch6.domain.animation.AnimationDummy;
+import chapters.ch6.domain.animation.AnimationGridMsEmpty;
 import chapters.ch6.domain.animation.AnimationGridMultiStepI;
 import chapters.ch6.domain.trainer_dep.episode_generator.EpisodeGeneratorGrid;
 import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
@@ -10,9 +8,6 @@ import chapters.ch6.domain.trainer_dep.core.TrainerI;
 import chapters.ch6.domain.trainer_dep.result_generator.MultiStepResultGrid;
 import chapters.ch6.domain.trainer_dep.result_generator.MultiStepResultsGeneratorGrid;
 import core.foundation.gadget.math.LogarithmicDecay;
-import core.gridrl.StateGrid;
-import core.gridrl.StepReturnGrid;
-import core.gridrl.TrainerGridDependencies;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,7 +44,7 @@ public class TrainerStatePredictor implements TrainerI {
 
     @Override
     public void train() {
-        train(AnimationDummy.empty());
+        train(AnimationGridMsEmpty.create());
     }
 
     public void train(AnimationGridMultiStepI animation) {

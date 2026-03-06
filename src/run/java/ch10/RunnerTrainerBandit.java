@@ -17,9 +17,8 @@ import java.util.List;
 
 public class RunnerTrainerBandit {
 
-    public static final int N_WINDOWS_FILTERING = 10;
-
-    public static final boolean IS_MANY_EPIS = true;
+    static final int N_WINDOWS_FILTERING = 10;
+    static final boolean IS_MANY_EPIS = false;
 
     @SneakyThrows
     public static void main(String[] args) {

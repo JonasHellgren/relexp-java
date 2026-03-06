@@ -18,12 +18,10 @@ public class RunnerPredictorSplittingAnimation {
         trainer.train(animation);
     }
 
-
     private static TrainerStatePredictor defineTrainer(int nStepsHorizon) {
         var dependencies = TrainerDependenciesFactorySplitting.givenRandomPolicySplitting(
                 nStepsHorizon, N_EPISODES, LEARNING_RATE_START);
         return TrainerStatePredictor.of(dependencies);
     }
-
 
 }
