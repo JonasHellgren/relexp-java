@@ -14,7 +14,10 @@ import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
+
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.function.DoubleUnaryOperator;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -125,6 +128,8 @@ public class AnimationSplit implements AnimationGridMultiStepI {
     private static GfxComponentFactory episodeGfx(AnimationSettings as) {
         var factory = GfxComponentFactory.of(as);
         factory.addHeatMap("Value");
+        var heatmap = factory.getHeatMapCharts().get(0);
+        heatmap.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
         return factory;
     }
 

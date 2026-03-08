@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -55,6 +56,7 @@ public class TrainerBandit {
                 addRecording(experiences, gradLog, probs);
                 animation.postStep(i, d.nEpisodes(), experiences);
                 animation.postEpisode(dependencies.getMemory(),i,returnAtT, gradLog, probs);
+                animation.postAfterStep(i, d.nEpisodes(), experiences);
             }
 
         }

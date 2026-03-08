@@ -30,6 +30,11 @@ public class AnimationPolicyEmpty implements AnimationPolicyI {
     }
 
     @Override
+    public void postAfterStep(int ei, int eiMax, List<ExperienceBandit> experiences) {
+
+    }
+
+    @Override
     public void postEpisode(MemoryBandit memory, int ei, double returnAtT, double[] gradLog, double[] probArray) {
 
     }

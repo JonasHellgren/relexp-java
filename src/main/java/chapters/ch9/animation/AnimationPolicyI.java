@@ -15,6 +15,7 @@ public interface AnimationPolicyI {
 
     // events
     void postStep(int ei, int eiMax, List<ExperienceBandit> experiences);
+    void postAfterStep(int ei, int eiMax, List<ExperienceBandit> experiences);
 
     void postEpisode(MemoryBandit memory,int ei, double returnAtT, double[] gradLog, double[] probArray);
 

@@ -22,6 +22,10 @@ public record LineSegment(
         return new LineSegment(x1, y1, x2, y2, 2f, END_ROUNDING, JOINING, Color.RED);
     }
 
+    public static LineSegment grey(double x1, double y1, double x2, double y2) {
+        return new LineSegment(x1, y1, x2, y2, 2f, END_ROUNDING, JOINING, Color.GRAY);
+    }
+
     public static LineSegment blackBold(double x1, double y1, double x2, double y2) {
         return new LineSegment(x1, y1, x2, y2, 15f, END_ROUNDING, JOINING, Color.BLACK);
     }
@@ -41,4 +45,6 @@ public record LineSegment(
     public static LineSegment circle(double x1, double y1, Color yellow) {
         return new LineSegment(x1, y1, x1, y1, 15f, END_ROUNDING, JOINING, yellow);
     }
+
+
 }

@@ -3,7 +3,7 @@ package chapters.ch9.animation;
 import lombok.Builder;
 
 @Builder
-record ArmParams(
+record BanditParams(
         int left,
         int right,
         int top,
@@ -18,8 +18,8 @@ record ArmParams(
 ) {
 
 
-    public static ArmParams create() {
-        return new ArmParams(
+    public static BanditParams create() {
+        return new BanditParams(
                 5, 45, 60, 5, 12, 38, 47, 30, 20, 5,20);
     }
 
@@ -41,5 +41,9 @@ record ArmParams(
 
     public int coinY() {
         return (coinTop - bottom)/2 + bottom;
+    }
+
+    public double dispY() {
+        return (coinTop - bottom) / 2.0;
     }
 }
