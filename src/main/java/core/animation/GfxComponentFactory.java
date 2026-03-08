@@ -45,7 +45,7 @@ public class GfxComponentFactory {
         CharAndPanelSizeSetter.setXaxisRange(chart, xlabel, xRange, getLabelFont(settings.fontsizeAxis()));
         CharAndPanelSizeSetter.setYaxisRange(chart, ylabel, yRange, getLabelFont(settings.fontsizeAxis()));
         lineCharts.add(chart);
-        ChartPanel panel = new ChartPanel(chart);
+        var panel = new ChartPanel(chart);
         CharAndPanelSizeSetter.setSizePanel(panel, settings.panelWidth(), settings.panelHeight());
         linePanels.add(panel);
     }

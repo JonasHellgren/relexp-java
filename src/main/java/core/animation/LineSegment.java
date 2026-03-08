@@ -35,6 +35,10 @@ public record LineSegment(
     }
 
     public static LineSegment goldBig(double x1, double y1) {
-        return new LineSegment(x1, y1, x1, y1, 15f, END_ROUNDING, JOINING, Color.YELLOW);
+        return circle(x1, y1, Color.YELLOW);
+    }
+
+    public static LineSegment circle(double x1, double y1, Color yellow) {
+        return new LineSegment(x1, y1, x1, y1, 15f, END_ROUNDING, JOINING, yellow);
     }
 }

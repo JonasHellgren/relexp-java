@@ -55,7 +55,6 @@ public class TrainerBandit {
                 addRecording(experiences, gradLog, probs);
                 animation.postStep(i, d.nEpisodes(), experiences);
                 animation.postEpisode(dependencies.getMemory(),i,returnAtT, gradLog, probs);
-                System.out.println("i = " + i);
             }
 
         }

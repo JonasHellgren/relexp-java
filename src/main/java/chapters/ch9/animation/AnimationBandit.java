@@ -8,11 +8,16 @@ import core.foundation.config.AnimationConfig;
 import core.foundation.gadget.math.ScalerLinear;
 import core.foundation.util.collections.MyMatrixArrayUtil;
 import core.foundation.util.formatting.NumberFormatterUtil;
-import core.gridrl.StateGrid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.apache.commons.math3.util.Pair;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.XYPlot;
+import org.knowm.xchart.XYChart;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,8 +35,8 @@ public class AnimationBandit implements AnimationPolicyI {
     static final int N_COLUMNS = 2;
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
-            List.of(0.0, 10.0, 1000.0),  //cuts
-            List.of(5000.0, 1.0, 500.0)   //animation time delays
+            List.of(0.0, 10.0, 990.0),  //cuts
+            List.of(2000.0, 1.0, 1500.0)   //animation time delays
     );
     public static final int Z_MAX = 5;
 
@@ -65,11 +70,12 @@ public class AnimationBandit implements AnimationPolicyI {
     public void postStep(int ei, int eiMax, List<ExperienceBandit> experiences) {
         if (isEmpty()) return;
         List<LineSegment> lines = new ArrayList<>();
-        addBanditLines(experiences.get(0), lines);
+        var exp = experiences.get(0);
+        addBanditLines(exp, lines);
         var lineData = List.of(lines);
-        double reward = experiences.get(0).reward();
-        String actionLorR = experiences.get(0).action().toString();
-        String isCoin = experiences.get(0).stepReturn().isCoin() ? "yes" : "no";
+        double reward = exp.reward();
+        String actionLorR = exp.action().toString();
+        String isCoin = exp.stepReturn().isCoin() ? "yes" : "no";
         var tableData = Collections.singletonList(new Object[][]{
                 {"episode", ei + "(" + eiMax + ")"},
                 {"action", actionLorR},
@@ -112,68 +118,63 @@ public class AnimationBandit implements AnimationPolicyI {
     private static GfxComponentFactory environmentGfx(AnimationSettings as) {
         var factory = GfxComponentFactory.of(as);
         factory.addLineChart("",
-                "x", Pair.create(-20, 70),
-                "y", Pair.create(0, 80));
+                "x", Pair.create(-40, 90),
+                "y", Pair.create(0, 70));
+        styleBanditChart(factory.getLineCharts().get(0));
         factory.addTable(N_COLUMNS, false);
         return factory;
+    }
+
+    private static void styleBanditChart(JFreeChart chart) {
+        chart.setBackgroundPaint(Color.WHITE);
+        XYPlot plot = chart.getXYPlot();
+        plot.setBackgroundPaint(Color.WHITE);
+        plot.getDomainAxis().setVisible(false); // disable X axis
+        plot.getRangeAxis().setVisible(false);  // disable Y axis
+        plot.setDomainGridlinesVisible(false); // vertical grid lines
+        plot.setRangeGridlinesVisible(false);  // horizontal grid lines
     }
 
     private static GfxComponentFactory episodeGfx(AnimationSettings as) {
         var factory = GfxComponentFactory.of(as);
         factory.addHeatMap("Value");
+        var heatmap= factory.getHeatMapCharts().get(0);
+        heatmap.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
+
+
         factory.addTable(N_COLUMNS, false);
         return factory;
     }
 
+
+    
     private static void addBanditLines(ExperienceBandit exp, List<LineSegment> lines) {
-        ActionBandit action = exp.action();
-        boolean isCoin = exp.stepReturn().isCoin();
-        int left = 5;
-        int right = 45;
-        int top = 60;
-        int bottom = 5;
-        int windowLeft = 12;
-        int windowRight = 38;
-        int windowTop = 47;
-        int windowBottom = 30;
-        int coinTop = 20;
-
-        int armLength = (top-bottom)/2;
-        int armWidth= 5;
-        int xArmChoosen;
-        int xArmNotChoosen;
-        if (action == ActionBandit.LEFT) {
-            xArmChoosen = left - armWidth / 2;
-            xArmNotChoosen = right + armWidth / 2;
-        } else if (action == ActionBandit.RIGHT) {
-            xArmChoosen = right + armWidth / 2;
-            xArmNotChoosen = left - armWidth / 2;
-        } else {
-            throw new IllegalArgumentException("Invalid action: " + action);
-        }
-
-        int topArm = top-armLength/2;
+        var p = ArmParams.create();
 
         // Machine body
-        lines.add(LineSegment.black(left, top, right, top));       // top
-        lines.add(LineSegment.black(right, top, right, bottom));   // right side
-        lines.add(LineSegment.black(right, bottom, left, bottom)); // bottom
-        lines.add(LineSegment.black(left, bottom, left, top));     // left side
+        lines.add(LineSegment.black(p.left(), p.top(), p.right(), p.top()));       // top
+        lines.add(LineSegment.black(p.right(), p.top(), p.right(), p.bottom()));   // right side
+        lines.add(LineSegment.black(p.right(), p.bottom(), p.left(), p.bottom())); // bottom
+        lines.add(LineSegment.black(p.left(), p.bottom(), p.left(), p.top()));     // d.left() side
         // window
-        lines.add(LineSegment.black(windowLeft, windowTop, windowRight, windowTop));       // window top
-        lines.add(LineSegment.black(windowLeft, windowBottom, windowRight, windowBottom)); // window bottom
+        lines.add(LineSegment.black(p.windowLeft(), p.windowTop(), p.windowRight(), p.windowTop()));       // window top
+        lines.add(LineSegment.black(p.windowLeft(), p.windowBottom(), p.windowRight(), p.windowBottom())); // window bottom
         // coin dispenser
-        lines.add(LineSegment.black(left, coinTop, right, coinTop));       // window top
+        lines.add(LineSegment.black(p.left(), p.coinTop(), p.right(), p.coinTop()));       // window top
 
-        // arms
-        lines.add(LineSegment.blackBold(xArmChoosen, topArm, xArmChoosen, topArm - armLength));
-        lines.add(LineSegment.blackBold(xArmNotChoosen, topArm, xArmNotChoosen, topArm));
+        //arm connections
+        lines.add(LineSegment.blackBold(p.armLeftXPos(), p.topArm(), p.armLeftXPos(), p.topArm()));
+        lines.add(LineSegment.blackBold(p.armRightXPos(), p.topArm(), p.armRightXPos(), p.topArm()));
+
+        // arm chosen and coin
+        var action = exp.action();
+        boolean isCoin = exp.stepReturn().isCoin();
+        int xArmChoosen=ActionBandit.LEFT==action?p.armLeftXPos():p.armRightXPos();
+        lines.add(LineSegment.blackBold(xArmChoosen, p.topArm(), xArmChoosen, p.topArm() - p.armLenght()));
+
         if (isCoin) {
-            lines.add(LineSegment.goldBig(left+(right-left)/2, (coinTop - bottom)/2 + bottom));
+            lines.add(LineSegment.circle(p.coinX(),p.coinY(),Color.orange));
         }
-
-
     }
-
 
 }
