@@ -20,7 +20,7 @@ public class FactoryTrainerParameters {
     }
 
     public static TrainerParametersBandit moderateLearningRateModerateEpis() {
-        return TrainerParametersBandit.builder().learningRate(0.1).nEpisodes(1000).build();
+        return TrainerParametersBandit.builder().learningRate(0.1).nEpisodes(500).build();
     }
 
 }

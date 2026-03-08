@@ -13,7 +13,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.XYPlot;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -32,9 +31,10 @@ public class AnimationBandit implements AnimationPolicyI {
     static final int X_LOCATION_VAL = 500;
     static final int N_COLUMNS = 2;
 
+
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
-            List.of(0.0, 10.0, 990.0),  //cuts
-            List.of(2000.0, 1.0, 1000.0)   //animation time delays
+            List.of(0.0, 10.0, 490.0),  //cuts
+            List.of(1000.0, 1.0, 1000.0)   //animation time delays
     );
     public static final int Z_MAX = 5;
 
@@ -68,7 +68,7 @@ public class AnimationBandit implements AnimationPolicyI {
 
     @Override
     public void postStep(int ei, int eiMax, List<ExperienceBandit> experiences) {
-        postCommon(ei, eiMax, experiences, false);
+        postCommon(ei, eiMax, experiences, true);
         var exp = experiences.get(0);
         ConditionalsUtil.executeIfTrue(exp.stepReturn().isCoin(),
                 () -> sounds.playCoin());
@@ -76,16 +76,16 @@ public class AnimationBandit implements AnimationPolicyI {
 
     @Override
     public void postAfterStep(int ei, int eiMax, List<ExperienceBandit> experiences) {
-        postCommon(ei, eiMax, experiences, true);
+        postCommon(ei, eiMax, experiences, false);
 
     }
 
-    private void postCommon(int ei, int eiMax, List<ExperienceBandit> experiences, boolean isAfter) {
+    private void postCommon(int ei, int eiMax, List<ExperienceBandit> experiences, boolean isStep) {
         if (isEmpty()) return;
         List<LineSegment> lines = new ArrayList<>();
         var exp = experiences.get(0);
-        addBanditLines(lines);
-        ConditionalsUtil.executeIfTrue(!isAfter,
+        addBanditLines(lines,isStep);
+        ConditionalsUtil.executeIfTrue(isStep,
                 () -> addArmsAndCoin(experiences.get(0), lines));
         var lineData = List.of(lines);
         double reward = exp.reward();
@@ -94,10 +94,10 @@ public class AnimationBandit implements AnimationPolicyI {
         var tableData = Collections.singletonList(new Object[][]{
                 {"episode", ei + "(" + eiMax + ")"},
                 {"action", actionLorR},
-                {"isCoin", isCoin},
+                {"coin achieved", isCoin},
                 {"reward", reward},
         });
-        int animationDelay = isAfter ? (int) delayFunction.applyAsDouble(ei) : 0;
+        int animationDelay = isStep ?  0: (int) delayFunction.applyAsDouble(ei);
         var dto = GraphicsDto.dtoStep(lineData, tableData, animationDelay, false);
         kitStep.postAndSleep(dto);
 
@@ -135,7 +135,7 @@ public class AnimationBandit implements AnimationPolicyI {
         var factory = GfxComponentFactory.of(as);
         factory.addLineChart("",
                 "x", Pair.create(-40, 90),
-                "y", Pair.create(0, 70));
+                "y", Pair.create(0, 65));
         styleBanditChart(factory.getLineCharts().get(0));
         factory.addTable(N_COLUMNS, false);
         return factory;
@@ -153,9 +153,9 @@ public class AnimationBandit implements AnimationPolicyI {
 
     private static GfxComponentFactory episodeGfx(AnimationSettings as) {
         var factory = GfxComponentFactory.of(as);
-        factory.addHeatMap("Memory - Parameter values");
+        factory.addHeatMap("Agent memory");
         var heatmap = factory.getHeatMapCharts().get(0);
-        heatmap.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
+        heatmap.getTitle().setFont(new Font("SansSerif", Font.BOLD, 16));
         var plot = heatmap.getXYPlot();
         plot.getDomainAxis().setVisible(false); // disable X axis
         plot.getRangeAxis().setVisible(false);  // disable Y axis
@@ -164,7 +164,7 @@ public class AnimationBandit implements AnimationPolicyI {
     }
 
 
-    private static void addBanditLines(List<LineSegment> lines) {
+    private static void addBanditLines(List<LineSegment> lines, boolean isStep) {
         var p = BanditParams.create();
         // Machine body
         lines.add(LineSegment.black(p.left(), p.top(), p.right(), p.top()));       // top
@@ -177,20 +177,38 @@ public class AnimationBandit implements AnimationPolicyI {
         lines.add(LineSegment.grey(p.windowLeft(), p.windowBottom(), p.windowLeft(), p.windowTop())); // window bottom
         lines.add(LineSegment.grey(p.windowRight(), p.windowBottom(), p.windowRight(), p.windowTop())); // window bottom
         // coin dispenser
-        lines.add(LineSegment.black(p.left(), p.coinTop(), p.right(), p.coinTop()));       // dispenser top
-        lines.add(LineSegment.black(p.windowLeft(), p.dispY(), p.windowRight(), p.dispY()));       // dispenser bottom
+        lines.add(LineSegment.black(p.dispLeft(), p.dispY(), p.dispRight(), p.dispY()));       // dispenser bottom
+        lines.add(LineSegment.black(p.dispLeft(), p.dispY(), p.dispLeft(), p.dispYtop()));       // dispenser bottom
+        lines.add(LineSegment.black(p.dispRight(), p.dispY(), p.dispRight(), p.dispYtop()));       // dispenser bottom
+        //buttons below window
+        lines.add(LineSegment.black(p.left(), p.panelHigh(), p.right(), p.panelHigh()));
+        lines.add(LineSegment.black(p.left(), p.panelLow(), p.right(), p.panelLow()));
+        lines.add(LineSegment.circleSmall(p.xRel(0.2), p.buttonY(),p.colorButtons()));
+        lines.add(LineSegment.circleSmall(p.xRel(0.5), p.buttonY(),p.colorButtons()));
+        lines.add(LineSegment.circleSmall(p.xRel(0.8), p.buttonY(),p.colorButtons()));
         //arm connections
-        lines.add(LineSegment.blackBold(p.armLeftXPos(), p.topArm(), p.armLeftXPos(), p.topArm()));
-        lines.add(LineSegment.blackBold(p.armRightXPos(), p.topArm(), p.armRightXPos(), p.topArm()));
+        lines.add(LineSegment.black(p.armLeftXPos(), p.topArm(), p.left(), p.topArm()));
+        lines.add(LineSegment.black(p.armRightXPos(), p.topArm(), p.right(), p.topArm()));
+        //knobs
+        if (!isStep) {  //only show after step (reset arm pos)
+            lines.add(LineSegment.circle(p.armLeftXPos(), p.topArm(), p.colorKnob()));
+            lines.add(LineSegment.circle(p.armRightXPos(), p.topArm(), p.colorKnob()));
+        }
+
     }
 
     private static void addArmsAndCoin(ExperienceBandit exp, List<LineSegment> lines) {
         var p = BanditParams.create();
-        var action = exp.action();
-        boolean isCoin = exp.stepReturn().isCoin();
-        int xArmChoosen = ActionBandit.LEFT == action ? p.armLeftXPos() : p.armRightXPos();
-        lines.add(LineSegment.blackBold(xArmChoosen, p.topArm(), xArmChoosen, p.topArm() - p.armLenght()));
-        if (isCoin) {
+        if (exp.action() == ActionBandit.LEFT) {
+            lines.add(LineSegment.black(p.armLeftXPos(), p.topArm(), p.armLeftXPos(), p.bottomArm()));
+            lines.add(LineSegment.circle(p.armLeftXPos(), p.bottomArm(), p.colorKnob()));
+            lines.add(LineSegment.circle(p.armRightXPos(), p.topArm(), p.colorKnob()));
+        } else {
+            lines.add(LineSegment.black(p.armRightXPos(), p.topArm(), p.armRightXPos(), p.bottomArm()));
+            lines.add(LineSegment.circle(p.armRightXPos(), p.bottomArm(), p.colorKnob()));
+            lines.add(LineSegment.circle(p.armLeftXPos(), p.topArm(), p.colorKnob()));
+        }
+        if (exp.stepReturn().isCoin()) {
             lines.add(LineSegment.circle(p.coinX(), p.coinY(), Color.orange));
         }
     }
