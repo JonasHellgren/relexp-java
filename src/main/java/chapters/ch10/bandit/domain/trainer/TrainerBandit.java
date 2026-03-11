@@ -1,14 +1,13 @@
 package chapters.ch10.bandit.domain.trainer;
 
 import chapters.ch10.plotting.MeasuresBandit;
-import chapters.ch9.animation.AnimationPolicyEmpty;
-import chapters.ch9.animation.AnimationPolicyI;
+import chapters.ch10.animation_bandit.AnimationPolicyEmpty;
+import chapters.ch10.animation_bandit.AnimationPolicyI;
 import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Collections;
 import java.util.List;
 
 /**

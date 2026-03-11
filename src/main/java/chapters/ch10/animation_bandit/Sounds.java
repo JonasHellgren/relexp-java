@@ -1,8 +1,7 @@
-package chapters.ch9.animation;
+package chapters.ch10.animation_bandit;
 
 import lombok.SneakyThrows;
 
-import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;

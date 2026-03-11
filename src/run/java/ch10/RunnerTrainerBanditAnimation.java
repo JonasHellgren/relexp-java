@@ -7,7 +7,7 @@ import chapters.ch10.bandit.domain.trainer.TrainerDependenciesBandit;
 import chapters.ch10.factory.FactoryAgentParametersBandit;
 import chapters.ch10.factory.FactoryEnvironmentParametersBandit;
 import chapters.ch10.factory.FactoryTrainerParameters;
-import chapters.ch9.animation.AnimationBandit;
+import chapters.ch10.animation_bandit.AnimationBandit;
 import core.foundation.config.ConfigFactory;
 import lombok.SneakyThrows;
 

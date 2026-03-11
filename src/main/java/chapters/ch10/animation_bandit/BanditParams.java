@@ -1,4 +1,4 @@
-package chapters.ch9.animation;
+package chapters.ch10.animation_bandit;
 
 import lombok.Builder;
 

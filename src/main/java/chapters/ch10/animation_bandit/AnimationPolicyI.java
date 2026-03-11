@@ -1,4 +1,4 @@
-package chapters.ch9.animation;
+package chapters.ch10.animation_bandit;
 
 import chapters.ch10.bandit.domain.agent.MemoryBandit;
 import chapters.ch10.bandit.domain.trainer.ExperienceBandit;
@@ -6,11 +6,7 @@ import java.util.List;
 
 public interface AnimationPolicyI {
 
-
-    // state
     boolean isEmpty();
-
-    // lifecycle
     void start();
 
     // events
