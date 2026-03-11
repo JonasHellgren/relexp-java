@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.function.DoubleUnaryOperator;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class AnimationBandit implements AnimationPolicyI {
+public class AnimationBandit {
 
     static final int HEIGHT_ENV = 200;
     public static final int TABLE_HEIGHT = (int) (HEIGHT_ENV * 0.5);
@@ -50,23 +50,30 @@ public class AnimationBandit implements AnimationPolicyI {
                 AnimationKit.of(environmentGfx(asStep), asStep),
                 AnimationKit.of(episodeGfx(asEpisode), asEpisode),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP),
-                Sounds.of(),
+                Sounds.create(),
                 cfg);
     }
 
-    @Override
+    public static AnimationBandit empty() {
+        return new AnimationBandit(
+                AnimationKit.empty(),
+                AnimationKit.empty(),
+                DelayIntervalFunction.from(ANIMATIONS_SLEEP),
+                Sounds.create(),
+                AnimationConfig.defaults());
+    }
+
+
     public boolean isEmpty() {
         return kitEpisode.isEmpty();
     }
 
-    @Override
     public void start() {
         if (isEmpty()) return;
         kitStep.start();
         kitEpisode.start();
     }
 
-    @Override
     public void postStep(int ei, int eiMax, List<ExperienceBandit> experiences) {
         postCommon(ei, eiMax, experiences, true);
         var exp = experiences.get(0);
@@ -74,7 +81,6 @@ public class AnimationBandit implements AnimationPolicyI {
                 () -> sounds.playCoin());
     }
 
-    @Override
     public void postAfterStep(int ei, int eiMax, List<ExperienceBandit> experiences) {
         postCommon(ei, eiMax, experiences, false);
 
@@ -103,7 +109,6 @@ public class AnimationBandit implements AnimationPolicyI {
 
     }
 
-    @Override
     public void postEpisode(MemoryBandit memory, int ei, double returnAtT, double[] gradLog, double[] probArray) {
         if (isEmpty()) return;
         int nRows = 1;

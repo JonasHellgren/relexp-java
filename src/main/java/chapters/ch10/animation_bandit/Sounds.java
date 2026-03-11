@@ -9,8 +9,8 @@ import java.io.File;
 public record Sounds(Clip coinSound) {
 
     @SneakyThrows
-    public static Sounds of() {
-        File file = new File("src/main/java/chapters/ch9/animation/coin.wav");
+    public static Sounds create() {
+        File file = new File("src/main/java/chapters/ch10/animation_bandit/coin.wav");
         Clip clip = AudioSystem.getClip();
         clip.open(AudioSystem.getAudioInputStream(file));
         return new Sounds(clip);

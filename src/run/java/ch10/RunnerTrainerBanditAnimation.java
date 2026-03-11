@@ -13,8 +13,6 @@ import lombok.SneakyThrows;
 
 public class RunnerTrainerBanditAnimation {
 
-    static final int N_WINDOWS_FILTERING = 10;
-
     @SneakyThrows
     public static void main(String[] args) {
         var agent = AgentBandit.of(FactoryAgentParametersBandit.equalProbability());

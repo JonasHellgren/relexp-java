@@ -1,8 +1,7 @@
 package chapters.ch10.bandit.domain.trainer;
 
+import chapters.ch10.animation_bandit.AnimationBandit;
 import chapters.ch10.plotting.MeasuresBandit;
-import chapters.ch10.animation_bandit.AnimationPolicyEmpty;
-import chapters.ch10.animation_bandit.AnimationPolicyI;
 import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -35,10 +34,10 @@ public class TrainerBandit {
     }
 
     public void train() {
-        train(AnimationPolicyEmpty.create());
+        train(AnimationBandit.empty());
     }
 
-    public void train(AnimationPolicyI animation) {
+    public void train(AnimationBandit animation) {
         var d = dependencies;
         var generator = EpisodeGeneratorBandit.of(dependencies);
         recorder.clear();
