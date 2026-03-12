@@ -8,11 +8,13 @@ import core.animation.*;
 import core.foundation.config.AnimationConfig;
 import core.foundation.gadget.math.ScalerLinear;
 import core.foundation.util.collections.MyMatrixArrayUtil;
+import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.util.unit_converter.UnitConverterUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
 import org.jfree.chart.JFreeChart;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,43 +81,68 @@ public class AnimationCannon {
     public void postFire(int ei, int eiMax, List<ExperienceCannon> experiences) {
         var exp = experiences.get(0);
         List<LineSegment> lines = new ArrayList<>();
-        addCannonLines(lines,exp);
-        addFireDots(lines,exp);
-
-        var tableData=TableData.create(ei, eiMax, exp, cfg);
-        postCommon(ei, eiMax, exp, lines,tableData);
-//        ConditionalsUtil.executeIfTrue(exp.stepReturn().isCoin(),
-  //              () -> sounds.playCoin());
+        addCannonAndFire(lines, exp);
+        addTargetLines(lines, exp);
+        addFireDots(lines, exp);
+        var tableData = TableData.create(ei, eiMax, exp, cfg);
+        postCommon(ei, eiMax, exp, lines, tableData);
+        sounds.playCoin();
     }
 
+    public void postHit(int ei, int eiMax, List<ExperienceCannon> experiences) {
+        var exp = experiences.get(0);
+        List<LineSegment> lines = new ArrayList<>();
+        addCannonAndFire(lines, exp);
+        addHitFire(lines, exp);
+        ConditionalsUtil.executeIfFalse(isHit(exp), () -> addTargetLines(lines, exp));
+        var tableData = TableData.create(ei, eiMax, exp, cfg);
+        postCommon(ei, eiMax, exp, lines, tableData);
+        ConditionalsUtil.executeIfTrue(isHit(exp), () -> sounds.playCoin());
+    }
 
-    private void addCannonLines(List<LineSegment> lines, ExperienceCannon exp) {
-        var p=params;
+    private void addCannonAndFire(List<LineSegment> lines, ExperienceCannon exp) {
+        var p = params;
         var angle = exp.action();
-        lines.add(LineSegment.line(p.cannonWestXpos(), p.cannonWestXpos(),
-                p.cannonEastXPos(angle), p.cannonEastYPos(angle),p.cannonColor(),p.widthCannon()));
+        lines.add(LineSegment.line(
+                p.cannonWestXpos(), p.cannonWestXpos(),
+                p.cannonEastXPos(angle), p.cannonEastYPos(angle),
+                p.cannonColor(), p.widthCannon()));
     }
 
 
     private void addFireDots(List<LineSegment> lines, ExperienceCannon exp) {
-
         var angle = exp.action();
-        var p=params;
-        for (int i = 0; i < p.nFireDots() ; i++) {
-            var color=p.randomColor();
-            var xyPos=p.randomXPosFireDot(angle);
-            lines.add(LineSegment.circleCommon(xyPos.getFirst(), xyPos.getSecond(), color,p.radiusFireDot()));
+        var p = params;
+        for (int i = 0; i < p.nFireDots(); i++) {
+            var xyPos = p.randomPosInCircle(p.centerCannonFire(angle), p.radiusFireDotsCannon());
+            lines.add(LineSegment.circleCommon(
+                    xyPos.getFirst(), xyPos.getSecond(),
+                    p.randomColor(p.fireColors()), p.radiusFireDot()));
         }
-
     }
 
-    public void postAfterStep(int ei, int eiMax, List<ExperienceBandit> experiences) {
-        //postCommon(ei, eiMax, experiences, false);
+
+    private void addHitFire(List<LineSegment> lines, ExperienceCannon exp) {
+        var p = params;
+        var dist = exp.stepReturn().distance();
+        for (int i = 0; i < p.nFireDots(); i++) {
+            var xyPos = p.randomPosInCircle(Pair.create((int) dist, 0), p.radiusFireDotsHit());
+            lines.add(LineSegment.circleCommon(
+                    xyPos.getFirst(), xyPos.getSecond(),
+                    p.randomColor(p.targetHitColors()), p.radiusFireDot()));
+        }
     }
 
-    public void postHit(int i, int i1, List<ExperienceCannon> experiences) {
-
-
+    private void addTargetLines(List<LineSegment> lines, ExperienceCannon exp) {
+        var dist = params.distTarget();
+        int x1 = params.targetLeft(dist);
+        int x2 = params.targetRight(dist);
+        int h1 = params.heightTarget();
+        int h2 = 0;
+        lines.add(LineSegment.black(x1, h1, x2, h1));
+        lines.add(LineSegment.black(x2, h1, x2, h2));
+        lines.add(LineSegment.black(x1, h2, x2, h2));
+        lines.add(LineSegment.black(x1, h1, x1, h2));
     }
 
     record TableData(List<Object[][]> data) {
@@ -123,21 +150,25 @@ public class AnimationCannon {
             var data = Collections.singletonList(new Object[][]{
                     {"episode", ei + "(" + eiMax + ")"},
                     {"action (angle in deg)", cfg.round(UnitConverterUtil.convertRadiansToDegrees(exp.action()))},
-                    {"distance to hit (m)", cfg.round(exp.stepReturn().distance()) },
+                    {"distance to hit (m)", cfg.round(exp.stepReturn().distance())},
                     {"reward", cfg.round(exp.reward())},
-                    {"is hit?", Math.abs((exp.stepReturn().distance()- DIST_REF))<= DIST_DIFF ? "yes" : "no"},
+                    {"is hit?", isHit(exp) ? "yes" : "no"},
             });
             return new TableData(data);
         }
 
     }
 
-    private void postCommon(int ei, int eiMax, ExperienceCannon exp, List<LineSegment> lines,TableData tableData) {
+    private static boolean isHit(ExperienceCannon exp) {
+        return Math.abs((exp.stepReturn().distance() - DIST_REF)) <= DIST_DIFF;
+    }
+
+    private void postCommon(int ei, int eiMax, ExperienceCannon exp, List<LineSegment> lines, TableData tableData) {
         if (isEmpty()) return;
 
         var lineData = List.of(lines);
         //var tableData = setTabledata(ei, eiMax, exp);
-        int animationDelay =  (int) delayFunction.applyAsDouble(ei);
+        int animationDelay = (int) delayFunction.applyAsDouble(ei);
         var dto = GraphicsDto.dtoStep(lineData, tableData.data, animationDelay, false);
         kitStep.postAndSleep(dto);
     }
@@ -178,7 +209,7 @@ public class AnimationCannon {
         chart.setBackgroundPaint(Color.WHITE);
         var plot = chart.getXYPlot();
         plot.setBackgroundPaint(CannonParams.create().colorBackground());
-    //    plot.getDomainAxis().setVisible(false); // disable X axis
+        //    plot.getDomainAxis().setVisible(false); // disable X axis
         plot.getRangeAxis().setVisible(false);  // disable Y axis
         plot.setDomainGridlinesVisible(false); // vertical grid lines
         plot.setRangeGridlinesVisible(false);  // horizontal grid lines

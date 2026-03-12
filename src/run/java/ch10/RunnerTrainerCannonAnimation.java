@@ -25,7 +25,7 @@ public class RunnerTrainerCannonAnimation {
         var cfg= ConfigFactory.getAnimationConfig();
         trainer.train(AnimationCannon.create(cfg));
         //trainer.train(AnimationCannon.empty());
-        plotting(trainer);
+      //  plotting(trainer);
     }
 
 

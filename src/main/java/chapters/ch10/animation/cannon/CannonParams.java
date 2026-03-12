@@ -1,11 +1,19 @@
 package chapters.ch10.animation.cannon;
-
 import core.foundation.util.rand.RandUtil;
 import lombok.Builder;
 import org.apache.commons.math3.util.Pair;
-
 import java.awt.Color;
 import java.util.List;
+
+
+    /*
+
+    eastY    O
+           /
+         /
+       /     eastX
+
+     */
 
 @Builder
 record CannonParams(
@@ -15,27 +23,32 @@ record CannonParams(
         int lengthCannon,
         int widthCannon,
         Color cannonColor,
+        int distTarget,
         int widthTarget,
         int heightTarget,
         int nFireDots,
         List<Color> fireColors,
-        int radiusFireDots,
+        List<Color> targetHitColors,
+        int radiusFireDotsCannon,
+        int radiusFireDotsHit,
         int radiusFireDot
 ) {
 
     public static CannonParams create() {
         return CannonParams.builder()
-                .colorBackground(Color.DARK_GRAY)
+                .colorBackground(Color.WHITE)
                 .cannonWestXpos(0)
                 .cannonWestYpos(0)
                 .lengthCannon(70)
                 .widthCannon(5)
-                .cannonColor(Color.WHITE)
-                .widthTarget(30*60)
+                .cannonColor(Color.BLACK)
+                .distTarget(800)
+                .widthTarget(60)
                 .heightTarget(30)
-                .nFireDots(20)
+                .nFireDots(40)
                 .fireColors(List.of(Color.RED,Color.YELLOW))
-                .radiusFireDots(20)
+                .targetHitColors(List.of(Color.BLACK,Color.RED))
+                .radiusFireDotsCannon(20).radiusFireDotsHit(60)
                 .radiusFireDot(3)
                 .build();
     }
@@ -49,36 +62,36 @@ record CannonParams(
         return (int) ((cannonWestXpos +lengthCannon)*Math.sin(angle));
     }
 
-    public Color randomColor() {
-        return fireColors.get(RandUtil.getRandomIntNumber(0, fireColors.size()));
-    }
-
-    public int fireDotsCenterX(double angle) {
-        return (int) (cannonEastYPos(angle)+radiusFireDots*Math.cos(angle));
+    public Color randomColor(List<Color> colors) {
+        return colors.get(RandUtil.getRandomIntNumber(0, colors.size()));
     }
 
 
-    public int fireDotsCenterY(double angle) {
-        return (int) (cannonEastYPos(angle)+radiusFireDots*Math.sin(angle));
+    public Pair<Integer, Integer> centerCannonFire(double angle) {
+        double dist= radiusFireDotsCannon * 2 ;
+        double x = cannonEastXPos(angle) + dist * Math.cos(angle);
+        double y = cannonEastYPos(angle) + dist * Math.sin(angle);
+        return Pair.create((int) x,(int)y);
     }
 
-
-    /*
-
-    eastY    O
-           /
-         /
-       /     eastX
-
-     */
-
-    public Pair<Integer, Integer> randomXPosFireDot(double angle) {
+    public Pair<Integer, Integer> randomPosInCircle(Pair<Integer, Integer> center, int radius) {
         double randomAngle=RandUtil.getRandomDouble(0, 2*Math.PI);
-        double randomRadius=RandUtil.getRandomDouble(0, radiusFireDots);
-        double dist=radiusFireDot*10.0;
+        double randomRadius=RandUtil.getRandomDouble(0, radius);
         return Pair.create(
-                (int) (cannonEastXPos(angle)+dist*Math.cos(angle)+randomRadius*Math.cos(randomAngle)),
-                (int) (cannonEastYPos(angle)+dist*Math.sin(angle)+randomRadius*Math.sin(randomAngle)));
+                (int) (center.getFirst() + randomRadius * Math.cos(randomAngle)),
+                (int) (center.getSecond() + randomRadius * Math.sin(randomAngle)));
+    }
+
+    public int targetLeft(double dist) {
+        return (int) (dist-widthTarget/2);
+    }
+
+    public int targetRight(double dist) {
+        return (int) (dist+widthTarget/2);
+    }
+
+    public int targetTop(double dist) {
+        return (int) (dist+widthTarget/2);
     }
 
 }
