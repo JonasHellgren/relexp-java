@@ -40,6 +40,5 @@ public record AnimationConfig(
 
     public float round(double value) {
         return FormatUtil.round((float) value,ndigits);
-
     }
 }

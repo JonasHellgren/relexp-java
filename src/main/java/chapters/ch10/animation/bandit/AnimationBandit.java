@@ -1,4 +1,4 @@
-package chapters.ch10.animation_bandit;
+package chapters.ch10.animation.bandit;
 
 import chapters.ch10.bandit.domain.agent.MemoryBandit;
 import chapters.ch10.bandit.domain.environment.ActionBandit;
@@ -8,12 +8,10 @@ import core.foundation.config.AnimationConfig;
 import core.foundation.gadget.math.ScalerLinear;
 import core.foundation.util.collections.MyMatrixArrayUtil;
 import core.foundation.util.cond.ConditionalsUtil;
-import core.foundation.util.formatting.NumberFormatterUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
 import org.jfree.chart.JFreeChart;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +29,6 @@ public class AnimationBandit {
     static final int X_LOCATION_VAL = 500;
     static final int N_COLUMNS = 2;
 
-
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
             List.of(0.0, 10.0, 490.0),  //cuts
             List.of(1000.0, 1.0, 1000.0)   //animation time delays
@@ -40,7 +37,7 @@ public class AnimationBandit {
 
     AnimationKit kitStep, kitEpisode;
     DoubleUnaryOperator delayFunction;
-    Sounds sounds;
+    SoundsBandit sounds;
     AnimationConfig cfg;
 
     public static AnimationBandit create(AnimationConfig cfg) {
@@ -50,7 +47,7 @@ public class AnimationBandit {
                 AnimationKit.of(environmentGfx(asStep), asStep),
                 AnimationKit.of(episodeGfx(asEpisode), asEpisode),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP),
-                Sounds.create(),
+                SoundsBandit.create(),
                 cfg);
     }
 
@@ -59,10 +56,9 @@ public class AnimationBandit {
                 AnimationKit.empty(),
                 AnimationKit.empty(),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP),
-                Sounds.create(),
+                SoundsBandit.create(),
                 AnimationConfig.defaults());
     }
-
 
     public boolean isEmpty() {
         return kitEpisode.isEmpty();
@@ -83,7 +79,6 @@ public class AnimationBandit {
 
     public void postAfterStep(int ei, int eiMax, List<ExperienceBandit> experiences) {
         postCommon(ei, eiMax, experiences, false);
-
     }
 
     private void postCommon(int ei, int eiMax, List<ExperienceBandit> experiences, boolean isStep) {
@@ -94,19 +89,15 @@ public class AnimationBandit {
         ConditionalsUtil.executeIfTrue(isStep,
                 () -> addArmsAndCoin(experiences.get(0), lines));
         var lineData = List.of(lines);
-        double reward = exp.reward();
-        String actionLorR = exp.action().toString();
-        String isCoin = exp.stepReturn().isCoin() ? "yes" : "no";
         var tableData = Collections.singletonList(new Object[][]{
                 {"episode", ei + "(" + eiMax + ")"},
-                {"action", actionLorR},
-                {"coin achieved", isCoin},
-                {"reward", reward},
+                {"action", exp.action().toString()},
+                {"coin achieved", exp.stepReturn().isCoin() ? "yes" : "no"},
+                {"reward", exp.reward()},
         });
         int animationDelay = isStep ?  0: (int) delayFunction.applyAsDouble(ei);
         var dto = GraphicsDto.dtoStep(lineData, tableData, animationDelay, false);
         kitStep.postAndSleep(dto);
-
     }
 
     public void postEpisode(MemoryBandit memory, int ei, double returnAtT, double[] gradLog, double[] probArray) {
@@ -120,21 +111,15 @@ public class AnimationBandit {
         vGrid[0][1] = scaler.calcOutDouble(z[1]);
         List<double[][]> grids = new ArrayList<>();
         grids.add(GridFactory.toSeries(vGrid));
-
         var tableData = Collections.singletonList(new Object[][]{
-                {"z", "(" + round(z[0]) + "," + round(z[1]) + ")"},
-                {"return", round(returnAtT)},
-                {"grad log", "(" + round(gradLog[0]) + "," + round(gradLog[1]) + ")"},
-                {"probability (L,R)", "(" + round(probArray[0]) + "," + round(probArray[1]) + ")"},
-
+                {"z", "(" + cfg.round(z[0]) + "," + cfg.round(z[1]) + ")"},
+                {"return", cfg.round(returnAtT)},
+                {"grad log", "(" + cfg.round(gradLog[0]) + "," + cfg.round(gradLog[1]) + ")"},
+                {"probability (L,R)", "(" + cfg.round(probArray[0]) + "," + cfg.round(probArray[1]) + ")"},
         });
-
         kitEpisode.postAndSleep(GraphicsDto.dtoEpisode(grids, tableData, (int) delayFunction.applyAsDouble(ei)));
     }
 
-    private static double round(double z) {
-        return NumberFormatterUtil.roundTo1Decimals(z);
-    }
 
     private static GfxComponentFactory environmentGfx(AnimationSettings as) {
         var factory = GfxComponentFactory.of(as);

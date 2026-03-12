@@ -1,5 +1,6 @@
 package chapters.ch10.cannon.domain.trainer;
 
+import chapters.ch10.animation.cannon.AnimationCannon;
 import chapters.ch10.plotting.MeasuresCannon;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.math.MeanAndStd;
@@ -27,9 +28,14 @@ public class TrainerCannon {
     }
 
     public void train() {
+        train(AnimationCannon.empty());
+    }
+
+    public void train(AnimationCannon animation) {
         var d=dependencies;
         var generator = EpisodeGeneratorCannon.of(d);
         recorder.clear();
+        animation.start();
         double base=0;
         for (int i = 0; i < d.nEpisodes(); i++) {
             var experiences = generator.generate();
@@ -41,6 +47,7 @@ public class TrainerCannon {
                 d.updateAgentMemory(lr, returnAtT-base, gradLog);
                 base=base+lr*(returnAtT-base);
                 recorder.addRecording(returnAtT-base, base, exp,gradLog, d.meanAndStd());
+                animation.postFire(i,d.nEpisodes(),experiences);
             }
         }
     }

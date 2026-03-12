@@ -26,4 +26,17 @@ public class FactoryTrainerParametersCannon {
                 .learningRateEnd(1e-4)
                 .build();
     }
+
+
+    public static TrainerParametersCannon animation() {
+        return TrainerParametersCannon.builder()
+                .denomMinGradLog(1e-3)
+                .nEpisodes(1000)
+                .learningRateStart(0.5)
+                .learningRateEnd(0.1)
+                .build();
+    }
+
+
+
 }

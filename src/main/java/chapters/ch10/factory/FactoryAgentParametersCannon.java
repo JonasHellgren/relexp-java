@@ -51,6 +51,9 @@ public class FactoryAgentParametersCannon {
         return clipIn0And45Degrees(INIT_ANGLE_MEAN,INIT_ANGLE_STD);
     }
 
+    public static AgentParametersCannon animation() {
+        return clipIn0And45DegreesAndGradient(INIT_ANGLE_MEAN,INIT_ANGLE_STD/2);
+    }
 
 
 }

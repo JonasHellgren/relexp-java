@@ -1,4 +1,4 @@
-package chapters.ch10.animation_bandit;
+package chapters.ch10.animation.bandit;
 
 import lombok.SneakyThrows;
 
@@ -6,14 +6,14 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
-public record Sounds(Clip coinSound) {
+public record SoundsBandit(Clip coinSound) {
 
     @SneakyThrows
-    public static Sounds create() {
-        File file = new File("src/main/java/chapters/ch10/animation_bandit/coin.wav");
+    public static SoundsBandit create() {
+        File file = new File("src/main/java/chapters/ch10/animation/bandit/coin.wav");
         Clip clip = AudioSystem.getClip();
         clip.open(AudioSystem.getAudioInputStream(file));
-        return new Sounds(clip);
+        return new SoundsBandit(clip);
     }
 
     public void playCoin() {

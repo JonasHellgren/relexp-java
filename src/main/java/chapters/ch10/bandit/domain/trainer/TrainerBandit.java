@@ -1,6 +1,6 @@
 package chapters.ch10.bandit.domain.trainer;
 
-import chapters.ch10.animation_bandit.AnimationBandit;
+import chapters.ch10.animation.bandit.AnimationBandit;
 import chapters.ch10.plotting.MeasuresBandit;
 import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
@@ -56,7 +56,6 @@ public class TrainerBandit {
                 animation.postEpisode(dependencies.getMemory(),i,returnAtT, gradLog, probs);
                 animation.postAfterStep(i, d.nEpisodes(), experiences);
             }
-
         }
     }
 
