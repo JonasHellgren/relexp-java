@@ -37,12 +37,12 @@ public class AnimationCannon {
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
             List.of(0.0, 10.0, 990.0),  //cuts
-            List.of(500.0, 1.0, 500.0)   //animation time delays
+            List.of(1000.0, 1.0, 1000.0)   //animation time delays
     );
 
     AnimationKit kitStep, kitEpisode;
     DoubleUnaryOperator delayFunction;
-    SoundsBandit sounds;
+    SoundsCannon sounds;
     CannonParams params;
     AnimationConfig cfg;
 
@@ -53,7 +53,7 @@ public class AnimationCannon {
                 AnimationKit.of(environmentGfx(asStep), asStep),
                 AnimationKit.of(episodeGfx(asEpisode), asEpisode),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP),
-                SoundsBandit.create(),
+                SoundsCannon.create(),
                 CannonParams.create(),
                 cfg);
     }
@@ -63,7 +63,7 @@ public class AnimationCannon {
                 AnimationKit.empty(),
                 AnimationKit.empty(),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP),
-                SoundsBandit.create(),
+                SoundsCannon.create(),
                 CannonParams.create(),
                 AnimationConfig.defaults());
     }
@@ -84,9 +84,9 @@ public class AnimationCannon {
         addCannonAndFire(lines, exp);
         addTargetLines(lines, exp);
         addFireDots(lines, exp);
+        sounds.playFire();
         var tableData = TableData.create(ei, eiMax, exp, cfg);
         postCommon(ei, eiMax, exp, lines, tableData);
-        sounds.playCoin();
     }
 
     public void postHit(int ei, int eiMax, List<ExperienceCannon> experiences) {
@@ -94,10 +94,13 @@ public class AnimationCannon {
         List<LineSegment> lines = new ArrayList<>();
         addCannonAndFire(lines, exp);
         addHitFire(lines, exp);
-        ConditionalsUtil.executeIfFalse(isHit(exp), () -> addTargetLines(lines, exp));
+        ConditionalsUtil.executeIfFalse(isHit(exp),
+                () -> addTargetLines(lines, exp));
+        ConditionalsUtil.executeOneOfTwo(isHit(exp),
+                () -> sounds.playHit(),
+                () -> sounds.playSplat());
         var tableData = TableData.create(ei, eiMax, exp, cfg);
         postCommon(ei, eiMax, exp, lines, tableData);
-        ConditionalsUtil.executeIfTrue(isHit(exp), () -> sounds.playCoin());
     }
 
     private void addCannonAndFire(List<LineSegment> lines, ExperienceCannon exp) {
@@ -227,13 +230,6 @@ public class AnimationCannon {
         return factory;
     }
 
-
-    private static void addBanditLines(List<LineSegment> lines, boolean isStep) {
-        //var p = BanditParams.create();
-        // Machine body
-        //lines.add(LineSegment.black(p.left(), p.top(), p.right(), p.top()));       // top
-
-    }
 
 
 }
