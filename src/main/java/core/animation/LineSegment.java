@@ -15,23 +15,20 @@ public record LineSegment(
     public static final int END_ROUNDING = BasicStroke.CAP_ROUND;
 
     public static LineSegment black(double x1, double y1, double x2, double y2) {
-        return new LineSegment(x1, y1, x2, y2, 2f, END_ROUNDING, JOINING, Color.BLACK);
+        return line(x1, y1, x2, y2, Color.BLACK, 2f);
     }
 
-    public static LineSegment red(double x1, double y1, double x2, double y2) {
-        return new LineSegment(x1, y1, x2, y2, 2f, END_ROUNDING, JOINING, Color.RED);
-    }
 
     public static LineSegment grey(double x1, double y1, double x2, double y2) {
-        return new LineSegment(x1, y1, x2, y2, 2f, END_ROUNDING, JOINING, Color.GRAY);
+        return line(x1, y1, x2, y2, Color.GRAY, 2f);
     }
 
     public static LineSegment blackBold(double x1, double y1, double x2, double y2) {
-        return new LineSegment(x1, y1, x2, y2, 15f, END_ROUNDING, JOINING, Color.BLACK);
+        return line(x1, y1, x2, y2, Color.BLACK, 15f);
     }
 
     public static LineSegment redBold(double x1, double y1, double x2, double y2) {
-        return new LineSegment(x1, y1, x2, y2, 15f, END_ROUNDING, JOINING, Color.RED);
+        return line(x1, y1, x2, y2, Color.RED, 15f);
     }
 
     public static LineSegment goldSmall(double x1, double y1) {
@@ -39,16 +36,24 @@ public record LineSegment(
     }
 
     public static LineSegment circleSmall(double x1, double y1, Color yellow) {
-        return new LineSegment(x1, y1, x1, y1, 5f, END_ROUNDING, JOINING, yellow);
+        return line(x1, y1, x1, y1, yellow, 5f);
     }
 
     public static LineSegment goldBig(double x1, double y1) {
         return circle(x1, y1, Color.YELLOW);
     }
 
-    public static LineSegment circle(double x1, double y1, Color yellow) {
-        return new LineSegment(x1, y1, x1, y1, 15f, END_ROUNDING, JOINING, yellow);
+    public static LineSegment circle(double x1, double y1, Color color) {
+        return circleCommon(x1, y1, color, 15f);
     }
 
+
+    public static LineSegment circleCommon(double x1, double y1, Color color, float t) {
+        return line(x1, y1, x1, y1, color, t);
+    }
+
+    public static LineSegment line(double x1, double y1, double x2, double y2, Color red, float thickness1) {
+        return new LineSegment(x1, y1, x2, y2, thickness1, END_ROUNDING, JOINING, red);
+    }
 
 }

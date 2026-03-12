@@ -48,6 +48,7 @@ public class TrainerCannon {
                 base=base+lr*(returnAtT-base);
                 recorder.addRecording(returnAtT-base, base, exp,gradLog, d.meanAndStd());
                 animation.postFire(i,d.nEpisodes(),experiences);
+                animation.postHit(i,d.nEpisodes(),experiences);
             }
         }
     }

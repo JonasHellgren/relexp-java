@@ -41,6 +41,7 @@ public class AnimationCannon {
     AnimationKit kitStep, kitEpisode;
     DoubleUnaryOperator delayFunction;
     SoundsBandit sounds;
+    CannonParams params;
     AnimationConfig cfg;
 
     public static AnimationCannon create(AnimationConfig cfg) {
@@ -51,6 +52,7 @@ public class AnimationCannon {
                 AnimationKit.of(episodeGfx(asEpisode), asEpisode),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP),
                 SoundsBandit.create(),
+                CannonParams.create(),
                 cfg);
     }
 
@@ -60,6 +62,7 @@ public class AnimationCannon {
                 AnimationKit.empty(),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP),
                 SoundsBandit.create(),
+                CannonParams.create(),
                 AnimationConfig.defaults());
     }
 
@@ -75,19 +78,44 @@ public class AnimationCannon {
 
     public void postFire(int ei, int eiMax, List<ExperienceCannon> experiences) {
         var exp = experiences.get(0);
+        List<LineSegment> lines = new ArrayList<>();
+        addCannonLines(lines,exp);
+        addFireDots(lines,exp);
 
         var tableData=TableData.create(ei, eiMax, exp, cfg);
-
-        List<LineSegment> lines = new ArrayList<>();
-        //addBanditLines(lines);
-
         postCommon(ei, eiMax, exp, lines,tableData);
 //        ConditionalsUtil.executeIfTrue(exp.stepReturn().isCoin(),
   //              () -> sounds.playCoin());
     }
 
+
+    private void addCannonLines(List<LineSegment> lines, ExperienceCannon exp) {
+        var p=params;
+        var angle = exp.action();
+        lines.add(LineSegment.line(p.cannonWestXpos(), p.cannonWestXpos(),
+                p.cannonEastXPos(angle), p.cannonEastYPos(angle),p.cannonColor(),p.widthCannon()));
+    }
+
+
+    private void addFireDots(List<LineSegment> lines, ExperienceCannon exp) {
+
+        var angle = exp.action();
+        var p=params;
+        for (int i = 0; i < p.nFireDots() ; i++) {
+            var color=p.randomColor();
+            var xyPos=p.randomXPosFireDot(angle);
+            lines.add(LineSegment.circleCommon(xyPos.getFirst(), xyPos.getSecond(), color,p.radiusFireDot()));
+        }
+
+    }
+
     public void postAfterStep(int ei, int eiMax, List<ExperienceBandit> experiences) {
         //postCommon(ei, eiMax, experiences, false);
+    }
+
+    public void postHit(int i, int i1, List<ExperienceCannon> experiences) {
+
+
     }
 
     record TableData(List<Object[][]> data) {
@@ -140,7 +168,7 @@ public class AnimationCannon {
         var factory = GfxComponentFactory.of(as);
         factory.addLineChart("",
                 "x", Pair.create(-10, 1000),
-                "y", Pair.create(0, 65));
+                "y", Pair.create(0, 200));
         styleChart(factory.getLineCharts().get(0));
         factory.addTable(N_COLUMNS, false);
         return factory;
@@ -149,7 +177,7 @@ public class AnimationCannon {
     private static void styleChart(JFreeChart chart) {
         chart.setBackgroundPaint(Color.WHITE);
         var plot = chart.getXYPlot();
-        plot.setBackgroundPaint(Color.gray);
+        plot.setBackgroundPaint(CannonParams.create().colorBackground());
     //    plot.getDomainAxis().setVisible(false); // disable X axis
         plot.getRangeAxis().setVisible(false);  // disable Y axis
         plot.setDomainGridlinesVisible(false); // vertical grid lines
