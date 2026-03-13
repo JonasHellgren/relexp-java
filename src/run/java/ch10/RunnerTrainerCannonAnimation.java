@@ -24,8 +24,6 @@ public class RunnerTrainerCannonAnimation {
         var trainer = getTrainer();
         var cfg= ConfigFactory.getAnimationConfig();
         trainer.train(AnimationCannon.create(cfg));
-      //  trainer.train(AnimationCannon.empty());
-     //   plotting(trainer);
     }
 
     static TrainerCannon getTrainer() {
@@ -36,24 +34,6 @@ public class RunnerTrainerCannonAnimation {
         var parTrainer = FactoryTrainerParametersCannon.animation();
         var dependencies = TrainerDependenciesCannon.of(environment, agent, parTrainer);
         return TrainerCannon.of(dependencies);
-    }
-
-
-    static void plotting(TrainerCannon trainer) {
-        var recorder = trainer.getRecorder();
-        var path= ConfigFactory.pathPicsConfig().ch10();
-        var plotter = ErrorBandPlotterCannon.ofFiltering(
-                recorder,
-                path,
-                "cannon_clipped=",
-                N_WINDOWS_FILTERING);
-        plotter.plotAndSave(List.of(
-                MeasuresCannonEnum.RETURN_MINUS_BASE,
-                MeasuresCannonEnum.BASE,
-                MeasuresCannonEnum.ANGLE,
-                MeasuresCannonEnum.DISTANCE,
-                MeasuresCannonEnum.MEAN,
-                MeasuresCannonEnum.STD));
     }
 
 

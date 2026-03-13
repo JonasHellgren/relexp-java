@@ -1,6 +1,7 @@
 package chapters.ch11.domain.trainer.multisteps;
 
 import chapters.ch11.domain.environment.core.StateLunar;
+import chapters.ch11.domain.environment.core.StepReturnLunar;
 import lombok.Builder;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import java.util.Optional;
  */
 @Builder
 public record MultiStepResult(
+        StepReturnLunar stepReturn,
         StateLunar state,          // Initial state
         double action,             // Action taken
         Double sumRewards,         // Sum of rewards

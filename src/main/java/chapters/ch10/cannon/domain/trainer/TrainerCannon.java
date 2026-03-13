@@ -46,12 +46,14 @@ public class TrainerCannon {
                 double returnAtT = getReturnAtTime(experiences, t);
                 double lr = d.learningRate(i);
                 var gradLog = d.calcGradLog(exp.action());
-                d.updateAgentMemory(lr, returnAtT-base, gradLog);
-                base=base+lr*(returnAtT-base);
+
                 recorder.addRecording(returnAtT-base, base, exp,gradLog, d.meanAndStd());
                 animation.postFire(i,d.nEpisodes(),experiences);
                 animation.postHit(i,d.nEpisodes(),experiences);
                 animation.postEpisode(d.agentmemory(),i, Pair.create(returnAtT,base),gradLog);
+
+                d.updateAgentMemory(lr, returnAtT-base, gradLog);
+                base=base+lr*(returnAtT-base);
             }
         }
     }

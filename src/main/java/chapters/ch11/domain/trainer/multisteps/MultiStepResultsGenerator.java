@@ -61,6 +61,7 @@ public class MultiStepResultsGenerator {
         double advantage = calculator.calcAdvantage(dependencies.agent(), e.state(), valueTarget);
         double tdError = calculator.calcTemporalDifferenceError(e);
         return MultiStepResult.builder()
+                .stepReturn(e.stepReturn())
                 .state(e.state())
                 .action(e.action())
                 .sumRewards(rewardSum)
