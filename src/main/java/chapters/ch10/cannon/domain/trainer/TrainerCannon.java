@@ -9,6 +9,8 @@ import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.apache.commons.math3.util.Pair;
+
 import java.util.List;
 
 /**
@@ -49,6 +51,7 @@ public class TrainerCannon {
                 recorder.addRecording(returnAtT-base, base, exp,gradLog, d.meanAndStd());
                 animation.postFire(i,d.nEpisodes(),experiences);
                 animation.postHit(i,d.nEpisodes(),experiences);
+                animation.postEpisode(d.agentmemory(),i, Pair.create(returnAtT,base),gradLog);
             }
         }
     }

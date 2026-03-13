@@ -5,6 +5,7 @@ import core.foundation.gadget.normal_distribution.NormDistributionSampler;
 import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * Represents an agent for the cannon domain.
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AgentCannon {
 
+    @Getter
     private MemoryCannon memory;
     private NormDistributionSampler sampler;
     private AgentParametersCannon parameters;

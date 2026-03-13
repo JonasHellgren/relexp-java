@@ -1,15 +1,13 @@
 package chapters.ch10.animation.cannon;
 
-import chapters.ch10.animation.bandit.SoundsBandit;
-import chapters.ch10.bandit.domain.agent.MemoryBandit;
-import chapters.ch10.bandit.domain.trainer.ExperienceBandit;
+import chapters.ch10.cannon.domain.agent.MemoryCannon;
 import chapters.ch10.cannon.domain.trainer.ExperienceCannon;
 import core.animation.*;
 import core.foundation.config.AnimationConfig;
 import core.foundation.gadget.math.ScalerLinear;
 import core.foundation.util.collections.MyMatrixArrayUtil;
-import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.util.unit_converter.UnitConverterUtil;
+import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
@@ -24,19 +22,17 @@ import java.util.function.DoubleUnaryOperator;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AnimationCannon {
 
-    static final int HEIGHT_ENV = 200;
-    public static final int TABLE_HEIGHT = (int) (HEIGHT_ENV * 0.75);
-    static final int HEIGHT_VAL = 200;
-    static final int WIDTH = 300;
-    static final int X_LOCATION_ENV = 100;
-    static final int X_LOCATION_VAL = 500;
+    static final int WIDTH = 350;
+    static final int HEIGHT = 200;
+    public static final int TABLE_HEIGHT = (int) (HEIGHT * 0.5);
+    static final int X_LOCATION_ENV = 20;
+    static final int X_LOCATION_VAL = 400;
     static final int N_COLUMNS = 2;
-    static final int Z_MAX = 5;
     static final int DIST_REF = 800;
     static final int DIST_DIFF = 30;
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
-            List.of(0.0, 10.0, 990.0),  //cuts
+            List.of(0.0, 20.0, 990.0),  //cuts
             List.of(1000.0, 1.0, 1000.0)   //animation time delays
     );
 
@@ -47,8 +43,8 @@ public class AnimationCannon {
     AnimationConfig cfg;
 
     public static AnimationCannon create(AnimationConfig cfg) {
-        var asStep = AnimationSettings.of(cfg, WIDTH, HEIGHT_ENV, TABLE_HEIGHT, X_LOCATION_ENV);
-        var asEpisode = AnimationSettings.of(cfg, WIDTH, HEIGHT_VAL, TABLE_HEIGHT, X_LOCATION_VAL);
+        var asStep = AnimationSettings.of(cfg, WIDTH, HEIGHT, TABLE_HEIGHT, X_LOCATION_ENV);
+        var asEpisode = AnimationSettings.of(cfg, WIDTH, HEIGHT, TABLE_HEIGHT, X_LOCATION_VAL);
         return new AnimationCannon(
                 AnimationKit.of(environmentGfx(asStep), asStep),
                 AnimationKit.of(episodeGfx(asEpisode), asEpisode),
@@ -82,7 +78,7 @@ public class AnimationCannon {
         var exp = experiences.get(0);
         List<LineSegment> lines = new ArrayList<>();
         addCannonAndFire(lines, exp);
-        addTargetLines(lines, exp);
+        addTargetLines(lines);
         addFireDots(lines, exp);
         sounds.playFire();
         var tableData = TableData.create(ei, eiMax, exp, cfg);
@@ -93,15 +89,41 @@ public class AnimationCannon {
         var exp = experiences.get(0);
         List<LineSegment> lines = new ArrayList<>();
         addCannonAndFire(lines, exp);
-        addHitFire(lines, exp);
-        ConditionalsUtil.executeIfFalse(isHit(exp),
-                () -> addTargetLines(lines, exp));
-        ConditionalsUtil.executeOneOfTwo(isHit(exp),
-                () -> sounds.playHit(),
-                () -> sounds.playSplat());
+        if (isHit(exp)) {
+            sounds.playHit();
+            addHitFire(lines, exp, params.radiusFireDotsHitLarge());
+        } else {
+            sounds.playSplat();
+            addTargetLines(lines);
+            addHitFire(lines, exp, params.radiusFireDotsHitSmall());
+        }
+
         var tableData = TableData.create(ei, eiMax, exp, cfg);
         postCommon(ei, eiMax, exp, lines, tableData);
     }
+
+    public void postEpisode(MemoryCannon memory, int ei, Pair<Double,Double> baseReturn, GradientMeanAndLogStd grad) {
+        if (isEmpty()) return;
+        int nRows = 1;
+        int nCols = 2;
+        double[][] vGrid = MyMatrixArrayUtil.emptyMatrix(nRows, nCols);
+        var scalerMean = ScalerLinear.of(0,90, 0.0, 1.0);
+        var scalerStd = ScalerLinear.of(0, 10, 0.0, 1.0);
+        double expAngleDeg = UnitConverterUtil.convertRadiansToDegrees(memory.mean());
+        double stdAngleDeg = UnitConverterUtil.convertRadiansToDegrees(memory.std());
+        vGrid[0][0] = scalerMean.calcOutDouble(expAngleDeg);
+        vGrid[0][1] = scalerStd.calcOutDouble(stdAngleDeg);
+        List<double[][]> grids = new ArrayList<>();
+        grids.add(GridFactory.toSeries(vGrid));
+        var tableData = Collections.singletonList(new Object[][]{
+                {"("+"m,d"+")", "(" + cfg.round(expAngleDeg) + "," + cfg.round(stdAngleDeg) + ")"},
+                {"base", cfg.round(baseReturn.getFirst())},
+                {"base-return", cfg.round(baseReturn.getFirst()-baseReturn.getSecond())},
+                {"grad log", "(" + cfg.round(grad.mean()) + "," + cfg.round(grad.std()) + ")"},
+        });
+        kitEpisode.postAndSleep(GraphicsDto.dtoEpisode(grids, tableData, (int) delayFunction.applyAsDouble(ei)));
+    }
+
 
     private void addCannonAndFire(List<LineSegment> lines, ExperienceCannon exp) {
         var p = params;
@@ -125,18 +147,18 @@ public class AnimationCannon {
     }
 
 
-    private void addHitFire(List<LineSegment> lines, ExperienceCannon exp) {
+    private void addHitFire(List<LineSegment> lines, ExperienceCannon exp, int radiusFireDotsHit) {
         var p = params;
         var dist = exp.stepReturn().distance();
         for (int i = 0; i < p.nFireDots(); i++) {
-            var xyPos = p.randomPosInCircle(Pair.create((int) dist, 0), p.radiusFireDotsHit());
+            var xyPos = p.randomPosInCircle(Pair.create((int) dist, 0), radiusFireDotsHit);
             lines.add(LineSegment.circleCommon(
                     xyPos.getFirst(), xyPos.getSecond(),
                     p.randomColor(p.targetHitColors()), p.radiusFireDot()));
         }
     }
 
-    private void addTargetLines(List<LineSegment> lines, ExperienceCannon exp) {
+    private void addTargetLines(List<LineSegment> lines) {
         var dist = params.distTarget();
         int x1 = params.targetLeft(dist);
         int x2 = params.targetRight(dist);
@@ -150,12 +172,12 @@ public class AnimationCannon {
 
     record TableData(List<Object[][]> data) {
         private static TableData create(int ei, int eiMax, ExperienceCannon exp, AnimationConfig cfg) {
+            var hitText = isHit(exp) ? "yes" : "no";
             var data = Collections.singletonList(new Object[][]{
                     {"episode", ei + "(" + eiMax + ")"},
                     {"action (angle in deg)", cfg.round(UnitConverterUtil.convertRadiansToDegrees(exp.action()))},
                     {"distance to hit (m)", cfg.round(exp.stepReturn().distance())},
-                    {"reward", cfg.round(exp.reward())},
-                    {"is hit?", isHit(exp) ? "yes" : "no"},
+                    {"reward, is hit?", cfg.round(exp.reward())+", "+hitText},
             });
             return new TableData(data);
         }
@@ -168,40 +190,17 @@ public class AnimationCannon {
 
     private void postCommon(int ei, int eiMax, ExperienceCannon exp, List<LineSegment> lines, TableData tableData) {
         if (isEmpty()) return;
-
         var lineData = List.of(lines);
-        //var tableData = setTabledata(ei, eiMax, exp);
         int animationDelay = (int) delayFunction.applyAsDouble(ei);
         var dto = GraphicsDto.dtoStep(lineData, tableData.data, animationDelay, false);
         kitStep.postAndSleep(dto);
     }
 
 
-    public void postEpisode(MemoryBandit memory, int ei, double returnAtT, double[] gradLog, double[] probArray) {
-        if (isEmpty()) return;
-        int nRows = 1;
-        int nCols = 2;
-        double[][] vGrid = MyMatrixArrayUtil.emptyMatrix(nRows, nCols);
-        var z = memory.getMemoryParameters();
-        var scaler = ScalerLinear.of(-Z_MAX, Z_MAX, 0.0, 1.0);
-        vGrid[0][0] = scaler.calcOutDouble(z[0]);
-        vGrid[0][1] = scaler.calcOutDouble(z[1]);
-        List<double[][]> grids = new ArrayList<>();
-        grids.add(GridFactory.toSeries(vGrid));
-        var tableData = Collections.singletonList(new Object[][]{
-                {"z", "(" + cfg.round(z[0]) + "," + cfg.round(z[1]) + ")"},
-                {"return", cfg.round(returnAtT)},
-                {"grad log", "(" + cfg.round(gradLog[0]) + "," + cfg.round(gradLog[1]) + ")"},
-                {"probability (L,R)", "(" + cfg.round(probArray[0]) + "," + cfg.round(probArray[1]) + ")"},
-        });
-        kitEpisode.postAndSleep(GraphicsDto.dtoEpisode(grids, tableData, (int) delayFunction.applyAsDouble(ei)));
-    }
-
-
     private static GfxComponentFactory environmentGfx(AnimationSettings as) {
         var factory = GfxComponentFactory.of(as);
         factory.addLineChart("",
-                "x", Pair.create(-10, 1000),
+                "x", Pair.create(-10, 900),
                 "y", Pair.create(0, 200));
         styleChart(factory.getLineCharts().get(0));
         factory.addTable(N_COLUMNS, false);

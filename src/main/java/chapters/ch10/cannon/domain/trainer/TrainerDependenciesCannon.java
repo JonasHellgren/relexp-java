@@ -2,6 +2,7 @@ package chapters.ch10.cannon.domain.trainer;
 
 
 import chapters.ch10.cannon.domain.agent.AgentCannon;
+import chapters.ch10.cannon.domain.agent.MemoryCannon;
 import chapters.ch10.cannon.domain.envrionment.EnvironmentCannon;
 import chapters.ch10.cannon.domain.envrionment.StepReturnCannon;
 import core.foundation.gadget.math.LogarithmicDecay;
@@ -57,5 +58,9 @@ public record TrainerDependenciesCannon(
 
     public MeanAndStd meanAndStd() {
         return agent.meanAndStd();
+    }
+
+    public MemoryCannon agentmemory() {
+        return agent.getMemory();
     }
 }

@@ -30,7 +30,8 @@ record CannonParams(
         List<Color> fireColors,
         List<Color> targetHitColors,
         int radiusFireDotsCannon,
-        int radiusFireDotsHit,
+        int radiusFireDotsHitSmall,
+        int radiusFireDotsHitLarge,
         int radiusFireDot
 ) {
 
@@ -39,7 +40,7 @@ record CannonParams(
                 .colorBackground(Color.WHITE)
                 .cannonWestXpos(0)
                 .cannonWestYpos(0)
-                .lengthCannon(70)
+                .lengthCannon(30)
                 .widthCannon(5)
                 .cannonColor(Color.BLACK)
                 .distTarget(800)
@@ -48,7 +49,8 @@ record CannonParams(
                 .nFireDots(40)
                 .fireColors(List.of(Color.RED,Color.YELLOW))
                 .targetHitColors(List.of(Color.BLACK,Color.RED))
-                .radiusFireDotsCannon(20).radiusFireDotsHit(60)
+                .radiusFireDotsCannon(20)
+                .radiusFireDotsHitSmall(10).radiusFireDotsHitLarge(60)
                 .radiusFireDot(3)
                 .build();
     }
