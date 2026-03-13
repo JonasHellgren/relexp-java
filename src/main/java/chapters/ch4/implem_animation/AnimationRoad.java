@@ -13,7 +13,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
 import oshi.util.FormatUtil;
-
 import java.util.*;
 import java.util.function.DoubleUnaryOperator;
 

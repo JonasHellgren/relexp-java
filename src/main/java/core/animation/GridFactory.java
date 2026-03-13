@@ -1,5 +1,7 @@
 package core.animation;
 
+import java.util.List;
+
 public class GridFactory {
 
     public static double[][] sincos(int rows, int cols) {
@@ -31,6 +33,26 @@ public class GridFactory {
             for (int c = 0; c < cols; c++) {
                 x[k] = c;
                 y[k] = r;
+                z[k] = grid[r][c];
+                k++;
+            }
+        }
+        return new double[][] { x, y, z }; // <-- längd 3
+    }
+
+    public static double[][] toSeries(double[][] grid, List<Double> xVec, List<Double> yVec) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int n = rows * cols;
+        double[] x = new double[n];
+        double[] y = new double[n];
+        double[] z = new double[n];
+
+        int k = 0;
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                x[k] = xVec.get(c);
+                y[k] = yVec.get(r);
                 z[k] = grid[r][c];
                 k++;
             }

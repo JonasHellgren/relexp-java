@@ -175,8 +175,8 @@ public class AnimationCannon {
             var data = Collections.singletonList(new Object[][]{
                     {"episode", ei + "(" + eiMax + ")"},
                     {"action (angle in deg)", cfg.round(UnitConverterUtil.convertRadiansToDegrees(exp.action()))},
-                    {"distance to hit (m)", cfg.round(exp.stepReturn().distance())},
-                    {"reward (is hit?)", cfg.round(exp.reward())+"("+hitText+")"},
+                    {"distance to crash (m)", cfg.round(exp.stepReturn().distance())},
+                    {"reward (is crash?)", cfg.round(exp.reward())+"("+hitText+")"},
             });
             return new TableData(data);
         }

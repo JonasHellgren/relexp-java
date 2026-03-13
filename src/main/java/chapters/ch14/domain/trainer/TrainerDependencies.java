@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 /**
  * This class represents the dependencies required for a trainer.
  * It includes the trainer settings, environment settings, environment, state supplier, planner,
- * long memory, replay buffer, mini batch adapter, and time to hit calculator.
+ * long memory, replay buffer, mini batch adapter, and time to crash calculator.
  */
 @Builder
 @With

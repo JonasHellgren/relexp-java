@@ -29,10 +29,14 @@ record LunarParams(
                 .colorBackground(Color.DARK_GRAY)
                 .width(2).height(2)
                 .armAngle(Math.PI / 4).armLenght(1)
-                .nFireDotsMax(100)
+                .nFireDotsMax(300)
                 .radiusFireDot(5).radiusFireDotsMax(1)
                 .colors(List.of(Color.WHITE, Color.YELLOW))
                 .build();
+    }
+
+    public static LunarParams empty() {
+        return create(StateLunar.zeroPosAndSpeed());
     }
 
 

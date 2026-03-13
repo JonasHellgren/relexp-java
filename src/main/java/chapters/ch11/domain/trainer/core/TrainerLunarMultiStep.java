@@ -45,7 +45,8 @@ public class TrainerLunarMultiStep {
             var experiences = epCreator.create();
             var msr = msrGenerator.generate(experiences);
             fit(msr);
-            animate(msr, Pair.create(i, dependencies.getNofEpisodes()),animation);
+            animateEpis(msr, Pair.create(i, dependencies.getNofEpisodes()),animation);
+            animation.postEpisode(dependencies.agent(),i);
             recorder.add(measuresFactory.getMeasures(experiences,msr));
         }
     }
@@ -61,8 +62,7 @@ public class TrainerLunarMultiStep {
     }
 
 
-    private void animate(MultiStepResults msr, Pair<Integer,Integer> epis, AnimationLunar animation) {
-        var agent = dependencies.agent();
+    private void animateEpis(MultiStepResults msr, Pair<Integer,Integer> epis, AnimationLunar animation) {
         for (int step = 0; step < msr.nResults(); step++) {
             animation.postStep(epis, msr.experienceAtStep(step));
         }

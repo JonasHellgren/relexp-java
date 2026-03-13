@@ -101,7 +101,7 @@ public class TestEnvironmentPong2 {
     @Test
     void timeStill_ResetsOnMove_NoHit() {
         double t0 = 0.7;
-        // Ball high and heading up -> no hit this step
+        // Ball high and heading up -> no crash this step
         var state = StatePong.of(
                 PosXy.of(settings.xMid(), settings.yMax()),
                 settings.xMid(),
@@ -121,7 +121,7 @@ public class TestEnvironmentPong2 {
         var state = StatePong.of(
                 PosXy.of(settings.xMid(), settings.yMax()),
                 settings.xMid(),
-                +Math.PI / 2,   // north, no hit
+                +Math.PI / 2,   // north, no crash
                 t0
         );
 
@@ -134,7 +134,7 @@ public class TestEnvironmentPong2 {
     @Test
     void timeStill_ResetsOnPaddleHit_NoMove() {
         double t0 = 0.5;
-        // Geometry chosen to hit the centered paddle this step
+        // Geometry chosen to crash the centered paddle this step
         var state = StatePong.of(
                 PosXy.of(settings.xMid(), settings.radiusBall()),
                 settings.xMid(),          // paddle centered
@@ -158,7 +158,7 @@ public class TestEnvironmentPong2 {
         var state = StatePong.of(
                 PosXy.of(settings.xMid(), settings.radiusBall()),
                 settings.xMid(),
-                -Math.PI / 2,  // south -> hit
+                -Math.PI / 2,  // south -> crash
                 t0
         );
 
@@ -166,7 +166,7 @@ public class TestEnvironmentPong2 {
         assertEquals(0.0, sr.stateNew().timeStill(), EPS);
         assertFalse(sr.isTerminal());
         assertFalse(sr.isFail());
-        // reward = +t0 (hit bonus) -1 (move penalty)
+        // reward = +t0 (crash bonus) -1 (move penalty)
         assertEquals(t0 - 1.0, sr.reward(), 1e-6);
     }
 
@@ -191,7 +191,7 @@ public class TestEnvironmentPong2 {
 
     @Test
     void reward_MovePenaltyOnlyWhenMoving_NoHit() {
-        // No hit scenario to isolate move penalty
+        // No crash scenario to isolate move penalty
         var state = StatePong.of(
                 PosXy.of(settings.xMid(), settings.yMax()),
                 settings.xMid(),

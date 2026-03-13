@@ -8,7 +8,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 /**
- * This class calculates the time it takes for the ball to hit the floor in the Pong game.
+ * This class calculates the time it takes for the ball to crash the floor in the Pong game.
  * It does this by simulating the game until the ball hits the floor.
  * The simulation is performed by calling the step method of the environment object.
  */

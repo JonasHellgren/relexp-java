@@ -11,16 +11,15 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 
-public record SoundsCannon(Clip fire, Clip hit, Clip splat) {
+public record SoundsLunar(Clip niceLand, Clip crash) {
 
-    public static final String PATH = "src/main/java/chapters/ch10/animation/cannon/";
+    public static final String PATH = "src/main/java/chapters/ch11/animation/";
 
     @SneakyThrows
-    public static SoundsCannon create() {
-        return new SoundsCannon(
-                getClip("cannon-shot.wav"),
-                getClip("hitHouse.wav"),
-                getClip("splat.wav"));
+    public static SoundsLunar create() {
+        return new SoundsLunar(
+                getClip("coin.wav"),
+                getClip("crash.wav"));
     }
 
     @NotNull
@@ -31,16 +30,12 @@ public record SoundsCannon(Clip fire, Clip hit, Clip splat) {
         return fire;
     }
 
-    public void playFire() {
-        play(fire());
+    public void playNiceLanding() {
+        play(niceLand());
     }
 
-    public void playHit() {
-        play(hit());
-    }
-
-    public void playSplat() {
-        play(splat());
+    public void playCrash() {
+        play(crash());
     }
 
     private void play(Clip clip) {
