@@ -33,7 +33,7 @@ public class FactoryTrainerParametersCannon {
                 .denomMinGradLog(1e-3)
                 .nEpisodes(1000)
                 .learningRateStart(0.5)
-                .learningRateEnd(0.05)
+                .learningRateEnd(0.5)
                 .build();
     }
 

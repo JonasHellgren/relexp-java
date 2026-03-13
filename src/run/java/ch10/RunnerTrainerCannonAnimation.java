@@ -24,10 +24,9 @@ public class RunnerTrainerCannonAnimation {
         var trainer = getTrainer();
         var cfg= ConfigFactory.getAnimationConfig();
         trainer.train(AnimationCannon.create(cfg));
-        //trainer.train(AnimationCannon.empty());
-      //  plotting(trainer);
+      //  trainer.train(AnimationCannon.empty());
+     //   plotting(trainer);
     }
-
 
     static TrainerCannon getTrainer() {
         var parEnv = FactoryEnvironmentParametersCannon.createDefault();

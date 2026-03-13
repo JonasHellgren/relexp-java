@@ -33,6 +33,9 @@ public class RecorderCannon {
                       GradientMeanAndLogStd gradLog,
                       MeanAndStd meanAndStd) {
         var measures= MeasuresCannon.getMeasures(gMinusBase, base, experience, gradLog, meanAndStd);
+
+        System.out.println("measures = " + measures);
+
         add(measures);
     }
 

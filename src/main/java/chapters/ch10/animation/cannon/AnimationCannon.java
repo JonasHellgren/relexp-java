@@ -12,7 +12,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
 import org.jfree.chart.JFreeChart;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,8 +31,8 @@ public class AnimationCannon {
     static final int DIST_DIFF = 30;
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
-            List.of(0.0, 20.0, 990.0),  //cuts
-            List.of(1000.0, 1.0, 1000.0)   //animation time delays
+            List.of(0.0,    10.0,   50.0,   60.0,      990.0),  //cuts
+            List.of(1000.0, 1.0,    1000.0, 1.0,       1000.0)   //animation time delays
     );
 
     AnimationKit kitStep, kitEpisode;
@@ -102,7 +101,7 @@ public class AnimationCannon {
         postCommon(ei, eiMax, exp, lines, tableData);
     }
 
-    public void postEpisode(MemoryCannon memory, int ei, Pair<Double,Double> baseReturn, GradientMeanAndLogStd grad) {
+    public void postEpisode(MemoryCannon memory, int ei, Pair<Double,Double> retBase, GradientMeanAndLogStd grad) {
         if (isEmpty()) return;
         int nRows = 1;
         int nCols = 2;
@@ -117,8 +116,8 @@ public class AnimationCannon {
         grids.add(GridFactory.toSeries(vGrid));
         var tableData = Collections.singletonList(new Object[][]{
                 {"("+"m,d"+")", "(" + cfg.round(expAngleDeg) + "," + cfg.round(stdAngleDeg) + ")"},
-                {"base", cfg.round(baseReturn.getFirst())},
-                {"base-return", cfg.round(baseReturn.getFirst()-baseReturn.getSecond())},
+                {"base", cfg.round(retBase.getSecond())},
+                {"return-base", cfg.round(retBase.getFirst()-retBase.getSecond())},
                 {"grad log", "(" + cfg.round(grad.mean()) + "," + cfg.round(grad.std()) + ")"},
         });
         kitEpisode.postAndSleep(GraphicsDto.dtoEpisode(grids, tableData, (int) delayFunction.applyAsDouble(ei)));
@@ -177,7 +176,7 @@ public class AnimationCannon {
                     {"episode", ei + "(" + eiMax + ")"},
                     {"action (angle in deg)", cfg.round(UnitConverterUtil.convertRadiansToDegrees(exp.action()))},
                     {"distance to hit (m)", cfg.round(exp.stepReturn().distance())},
-                    {"reward, is hit?", cfg.round(exp.reward())+", "+hitText},
+                    {"reward (is hit?)", cfg.round(exp.reward())+"("+hitText+")"},
             });
             return new TableData(data);
         }
