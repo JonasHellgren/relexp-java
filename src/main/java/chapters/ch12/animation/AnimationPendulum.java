@@ -15,6 +15,7 @@ import core.foundation.config.AnimationConfig;
 import core.foundation.gadget.math.ScalerLinear;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.foundation.util.cond.ConditionalsUtil;
+import core.foundation.util.formatting.NumberFormatterUtil;
 import core.foundation.util.rand.RandUtil;
 import core.foundation.util.unit_converter.UnitConverterUtil;
 import lombok.AccessLevel;
@@ -49,7 +50,8 @@ public class AnimationPendulum {
                     {"Num. of steps", cfg.round(exp.state().nSteps())},
                     {"Value", cfg.round(val)},
                     {"Probability random action", cfg.round(probRand)},
-                    {"Reward (is fail?)", cfg.round(exp.stepReturn().reward()) + " (" + isFail + ")"},
+                    {"Reward (is fail?)", NumberFormatterUtil.roundToNDecimals(exp.stepReturn().reward(),3)
+                            + " (" + isFail + ")"},
             });
             return new EnvironmentTableData(data);
         }
@@ -66,7 +68,7 @@ public class AnimationPendulum {
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
             List.of(0.0, 10.0, 245.0),  //cuts
-            List.of(100.0, 1.0, 100.0)   //animation time delays
+            List.of(250.0, 1.0, 250.0)   //animation time delays
     );
 
     AnimationKit kitStep, kitEpisode;
@@ -235,15 +237,15 @@ public class AnimationPendulum {
         var factory = GfxComponentFactory.of(as);
         factory.addHeatMap("Value");
         var heatmap = factory.getHeatMapCharts().get(0);
-        styleMap(heatmap, env);
+        styleMap(heatmap);
         factory.addHeatMap("Policy");
         heatmap = factory.getHeatMapCharts().get(1);
-        styleMap(heatmap, env);
+        styleMap(heatmap);
         factory.addTable(N_COLUMNS, false);
         return factory;
     }
 
-    private static void styleMap(JFreeChart heatmap, EnvironmentPendulum env) {
+    private static void styleMap(JFreeChart heatmap) {
         heatmap.getTitle().setFont(FONT_TITLE);
         var plot = heatmap.getXYPlot();
         plot.getDomainAxis().setLabel("Speed (rad/s)");

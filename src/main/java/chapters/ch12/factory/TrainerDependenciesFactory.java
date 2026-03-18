@@ -43,6 +43,7 @@ public class TrainerDependenciesFactory {
         var pendulumParameters = hp.isFailPenalty()
                 ? PendulumParametersFactory.createForTrainerRunningFailPenalty()
                 : PendulumParametersFactory.createForTrainerRunningCloserToRefReward();
+        pendulumParameters.withMaxTime(20);
         var environment = EnvironmentPendulum.of(pendulumParameters);
         StartStateSupplierI ssSup = hp.isRandomStart()
                 ? StartStateSupplierEnum.RANDOM_FEASIBLE_ANGLE_AND_SPEED.of(pendulumParameters)
@@ -53,7 +54,21 @@ public class TrainerDependenciesFactory {
 
 
     public static TrainerDependencies createForAnimation(HyperParametersPendulum hp) {
-        return createForTrainerRunning(hp);
+        var agentParameters = AgentParametersFactory.createForTrainerRunning(
+                hp.nHiddenLayers(),hp.nHiddenUnits());
+        var trainerPar = TrainerParametersFactory.createForTrainerRunning(
+                hp.nEpisodes(), hp.learningRateStartEnd(), hp.sizeMiniBatch());
+        var agent = AgentPendulum.of(agentParameters, trainerPar);
+        var pendulumParameters = hp.isFailPenalty()
+                ? PendulumParametersFactory.createForTrainerRunningFailPenalty()
+                : PendulumParametersFactory.createForTrainerRunningCloserToRefReward();
+        System.out.println("pendulumParameters = " + pendulumParameters);
+        var environment = EnvironmentPendulum.of(pendulumParameters.withMaxTime(20));
+        StartStateSupplierI ssSup = hp.isRandomStart()
+                ? StartStateSupplierEnum.RANDOM_FEASIBLE_ANGLE_AND_SPEED.of(pendulumParameters)
+                : StartStateSupplierEnum.SMALL_ANGLE_ZERO_SPEED.create();
+        return TrainerDependencies.of(
+                agent, environment, trainerPar, ssSup);
     }
 
 
