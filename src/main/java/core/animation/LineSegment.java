@@ -52,8 +52,13 @@ public record LineSegment(
         return line(x1, y1, x1, y1, color, t);
     }
 
-    public static LineSegment line(double x1, double y1, double x2, double y2, Color red, float thickness1) {
-        return new LineSegment(x1, y1, x2, y2, thickness1, END_ROUNDING, JOINING, red);
+    public static LineSegment line(double x1, double y1, double x2, double y2, Color color, double thickness1) {
+        return line(x1, y1, x2, y2, color, (float) thickness1);
+    }
+
+
+        public static LineSegment line(double x1, double y1, double x2, double y2, Color color, float thickness1) {
+        return new LineSegment(x1, y1, x2, y2, thickness1, END_ROUNDING, JOINING, color);
     }
 
 }

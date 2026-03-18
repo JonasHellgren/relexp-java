@@ -20,7 +20,6 @@ public class TrainerDependenciesFactory {
                 .RANDOM_SMALL_ANGLE_ZERO_SPEED.create();
         return TrainerDependencies.of(
                 agent, environment, trainerParameters, startStateSupplier);
-
     }
 
     public static TrainerDependencies createForTrainerTest() {
@@ -51,6 +50,13 @@ public class TrainerDependenciesFactory {
         return TrainerDependencies.of(
                 agent, environment, trainerPar, ssSup);
     }
+
+
+    public static TrainerDependencies createForAnimation(HyperParametersPendulum hp) {
+        return createForTrainerRunning(hp);
+    }
+
+
 
 
 }

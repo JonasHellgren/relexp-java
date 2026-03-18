@@ -1,5 +1,6 @@
 package chapters.ch12.domain.inv_pendulum.trainer.core;
 
+import chapters.ch12.animation.AnimationPendulum;
 import chapters.ch12.domain.inv_pendulum.agent.memory.ActionAndItsValue;
 import chapters.ch12.domain.inv_pendulum.environment.core.StatePendulum;
 import chapters.ch12.plotting_invpend.RecorderTrainerPendulum;
@@ -8,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.java.Log;
+import org.apache.commons.math3.util.Pair;
 
 import java.util.List;
 
@@ -29,9 +31,15 @@ public class TrainerPendulum {
     }
 
     public void train() {
-        var d=dependencies;
+        train(AnimationPendulum.empty());
+    }
+
+
+    public void train(AnimationPendulum animation) {
+        var d = dependencies;
         var replayBuffer = ReplayBuffer.of(d);
         var targetCalculator = TargetCalculator.of(d);
+        animation.start();
         for (int ei = 0; ei < d.getNofEpisodes(); ei++) {
             var s = d.startStateSupplier().getStartState();
             boolean termState = false;
@@ -44,13 +52,17 @@ public class TrainerPendulum {
                 var mb = replayBuffer.sampleMiniBatch();
                 var targets = targetCalculator.calculateTargets(mb);
                 d.fitAgentMemory(mb, lr, targets);
-                replayBuffer.add(ExperiencePendulum.of(s, a, sr));
+                var exp = ExperiencePendulum.of(s, a, sr);
+                replayBuffer.add(exp);
                 replayBuffer.maybeDeleteOldExperience();
                 s = sr.stateNew();
                 rewardAccum.add(sr.reward());
                 termState = sr.isTerminal();
+                animation.postStep(Pair.create(ei, d.getNofEpisodes()), exp);
+                System.out.println("r = " + exp.stepReturn().reward());
             }
-            recorder.addRecord(ei, rewardAccum.value(), s,d);
+            animation.postEpisode(d.agent(), ei,replayBuffer.size());
+            recorder.addRecord(ei, rewardAccum.value(), s, d);
             maybeLogSuccess(s, ei);
             d.maybeCopyToTargetNetwork(ei);
         }

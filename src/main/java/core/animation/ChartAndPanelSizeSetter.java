@@ -1,6 +1,5 @@
 package core.animation;
 
-import com.google.common.collect.Range;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.math3.util.Pair;
 import org.jfree.chart.ChartPanel;
@@ -11,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 
 @UtilityClass
-public class CharAndPanelSizeSetter {
+public class ChartAndPanelSizeSetter {
 
 
     public static void setSizePanel(ChartPanel p, int panelWidth, int panelHeight) {
