@@ -7,27 +7,19 @@ import chapters.ch11.domain.trainer.multisteps.MultiStepResult;
 import core.animation.*;
 import core.foundation.config.AnimationConfig;
 import core.foundation.gadget.math.ScalerLinear;
-import core.foundation.util.collections.ListUtil;
 import core.foundation.util.cond.ConditionalsUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.DoubleUnaryOperator;
-import java.util.function.Function;
+import java.util.function.*;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AnimationLunar {
-
-
-    public static final int POST_EPIS_INTERVALL = 25;
 
     record EnvironmentTableData(List<Object[][]> data) {
         private static EnvironmentTableData create(int ei,
@@ -38,33 +30,32 @@ public class AnimationLunar {
             var isCrash = isCrash(msr) ? "yes" : "no";
             double force = EnvironmentLunar.forceInNewton(env.getParameters().clippedForce(msr.action()));
             var data = Collections.singletonList(new Object[][]{
-                    {"episode", ei + "(" + eiMax + ")"},
+                    {"episode", ei + " (" + eiMax + ")"},
                     {"Force (N)", cfg.round(force)},
-                    {"Pos (m)", cfg.round(msr.state().y())},
                     {"Acceleration (m/s2)", cfg.round(env.acceleration(msr.action()))},
                     {"Speed (m/s)", cfg.round(msr.state().spd())},
-                    {"is crash", isCrash},
+                    {"Pos (m)", cfg.round(msr.state().y())},
+                    {"Advantage", cfg.round(msr.advantage())},
+                    {"Value", cfg.round(msr.valueTarget())},
+                    {"reward (is crash?)", cfg.round(msr.stepReturn().reward()) + " (" + isCrash + ")"},
             });
             return new EnvironmentTableData(data);
         }
     }
 
-
+    static final int POST_EPIS_INTERVALL = 5;
     static final int WIDTH = 300;
     static final int HEIGHT = 400;
-    public static final int TABLE_HEIGHT_ENV = (int) (HEIGHT * 0.35);
+    public static final int N_COL_ROWS_HEAT_MAP = 50;
+    public static final int TABLE_HEIGHT_ENV = (int) (HEIGHT * 0.5);
     public static final int TABLE_HEIGHT_EPIS = (int) (HEIGHT * 0.1);
     static final int X_LOCATION_ENV = 20;
     static final int X_LOCATION_VAL = 400;
     static final int N_COLUMNS = 2;
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
-            //List.of(0.0,    10.0,   3000.0, 3010.0, 9990.0),  //cuts
-            //List.of(10.0,  0.0,     10.0,  0.0,    10.0)   //animation time delays
-
-            List.of(0.0,    10.0,   9990.0),  //cuts
-            List.of(100.0,   0.0,     100.0)   //animation time delays
-
+            List.of(0.0,    5.0,   3000.0, 3003.0, 9995.0),  //cuts
+            List.of(250.0,  5.0,    250.0,  0.0,    250.0)   //animation time delays
     );
 
     AnimationKit kitStep, kitEpisode;
@@ -106,28 +97,29 @@ public class AnimationLunar {
     }
 
     public void postStep(Pair<Integer, Integer> epis, MultiStepResult msr) {
-        if (delayFunction.applyAsDouble(epis.getFirst()) < 1) return;
+        if (kitStep.isEmpty()) return;
+        if (delayFunction.applyAsDouble(epis.getFirst()) < 10.0) return;
 
         List<LineSegment> lines = new ArrayList<>();
+        addBackground(lines, msr);
         addLunar(lines, msr);
         addFireDots(lines, msr);
-        //sounds.playFire();
-
+        var par = env.getParameters();
+        sounds.setVolumeForce((float) (par.clippedForce(msr.action())/par.forceMax()));
+        sounds.playForce();
         ConditionalsUtil.executeIfTrue(isCrash(msr), () -> sounds.playCrash());
         ConditionalsUtil.executeIfTrue(isSafeLanded(msr), () -> sounds.playNiceLanding());
         var tableData = EnvironmentTableData.create(epis.getFirst(), epis.getSecond(), msr, env, cfg);
         postCommon(epis.getFirst(), lines, tableData);
     }
 
-
-    //public void postEpisode(AgentLunar agent, int ei, Pair<Double, Double> retBase, GradientMeanAndLogStd grad) {
     public void postEpisode(AgentLunar agent,int ei) {
-        if (isEmpty() || !(ei % POST_EPIS_INTERVALL == 0)) return;
+        if (kitStep.isEmpty()) return;
 
+        if (isEmpty() || (ei % POST_EPIS_INTERVALL != 0)) return;
+        System.out.println("ei = " + ei);
         var scaler = ScalerLinear.of(-50, 100.0, 0.0, 1.0);
         double[][] vGrid = getData(s -> agent.readCritic(s),scaler);
-
-        //var scalerPol = ScalerLinear.of(-env.getParameters().forceMax()*2, env.getParameters().forceMax()*2, 0.0, 1.0);
         var scalerPol = ScalerLinear.of(-2,3, 0.0, 1.0);
         double[][] polGrid = getData(s -> env.acceleration(agent.readActor(s).mean()),scalerPol);
 
@@ -141,7 +133,7 @@ public class AnimationLunar {
                 GraphicsDto.dtoEpisode(grids, tableData, (int) delayFunction.applyAsDouble(ei)));
     }
 
-    public static final int N_COL_ROWS_HEAT_MAP = 50;
+
     private double[][] getData(Function<StateLunar,Double> func, ScalerLinear scaler) {
         var yList = env.getParameters().ySpace(N_COL_ROWS_HEAT_MAP);
         var spdList = env.getParameters().spdSpace(N_COL_ROWS_HEAT_MAP);
@@ -156,27 +148,33 @@ public class AnimationLunar {
         return data;
     }
 
+    private void addBackground(List<LineSegment> lines, MultiStepResult msr) {
+        var p = LunarParams.create(msr.state());
+        for (Pair<Double,Double> pos : p.stars()) {
+            lines.add(LineSegment.circleCommon(pos.getFirst(),pos.getSecond(),Color.WHITE,2));
+        }
+        lines.add(LineSegment.line(-p.xmax(), 0, p.xmax(), 0, Color.GRAY, 10));
+    }
 
     private void addLunar(List<LineSegment> lines, MultiStepResult msr) {
-        var p = LunarParams.create(msr.state());
+        var p = LunarParams.create(msr.state(),isCrash(msr));
+
         //body
         lines.add(LineSegment.grey(p.left(), p.top(), p.right(), p.top()));       // top
-        lines.add(LineSegment.grey(p.right(), p.top(), p.right(), p.bottom()));   // right side
-        lines.add(LineSegment.grey(p.right(), p.bottom(), p.left(), p.bottom())); // bottom
+        lines.add(LineSegment.grey(p.right(), p.top(),p.right(), p.bottom()));   // right side
+        lines.add(LineSegment.grey(p.right(), p.bottom(),p.left(), p.bottom())); // bottom
         lines.add(LineSegment.grey(p.left(), p.bottom(), p.left(), p.top()));     // d.left() side
+
+        //antenna
+        lines.add(LineSegment.grey(p.midx(), p.topAntenna(), p.midx(), p.top()));
 
         //angled arms
         lines.add(LineSegment.grey(p.left(), p.topArm1(), p.leftBottom1(), p.bottomArm1()));       // left side
         lines.add(LineSegment.grey(p.right(), p.topArm1(), p.rightBottom2(), p.bottomArm1()));   // right side
 
         //vertical arms
-        if (isCrash(msr)) {
-            lines.add(LineSegment.grey(p.leftBottom1(), p.bottomArm1(), p.left(), p.bottomArm2())); // left side
-            lines.add(LineSegment.grey(p.rightBottom2(), p.bottomArm1(), p.right(), p.bottomArm2()));  // left side
-        } else {
-            lines.add(LineSegment.grey(p.leftBottom1(), p.bottomArm1(), p.leftBottom1(), p.bottomArm2())); // left side
-            lines.add(LineSegment.grey(p.rightBottom2(), p.bottomArm1(), p.rightBottom2(), p.bottomArm2()));  // left side
-        }
+        lines.add(LineSegment.grey(p.leftBottom1(), p.bottomArm1(), p.leftBottom1(), p.bottomArm2())); // left side
+        lines.add(LineSegment.grey(p.rightBottom2(), p.bottomArm1(), p.rightBottom2(), p.bottomArm2()));  // left side
     }
 
 
@@ -190,7 +188,7 @@ public class AnimationLunar {
             var xyPos = p.randomPosInCircle(p.centerFire(relforce), radiusFire);
             lines.add(LineSegment.circleCommon(
                     xyPos.getFirst(), xyPos.getSecond(),
-                    p.randomColor(), p.radiusFireDot()));
+                    p.randomColor(), p.randomRadiusFireDot()));
         }
     }
 
@@ -214,9 +212,11 @@ public class AnimationLunar {
 
     private static GfxComponentFactory environmentGfx(AnimationSettings as) {
         var factory = GfxComponentFactory.of(as);
+        var p = LunarParams.empty();
+
         factory.addLineChart("",
-                "x", Pair.create(-6, 6),
-                "y", Pair.create(0, 8));
+                "x", Pair.create(-p.xmax(), p.xmax()),
+                "y", Pair.create(0, p.ymax()));
         styleChart(factory.getLineCharts().get(0));
         factory.addTable(N_COLUMNS, false);
         return factory;
@@ -227,7 +227,6 @@ public class AnimationLunar {
         var plot = chart.getXYPlot();
         plot.setBackgroundPaint(LunarParams.empty().colorBackground());
         plot.getDomainAxis().setVisible(false); // disable X axis
-       // plot.getRangeAxis().setVisible(false);  // disable Y axis
         plot.setDomainGridlinesVisible(false); // vertical grid lines
         plot.setRangeGridlinesVisible(false);  // horizontal grid lines
     }
@@ -245,22 +244,10 @@ public class AnimationLunar {
     }
 
     private static void styleMap(JFreeChart heatmap, EnvironmentLunar env) {
-        heatmap.getTitle().setFont(new Font("SansSerif", Font.BOLD, 16));
+        heatmap.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
         var plot = heatmap.getXYPlot();
         plot.getDomainAxis().setLabel("Speed (m/s)");
         plot.getRangeAxis().setLabel("Position (m)");
-     /*   var yList = env.getParameters().ySpace(N_COL_ROWS_HEAT_MAP);
-        var spdList = env.getParameters().spdSpace(N_COL_ROWS_HEAT_MAP);
-
-        NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
-        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-
-        domainAxis.setTickUnit(new NumberTickUnit(10));   // example spacing
-        rangeAxis.setTickUnit(new NumberTickUnit(5));
-*/
-        //plot.getDomainAxis().setRange(ListUtil.findMin(spdList).orElseThrow(), ListUtil.findMax(spdList).orElseThrow());
-        //plot.getDomainAxis().set(new NumberAxis.createStandardTickUnits(1, 5, 10));;
-        //plot.getRangeAxis().setRange(ListUtil.findMin(yList).orElseThrow(), ListUtil.findMax(yList).orElseThrow());
 
     }
 

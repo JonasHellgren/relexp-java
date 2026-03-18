@@ -25,7 +25,7 @@ public class RunnerTrainerLunarAnimation {
 
     @SneakyThrows
     public static void main(String[] args) {
-        var ep = LunarEnvParamsFactory.produceDefault();
+        var ep = LunarEnvParamsFactory.produceDefault().withDt(0.1);
         var trainerDependencies = DependencyFactory.produce(ep, STEP_HORIZON, N_EPISODES);
         var trainer = TrainerLunarMultiStep.of(trainerDependencies);
         //trainer.train(AnimationLunar.empty());

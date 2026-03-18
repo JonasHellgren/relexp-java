@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.SwingWrapper;
+
 import java.awt.*;
 import java.util.function.Function;
 
@@ -23,14 +24,14 @@ import static core.plotting_core.chart_saving_and_plotting.ChartSaver.saveHeatMa
 @AllArgsConstructor
 public class PlotterHeatMapsAgent {
 
-    public static final String FORCE = "Force (N)";
-    public static final String ACC_TITLE = "Acceleration (m/s2)";
-    public static final String ACC_FILE = "Acceleration";
-    public static final String VALUE = "Value";
-    public static final int N_COL_ROWS_HEAT_MAP = 50;
-    public static final String X_AXIS_LABEL = "Speed (m/s)";
-    public static final String Y_AXIS_LABEL = "Position (m)";
-    public static final int FONT_SIZE_AXIS = 20;
+    static final String FORCE = "Force (N)";
+    static final String ACC_TITLE = "Acceleration (m/s2)";
+    static final String ACC_FILE = "Acceleration";
+    static final String VALUE = "Value";
+    static final int N_COL_ROWS_HEAT_MAP = 50;
+    static final String X_AXIS_LABEL = "Speed (m/s)";
+    static final String Y_AXIS_LABEL = "Position (m)";
+    static final int FONT_SIZE_AXIS = 20;
 
     private final TrainerDependencies dependencies;
 
@@ -46,29 +47,29 @@ public class PlotterHeatMapsAgent {
     }
 
     private void plotAndSaveExpectedForce(String path) {
-        Function<StateLunar,Double> func = s -> dependencies.agent().readActor(s).mean();
-        var chart= createChart(FORCE, getData(func));
+        Function<StateLunar, Double> func = s -> dependencies.agent().readActor(s).mean();
+        var chart = createChart(FORCE, getData(func));
         saveHeatMapChart(chart, PathAndFile.ofPng(path, FORCE));
         new SwingWrapper<>(chart).displayChart();
     }
 
     private void plotAndSavExpectedAcceleration(String path) {
-        var env=(EnvironmentLunar) dependencies.environment();
-        Function<StateLunar,Double> func = s ->
+        var env = (EnvironmentLunar) dependencies.environment();
+        Function<StateLunar, Double> func = s ->
                 env.acceleration(dependencies.agent().readActor(s).mean());
-        var chart= createChart(ACC_TITLE, getData(func));
+        var chart = createChart(ACC_TITLE, getData(func));
         saveHeatMapChart(chart, PathAndFile.ofPng(path, ACC_FILE));
         new SwingWrapper<>(chart).displayChart();
     }
 
     private void plotAndSavValue(String path) {
-        Function<StateLunar,Double> func = s -> dependencies.agent().readCritic(s);
-        var chart= createChart(VALUE, getData(func));
+        Function<StateLunar, Double> func = s -> dependencies.agent().readCritic(s);
+        var chart = createChart(VALUE, getData(func));
         saveHeatMapChart(chart, PathAndFile.ofPng(path, VALUE));
         new SwingWrapper<>(chart).displayChart();
     }
 
-    private double[][] getData(Function<StateLunar,Double> func) {
+    private double[][] getData(Function<StateLunar, Double> func) {
         var yList = dependencies.environment().getParameters().ySpace(N_COL_ROWS_HEAT_MAP);
         var spdList = dependencies.environment().getParameters().spdSpace(N_COL_ROWS_HEAT_MAP);
         double[][] data = new double[yList.size()][spdList.size()];
@@ -100,7 +101,6 @@ public class PlotterHeatMapsAgent {
                 List2ArrayConverterUtil.convertListToDoubleArr(yList));
         return creator.create();
     }
-
 
 
 }

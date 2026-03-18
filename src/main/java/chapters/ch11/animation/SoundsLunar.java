@@ -1,24 +1,23 @@
 
 package chapters.ch11.animation;
 
+import core.foundation.util.math.MathUtil;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-public record SoundsLunar(Clip niceLand, Clip crash) {
+public record SoundsLunar(Clip niceLand, Clip force,Clip crash) {
 
     public static final String PATH = "src/main/java/chapters/ch11/animation/";
 
     @SneakyThrows
     public static SoundsLunar create() {
         return new SoundsLunar(
-                getClip("coin.wav"),
+                getClip("ball.wav"),
+                getClip("force.wav"),
                 getClip("crash.wav"));
     }
 
@@ -34,13 +33,32 @@ public record SoundsLunar(Clip niceLand, Clip crash) {
         play(niceLand());
     }
 
+
+    public void playForce() {
+        play(force());
+    }
+
     public void playCrash() {
         play(crash());
     }
 
+    public void setVolumeForce(float volume) {
+        setVolumeForce(force(), volume);
+    }
+
     private void play(Clip clip) {
-        clip.setFramePosition(0);
+        clip.setMicrosecondPosition(0);
         clip.start();
+    }
+
+    private void setVolumeForce(Clip fire, float volume) {
+
+        FloatControl gain = (FloatControl) fire.getControl(FloatControl.Type.MASTER_GAIN);
+        float max = gain.getMaximum();
+        float min = -max*7;
+        float range = max-min;
+        float gainValue = (range * volume) + min;
+        gain.setValue((float) MathUtil.clip(gainValue,min,max));
     }
 
 }
