@@ -32,7 +32,9 @@ record PendulumParams(
         double jointWidth,
         double jointheight,
         double jointThickness,
-        Color jointColor
+        Color jointColor,
+        Color torqueColor,
+        double torqueThikness
 ) {
 
 
@@ -48,6 +50,7 @@ record PendulumParams(
                 .armThikness(2).armColor(Color.WHITE)
                 .jointWidth(5).jointheight(10.0)
                 .jointThickness(15).jointColor(Color.darkGray)
+                .torqueColor(Color.RED).torqueThikness(2)
                 .build();
     }
 

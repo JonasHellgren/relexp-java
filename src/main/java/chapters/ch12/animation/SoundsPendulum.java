@@ -1,20 +1,22 @@
 
 package chapters.ch12.animation;
 
-import core.foundation.util.math.MathUtil;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-public record SoundsPendulum(Clip niceLand) {
+public record SoundsPendulum(Clip fail, Clip success) {
 
     public static final String PATH = "src/main/java/chapters/ch12/animation/";
 
     @SneakyThrows
     public static SoundsPendulum create() {
-        return new SoundsPendulum(getClip("metal-pipe.wav"));
+        return new SoundsPendulum(
+                getClip("metal-pipe.wav"),
+                getClip("fanfar.wav")
+        );
     }
 
     @NotNull
@@ -26,9 +28,12 @@ public record SoundsPendulum(Clip niceLand) {
     }
 
     public void playFail() {
-        play(niceLand());
+        play(fail());
     }
 
+    public void playSuccess() {
+        play(success());
+    }
 
     private void play(Clip clip) {
         clip.setMicrosecondPosition(0);

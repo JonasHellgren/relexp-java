@@ -58,8 +58,8 @@ public class TrainerPendulum {
                 s = sr.stateNew();
                 rewardAccum.add(sr.reward());
                 termState = sr.isTerminal();
-                animation.postStep(Pair.create(ei, d.getNofEpisodes()), exp);
-                System.out.println("r = " + exp.stepReturn().reward());
+                animation.postStep(Pair.create(ei, d.getNofEpisodes()),
+                        exp, d.agent().readValue(exp.state()),d.probRandom(ei));
             }
             animation.postEpisode(d.agent(), ei,replayBuffer.size());
             recorder.addRecord(ei, rewardAccum.value(), s, d);

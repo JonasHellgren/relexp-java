@@ -18,6 +18,7 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.DataSet;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 /**
@@ -115,6 +116,20 @@ public class AgentPendulum {
      */
     public List<ActionAndItsValue> read(StatePendulum state) {
         return getActionAndItsValues(state, memory);
+    }
+
+    /**
+     * Value of best action
+     */
+    public double readValue(StatePendulum state) {
+        return maxValue(getActionAndItsValues(state, memory));
+    }
+
+
+    private double maxValue(List<ActionAndItsValue> avList) {
+        Optional<ActionAndItsValue> maxAction = avList.stream()
+                .max(Comparator.comparing(ActionAndItsValue::actionValue));
+        return maxAction.map(ActionAndItsValue::actionValue).orElse(0.0);
     }
 
     /**

@@ -5,8 +5,10 @@ import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch11.domain.trainer.multisteps.MultiStepResult;
 import chapters.ch12.domain.inv_pendulum.agent.core.AgentPendulum;
 import chapters.ch12.domain.inv_pendulum.agent.memory.ActionAndItsValue;
+import chapters.ch12.domain.inv_pendulum.environment.core.ActionPendulum;
 import chapters.ch12.domain.inv_pendulum.environment.core.EnvironmentPendulum;
 import chapters.ch12.domain.inv_pendulum.environment.core.StatePendulum;
+import chapters.ch12.domain.inv_pendulum.environment.core.StepReturnPendulum;
 import chapters.ch12.domain.inv_pendulum.trainer.core.ExperiencePendulum;
 import core.animation.*;
 import core.foundation.config.AnimationConfig;
@@ -36,6 +38,7 @@ public class AnimationPendulum {
         private static EnvironmentTableData create(int ei,
                                                    int eiMax,
                                                    ExperiencePendulum exp,
+                                                   double val, double probRand,
                                                    AnimationConfig cfg) {
             var isFail = exp.stepReturn().isFail() ? "yes" : "no";
             var data = Collections.singletonList(new Object[][]{
@@ -44,6 +47,8 @@ public class AnimationPendulum {
                     {"Ang speed (rad/s)", cfg.round(exp.state().angularSpeed())},
                     {"Angle (rad)", cfg.round(exp.state().angle())},
                     {"Num. of steps", cfg.round(exp.state().nSteps())},
+                    {"Value", cfg.round(val)},
+                    {"Probability random action", cfg.round(probRand)},
                     {"Reward (is fail?)", cfg.round(exp.stepReturn().reward()) + " (" + isFail + ")"},
             });
             return new EnvironmentTableData(data);
@@ -52,17 +57,16 @@ public class AnimationPendulum {
 
     static final int WIDTH = 300;
     static final int HEIGHT = 400;
-    public static final int N_COL_ROWS_HEAT_MAP = 100;
-    public static final int TABLE_HEIGHT_ENV = (int) (HEIGHT * 0.35);
+    public static final int N_COL_ROWS_HEAT_MAP = 70;
+    public static final int TABLE_HEIGHT_ENV = (int) (HEIGHT * 0.5);
     public static final int TABLE_HEIGHT_EPIS = (int) (HEIGHT * 0.15);
     static final int X_LOCATION_ENV = 20;
     static final int X_LOCATION_VAL = 400;
     static final int N_COLUMNS = 2;
 
-    public static final double SMALL_TIME = 10.0;
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
-            List.of(0.0,    10.0,   245.0),  //cuts
-            List.of(100.0,  1.0,   100.0)   //animation time delays
+            List.of(0.0, 10.0, 245.0),  //cuts
+            List.of(100.0, 1.0, 100.0)   //animation time delays
     );
 
     AnimationKit kitStep, kitEpisode;
@@ -76,7 +80,7 @@ public class AnimationPendulum {
         var asEpisode = AnimationSettings.of(cfg, WIDTH, HEIGHT, TABLE_HEIGHT_EPIS, X_LOCATION_VAL);
         return new AnimationPendulum(
                 AnimationKit.of(environmentGfx(asStep), asStep),
-                AnimationKit.of(episodeGfx(asEpisode,env), asEpisode),
+                AnimationKit.of(episodeGfx(asEpisode, env), asEpisode),
                 DelayIntervalFunction.from(ANIMATIONS_SLEEP),
                 SoundsPendulum.create(),
                 env,
@@ -103,27 +107,31 @@ public class AnimationPendulum {
         kitEpisode.start();
     }
 
-    public void postStep(Pair<Integer, Integer> epis, ExperiencePendulum exp) {
+    public void postStep(Pair<Integer, Integer> epis, ExperiencePendulum exp, double val, double probRand) {
         if (kitStep.isEmpty()) return;
-     //   if (delayFunction.applyAsDouble(epis.getFirst()) < SMALL_TIME) return;
+
         List<LineSegment> lines = new ArrayList<>();
-        addPendulum(lines,exp);
+        addPendulum(lines, exp);
         addJoint(lines);
-        ConditionalsUtil.executeIfTrue(exp.stepReturn().isFail(), () -> sounds.playFail());
-        var tableData = EnvironmentTableData.create(epis.getFirst(), epis.getSecond(), exp,cfg);
+        addTorqueLine(lines, exp);
+        var sr = exp.stepReturn();
+        ConditionalsUtil.executeIfTrue(sr.isFail(), () -> sounds.playFail());
+        ConditionalsUtil.executeIfTrue(sr.isTerminal() && !sr.isFail(), () -> sounds.playSuccess());
+        var tableData = EnvironmentTableData.create(epis.getFirst(), epis.getSecond(), exp, val, probRand, cfg);
         postCommon(epis.getFirst(), lines, tableData);
     }
+
 
     public void postEpisode(AgentPendulum agent, int ei, int rpSize) {
         if (kitStep.isEmpty()) return;
 
         var scalerVal = ScalerLinear.of(-1.0, 0.1, 0.0, 1.0);
-        double[][] vGrid = getData(s -> maxValue(agent.read(s)),scalerVal);
-        var scalerPol = ScalerLinear.of(-2,2, 0.0, 1.0);
-        double[][] polGrid = getData(s -> agent.chooseActionNoExploration(s).torque(),scalerPol);
+        double[][] vGrid = getData(s -> agent.readValue(s), scalerVal);
+        var scalerPol = ScalerLinear.of(-2, 2, 0.0, 1.0);
+        double[][] polGrid = getData(s -> agent.chooseActionNoExploration(s).torque(), scalerPol);
 
-        var angleList = ListCreatorUtil.createFromStartToEndWithNofItems(-40,40,N_COL_ROWS_HEAT_MAP);
-        var spdList = ListCreatorUtil.createFromStartToEndWithNofItems(-40,40,N_COL_ROWS_HEAT_MAP);
+        var angleList = ListCreatorUtil.createFromStartToEndWithNofItems(-40, 40, N_COL_ROWS_HEAT_MAP);
+        var spdList = ListCreatorUtil.createFromStartToEndWithNofItems(-40, 40, N_COL_ROWS_HEAT_MAP);
         List<double[][]> grids = new ArrayList<>();
         grids.add(GridFactory.toSeries(vGrid, spdList, angleList));
         grids.add(GridFactory.toSeries(polGrid, spdList, angleList));
@@ -136,27 +144,17 @@ public class AnimationPendulum {
     }
 
 
-    private double maxValue(List<ActionAndItsValue> avList) {
-        Optional<ActionAndItsValue> maxAction = avList.stream()
-                .max(Comparator.comparing(ActionAndItsValue::actionValue));
-        return maxAction.map(ActionAndItsValue::actionValue).orElse(0.0);
-    }
-
-
-    private double[][] getData(Function<StatePendulum,Double> func, ScalerLinear scaler) {
-        var angleList = ListCreatorUtil.createFromStartToEndWithNofItems(-40,40,N_COL_ROWS_HEAT_MAP);
-        var spdList = ListCreatorUtil.createFromStartToEndWithNofItems(-40,40,N_COL_ROWS_HEAT_MAP);
+    private double[][] getData(Function<StatePendulum, Double> func, ScalerLinear scaler) {
+        var angleList = ListCreatorUtil.createFromStartToEndWithNofItems(-40, 40, N_COL_ROWS_HEAT_MAP);
+        var spdList = ListCreatorUtil.createFromStartToEndWithNofItems(-40, 40, N_COL_ROWS_HEAT_MAP);
         double[][] data = new double[angleList.size()][spdList.size()];
         for (double a : angleList) {
             for (double spd : spdList) {
                 int ai = angleList.indexOf(a);
                 int spdi = spdList.indexOf(spd);
-                double aRad= UnitConverterUtil.convertDegreesToRadians(a);
-                double spdRad= UnitConverterUtil.convertDegreesToRadians(spd);
-                data[ai][spdi] = scaler.calcOutDouble(func.apply(StatePendulum.ofStart(aRad,spdRad)));
-
-              //  if (RandUtil.randomNumberBetweenZeroAndOne() < 0.01)
-             //   System.out.println("a = " + a+", spd = " + spd+", value = " +func.apply(StatePendulum.ofStart(aRad,spdRad)));
+                double aRad = UnitConverterUtil.convertDegreesToRadians(a);
+                double spdRad = UnitConverterUtil.convertDegreesToRadians(spd);
+                data[ai][spdi] = scaler.calcOutDouble(func.apply(StatePendulum.ofStart(aRad, spdRad)));
             }
         }
         return data;
@@ -164,23 +162,42 @@ public class AnimationPendulum {
 
     private void addJoint(List<LineSegment> lines) {
         var p = PendulumParams.empty();
-        var top=p.jointTop();
-        var left=p.jointLeft();
-        var right=p.jointRight();
-        lines.add(LineSegment.line(top.x(), top.y(), left.x(), left.y(),p.jointColor(), p.jointThickness()));
-        lines.add(LineSegment.line(left.x(), left.y(), right.x(), right.y(),p.jointColor(), p.jointThickness()));
-        lines.add(LineSegment.line(right.x(), right.y(), top.x(), top.y(),p.jointColor(), p.jointThickness()));
+        var top = p.jointTop();
+        var left = p.jointLeft();
+        var right = p.jointRight();
+        lines.add(LineSegment.line(top.x(), top.y(), left.x(), left.y(), p.jointColor(), p.jointThickness()));
+        lines.add(LineSegment.line(left.x(), left.y(), right.x(), right.y(), p.jointColor(), p.jointThickness()));
+        lines.add(LineSegment.line(right.x(), right.y(), top.x(), top.y(), p.jointColor(), p.jointThickness()));
     }
 
     private void addPendulum(List<LineSegment> lines, ExperiencePendulum exp) {
-        var p = PendulumParams.create(exp,env);
-        var top=p.topArmXy();
-        var bottom=p.bottomArmXy();
-        lines.add(LineSegment.line(bottom.x(), bottom.y(), top.x(), top.y(),p.armColor(), p.armThikness()));
+        var p = PendulumParams.create(exp, env);
+        var top = p.topArmXy();
+        var bottom = p.bottomArmXy();
+        lines.add(LineSegment.line(bottom.x(), bottom.y(), top.x(), top.y(), p.armColor(), p.armThikness()));
     }
 
-    private static boolean isCrash(MultiStepResult msr) {
-        return msr.stepReturn().isFail();
+
+    private void addTorqueLine(List<LineSegment> lines, ExperiencePendulum exp) {
+        var p = PendulumParams.empty();
+        var top = p.jointTop();
+        var left = p.jointLeft();
+        var right = p.jointRight();
+        int arrowShift = 3;
+
+        if (exp.action().equals(ActionPendulum.CCW)) {
+            lines.add(LineSegment.line(right.x(), top.y(), top.x(), top.y(), p.torqueColor(), p.torqueThikness()));
+            lines.add(LineSegment.line(top.x() + arrowShift, top.y() + arrowShift, top.x(), top.y(), p.torqueColor(), p.torqueThikness()));
+            lines.add(LineSegment.line(top.x() + arrowShift, top.y() - arrowShift, top.x(), top.y(), p.torqueColor(), p.torqueThikness()));
+        }
+
+        if (exp.action().equals(ActionPendulum.CW)) {
+            lines.add(LineSegment.line(left.x(), top.y(), top.x(), top.y(), p.torqueColor(), p.torqueThikness()));
+            lines.add(LineSegment.line(top.x() - arrowShift, top.y() + arrowShift, top.x(), top.y(), p.torqueColor(), p.torqueThikness()));
+            lines.add(LineSegment.line(top.x() - arrowShift, top.y() - arrowShift, top.x(), top.y(), p.torqueColor(), p.torqueThikness()));
+        }
+
+
     }
 
     private void postCommon(int ei, List<LineSegment> lines, EnvironmentTableData tableData) {
@@ -214,14 +231,14 @@ public class AnimationPendulum {
         plot.setRangeGridlinesVisible(false);  // horizontal grid lines
     }
 
-    private static GfxComponentFactory episodeGfx(AnimationSettings as,EnvironmentPendulum env) {
+    private static GfxComponentFactory episodeGfx(AnimationSettings as, EnvironmentPendulum env) {
         var factory = GfxComponentFactory.of(as);
         factory.addHeatMap("Value");
         var heatmap = factory.getHeatMapCharts().get(0);
-        styleMap(heatmap,env);
+        styleMap(heatmap, env);
         factory.addHeatMap("Policy");
         heatmap = factory.getHeatMapCharts().get(1);
-        styleMap(heatmap,env);
+        styleMap(heatmap, env);
         factory.addTable(N_COLUMNS, false);
         return factory;
     }
@@ -233,9 +250,9 @@ public class AnimationPendulum {
         plot.getRangeAxis().setLabel("Angle (rad)");
         plot.setDomainGridlinesVisible(false);
         plot.setRangeGridlinesVisible(false);
-        var axisD=plot.getDomainAxis();
+        var axisD = plot.getDomainAxis();
         axisD.setLabelFont(FONT_LABEL);
-        var axisR=plot.getRangeAxis();
+        var axisR = plot.getRangeAxis();
         axisR.setLabelFont(FONT_LABEL);
     }
 
