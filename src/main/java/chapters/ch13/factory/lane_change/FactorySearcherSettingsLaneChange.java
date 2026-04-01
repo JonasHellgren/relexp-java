@@ -20,7 +20,13 @@ public class FactorySearcherSettingsLaneChange {
     }
 
 
-
-
-
+    public static SearcherParameters animation() {
+        return SearcherParameters.builder()
+                .uctExploration(10.0)  //2  or 10
+                .maxTreeDepth(3*4+4)  //4 steps per sec, max 3 sec
+                .maxDepth(500).maxIterations(10_000)
+                .discountNormal(1.0).learningRateNormal(1.0)
+                .discountDefensive(0.5).learningRateDefensive(0.1)
+                .build();
+    }
 }

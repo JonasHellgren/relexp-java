@@ -26,4 +26,19 @@ public class FactoryDependenciesLaneChange {
     public static OuterDependencies<StateLane, ActionLane> runner() {
         return laneTest();
     }
+
+    public static OuterDependencies<StateLane, ActionLane> animation() {
+        var searcherSettings = FactorySearcherSettingsLaneChange.animation();
+        var environment = EnvironmentLane.create(LaneChangeParametersFactory.produce());
+        var nameFunction = FactoryNameFunctionLaneChange.rand5DigitLane;
+        var rolloutPolicy = FactoryRolloutPolicyLaneChange.zeroOrRandom;
+        return OuterDependencies.<StateLane, ActionLane>builder()
+                .searcherSettings(searcherSettings)
+                .environment(environment)
+                .nameFunction(nameFunction)
+                .rolloutPolicy(rolloutPolicy)
+                .build();
+
+    }
+
 }

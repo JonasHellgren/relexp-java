@@ -7,6 +7,7 @@ import chapters.ch13.implem.lane_change.ActionLane;
 import chapters.ch13.implem.lane_change.StateLane;
 import core.animation.*;
 import core.foundation.config.AnimationConfig;
+import core.foundation.gadget.math.ScalerLinear;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.foundation.util.unit_converter.UnitConverterUtil;
 import lombok.AccessLevel;
@@ -25,6 +26,7 @@ public class AnimationLaneChange<S, A> {
 
     public static final Font FONT_LABEL = new Font("SansSerif", Font.BOLD, 12);
     public static final Font FONT_TITLE = new Font("SansSerif", Font.BOLD, 12);
+    public static final int N_NODESMAX_MARIGINAL = 1;
 
     record EnvironmentTableData<S, A>(List<Object[][]> data) {
         private static <S, A> EnvironmentTableData<S, A> create(Path<S, A> path, Node<S, A> node, AnimationConfig cfg) {
@@ -55,7 +57,7 @@ public class AnimationLaneChange<S, A> {
     static final int N_COLUMNS = 2;
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
-            List.of(0.0, 50.0, 49990.0),  //cuts
+            List.of(0.0, 50.0, 9990.0),  //cuts
             List.of(250.0, 0.0, 250.0)   //animation time delays
     );
 
@@ -146,8 +148,12 @@ public class AnimationLaneChange<S, A> {
     public void postEpisode(Pair<Integer, Integer> iter, TreeInfo<S, A> treeInfo, int maxDepth) {
         if (isEmpty()) return;
 
-        var nodeList = ListCreatorUtil.createFromStartToEndWithNofItems(0, N_NODES_MAX-1, N_NODES_MAX);
-        var depthList = ListCreatorUtil.createFromStartToEndWithNofItems(0, maxDepth-1, maxDepth);
+        var depthList = ListCreatorUtil.createFromZeroToNofItems(maxDepth);
+        System.out.println("depthList = " + depthList);
+        int nodesMax = treeInfo.numberOfNodesMaxAnyDepth();
+        System.out.println("nodesMax = " + nodesMax);
+        var nodeList = ListCreatorUtil.createFromZeroToNofItems(nodesMax+ N_NODESMAX_MARIGINAL);
+
         List<double[][]> grids = new ArrayList<>();
         double[][] vGrid = getData(nodeList, depthList, treeInfo);
         grids.add(GridFactory.toSeries(vGrid, depthList, nodeList));
@@ -161,16 +167,19 @@ public class AnimationLaneChange<S, A> {
     }
 
     private double[][] getData(List<Double> nodeList, List<Double> depthList, TreeInfo<S, A> treeInfo) {
+        double minValue=treeInfo.minValue();
+        double maxValue=treeInfo.maxValue();
+        var scaler= ScalerLinear.of(minValue,maxValue,0,1);
+
         double[][] data = new double[nodeList.size()][depthList.size()];
         for (double depth : depthList) {
             int di = depthList.indexOf(depth);
             var nodes = treeInfo.nodesAtDepth(di);
             System.out.println("di = " + di);
-            System.out.println("nodes = " + nodes);
+            System.out.println("nodes.size() = " + nodes.size());
             for (Node<S, A> node : nodes) {
                 int ni = nodes.indexOf(node);
-                System.out.println("ni = " + ni);
-                data[ni][di] = 1; //node.info().value(); //  RandUtil.randomNumberBetweenZeroAndOne();
+                data[ni][di] = scaler.calcOutDouble(node.info().value()); //  RandUtil.randomNumberBetweenZeroAndOne();
             }
         }
         return data;

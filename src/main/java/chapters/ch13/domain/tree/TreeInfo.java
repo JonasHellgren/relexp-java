@@ -2,7 +2,6 @@ package chapters.ch13.domain.tree;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.apache.arrow.flatbuf.Int;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,34 +32,43 @@ public class TreeInfo<S, A> {
     }
 
     public int numberOfNodes() {
-        return countNodes(root(),1);
+        return recursiveCountNodes(root(),1);
     }
 
 
+    public int numberOfNodesMaxAnyDepth() {
+        int nMax=0;
+        for (int i = 0; i < depth() ; i++) {
+            var nodes=nodesAtDepth(i);
+            nMax=Math.max(nMax,nodes.size());
+        }
+        return nMax;
+    }
 
     public List<Node<S, A>> nodesAtDepth(double depth) {
         List<Node<S, A>> nodes = new ArrayList<>();
-        return recursiveNodesAtDepth(root(),depth,1,nodes);
+        return recursiveNodesAtDepth(root(),depth,0,nodes);
     }
 
-    private List<Node<S,A>> recursiveNodesAtDepth(Node<S,A> root, double depth, int i, List<Node<S,A>> nodes) {
-        if (i==depth) {
-            nodes.add(root);
+    public double minValue() {
+        return recursiveExtreme(root(),Double.MAX_VALUE,true);
+    }
+
+    public double maxValue() {
+        return recursiveExtreme(root(),-Double.MAX_VALUE,false);
+    }
+
+
+    private List<Node<S,A>> recursiveNodesAtDepth(Node<S,A> parent, double depth, int currentDepth, List<Node<S,A>> nodes) {
+        if (currentDepth==depth) {
+            nodes.add(parent);
             return nodes;
         }
-        for (var child : root.info().children()) {
-            nodes = recursiveNodesAtDepth(child,depth,i+1,nodes);
+        for (var child : parent.info().children()) {
+            nodes = recursiveNodesAtDepth(child,depth,currentDepth+1,nodes);
         }
         return nodes;
     }
-
-    //TODO FIXA
-    public int numberOfNodesAtDepth(int depthOfInterest) {
-        //List<Integer> countList=new ArrayList<>();
-        //countList.add(1);
-        return recursiveCountAtDepth(root(),depthOfInterest,1,0);
-    }
-
 
     private int recursiveDepth(Node<S, A> node,int maxDepth,int depth) {
         if (node.info().nChildrens()==0) {
@@ -72,28 +80,31 @@ public class TreeInfo<S, A> {
         return maxDepth;
     }
 
-    private int countNodes(Node<S, A> node,int count) {
+    private int recursiveCountNodes(Node<S, A> node, int count) {
         if (node.info().nChildrens()==0) {
             return count;
         }
         for (var child : node.info().children()) {
-            count = countNodes(child,count)+1; // recursively count the children
+            count = recursiveCountNodes(child,count)+1; // recursively count the children
         }
         return count;
     }
 
-
-    private int recursiveCountAtDepth(Node<S, A> node,int depthOfInterest,int depth, int count) {
+    private double recursiveExtreme(Node<S, A> node, double value, boolean isMin) {
         if (node.info().nChildrens()==0) {
-            return count;
+            return getExtreme(node, value, isMin);
         }
         for (var child : node.info().children()) {
-            if (depth==depthOfInterest) {
-                count = Math.max(depthOfInterest, recursiveCountAtDepth(child, depthOfInterest, depth + 1, count + 1));
-            }
+            value = recursiveExtreme(child,getExtreme(node, value, isMin),isMin);
         }
-        return count;
+        return value;
     }
+
+    private static <S, A> double getExtreme(Node<S, A> node, double value, boolean isMin) {
+        return isMin ? Math.min(value, node.info().value()) : Math.max(value, node.info().value());
+    }
+
+
 
 /*
 

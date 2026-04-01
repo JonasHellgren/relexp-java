@@ -65,12 +65,9 @@ public class Searcher<S, A> {
                 animation.postStep(iter, path, node);
             }
 
-        if (i % 10 == 0) {
+        if (i % 1 == 0) {
             animation.postEpisode(iter, info,dependencies.maxTreeDepth());
         }
-
-        //System.out.println("i = " + i + " depth = " + info.depth());
-        System.out.println("i = " + i + " nofn = " + info.numberOfNodesAtDepth(5));
     }
         return Tree.of(root);
 }

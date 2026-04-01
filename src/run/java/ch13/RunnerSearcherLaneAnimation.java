@@ -32,7 +32,6 @@ import static core.foundation.util.unit_converter.UnitConverterUtil.convertRadia
 
 public class RunnerSearcherLaneAnimation {
 
-    public static final int MAX_DEPTH_IN_PLOT = 2;
     static String PATH = ConfigFactory.pathPicsConfig().ch13();
     public static final String FILE_NAME = "lane_runner_mcts.dot";
 
@@ -41,7 +40,7 @@ public class RunnerSearcherLaneAnimation {
     @SneakyThrows
     public static void main(String[] args) {
 
-        dependencies = FactoryDependenciesLaneChange.runner();
+        dependencies = FactoryDependenciesLaneChange.animation();
         var searcher = Searcher.of(dependencies);
         var root = FactoryTreeLaneChange.onlyRoot();
         var cfg= ConfigFactory.getAnimationConfig();
