@@ -2,6 +2,10 @@ package chapters.ch13.domain.tree;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.apache.arrow.flatbuf.Int;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides information about a tree in the Monte Carlo Tree Search (MCTS) algorithm.
@@ -32,6 +36,15 @@ public class TreeInfo<S, A> {
         return countNodes(root(),1);
     }
 
+
+    //TODO FIXA
+    public List<Integer> numberOfNodesEachDepth() {
+        List<Integer> countList=new ArrayList<>();
+        countList.add(1);
+        return countNodesAtEachDepth(root(),countList);
+    }
+
+
     private int recursiveDepth(Node<S, A> node,int maxDepth,int depth) {
         if (node.info().nChildrens()==0) {
             return depth;
@@ -51,5 +64,18 @@ public class TreeInfo<S, A> {
         }
         return count;
     }
+
+
+    private List<Integer> countNodesAtEachDepth(Node<S, A> node,List<Integer> countList) {
+        if (node.info().nChildrens()==0) {
+            return countList;
+        }
+        for (var child : node.info().children()) {
+            countList.add(node.info().nChildrens());
+            countList = countNodesAtEachDepth(child,countList); // recursively count the children
+        }
+        return countList;
+    }
+
 
 }

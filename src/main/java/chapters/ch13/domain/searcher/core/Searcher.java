@@ -2,9 +2,11 @@ package chapters.ch13.domain.searcher.core;
 
 import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.tree.Tree;
+import chapters.ch13.domain.tree.TreeInfo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+
 import static core.foundation.util.cond.ConditionalsUtil.executeIfTrue;
 
 
@@ -41,6 +43,9 @@ public class Searcher<S, A> {
                     () -> expand(vars));
             executeIfTrue(nodeInfo.isSimulate(), () -> simulate(vars));
             backPropagate(vars);
+            var info = TreeInfo.of(Tree.of(root));
+            if (i % 100 == 0)
+                System.out.println("i = " + i + " depth = " + info.depth());
         }
         return Tree.of(root);
     }
