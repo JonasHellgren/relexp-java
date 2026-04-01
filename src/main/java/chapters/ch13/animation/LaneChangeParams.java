@@ -1,12 +1,9 @@
 package chapters.ch13.animation;
 
-import chapters.ch12.domain.inv_pendulum.environment.core.EnvironmentPendulum;
-import chapters.ch12.domain.inv_pendulum.trainer.core.ExperiencePendulum;
 import core.foundation.gadget.pos.PosXyDouble;
 import lombok.Builder;
 
 import java.awt.*;
-import java.util.Optional;
 
 
 @Builder
@@ -23,8 +20,10 @@ record LaneChangeParams(
         double thiknessMidlines,
         double yMidLine,
         Color midLineColor,
+        double carMidPos,
         double carLenght,
         double carWidth,
+        double thiknessCarLine,
         Color carColor
 ) {
 
@@ -33,11 +32,11 @@ record LaneChangeParams(
         return LaneChangeParams.builder()
                 .colorBackground(Color.BLACK)
                 .midx(0).bottomy(0)
-                .xmax(50).ymin(-4).ymax(1)
-
-                .nMidLines(5).yMidLine(-1.5)
+                .xmax(15).ymin(-6).ymax(2)
+                .nMidLines(10).yMidLine(-1.5)
                 .lengthMidLine(1).distBetweenMidlines(2).thiknessMidlines(2).midLineColor(Color.gray)
-                .carLenght(4.0).carWidth(2.0).carColor(Color.WHITE)
+                .carMidPos(7)
+                .carLenght(4.0).carWidth(2.0).thiknessCarLine(2).carColor(Color.WHITE)
                 .build();
     }
 
@@ -54,5 +53,22 @@ record LaneChangeParams(
         return posLeftSingleMidline(x, i) + lengthMidLine;
     }
 
+    public PosXyDouble carCorner(double angle, double yPos, int index) {
+        return switch (index) {
+            case 0 -> getXyDouble(1, -1, 1, 1, angle, yPos);
+            case 1 -> getXyDouble(1, 1, 1, -1, angle, yPos);
+            case 2 -> getXyDouble(-1, 1, -1, -1, angle, yPos);
+            case 3 -> getXyDouble(-1, -1, -1, 1, angle, yPos);
+            default -> null;
+        };
+    }
+
+    private PosXyDouble getXyDouble(double s1,double s2, double s3, double s4,double angle,double yPos) {
+        double ldiv2=carLenght/2;
+        double wdiv2=carWidth/2;
+        double ca=Math.cos(angle);
+        double sa=Math.sin(angle);
+        return PosXyDouble.of(carMidPos + s1*ldiv2 * ca + s2*wdiv2 * sa, yPos + s3*ldiv2 * sa + s4*wdiv2 * ca);
+    }
 
 }

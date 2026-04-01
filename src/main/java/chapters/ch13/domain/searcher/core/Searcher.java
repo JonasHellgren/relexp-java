@@ -66,7 +66,7 @@ public class Searcher<S, A> {
             }
 
         if (i % 10 == 0) {
-            animation.postEpisode(iter, info);
+            animation.postEpisode(iter, info,dependencies.maxTreeDepth());
         }
 
         //System.out.println("i = " + i + " depth = " + info.depth());

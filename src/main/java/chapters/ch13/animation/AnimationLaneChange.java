@@ -28,16 +28,14 @@ public class AnimationLaneChange<S, A> {
 
     record EnvironmentTableData<S, A>(List<Object[][]> data) {
         private static <S, A> EnvironmentTableData<S, A> create(Path<S, A> path, Node<S, A> node, AnimationConfig cfg) {
-            var isFail = false; //exp.stepReturn().isFail() ? "yes" : "no";
-
-            Node<StateLane, ActionLane> nodeC = (Node<StateLane, ActionLane>) node;
+            var nodeC = nodeCasted(node);
             var state = nodeC.info().state();
             var data = Collections.singletonList(new Object[][]{
                     {"depth (max depth)", path.getNodes().indexOf(nodeC) + "(" + path.info().length() + ")"},
                     {"action", nodeC.info().action()},
                     {"steering angle (deg)", getRoundDeg(cfg, nodeC.info().action().getSteeringAngle())},
                     {"heading (deg)", getRoundDeg(cfg, state.headingAngle())},
-                    {"(x,y) (m)", cfg.round(state.x())+"("+cfg.round(state.y())+")"},
+                    {"(x,y) (m)", cfg.round(state.x()) + "(" + cfg.round(state.y()) + ")"},
             });
             return new EnvironmentTableData(data);
         }
@@ -49,7 +47,7 @@ public class AnimationLaneChange<S, A> {
 
     static final int WIDTH = 350;
     static final int HEIGHT = 300;
-    public static final int N_COL_ROWS_HEAT_MAP = 70;
+    public static final int N_NODES_MAX = 200;
     public static final int TABLE_HEIGHT_ENV = (int) (HEIGHT * 0.5);
     public static final int TABLE_HEIGHT_EPIS = (int) (HEIGHT * 0.15);
     static final int X_LOCATION_ENV = 20;
@@ -102,8 +100,8 @@ public class AnimationLaneChange<S, A> {
         if (animationDelay == 0) return;
 
         List<LineSegment> lines = new ArrayList<>();
-        addMidLines(lines,node);
-        //addCar(lines);
+        addMidLines(lines, node);
+        addCar(lines, node);
         var tableData = EnvironmentTableData.create(path, node, cfg);
         var lineData = List.of(lines);
         var dto = GraphicsDto.dtoStep(lineData, tableData.data, animationDelay, false);
@@ -111,71 +109,79 @@ public class AnimationLaneChange<S, A> {
 
     }
 
-    private void addMidLines(List<LineSegment> lines, Node<S,A> node) {
-        Node<StateLane, ActionLane> nodeC = nodeCasted(node);
+
+    private void addMidLines(List<LineSegment> lines, Node<S, A> node) {
+        var nodeC = nodeCasted(node);
         var p = LaneChangeParams.empty();
-
-        double xPos=nodeC.info().state().x();
-        double xMin=p.xmax();
-
-        System.out.println("xPos = " + xPos);
-
+        double xPos = nodeC.info().state().x();
         for (int i = 0; i < p.nMidLines(); i++) {
             double xLeft = p.posLeftSingleMidline(xPos, i);
             double xRigth = p.posRightSingleMidline(xPos, i);
-            System.out.println(" xLeft = " + xLeft+" xRigth = "+xRigth);
             lines.add(LineSegment.line(xLeft, p.yMidLine(), xRigth, p.yMidLine(), p.midLineColor(), p.thiknessMidlines()));
         }
-
-
-
     }
 
-    private static <S, A> Node<StateLane, ActionLane> nodeCasted(Node<S,A> node) {
+
+    private void addCar(List<LineSegment> lines, Node<S, A> node) {
+        var nodeC = nodeCasted(node);
+        var p = LaneChangeParams.empty();
+        double y = nodeC.info().state().y();
+        double angle = nodeC.info().state().headingAngle();
+        var c0 = p.carCorner(angle, y, 0);
+        var c1 = p.carCorner(angle, y, 1);
+        var c2 = p.carCorner(angle, y, 2);
+        var c3 = p.carCorner(angle, y, 3);
+        lines.add(LineSegment.line(c0.x(), c0.y(), c1.x(), c1.y(), p.carColor(), p.thiknessCarLine()));
+        lines.add(LineSegment.line(c1.x(), c1.y(), c2.x(), c2.y(), p.carColor(), p.thiknessCarLine()));
+        lines.add(LineSegment.line(c2.x(), c2.y(), c3.x(), c3.y(), p.carColor(), p.thiknessCarLine()));
+        lines.add(LineSegment.line(c3.x(), c3.y(), c0.x(), c0.y(), p.carColor(), p.thiknessCarLine()));
+    }
+
+    private static <S, A> Node<StateLane, ActionLane> nodeCasted(Node<S, A> node) {
         Node<StateLane, ActionLane> nodeC = (Node<StateLane, ActionLane>) node;
         return nodeC;
     }
 
 
-    public void postEpisode(Pair<Integer, Integer> iter, TreeInfo<S, A> treeInfo) {
+    public void postEpisode(Pair<Integer, Integer> iter, TreeInfo<S, A> treeInfo, int maxDepth) {
         if (isEmpty()) return;
 
-        var angleList = ListCreatorUtil.createFromStartToEndWithNofItems(-40, 40, N_COL_ROWS_HEAT_MAP);
-        var spdList = ListCreatorUtil.createFromStartToEndWithNofItems(-40, 40, N_COL_ROWS_HEAT_MAP);
+        var nodeList = ListCreatorUtil.createFromStartToEndWithNofItems(0, N_NODES_MAX-1, N_NODES_MAX);
+        var depthList = ListCreatorUtil.createFromStartToEndWithNofItems(0, maxDepth-1, maxDepth);
         List<double[][]> grids = new ArrayList<>();
-        double[][] vGrid = getData(angleList, spdList);
-        grids.add(GridFactory.toSeries(vGrid, spdList, angleList));
+        double[][] vGrid = getData(nodeList, depthList, treeInfo);
+        grids.add(GridFactory.toSeries(vGrid, depthList, nodeList));
 
         var tableData = Collections.singletonList(new Object[][]{
-                {"Iteration (max iter):", iter.getFirst()+"("+iter.getSecond()+")"},
+                {"Iteration (max iter):", iter.getFirst() + "(" + iter.getSecond() + ")"},
                 {"Number of nodes:", treeInfo.numberOfNodes()}}
         );
         kitEpisode.postAndSleep(
                 GraphicsDto.dtoEpisode(grids, tableData, (int) delayFunction.applyAsDouble(iter.getFirst())));
     }
 
-    private double[][] getData(List<Double> angleList, List<Double> spdList) {
-        double[][] data = new double[angleList.size()][spdList.size()];
-        for (double a : angleList) {
-            for (double spd : spdList) {
-                int ai = angleList.indexOf(a);
-                int spdi = spdList.indexOf(spd);
-                double aRad = UnitConverterUtil.convertDegreesToRadians(a);
-                double spdRad = UnitConverterUtil.convertDegreesToRadians(spd);
-                data[ai][spdi] = 0;
+    private double[][] getData(List<Double> nodeList, List<Double> depthList, TreeInfo<S, A> treeInfo) {
+        double[][] data = new double[nodeList.size()][depthList.size()];
+        for (double depth : depthList) {
+            int di = depthList.indexOf(depth);
+            var nodes = treeInfo.nodesAtDepth(di);
+            System.out.println("di = " + di);
+            System.out.println("nodes = " + nodes);
+            for (Node<S, A> node : nodes) {
+                int ni = nodes.indexOf(node);
+                System.out.println("ni = " + ni);
+                data[ni][di] = 1; //node.info().value(); //  RandUtil.randomNumberBetweenZeroAndOne();
             }
         }
         return data;
     }
-
-
 
     private static GfxComponentFactory environmentGfx(AnimationSettings as) {
         var factory = GfxComponentFactory.of(as);
         var p = LaneChangeParams.empty();
 
         factory.addLineChart("",
-                "x", Pair.create(0, (int) (2*p.carLenght())),
+                "x", Pair.create(0, p.xmax()),
                 "y", Pair.create(p.ymin(), p.ymax()));
         styleChart(factory.getLineCharts().get(0));
         factory.addTable(N_COLUMNS, false);
@@ -187,7 +193,7 @@ public class AnimationLaneChange<S, A> {
         var plot = chart.getXYPlot();
         plot.setBackgroundPaint(LaneChangeParams.empty().colorBackground());
         //plot.getRangeAxis().setVisible(false); // disable Y axis
-        plot.getDomainAxis().setVisible(false); // disable X axis
+        // plot.getDomainAxis().setVisible(false); // disable X axis
         plot.setDomainGridlinesVisible(false); // vertical grid lines
         plot.setRangeGridlinesVisible(false);  // horizontal grid lines
     }
@@ -205,7 +211,7 @@ public class AnimationLaneChange<S, A> {
         heatmap.getTitle().setFont(FONT_TITLE);
         var plot = heatmap.getXYPlot();
         plot.getDomainAxis().setLabel("Depth");
-        plot.getRangeAxis().setLabel("");
+        plot.getRangeAxis().setLabel("Nodes");
         plot.setDomainGridlinesVisible(false);
         plot.setRangeGridlinesVisible(false);
         var axisD = plot.getDomainAxis();
