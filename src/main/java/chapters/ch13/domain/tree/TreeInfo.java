@@ -38,10 +38,10 @@ public class TreeInfo<S, A> {
 
 
     //TODO FIXA
-    public List<Integer> numberOfNodesEachDepth() {
-        List<Integer> countList=new ArrayList<>();
-        countList.add(1);
-        return countNodesAtEachDepth(root(),countList);
+    public int numberOfNodesAtDepth(int depthOfInterest) {
+        //List<Integer> countList=new ArrayList<>();
+        //countList.add(1);
+        return recursiveCountAtDepth(root(),depthOfInterest,1,0);
     }
 
 
@@ -66,6 +66,20 @@ public class TreeInfo<S, A> {
     }
 
 
+    private int recursiveCountAtDepth(Node<S, A> node,int depthOfInterest,int depth, int count) {
+        if (node.info().nChildrens()==0) {
+            return count;
+        }
+        for (var child : node.info().children()) {
+            if (depth==depthOfInterest) {
+                count = Math.max(depthOfInterest, recursiveCountAtDepth(child, depthOfInterest, depth + 1, count + 1));
+            }
+        }
+        return count;
+    }
+/*
+
+
     private List<Integer> countNodesAtEachDepth(Node<S, A> node,List<Integer> countList) {
         if (node.info().nChildrens()==0) {
             return countList;
@@ -76,6 +90,7 @@ public class TreeInfo<S, A> {
         }
         return countList;
     }
+*/
 
 
 }

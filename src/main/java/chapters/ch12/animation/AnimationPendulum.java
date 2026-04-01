@@ -198,8 +198,6 @@ public class AnimationPendulum {
             lines.add(LineSegment.line(top.x() - arrowShift, top.y() + arrowShift, top.x(), top.y(), p.torqueColor(), p.torqueThikness()));
             lines.add(LineSegment.line(top.x() - arrowShift, top.y() - arrowShift, top.x(), top.y(), p.torqueColor(), p.torqueThikness()));
         }
-
-
     }
 
     private void postCommon(int ei, List<LineSegment> lines, EnvironmentTableData tableData) {
