@@ -1,6 +1,8 @@
 package chapters.ch4;
 
 import chapters.ch4.domain.agent.AgentQLearningGrid;
+import chapters.ch4.implem_animation.AnimationTreasure;
+import core.foundation.config.ConfigFactory;
 import core.gridrl.TrainerGridDependencies;
 import chapters.ch4.domain.trainer.TrainerOneStepTdQLearning;
 import chapters.ch4.implem.cliff_walk.core.EnvironmentCliff;
@@ -43,7 +45,7 @@ public class TestTrainerQLearningCliff {
                 informer);
 
         trainerQL = TrainerOneStepTdQLearning.of(dependenciesQL);
-        trainerQL.train();
+        trainerQL.train(AnimationTreasure.empty());
     }
 
     @Test

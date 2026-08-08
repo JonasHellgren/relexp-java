@@ -1,6 +1,7 @@
 package chapters.ch4;
 
 import chapters.ch4.domain.agent.AgentQLearningGrid;
+import chapters.ch4.implem_animation.AnimationRoad;
 import core.gridrl.TrainerGridDependencies;
 import chapters.ch4.domain.trainer.TrainerOneStepTdQLearning;
 import chapters.ch4.domain.trainer.TrainerOneStepTdSarsa;
@@ -53,8 +54,8 @@ class TestTrainersRoad {
 
         trainerQL = TrainerOneStepTdQLearning.of(dependenciesQL);
         trainerSarsa = TrainerOneStepTdSarsa.of(dependenciesSarsa);
-        trainerQL.train();
-        trainerSarsa.train();
+        trainerQL.train(AnimationRoad.empty());
+        trainerSarsa.train(AnimationRoad.empty());
     }
 
     @Test

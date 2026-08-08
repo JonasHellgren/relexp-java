@@ -1,6 +1,7 @@
 package chapters.ch7;
 
 import chapters.ch4.implem.treasure.start_state_suppliers.StartStateSupplierPositionGiven;
+import chapters.ch4.implem_animation.AnimationTreasure;
 import chapters.ch7.domain.trainer.TrainerOneStepTdQLearningWithSafety;
 import chapters.ch7.factory.SafetyLayerFactoryTreasure;
 import chapters.ch7.factory.TrainerDependencySafeFactory;
@@ -22,11 +23,11 @@ class TestTrainerOneStepTdQLearningWithSafetyHardCodedFails {
         var dependencies1 = TrainerDependencySafeFactory.treasure(10_000, 0.1, 0.9);
         var safetyLayer = SafetyLayerFactoryTreasure.produce(dependencies1);
         trainerStartAt01 = TrainerOneStepTdQLearningWithSafety.givenSafetyLayerOf(dependencies1, safetyLayer);
-        trainerStartAt01.train();
+        trainerStartAt01.train(AnimationTreasure.empty());
         var dependencies2 =dependencies1.withStartStateSupplier(
                 StartStateSupplierPositionGiven.create(StateGrid.of(5,1)));
         trainerStartAt52 = TrainerOneStepTdQLearningWithSafety.givenSafetyLayerOf(dependencies2, safetyLayer);
-        trainerStartAt52.train();
+        trainerStartAt52.train(AnimationTreasure.empty());
     }
 
     /**

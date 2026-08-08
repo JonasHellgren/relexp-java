@@ -4,6 +4,7 @@ import core.foundation.util.cond.ConditionalsUtil;
 import lombok.extern.java.Log;
 import oshi.util.FormatUtil;
 
+import java.math.BigDecimal;
 import java.util.Properties;
 
 @Log
@@ -39,6 +40,11 @@ public record AnimationConfig(
     }
 
     public float round(double value) {
-        return FormatUtil.round((float) value,ndigits);
+        return round((float) value,ndigits);
+    }
+
+    public static float round(float d, int decimalPlace) {
+        final BigDecimal bd = new BigDecimal(Float.toString(d)).setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
     }
 }
