@@ -47,7 +47,6 @@ public class Searcher<S, A> {
         var vars = Variables.of(root);
         animation.start();
         for (int i = 0; i < dependencies.maxIterations(); i++) {
-       // for (int i = 0; i < 1000; i++) {
             initPath(root, vars);
             traverse(vars);
             var nodeInfo = vars.current.info();
@@ -64,66 +63,63 @@ public class Searcher<S, A> {
             for (var node : path.getNodes()) {
                 animation.postStep(iter, path, node);
             }
+            animation.postEpisode(iter, info, dependencies.maxTreeDepth());
+        }
+        return Tree.of(root);
+    }
 
-        if (i % 1 == 0) {
-            animation.postEpisode(iter, info,dependencies.maxTreeDepth());
+    public void logTime() {
+        log.info("Time (s): " + dependencies.timeInSecondsAsString());
+    }
+
+    /**
+     * Initializes the path for the current iteration.
+     *
+     * @param root The root node of the tree.
+     * @param vars The current state of the search algorithm.
+     */
+    private void initPath(Node<S, A> root, Variables<S, A> vars) {
+        vars.clearPath();
+        vars.addNodeToPath(root);
+        vars.setCurrent(root);
+    }
+
+    /**
+     * Traversal. Starting from the root, follow the tree by choosing child nodes
+     */
+    private void traverse(Variables<S, A> vars) {
+        while (vars.isNotExpandable() && isBelowMaxDepth(vars)) {
+            vars.setCurrent(dependencies.getSelector().selectFromTriedActions(vars.current));
+            vars.addNodeToPath(vars.current);
         }
     }
-        return Tree.of(root);
-}
 
-public void logTime() {
-    log.info("Time (s): " + dependencies.timeInSecondsAsString());
-}
-
-/**
- * Initializes the path for the current iteration.
- *
- * @param root The root node of the tree.
- * @param vars The current state of the search algorithm.
- */
-private void initPath(Node<S, A> root, Variables<S, A> vars) {
-    vars.clearPath();
-    vars.addNodeToPath(root);
-    vars.setCurrent(root);
-}
-
-/**
- * Traversal. Starting from the root, follow the tree by choosing child nodes
- */
-private void traverse(Variables<S, A> vars) {
-    while (vars.isNotExpandable() && isBelowMaxDepth(vars)) {
-        vars.setCurrent(dependencies.getSelector().selectFromTriedActions(vars.current));
-        vars.addNodeToPath(vars.current);
+    /**
+     * Expansion. Add one or more new child nodes (representing new actions).
+     */
+    private void expand(Variables<S, A> vars) {
+        var newChild = dependencies.getExpander().expand(vars.current);
+        vars.setCurrent(newChild);
+        vars.addNodeToPath(newChild);
     }
-}
 
-/**
- * Expansion. Add one or more new child nodes (representing new actions).
- */
-private void expand(Variables<S, A> vars) {
-    var newChild = dependencies.getExpander().expand(vars.current);
-    vars.setCurrent(newChild);
-    vars.addNodeToPath(newChild);
-}
+    /**
+     * Simulation. From the new node, simulate  until terminal state
+     */
+    private void simulate(Variables<S, A> vars) {
+        dependencies.getSimulator().simulate(vars.current, vars.path);
+    }
 
-/**
- * Simulation. From the new node, simulate  until terminal state
- */
-private void simulate(Variables<S, A> vars) {
-    dependencies.getSimulator().simulate(vars.current, vars.path);
-}
+    /**
+     * Backpropagation. Use the path to update the stats of all traversed nodes
+     */
+    private void backPropagate(Variables<S, A> vars) {
+        dependencies.getBackpropagator().update(vars.path);
+    }
 
-/**
- * Backpropagation. Use the path to update the stats of all traversed nodes
- */
-private void backPropagate(Variables<S, A> vars) {
-    dependencies.getBackpropagator().update(vars.path);
-}
-
-private boolean isBelowMaxDepth(Variables<S, A> vars) {
-    return vars.isTreeBelowMaxDepth(dependencies.maxTreeDepth());
-}
+    private boolean isBelowMaxDepth(Variables<S, A> vars) {
+        return vars.isTreeBelowMaxDepth(dependencies.maxTreeDepth());
+    }
 
 
 }

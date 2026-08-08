@@ -39,7 +39,7 @@ record LaneChangeParams(
                 .nMidLines(10).yMidLine(-1.5)
                 .lengthMidLine(1).distBetweenMidlines(2).thiknessMidlines(2).midLineColor(Color.gray)
                 .carMidPos(5)
-                .carLenght(4.0).carWidth(2.0).thiknessCarLine(2).carColor(Color.WHITE)
+                .carLenght(4.0).carWidth(2.0).thiknessCarLine(2).carColor(Color.GREEN)
                 .build();
     }
 

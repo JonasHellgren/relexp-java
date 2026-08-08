@@ -34,7 +34,7 @@ public class AnimationLaneChange<S, A> {
             var nodeC = nodeCasted(node);
             var state = nodeC.info().state();
             var data = Collections.singletonList(new Object[][]{
-                    {"depth (max depth)", path.getNodes().indexOf(nodeC) + "(" + path.info().length() + ")"},
+                    {"depth (max depth)", path.getNodes().indexOf(nodeC)+1 + "(" + path.info().length() + ")"},
                     {"action", nodeC.info().action()},
                     {"steering angle (deg)", getRoundDeg(cfg, nodeC.info().action().getSteeringAngle())},
                     {"heading (deg)", getRoundDeg(cfg, state.headingAngle())},
@@ -50,7 +50,6 @@ public class AnimationLaneChange<S, A> {
 
     static final int WIDTH = 350;
     static final int HEIGHT = 300;
-    public static final int N_NODES_MAX = 200;
     public static final int TABLE_HEIGHT_ENV = (int) (HEIGHT * 0.4);
     public static final int TABLE_HEIGHT_EPIS = (int) (HEIGHT * 0.15);
     static final int X_LOCATION_ENV = 20;
@@ -58,8 +57,8 @@ public class AnimationLaneChange<S, A> {
     static final int N_COLUMNS = 2;
 
     static final IntervalData ANIMATIONS_SLEEP = IntervalData.of(
-            List.of(0.0, 50.0, 9990.0),  //cuts
-            List.of(250.0, 0.0, 250.0)   //animation time delays
+            List.of(0.0, 100.0, 110.0, 4990.0),  //cuts
+            List.of(0.0, 500.0, 1.0, 250.0)   //animation time delays
     );
 
     AnimationKit kitStep, kitEpisode;
@@ -110,6 +109,23 @@ public class AnimationLaneChange<S, A> {
 
     }
 
+    public void postEpisode(Pair<Integer, Integer> iter, TreeInfo<S, A> treeInfo, int maxDepth) {
+        if (isEmpty()) return;
+
+        var depthList = ListCreatorUtil.createFromZeroToNofItems(maxDepth);
+        int nodesMax = treeInfo.numberOfNodesMaxAnyDepth();
+        var nodeList = ListCreatorUtil.createFromZeroToNofItems(nodesMax + N_NODESMAX_MARIGINAL);
+        List<double[][]> grids = new ArrayList<>();
+        double[][] vGrid = getData(nodeList, depthList, treeInfo);
+        grids.add(GridFactory.toSeries(vGrid, depthList, nodeList));
+        var tableData = Collections.singletonList(new Object[][]{
+                {"Iteration (max iter):", iter.getFirst() + "(" + iter.getSecond() + ")"},
+                {"Number of nodes:", treeInfo.numberOfNodes()}}
+        );
+        kitEpisode.postAndSleep(
+                GraphicsDto.dtoEpisode(grids, tableData, (int) delayFunction.applyAsDouble(iter.getFirst())));
+    }
+
     private void addMidLines(List<LineSegment> lines, Node<S, A> node) {
         var nodeC = nodeCasted(node);
         var p = LaneChangeParams.empty();
@@ -145,24 +161,6 @@ public class AnimationLaneChange<S, A> {
     private static <S, A> Node<StateLane, ActionLane> nodeCasted(Node<S, A> node) {
         Node<StateLane, ActionLane> nodeC = (Node<StateLane, ActionLane>) node;
         return nodeC;
-    }
-
-
-    public void postEpisode(Pair<Integer, Integer> iter, TreeInfo<S, A> treeInfo, int maxDepth) {
-        if (isEmpty()) return;
-
-        var depthList = ListCreatorUtil.createFromZeroToNofItems(maxDepth);
-        int nodesMax = treeInfo.numberOfNodesMaxAnyDepth();
-        var nodeList = ListCreatorUtil.createFromZeroToNofItems(nodesMax + N_NODESMAX_MARIGINAL);
-        List<double[][]> grids = new ArrayList<>();
-        double[][] vGrid = getData(nodeList, depthList, treeInfo);
-        grids.add(GridFactory.toSeries(vGrid, depthList, nodeList));
-        var tableData = Collections.singletonList(new Object[][]{
-                {"Iteration (max iter):", iter.getFirst() + "(" + iter.getSecond() + ")"},
-                {"Number of nodes:", treeInfo.numberOfNodes()}}
-        );
-        kitEpisode.postAndSleep(
-                GraphicsDto.dtoEpisode(grids, tableData, (int) delayFunction.applyAsDouble(iter.getFirst())));
     }
 
     private double[][] getData(List<Double> nodeList, List<Double> depthList, TreeInfo<S, A> treeInfo) {
