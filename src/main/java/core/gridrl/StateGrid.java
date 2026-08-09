@@ -54,23 +54,6 @@ public class StateGrid {
         return of(variables.x() + action.deltaX(), variables.y() + action.deltaY());
     }
 
-    /**
-     * Clips this state to the given grid parameters, ensuring that the coordinates are within the valid range.
-     *
-     * @param parameters the grid parameters to clip to
-     * @return the clipped state
-     *
-     * TODO REMOVE METHOD
-     */
-    public StateGrid clip(EnvironmentGridParametersI parameters) {
-        Integer minX = parameters.getPosXMinMax().getFirst();
-        Integer maxX = parameters.getPosXMinMax().getSecond();
-        Integer minY = parameters.getPosYMinMax().getFirst();
-        Integer maxY = parameters.getPosYMinMax().getSecond();
-        return StateGrid.of(
-                MathUtil.clip(x(), minX, maxX),
-                MathUtil.clip(y(), minY, maxY));
-    }
 
 /**
  * Clips this state to the given grid parameters, ensuring that the coordinates are within the valid range.

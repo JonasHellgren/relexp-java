@@ -16,9 +16,4 @@ public record Discrete2DVector(
         return new Discrete2DVector(dx,dy);
     }
 
-    public boolean equals(Discrete2DVector other) {
-        return dx==other.dx && dy==other.dy;
-    }
-
-
 }
