@@ -98,7 +98,7 @@ public class AgentMemory {
     }
 
     private static void addHiddenLayers(AgentParameters ap, TrainerParameters tp, NeuralNetConfiguration.ListBuilder confBuilder) {
-        double nHiddenLayers = 0d; // ap.nHiddenLayers();
+        double nHiddenLayers = ap.nHiddenLayers();
         for (int i = 1; i <= nHiddenLayers; i++) {
             confBuilder.layer(new DenseLayer.Builder()
                     .nIn(ap.nHiddenUnits()).nOut(ap.nHiddenUnits())

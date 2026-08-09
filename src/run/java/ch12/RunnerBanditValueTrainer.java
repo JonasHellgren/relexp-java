@@ -35,7 +35,7 @@ public class RunnerBanditValueTrainer {
     }
 
 
-    static void plotting(BanditActionValueTrainer trainer) throws IOException {
+    static void plotting(BanditActionValueTrainer trainer)  {
         var recorder = trainer.getRecorder();
         var path= ConfigFactory.pathPicsConfig().ch12();
         var plotter = ErrorBandPlotterNeuralBandit.ofFiltering(

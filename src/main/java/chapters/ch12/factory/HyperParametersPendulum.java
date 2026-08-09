@@ -19,7 +19,7 @@ public record HyperParametersPendulum(
     public static final double LEARNING_RATE0 = 0.01,LEARNING_RATE1 = 0.001;
     public static final int SIZE_MINI_BATCH = 32;  //16
     public static final int N_HIDDEN_UNITS = 32;  //16
-    public static final int N_HIDDEN_LAYERS = 2;  //1
+    public static final int N_HIDDEN_LAYERS = 0;  //1
 
     public static final HyperParametersPendulum FAIL_PEN_START_UPRIGHT =
             HyperParametersPendulum.builder()
@@ -46,7 +46,6 @@ public record HyperParametersPendulum(
     public static final HyperParametersPendulum FAIL_PEN_START_RANDOM =
             FAIL_PEN_START_UPRIGHT.withRandomStart(true);
 
-    public static final HyperParametersPendulum CLOSE_TO_REF_START_RANDOM =
-            CLOSE_TO_REF_START_UPRIGHT.withRandomStart(true);
+
 
 }

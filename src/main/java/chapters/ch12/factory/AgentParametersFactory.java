@@ -10,6 +10,7 @@ public class AgentParametersFactory {
     public static AgentParameters createForTest() {
         return  AgentParameters.builder()
                 .nInputs(2)
+                .nHiddenLayers(0)
                 .nHiddenUnits(64)
                 .nOutputs(3)
                 .angleMaxMagnitude(1)
@@ -22,6 +23,7 @@ public class AgentParametersFactory {
     public static AgentParameters createForTrainerTest() {
         return  AgentParameters.builder()
                 .nInputs(2)
+                .nHiddenLayers(0)
                 .nHiddenUnits(64)
                 .nOutputs(3)
                 .angleMaxMagnitude(1)
