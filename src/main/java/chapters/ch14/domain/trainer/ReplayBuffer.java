@@ -70,7 +70,7 @@ public class ReplayBuffer<SI,S,A> {
     }
 
     public boolean isFull() {
-        return buffer.size() > trainerParameters.maxSizeReplayBuffer();
+        return buffer.size() >= trainerParameters.maxSizeReplayBuffer();
     }
 
     private int getRandomIndexInBuffer() {

@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.math3.util.Pair;
+
 import java.util.List;
 
 /**
@@ -29,32 +30,32 @@ public class TrainerCannon {
     }
 
     public void train(AnimationCannon animation) {
-        var d=dependencies;
+        var d = dependencies;
         var generator = EpisodeGeneratorCannon.of(d);
         recorder.clear();
         animation.start();
-        double base=0;
+        double base = 0;
         for (int i = 0; i < d.nEpisodes(); i++) {
             var experiences = generator.generate();
-            for (var exp : experiences) {  //loop through single experience
-                int t = experiences.indexOf(exp);
+            for (int t = 0; t < experiences.size(); t++) {
+                var exp = experiences.get(t);
                 double returnAtT = getReturnAtTime(experiences, t);
                 double lr = d.learningRate(i);
                 var gradLog = d.calcGradLog(exp.action());
 
-                recorder.addRecording(returnAtT-base, base, exp,gradLog, d.meanAndStd());
-                animation.postFire(i,d.nEpisodes(),experiences);
-                animation.postHit(i,d.nEpisodes(),experiences);
-                animation.postEpisode(d.agentmemory(),i, Pair.create(returnAtT,base),gradLog);
+                recorder.addRecording(returnAtT - base, base, exp, gradLog, d.meanAndStd());
+                animation.postFire(i, d.nEpisodes(), experiences);
+                animation.postHit(i, d.nEpisodes(), experiences);
+                animation.postEpisode(d.agentmemory(), i, Pair.create(returnAtT, base), gradLog);
 
-                d.updateAgentMemory(lr, returnAtT-base, gradLog);
-                base=base+lr*(returnAtT-base);
+                d.updateAgentMemory(lr, returnAtT - base, gradLog);
+                base = base + lr * (returnAtT - base);
             }
         }
     }
 
     private double getReturnAtTime(List<ExperienceCannon> experiences, int t) {
-        Preconditions.checkArgument(t==0, "calculateReturnAtT only works for t=0");
+        Preconditions.checkArgument(t == 0, "calculateReturnAtT only works for t=0");
         return experiences.get(t).stepReturn().reward();
     }
 
