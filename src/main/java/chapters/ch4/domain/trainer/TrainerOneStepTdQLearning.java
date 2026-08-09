@@ -1,10 +1,7 @@
 package chapters.ch4.domain.trainer;
 
 import chapters.ch4.domain.animation.AnimationGridI;
-import chapters.ch4.implem_animation.AnimationRoad;
 import com.google.common.base.Preconditions;
-import core.animation.AnimationKit;
-import core.foundation.util.cond.ConditionalsUtil;
 import core.gridrl.*;
 import core.plotting_rl.progress_plotting.RecorderProgressMeasures;
 import lombok.AccessLevel;

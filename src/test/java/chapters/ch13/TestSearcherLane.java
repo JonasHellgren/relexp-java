@@ -11,7 +11,6 @@ import chapters.ch13.implem.lane_change.StateLane;
 import chapters.ch13.factory.lane_change.FactoryDependenciesLaneChange;
 import chapters.ch13.plotting.DotFileGenerator;
 import core.foundation.config.ConfigFactory;
-import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -5,7 +5,6 @@ import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
 import chapters.ch4.implem.blocked_road_lane.core.InformerRoadParams;
 import chapters.ch4.implem.blocked_road_lane.factory.FactoryEnvironmentParametersRoad;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import core.gridrl.StepReturnGrid;
 import org.junit.jupiter.api.BeforeEach;

@@ -12,7 +12,6 @@ import chapters.ch8.domain.environment.startstate_supplier.StartStateSupplier;
 import chapters.ch8.factory.AgentMemoryFactory;
 import chapters.ch8.factory.AgentParkingParametersFactory;
 import chapters.ch8.factory.ParkingParametersFactory;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

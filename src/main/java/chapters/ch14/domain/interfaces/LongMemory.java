@@ -2,7 +2,6 @@ package chapters.ch14.domain.interfaces;
 
 
 import core.foundation.gadget.training.TrainData;
-import core.foundation.gadget.training.TrainDataOld;
 
 /**
  * This package contains the LongMemory interface and its implementations.

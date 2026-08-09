@@ -1,7 +1,6 @@
 package chapters.ch12.domain.inv_pendulum.trainer.core;
 
 import chapters.ch12.animation.AnimationPendulum;
-import chapters.ch12.domain.inv_pendulum.agent.memory.ActionAndItsValue;
 import chapters.ch12.domain.inv_pendulum.environment.core.StatePendulum;
 import chapters.ch12.plotting_invpend.RecorderTrainerPendulum;
 import core.foundation.gadget.math.Accumulator;
@@ -10,8 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.java.Log;
 import org.apache.commons.math3.util.Pair;
-
-import java.util.List;
 
 /**
  * This class represents a trainer for the inverted pendulum domain.

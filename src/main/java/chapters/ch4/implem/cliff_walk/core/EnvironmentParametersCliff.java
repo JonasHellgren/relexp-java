@@ -1,12 +1,8 @@
 package chapters.ch4.implem.cliff_walk.core;
 
-import chapters.ch4.implem.blocked_road_lane.core.EnvironmentRoad;
-import com.google.common.base.Preconditions;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import lombok.Builder;
-import lombok.Getter;
 import org.apache.commons.math3.util.Pair;
 import java.util.List;
 import java.util.Set;

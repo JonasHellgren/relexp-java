@@ -1,8 +1,6 @@
 package core.animation;
 
 import com.google.common.eventbus.Subscribe;
-import core.foundation.config.AnimationConfig;
-import core.foundation.util.formatting.NumberFormatterUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.jfree.chart.JFreeChart;
@@ -13,7 +11,6 @@ import org.jfree.data.xy.DefaultXYZDataset;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.Arrays;
 import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

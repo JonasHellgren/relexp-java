@@ -10,7 +10,6 @@ import chapters.ch14.implem.pong.PongSettings;
 import chapters.ch14.implem.pong.StateLongPong;
 import chapters.ch14.implem.pong.StatePong;
 import core.foundation.gadget.training.TrainData;
-import core.foundation.gadget.training.TrainDataOld;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.List;

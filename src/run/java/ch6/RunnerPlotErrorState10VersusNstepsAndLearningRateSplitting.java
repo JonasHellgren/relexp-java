@@ -4,7 +4,6 @@ import chapters.ch6.domain.trainers.during_episode.TrainerStateActionControlDuri
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.foundation.config.ConfigFactory;
 import core.foundation.config.PathAndFile;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.foundation.util.collections.ListUtil;
 import core.plotting_core.plotting_2d.ErrorBandCreator;
@@ -13,7 +12,6 @@ import core.plotting_rl.progress_plotting.ProgressMeasureEnum;
 import lombok.SneakyThrows;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

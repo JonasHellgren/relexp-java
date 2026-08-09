@@ -3,7 +3,6 @@ package chapters.ch9;
 import chapters.ch9.gradient_descent.LinearFitter;
 import chapters.ch9.gradient_descent.PhiExtractor;
 import core.foundation.gadget.training.TrainData;
-import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

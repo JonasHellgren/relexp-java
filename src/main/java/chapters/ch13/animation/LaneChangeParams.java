@@ -3,7 +3,6 @@ package chapters.ch13.animation;
 import com.google.common.base.Preconditions;
 import core.foundation.gadget.pos.PosXyDouble;
 import lombok.Builder;
-import lombok.NonNull;
 
 import java.awt.Color;
 import java.util.List;

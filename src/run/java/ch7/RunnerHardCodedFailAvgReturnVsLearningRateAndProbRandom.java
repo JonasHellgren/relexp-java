@@ -6,7 +6,6 @@ import chapters.ch7.factory.SafetyLayerFactoryTreasure;
 import chapters.ch7.factory.TrainerDependencySafeFactory;
 import core.foundation.config.ConfigFactory;
 import core.foundation.config.PathAndFile;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.foundation.util.collections.ListUtil;
 import core.plotting_core.plotting_2d.ErrorBandCreator;

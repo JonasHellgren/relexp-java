@@ -1,12 +1,8 @@
 package chapters.ch4.implem.treasure.core;
 
-import com.google.common.base.Preconditions;
 import core.gridrl.ActionGrid;
-import core.gridrl.EnvironmentGridParametersI;
 import core.gridrl.StateGrid;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.With;
 import org.apache.commons.math3.util.Pair;
 

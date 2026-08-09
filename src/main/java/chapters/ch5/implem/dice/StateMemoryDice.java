@@ -3,7 +3,6 @@ package chapters.ch5.implem.dice;
 import chapters.ch5.domain.environment.StateMcI;
 import chapters.ch5.domain.memory.StateMemoryMcI;
 import chapters.ch5.implem.converter.StateTypeConverter;
-import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.util.HashMap;

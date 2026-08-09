@@ -1,21 +1,14 @@
 package chapters.ch8;
 
 import chapters.ch8.domain.agent.core.AgentParking;
-import chapters.ch8.domain.agent.param.AgentParkingParameters;
-import chapters.ch8.domain.environment.core.EnvironmentParking;
 import chapters.ch8.domain.environment.core.FeeEnum;
 import chapters.ch8.domain.environment.core.StateParking;
-import chapters.ch8.domain.environment.param.ParkingParameters;
 import chapters.ch8.domain.environment.startstate_supplier.StartStateSupplier;
-import chapters.ch8.domain.environment.startstate_supplier.StartStateSupplierI;
 import chapters.ch8.domain.trainer.core.TrainerDependenciesParking;
 import chapters.ch8.domain.trainer.core.TrainerParking;
-import chapters.ch8.domain.trainer.param.TrainerParametersParking;
 import chapters.ch8.factory.AgentParkingParametersFactory;
 import chapters.ch8.factory.ParkingParametersFactory;
 import chapters.ch8.factory.TrainerParametersFactory;
-import core.foundation.gadget.math.LogarithmicDecay;
-import org.apache.commons.math3.util.Pair;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;

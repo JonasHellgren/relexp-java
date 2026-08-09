@@ -5,11 +5,7 @@ import chapters.ch4.domain.trainer.TrainerOneStepTdQLearning;
 import chapters.ch4.implem.treasure.factory.TreasureRunnerFactory;
 import chapters.ch4.implem_animation.AnimationTreasure;
 import core.foundation.config.ConfigFactory;
-import core.foundation.gadget.timer.CpuTimer;
-import core.gridrl.TrainerGridDependencies;
-import core.gridrl.TrainerGridI;
 
-import static chapters.ch4.plotting.GridPlotShowAndSave.showAndSavePlots;
 
 public class RunnerTrainerTreasureAnimation {
     public static final int NOF_DIGITS = 0;

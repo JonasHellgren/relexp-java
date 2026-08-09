@@ -1,23 +1,14 @@
 package ch12;
 
-import chapters.ch10.bandit.domain.environment.EnvironmentParametersBandit;
 import chapters.ch10.factory.FactoryEnvironmentParametersBandit;
-import chapters.ch12.domain.bandit.environment.EnvironmentBanditWrapper;
-import chapters.ch12.domain.bandit.trainer.BanditActionValueMemory;
 import chapters.ch12.domain.bandit.trainer.BanditActionValueTrainer;
-import chapters.ch12.domain.bandit.trainer.BanditTrainerDependencies;
-import chapters.ch12.domain.bandit.trainer.BanditTrainerParameters;
 import chapters.ch12.factory.BanditTrainerDependenciesFactory;
 import chapters.ch12.factory.BanditTrainerParametersFactory;
 import chapters.ch12.plotting_bandit.ErrorBandPlotterNeuralBandit;
 import chapters.ch12.plotting_bandit.MeasuresBanditNeuralEnum;
 import core.foundation.config.ConfigFactory;
-import core.foundation.configOld.ProjectPropertiesReader;
-import core.foundation.gadget.timer.CpuTimer;
 import lombok.SneakyThrows;
-import java.io.IOException;
 import java.util.List;
-import java.util.Random;
 
 public class RunnerBanditValueTrainer {
 

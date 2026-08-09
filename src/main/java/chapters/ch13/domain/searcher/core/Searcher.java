@@ -5,7 +5,6 @@ import chapters.ch13.domain.searcher.path.OptimalPathExtractor;
 import chapters.ch13.domain.tree.Node;
 import chapters.ch13.domain.tree.Tree;
 import chapters.ch13.domain.tree.TreeInfo;
-import chapters.ch13.plotting.DotFileGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;

@@ -1,7 +1,6 @@
 package core.foundation.config;
 
 import com.google.common.base.Preconditions;
-import org.bytedeco.opencv.presets.opencv_core;
 
 import java.util.Properties;
 

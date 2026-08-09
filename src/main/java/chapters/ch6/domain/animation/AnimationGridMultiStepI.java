@@ -1,7 +1,6 @@
 package chapters.ch6.domain.animation;
 
 import chapters.ch6.domain.agent.AgentGridMultiStepI;
-import core.gridrl.AgentGridI;
 import core.gridrl.EnvironmentGridI;
 import core.gridrl.StateGrid;
 

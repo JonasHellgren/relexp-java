@@ -2,7 +2,6 @@ package core.foundation.config;
 
 import core.foundation.util.cond.ConditionalsUtil;
 import lombok.extern.java.Log;
-import oshi.util.FormatUtil;
 
 import java.math.BigDecimal;
 import java.util.Properties;

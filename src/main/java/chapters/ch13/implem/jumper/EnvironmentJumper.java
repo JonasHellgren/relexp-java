@@ -4,7 +4,6 @@ import chapters.ch13.domain.environment.EnvironmentI;
 import chapters.ch13.domain.environment.StepReturnI;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import java.util.List;
 
 /**
  * Implementation of the Climber environment.

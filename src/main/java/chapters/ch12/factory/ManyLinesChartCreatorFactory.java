@@ -1,7 +1,6 @@
 package chapters.ch12.factory;
 
 import core.foundation.config.PlotConfig;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.plotting_2d.ManyLinesChartCreator;
 import lombok.SneakyThrows;

@@ -12,7 +12,6 @@ import chapters.ch14.factory.FactoryDependencies;
 import chapters.ch14.factory.FactoryStatePong;
 import chapters.ch14.factory.FactoryTrainerSettings;
 import core.foundation.gadget.training.TrainData;
-import core.foundation.gadget.training.TrainDataOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

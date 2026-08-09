@@ -5,7 +5,6 @@ import chapters.ch6.domain.trainer_dep.core.TrainerDependenciesMultiStep;
 import chapters.ch6.domain.trainers.during_episode.TrainerStateActionControlDuringEpisode;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.foundation.config.ConfigFactory;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import core.plotting_rl.progress_plotting.PlotterProgressMeasures;
 import core.plotting_rl.progress_plotting.ProgressMeasureEnum;

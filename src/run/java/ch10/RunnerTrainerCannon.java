@@ -10,7 +10,6 @@ import chapters.ch10.factory.FactoryTrainerParametersCannon;
 import chapters.ch10.plotting.ErrorBandPlotterCannon;
 import chapters.ch10.plotting.MeasuresCannonEnum;
 import core.foundation.config.ConfigFactory;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import lombok.SneakyThrows;
 import java.io.IOException;

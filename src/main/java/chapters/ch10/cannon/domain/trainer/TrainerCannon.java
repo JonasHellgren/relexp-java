@@ -1,16 +1,11 @@
 package chapters.ch10.cannon.domain.trainer;
 
 import chapters.ch10.animation.cannon.AnimationCannon;
-import chapters.ch10.plotting.MeasuresCannon;
 import com.google.common.base.Preconditions;
-import core.foundation.gadget.math.MeanAndStd;
-import core.foundation.gadget.math.LogarithmicDecay;
-import core.nextlevelrl.gradient.GradientMeanAndLogStd;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.math3.util.Pair;
-
 import java.util.List;
 
 /**

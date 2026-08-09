@@ -10,7 +10,6 @@ import chapters.ch10.factory.FactoryAgentParametersBandit;
 import chapters.ch10.factory.FactoryEnvironmentParametersBandit;
 import chapters.ch10.factory.FactoryTrainerParameters;
 import core.foundation.config.ConfigFactory;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.gadget.timer.CpuTimer;
 import lombok.SneakyThrows;
 import java.util.List;

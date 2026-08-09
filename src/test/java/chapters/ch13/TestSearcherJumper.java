@@ -10,7 +10,6 @@ import chapters.ch13.implem.jumper.StateJumper;
 import chapters.ch13.factory.jumper.FactoryTreeJumper;
 import chapters.ch13.plotting.DotFileGenerator;
 import core.foundation.config.ConfigFactory;
-import core.foundation.configOld.ProjectPropertiesReader;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

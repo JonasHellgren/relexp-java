@@ -4,7 +4,6 @@ import chapters.ch6.plotting.PlottingFactoryMultiStep;
 import chapters.ch6.domain.trainers.state_predictor.TrainerStatePredictor;
 import chapters.ch6.implem.factory.TrainerDependenciesFactorySplitting;
 import core.foundation.config.ConfigFactory;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.foundation.util.collections.List2ArrayConverterUtil;
 import core.gridrl.StateGrid;
 import core.plotting_core.plotting_2d.ErrorBandCreator;

@@ -8,8 +8,6 @@ import chapters.ch10.cannon.domain.trainer.TrainerDependenciesCannon;
 import chapters.ch10.factory.FactoryAgentParametersCannon;
 import chapters.ch10.factory.FactoryEnvironmentParametersCannon;
 import chapters.ch10.factory.FactoryTrainerParametersCannon;
-import chapters.ch10.plotting.ErrorBandPlotterCannon;
-import chapters.ch10.plotting.MeasuresCannonEnum;
 import chapters.ch11.domain.environment.param.LunarParameters;
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierI;
 import chapters.ch11.domain.environment.startstate_suppliers.StartStateSupplierRandomAndClipped;
@@ -22,7 +20,6 @@ import lombok.SneakyThrows;
 import org.apache.commons.math3.util.Pair;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 
 public class RunnerTrainerCannonAnimation {
 

@@ -3,7 +3,6 @@ package core.plotting_rl.progress_plotting;
 import com.google.common.base.Preconditions;
 import core.foundation.config.PathAndFile;
 import core.foundation.config.PlotConfig;
-import core.foundation.configOld.ProjectPropertiesReader;
 import core.plotting_core.base.shared.PlotSettings;
 import core.plotting_core.plotting_2d.ErrorBandCreator;
 import lombok.AccessLevel;

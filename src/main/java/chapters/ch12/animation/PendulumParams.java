@@ -1,19 +1,11 @@
 package chapters.ch12.animation;
 
-import chapters.ch11.domain.environment.core.StateLunar;
 import chapters.ch12.domain.inv_pendulum.environment.core.EnvironmentPendulum;
 import chapters.ch12.domain.inv_pendulum.trainer.core.ExperiencePendulum;
-import com.google.common.collect.Range;
 import core.foundation.gadget.pos.PosXyDouble;
-import core.foundation.util.rand.RandUtil;
 import lombok.Builder;
-import org.apache.commons.math3.util.Pair;
-
 import java.awt.*;
-import java.util.List;
 import java.util.Optional;
-import java.util.function.DoubleSupplier;
-
 
 @Builder
 record PendulumParams(

@@ -11,7 +11,6 @@ import chapters.ch8.domain.trainer.param.TrainerParametersParking;
 import core.foundation.gadget.math.LogarithmicDecay;
 import core.foundation.gadget.timer.CpuTimer;
 import lombok.Builder;
-import org.apache.commons.math3.util.Pair;
 
 /**
  * Represents the dependencies required for a trainer in the non-episodic domain.

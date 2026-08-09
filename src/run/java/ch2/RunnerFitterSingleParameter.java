@@ -5,7 +5,6 @@ import chapters.ch2.factory.ManyLinesChartCreatorFactory;
 import chapters.ch2.factory.TrainingResultsGenerator;
 import chapters.ch2.plotting.SingleParameterFittingPlotter;
 import core.foundation.config.ConfigFactory;
-import core.foundation.config.PlotConfig;
 import lombok.SneakyThrows;
 
 import java.util.List;

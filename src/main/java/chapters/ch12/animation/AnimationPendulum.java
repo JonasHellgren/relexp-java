@@ -1,14 +1,9 @@
 package chapters.ch12.animation;
 
-import chapters.ch11.domain.agent.core.AgentLunar;
-import chapters.ch11.domain.environment.core.StateLunar;
-import chapters.ch11.domain.trainer.multisteps.MultiStepResult;
 import chapters.ch12.domain.inv_pendulum.agent.core.AgentPendulum;
-import chapters.ch12.domain.inv_pendulum.agent.memory.ActionAndItsValue;
 import chapters.ch12.domain.inv_pendulum.environment.core.ActionPendulum;
 import chapters.ch12.domain.inv_pendulum.environment.core.EnvironmentPendulum;
 import chapters.ch12.domain.inv_pendulum.environment.core.StatePendulum;
-import chapters.ch12.domain.inv_pendulum.environment.core.StepReturnPendulum;
 import chapters.ch12.domain.inv_pendulum.trainer.core.ExperiencePendulum;
 import core.animation.*;
 import core.foundation.config.AnimationConfig;
@@ -16,13 +11,11 @@ import core.foundation.gadget.math.ScalerLinear;
 import core.foundation.util.collections.ListCreatorUtil;
 import core.foundation.util.cond.ConditionalsUtil;
 import core.foundation.util.formatting.NumberFormatterUtil;
-import core.foundation.util.rand.RandUtil;
 import core.foundation.util.unit_converter.UnitConverterUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Pair;
 import org.jfree.chart.JFreeChart;
-
 import java.awt.*;
 import java.util.*;
 import java.util.List;

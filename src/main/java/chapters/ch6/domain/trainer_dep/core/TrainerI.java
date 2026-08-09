@@ -1,6 +1,5 @@
 package chapters.ch6.domain.trainer_dep.core;
 
-import chapters.ch4.domain.animation.AnimationGridI;
 
 /**
  * This interface represents a trainer in the multi-step domain.
