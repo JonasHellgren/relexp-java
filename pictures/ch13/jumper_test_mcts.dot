@@ -2,25 +2,25 @@ digraph MCTS {
 node [shape=ellipse];
 Nroot [label="(root)
 <100|2,8>"];
-Nroot -> N186[penwidth=3];
-N186 [label="(186|up)
+Nroot -> N418[penwidth=3];
+N418 [label="(418|up)
 <98|2,9>"];
-N186 -> N845[penwidth=3];
-N845 [label="(845|up)
+N418 -> N1[penwidth=3];
+N1 [label="(1|up)
 <96|2,0>"];
-N845 -> N554[penwidth=3];
-N554 [label="(554|up)
-<92|1,0>"];
-N845 -> N180[penwidth=1];
-N180 [label="(180|n)
+N1 -> N95[penwidth=1];
+N95 [label="(95|n)
 <3|-0,2>"];
-N186 -> N575[penwidth=1];
-N575 [label="(575|n)
+N1 -> N800[penwidth=3];
+N800 [label="(800|up)
+<92|1,0>"];
+N418 -> N797[penwidth=1];
+N797 [label="(797|n)
 <1|-0,3>"];
-Nroot -> N41[penwidth=1];
-N41 [label="(41|n)
+Nroot -> N644[penwidth=1];
+N644 [label="(644|n)
 <2|0,0>"];
-N41 -> N71[penwidth=1];
-N71 [label="(71|n)
+N644 -> N1[penwidth=1];
+N1 [label="(1|n)
 <1|0,0>"];
 }
