@@ -32,8 +32,14 @@ public final class MathUtil {
         return Math.max(lowerThanMax, minValue);
     }
 
-    public static boolean isZero(double value) {
+    public static boolean isZeroDepricated(double value) {
         return (Math.abs(value-0)<2*Double.MIN_VALUE);
+    }
+
+    private static final double EPSILON = 1e-10;
+
+    public static boolean isZero(double value) {
+        return Math.abs(value) < EPSILON;
     }
 
     public static boolean isZero(int value) {
