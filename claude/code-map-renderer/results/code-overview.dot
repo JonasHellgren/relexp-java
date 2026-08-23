@@ -1,0 +1,69 @@
+digraph RelexpJava {
+
+    rankdir=TB;
+    splines=polyline;
+    bgcolor=white;
+    nodesep=0.6;
+    ranksep=0.9;
+    fontsize=22;
+    fontname="Helvetica";
+    label="relexp-java — architecture overview";
+    labelloc=t;
+
+    node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12, margin="0.2,0.15"];
+    edge [fontname="Helvetica", fontsize=10, color="#555555"];
+
+    { rank=source; Runner; }
+
+    Runner        [label="Runner*\n(src/run/java)\n~48 entry points, 1+ per chapter",
+                    fillcolor="#e3d6f7", color="#8a63c9", penwidth=1.5];
+
+    Factory       [label="Chapter Factory\n(chapters/chN/factory)\nbuilds params & wires dependencies",
+                    fillcolor="#fbe3c5", color="#d99a3f"];
+    Trainer       [label="Trainer\n(domain/trainer)\nruns the training loop",
+                    fillcolor="#fbe3c5", color="#d99a3f"];
+
+    Agent         [label="Agent\n(domain/agent)\npolicy + learning update",
+                    fillcolor="#d7e6ee", color="#5e8ba3"];
+    Environment   [label="Environment\n(domain/environment)\nsimulated dynamics & reward",
+                    fillcolor="#d7e6ee", color="#5e8ba3"];
+
+    CoreLearning  [label="core.nextlevelrl\ngradient / neural / radial-basis\nlearning algorithms",
+                    fillcolor="#d9f0df", color="#4fa06a"];
+    CoreFoundation[label="core.foundation / core.gridrl\nconfig, math & vector gadgets,\nutils, shared grid-RL abstractions",
+                    fillcolor="#d9f0df", color="#4fa06a"];
+    Plotting      [label="core.plotting_core /\ncore.plotting_rl\n(xchart, jfreechart)",
+                    fillcolor="#d9f0df", color="#4fa06a"];
+
+    DL4J          [label="DeepLearning4j / ND4J\n(external)",
+                    fillcolor="#ececec", color="#999999"];
+
+    ArchTests     [label="archunit tests\n(src/test/java/archunit)\narchitecture governance",
+                    fillcolor="#f7d9d9", color="#c96f6f"];
+
+    Runner -> Factory       [label="builds via"];
+    Runner -> Trainer       [label="starts"];
+    Runner -> Plotting      [label="plots results"];
+
+    Factory -> Agent        [label="creates"];
+    Factory -> Environment  [label="creates"];
+    Factory -> Trainer      [label="wires"];
+
+    Trainer -> Agent        [label="act / update"];
+    Trainer -> Environment  [label="step / reset"];
+    Trainer -> CoreFoundation [label="config, timer"];
+
+    Agent -> Environment    [label="reads state"];
+    Agent -> CoreLearning   [label="learning update"];
+    Agent -> CoreFoundation [label="math/vector utils"];
+
+    Environment -> CoreFoundation [label="utils"];
+
+    CoreLearning -> DL4J    [label="delegates to"];
+
+    Plotting -> CoreFoundation [label="paths/config"];
+
+    ArchTests -> CoreFoundation [label="enforces independence of", style=dashed];
+    ArchTests -> CoreLearning   [label="chapters-independence\n(rule disabled)", style=dotted];
+    ArchTests -> Plotting       [style=dotted];
+}
